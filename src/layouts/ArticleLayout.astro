@@ -3,7 +3,7 @@ import type { CollectionEntry } from 'astro:content';
 import BaseLayout from './BaseLayout.astro';
 import ArticleCard from '../components/ArticleCard.astro';
 import Icon from '../components/Icon.astro';
-import { articleSlug, formatDate, getPillar } from '../data/site';
+import { articleSlug, formatDate, getCategory } from '../data/site';
 
 interface Props {
   article: CollectionEntry<'articles'>;
@@ -13,7 +13,7 @@ interface Props {
 
 const { article, headings, related } = Astro.props;
 const { data } = article;
-const pillar = getPillar(data.pillar);
+const category = getCategory(data.category);
 const url = new URL(`/cam-nang/${articleSlug(article.id)}/`, Astro.site ?? Astro.url.origin);
 const schema = [
   {
@@ -26,6 +26,8 @@ const schema = [
     author: { '@type': 'Organization', name: data.author },
     publisher: { '@type': 'Organization', name: 'Cẩm nang sinh viên' },
     mainEntityOfPage: url.href,
+    articleSection: category?.name,
+    keywords: data.tags.join(', '),
     inLanguage: 'vi-VN',
   },
   {
@@ -34,20 +36,21 @@ const schema = [
     itemListElement: [
       { '@type': 'ListItem', position: 1, name: 'Trang chủ', item: new URL('/', url).href },
       { '@type': 'ListItem', position: 2, name: 'Cẩm nang', item: new URL('/cam-nang/', url).href },
-      { '@type': 'ListItem', position: 3, name: data.title, item: url.href },
+      { '@type': 'ListItem', position: 3, name: category?.name, item: new URL(`/chu-de/${data.category}/`, url).href },
+      { '@type': 'ListItem', position: 4, name: data.title, item: url.href },
     ],
   },
 ];
 ---
 
-<BaseLayout title={data.title} description={data.description} canonical={url.pathname} schema={schema}>
+<BaseLayout title={data.title} description={data.description} canonical={url.pathname} schema={schema} ogType="article">
   <article>
     <header class="article-header">
       <div class="narrow">
         <nav class="breadcrumb" aria-label="Breadcrumb">
-          <a href="/">Trang chủ</a><span>/</span><a href="/cam-nang/">Cẩm nang</a><span>/</span><span aria-current="page">{data.topic}</span>
+          <a href="/">Trang chủ</a><span>/</span><a href="/cam-nang/">Cẩm nang</a><span>/</span><a href={`/chu-de/${data.category}/`}>{category?.shortName}</a><span>/</span><span aria-current="page">{data.title}</span>
         </nav>
-        <a class={`topic-label accent-${pillar?.accent}`} href={`/chu-de/${data.pillar}/`}>{pillar?.name}</a>
+        <a class={`topic-label accent-${category?.accent}`} href={`/chu-de/${data.category}/`}>{category?.name}</a>
         <h1>{data.title}</h1>
         <p class="article-dek">{data.description}</p>
         <div class="byline">

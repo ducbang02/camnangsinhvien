@@ -15,8 +15,17 @@ interface Props {
 const { article, articles } = Astro.props;
 const { Content, headings } = await render(article);
 const related = articles
-  .filter((item) => item.id !== article.id && (item.data.topic === article.data.topic || item.data.pillar === article.data.pillar))
-  .sort((a, b) => Number(b.data.topic === article.data.topic) - Number(a.data.topic === article.data.topic))
+  .filter((item) => item.id !== article.id)
+  .map((item) => ({
+    item,
+    score:
+      Number(item.data.topic === article.data.topic) * 4
+      + Number(item.data.category === article.data.category) * 2
+      + item.data.tags.filter((tag) => article.data.tags.includes(tag)).length,
+  }))
+  .filter(({ score }) => score > 0)
+  .sort((a, b) => b.score - a.score || b.item.data.publishedDate.valueOf() - a.item.data.publishedDate.valueOf())
+  .map(({ item }) => item)
   .slice(0, 3);
 ---
 

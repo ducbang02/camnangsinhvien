@@ -12,7 +12,7 @@ Collection: `articles`, định dạng `.md` hoặc `.mdx`.
 | --- | --- | --- | --- |
 | `title` | string | Có | Tiêu đề hiển thị và SEO |
 | `description` | string | Có | Mô tả ngắn, dùng trong card/meta |
-| `pillar` | enum | Có | Một trong ba trụ cột |
+| `category` | enum | Có | Một trong mười ID khai báo tại `src/data/categories.ts` |
 | `topic` | string | Có | Nhóm nhỏ để gom cluster |
 | `tags` | string[] | Có | Từ khóa điều hướng, không dùng để nhồi SEO |
 | `publishedDate` | date | Có | Ngày xuất bản |
@@ -25,20 +25,24 @@ Collection: `articles`, định dạng `.md` hoặc `.mdx`.
 | `video` | string URL | Không | Video bổ trợ đã được kiểm tra |
 | `sources` | object[] | Không | Nhãn và URL nguồn tham khảo |
 
-ID/slug được lấy từ đường dẫn file, ví dụ `hoc-tap/cach-tinh-gpa.md` thành `hoc-tap/cach-tinh-gpa` ở collection; route công khai sử dụng phần tên file để giữ URL ngắn.
+ID/slug được lấy từ đường dẫn file, ví dụ `hoc-tap-thi-cu/cach-tinh-gpa.md` thành `hoc-tap-thi-cu/cach-tinh-gpa` ở collection; route công khai sử dụng phần tên file để giữ URL ngắn.
 
-## 3. Pillar
+## 3. Category / trụ cột
 
-Pillar là dữ liệu TypeScript tĩnh:
+Trụ cột là dữ liệu TypeScript tĩnh trong `src/data/categories.ts`. Đây là nguồn chuẩn duy nhất cho toàn website:
 
 ```ts
-type Pillar = {
-  id: 'hoc-tap' | 'ky-nang-so' | 'cuoc-song';
+type Category = {
+  id: CategoryId;
   name: string;
   shortName: string;
   description: string;
+  menuDescription: string;
   promise: string;
-  color: string;
+  accent: 'mint' | 'blue' | 'yellow' | 'coral';
+  seoTitle: string;
+  metaDescription: string;
+  steps: { label: string; text: string }[];
 };
 ```
 
@@ -52,7 +56,7 @@ type Tool = {
   name: string;
   description: string;
   status: 'ready' | 'planned';
-  pillar: Pillar['id'];
+  category: CategoryId;
   icon: string;
 };
 ```

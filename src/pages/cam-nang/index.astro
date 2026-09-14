@@ -3,7 +3,7 @@ import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ArticleCard from '../../components/ArticleCard.astro';
 import Icon from '../../components/Icon.astro';
-import { pillars } from '../../data/site';
+import { categories } from '../../data/site';
 
 const articles = (await getCollection('articles', ({ data }) => !data.draft))
   .sort((a, b) => b.data.publishedDate.valueOf() - a.data.publishedDate.valueOf());
@@ -14,7 +14,7 @@ const articles = (await getCollection('articles', ({ data }) => !data.draft))
     <div class="container">
       <p class="eyebrow">{articles.length} hướng dẫn thực hành</p>
       <h1>Tìm đúng việc bạn cần giải quyết</h1>
-      <p class="lead">Lọc theo trụ cột hoặc gõ vấn đề đang gặp. Danh sách đầy đủ luôn có sẵn, không cần đăng nhập.</p>
+      <p class="lead">Lọc theo 10 trụ cột hoặc gõ vấn đề đang gặp. Danh sách đầy đủ luôn có sẵn, không cần đăng nhập.</p>
     </div>
   </section>
   <section class="section-tight filter-section">
@@ -27,7 +27,7 @@ const articles = (await getCollection('articles', ({ data }) => !data.draft))
         </label>
         <div class="filter-pills" aria-label="Lọc theo chủ đề">
           <button class="filter-pill active" type="button" data-filter="all" aria-pressed="true">Tất cả</button>
-          {pillars.map((pillar) => <button class="filter-pill" type="button" data-filter={pillar.id} aria-pressed="false">{pillar.shortName}</button>)}
+          {categories.map((category) => <button class="filter-pill" type="button" data-filter={category.id} aria-pressed="false">{category.shortName}</button>)}
         </div>
       </div>
       <p id="result-count" class="result-count" aria-live="polite">Hiển thị {articles.length} bài viết</p>
@@ -56,9 +56,9 @@ const articles = (await getCollection('articles', ({ data }) => !data.draft))
     const query = searchInput?.value.trim().toLocaleLowerCase('vi') ?? '';
     let visible = 0;
     for (const card of cards) {
-      const matchesPillar = activeFilter === 'all' || card.dataset.pillar === activeFilter;
+      const matchesCategory = activeFilter === 'all' || card.dataset.category === activeFilter;
       const matchesSearch = !query || card.dataset.search?.includes(query);
-      card.hidden = !(matchesPillar && matchesSearch);
+      card.hidden = !(matchesCategory && matchesSearch);
       if (!card.hidden) visible += 1;
     }
     if (count) count.textContent = `Hiển thị ${visible} bài viết`;

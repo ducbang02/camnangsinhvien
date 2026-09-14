@@ -3,47 +3,40 @@ import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ArticleCard from '../../components/ArticleCard.astro';
 import Icon from '../../components/Icon.astro';
-import { pillars, tools } from '../../data/site';
+import { categories, tools } from '../../data/site';
 
 export function getStaticPaths() {
-  return pillars.map((pillar) => ({ params: { slug: pillar.id }, props: { pillar } }));
+  return categories.map((category) => ({ params: { slug: category.id }, props: { category } }));
 }
 
-type Pillar = (typeof pillars)[number];
-interface Props { pillar: Pillar }
-const { pillar } = Astro.props;
-const articles = (await getCollection('articles', ({ data }) => !data.draft && data.pillar === pillar.id))
+type Category = (typeof categories)[number];
+interface Props { category: Category }
+const { category } = Astro.props;
+const articles = (await getCollection('articles', ({ data }) => !data.draft && data.category === category.id))
   .sort((a, b) => Number(b.data.featured) - Number(a.data.featured) || b.data.publishedDate.valueOf() - a.data.publishedDate.valueOf());
-const pillarTools = tools.filter((tool) => tool.pillar === pillar.id);
+const categoryTools = tools.filter((tool) => tool.category === category.id);
 
-const pathMap: Record<string, { step: string; text: string }[]> = {
-  'hoc-tap': [
-    { step: 'Bắt đầu', text: 'Hiểu cách tính điểm và đặt mục tiêu học kỳ.' },
-    { step: 'Thực hành', text: 'Dùng Active Recall, Spaced Repetition và phiên tập trung.' },
-    { step: 'Tự chủ', text: 'Quản lý deadline, research và giao tiếp học thuật.' },
-  ],
-  'ky-nang-so': [
-    { step: 'Nền tảng', text: 'Quản lý file, trình duyệt, tài khoản và backup.' },
-    { step: 'Công việc', text: 'Dùng bộ Office, tìm kiếm và phần mềm theo workflow.' },
-    { step: 'AI an toàn', text: 'Đặt câu hỏi, kiểm chứng và chịu trách nhiệm với đầu ra.' },
-  ],
-  'cuoc-song': [
-    { step: 'Ổn định', text: 'Chuẩn bị năm nhất, chỗ ở và ngân sách tối thiểu.' },
-    { step: 'Phối hợp', text: 'Giao tiếp, làm nhóm và cân bằng học với việc làm.' },
-    { step: 'Sẵn sàng', text: 'Xây CV, portfolio và chuẩn bị thực tập.' },
-  ],
+const url = new URL(`/chu-de/${category.id}/`, Astro.site ?? Astro.url.origin);
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: category.name,
+  description: category.metaDescription,
+  url: url.href,
+  isPartOf: { '@type': 'WebSite', name: 'Cẩm nang sinh viên', url: new URL('/', url).href },
 };
 ---
 
-<BaseLayout title={pillar.name} description={pillar.description}>
-  <section class={`pillar-hero hero-${pillar.accent}`}>
-    <div class="container pillar-hero-grid">
+<BaseLayout title={category.seoTitle} description={category.metaDescription} canonical={url.pathname} schema={schema}>
+  <section class={`category-hero hero-${category.accent}`}>
+    <div class="container category-hero-grid">
       <div>
-        <p class="eyebrow">Trụ cột {pillar.number}</p>
-        <h1>{pillar.name}</h1>
-        <p class="lead">{pillar.description}</p>
+        <nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Trang chủ</a><span>/</span><a href="/cam-nang/">Cẩm nang</a><span>/</span><span aria-current="page">{category.shortName}</span></nav>
+        <p class="eyebrow">Trụ cột {category.number}</p>
+        <h1>{category.name}</h1>
+        <p class="lead">{category.description}</p>
       </div>
-      <p class="big-promise">{pillar.promise}</p>
+      <p class="big-promise">{category.promise}</p>
     </div>
   </section>
 
@@ -51,10 +44,10 @@ const pathMap: Record<string, { step: string; text: string }[]> = {
     <div class="container">
       <p class="eyebrow">Nên đi theo thứ tự</p>
       <div class="path-grid">
-        {pathMap[pillar.id].map((item, index) => (
+        {category.steps.map((item, index) => (
           <div class="path-step">
             <span>{index + 1}</span>
-            <div><strong>{item.step}</strong><p>{item.text}</p></div>
+            <div><strong>{item.label}</strong><p>{item.text}</p></div>
           </div>
         ))}
       </div>
@@ -67,18 +60,23 @@ const pathMap: Record<string, { step: string; text: string }[]> = {
         <div><p class="eyebrow">Cẩm nang chọn lọc</p><h2>{articles.length} bài để bắt đầu</h2></div>
         <a class="arrow-link" href="/cam-nang/">Tìm trong tất cả bài <Icon name="arrow" size={18} /></a>
       </div>
-      <div class="article-grid">
-        {articles.map((article) => <ArticleCard article={article} />)}
-      </div>
+      {articles.length > 0 ? (
+        <div class="article-grid">{articles.map((article) => <ArticleCard article={article} />)}</div>
+      ) : (
+        <div class="category-empty">
+          <span aria-hidden="true">{category.number}</span>
+          <div><h3>Nội dung đang được chuẩn bị</h3><p>Trụ cột này đã có cấu trúc riêng. Bài mẫu sẽ được thêm sau khi giao diện được duyệt.</p></div>
+        </div>
+      )}
     </div>
   </section>
 
-  {pillarTools.length > 0 && (
+  {categoryTools.length > 0 && (
     <section class="section section-muted">
       <div class="container">
         <div class="section-heading"><div><p class="eyebrow">Thực hành ngay</p><h2>Công cụ cho trụ cột này</h2></div></div>
         <div class="tool-buttons">
-          {pillarTools.map((tool) => <a class="button button-dark" href={`/cong-cu/${tool.slug}/`}>{tool.name} <Icon name="arrow" size={18} /></a>)}
+          {categoryTools.map((tool) => <a class="button button-dark" href={`/cong-cu/${tool.slug}/`}>{tool.name} <Icon name="arrow" size={18} /></a>)}
         </div>
       </div>
     </section>
@@ -86,14 +84,16 @@ const pathMap: Record<string, { step: string; text: string }[]> = {
 </BaseLayout>
 
 <style>
-  .pillar-hero { padding-block: clamp(4rem, 9vw, 8rem); border-bottom: 2px solid var(--ink); }
+  .category-hero { padding-block: clamp(3.5rem, 8vw, 7rem); border-bottom: 2px solid var(--ink); }
   .hero-mint { background: var(--mint); }
   .hero-blue { background: var(--blue); }
   .hero-yellow { background: var(--yellow); }
-  .pillar-hero-grid { display: grid; grid-template-columns: 1.5fr .7fr; align-items: end; gap: 3rem; }
-  .pillar-hero h1 { max-width: 860px; margin-bottom: 1.2rem; }
-  .pillar-hero .lead { color: var(--ink); opacity: .78; }
-  .pillar-hero .eyebrow { color: var(--ink); }
+  .hero-coral { background: var(--coral); }
+  .category-hero-grid { display: grid; grid-template-columns: 1.5fr .7fr; align-items: end; gap: 3rem; }
+  .category-hero h1 { max-width: 860px; margin-bottom: 1.2rem; }
+  .category-hero .lead { color: var(--ink); opacity: .78; }
+  .category-hero .eyebrow { color: var(--ink); }
+  .category-hero .breadcrumb { margin-bottom: 2rem; color: rgba(16, 33, 63, .7); }
   .big-promise { margin: 0; padding: 1.25rem; border: 2px solid var(--ink); border-radius: 18px 6px 18px 6px; font-family: var(--font-display); font-size: 1.15rem; font-weight: 800; box-shadow: 6px 6px 0 var(--ink); }
   .path-section { background: white; border-bottom: 1px solid var(--line); }
   .path-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
@@ -102,5 +102,9 @@ const pathMap: Record<string, { step: string; text: string }[]> = {
   .path-step strong { font-family: var(--font-display); }
   .path-step p { margin: .25rem 0 0; color: var(--ink-soft); font-size: .82rem; line-height: 1.55; }
   .tool-buttons { display: flex; flex-wrap: wrap; gap: .75rem; }
-  @media (max-width: 760px) { .pillar-hero-grid, .path-grid { grid-template-columns: 1fr; } .pillar-hero-grid { gap: 1.5rem; } }
+  .category-empty { display: flex; align-items: center; gap: 1.25rem; padding: 1.5rem; background: white; border: 1px dashed var(--line-strong); border-radius: var(--radius); }
+  .category-empty > span { display: grid; width: 54px; height: 54px; flex: 0 0 auto; color: white; background: var(--ink); border-radius: 16px 7px 16px 7px; font-family: var(--font-display); font-weight: 800; place-items: center; }
+  .category-empty h3 { margin-bottom: .35rem; }
+  .category-empty p { margin: 0; color: var(--ink-soft); }
+  @media (max-width: 760px) { .category-hero-grid, .path-grid { grid-template-columns: 1fr; } .category-hero-grid { gap: 1.5rem; } }
 </style>

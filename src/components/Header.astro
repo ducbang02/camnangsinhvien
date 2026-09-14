@@ -1,5 +1,5 @@
 ---
-import { primaryNav, site } from '../data/site';
+import { categories, primaryNav, site } from '../data/site';
 
 const pathname = Astro.url.pathname;
 const isActive = (href: string) => href !== '/' && pathname.startsWith(href);
@@ -13,6 +13,23 @@ const isActive = (href: string) => href !== '/' && pathname.startsWith(href);
     </a>
 
     <nav class="desktop-nav" aria-label="Điều hướng chính">
+      <details class="mega-nav">
+        <summary aria-label="Mở danh sách 10 trụ cột">Cẩm nang <span aria-hidden="true">⌄</span></summary>
+        <div class="mega-panel">
+          <div class="mega-heading">
+            <div><span>10 trụ cột</span><strong>Chọn đúng việc bạn đang cần giải quyết</strong></div>
+            <a href="/cam-nang/">Xem tất cả bài viết →</a>
+          </div>
+          <div class="mega-grid">
+            {categories.map((category) => (
+              <a class="mega-item" href={`/chu-de/${category.id}/`}>
+                <span class={`mega-number accent-${category.accent}`}>{category.number}</span>
+                <span><strong>{category.name}</strong><small>{category.menuDescription}</small></span>
+              </a>
+            ))}
+          </div>
+        </div>
+      </details>
       {primaryNav.map((item) => (
         <a href={item.href} aria-current={isActive(item.href) ? 'page' : undefined}>{item.label}</a>
       ))}
@@ -21,6 +38,13 @@ const isActive = (href: string) => href !== '/' && pathname.startsWith(href);
     <details class="mobile-nav">
       <summary><span>Menu</span><span class="menu-lines" aria-hidden="true"></span></summary>
       <nav aria-label="Điều hướng trên điện thoại">
+        <a class="mobile-overview" href="/cam-nang/">Tất cả bài viết</a>
+        <p>10 trụ cột</p>
+        <div class="mobile-categories">
+          {categories.map((category) => (
+            <a href={`/chu-de/${category.id}/`}><span>{category.number}</span>{category.shortName}</a>
+          ))}
+        </div>
         {primaryNav.map((item) => (
           <a href={item.href} aria-current={isActive(item.href) ? 'page' : undefined}>{item.label}</a>
         ))}
@@ -29,3 +53,18 @@ const isActive = (href: string) => href !== '/' && pathname.startsWith(href);
     </details>
   </div>
 </header>
+
+<script>
+  const navigationDetails = [...document.querySelectorAll<HTMLDetailsElement>('.site-header details')];
+
+  document.addEventListener('click', (event) => {
+    for (const details of navigationDetails) {
+      if (details.open && !details.contains(event.target as Node)) details.open = false;
+    }
+  });
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key !== 'Escape') return;
+    for (const details of navigationDetails) details.open = false;
+  });
+</script>

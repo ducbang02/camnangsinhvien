@@ -1,7 +1,7 @@
 ---
 title: "Sinh viên IT nên học gì trước? Bản đồ nền tảng không chạy theo trend"
 description: "Thứ tự học lập trình, Git, dữ liệu, web, hệ điều hành và kiểm thử trước khi chọn hướng Developer, Data, BA hay QA."
-pillar: ky-nang-so
+category: nghe-nghiep
 topic: Sinh viên IT
 tags: [sinh viên IT, lập trình, Git, SQL, career roadmap]
 publishedDate: 2026-08-27

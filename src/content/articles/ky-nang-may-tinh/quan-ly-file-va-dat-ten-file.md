@@ -1,7 +1,7 @@
 ---
 title: "Quản lý file và đặt tên file để không còn tìm bản final_final"
 description: "Một cấu trúc thư mục và quy tắc đặt tên đơn giản giúp tìm đúng tài liệu, làm nhóm dễ hơn và giảm nguy cơ ghi đè phiên bản."
-pillar: ky-nang-so
+category: ky-nang-may-tinh
 topic: Nền tảng số
 tags: [file, folder, đặt tên file, backup, làm việc nhóm]
 publishedDate: 2026-09-05

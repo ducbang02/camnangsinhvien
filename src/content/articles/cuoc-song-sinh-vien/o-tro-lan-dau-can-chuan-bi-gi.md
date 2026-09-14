@@ -1,7 +1,7 @@
 ---
 title: "Ở trọ lần đầu cần chuẩn bị gì? Checklist trước khi đặt cọc"
 description: "Checklist xem phòng, hợp đồng, tiền cọc, điện nước, an toàn và đồ dùng tối thiểu để sinh viên tránh quyết định vội."
-pillar: cuoc-song
+category: cuoc-song-sinh-vien
 topic: Ở trọ
 tags: [ở trọ, phòng trọ, tiền cọc, đồ dùng sinh viên]
 publishedDate: 2026-08-31

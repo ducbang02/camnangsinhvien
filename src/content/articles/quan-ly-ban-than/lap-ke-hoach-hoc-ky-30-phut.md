@@ -1,7 +1,7 @@
 ---
 title: "Lập kế hoạch học kỳ trong 30 phút: từ lịch môn đến tuần hành động"
 description: "Một quy trình ngắn để gom deadline, nhận diện tuần cao điểm và biến mục tiêu học kỳ thành lịch làm việc thực tế."
-pillar: hoc-tap
+category: quan-ly-ban-than
 topic: Kế hoạch & tập trung
 tags: [kế hoạch học kỳ, deadline, quản lý thời gian, semester planning]
 publishedDate: 2026-09-12

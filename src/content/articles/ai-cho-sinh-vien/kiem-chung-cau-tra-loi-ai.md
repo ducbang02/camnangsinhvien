@@ -1,7 +1,7 @@
 ---
 title: "Kiểm chứng câu trả lời của AI bằng quy trình 5 bước"
 description: "Cách tách claim, tìm nguồn gốc, kiểm tra trích dẫn và thử ví dụ để phát hiện câu trả lời AI nghe hợp lý nhưng sai."
-pillar: ky-nang-so
+category: ai-cho-sinh-vien
 topic: AI cho sinh viên
 tags: [AI hallucination, fact checking, nguồn, research]
 publishedDate: 2026-09-07

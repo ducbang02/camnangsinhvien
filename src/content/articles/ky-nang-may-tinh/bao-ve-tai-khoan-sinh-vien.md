@@ -1,7 +1,7 @@
 ---
 title: "Bảo vệ tài khoản sinh viên: 30 phút thiết lập đáng làm nhất"
 description: "Checklist mật khẩu, MFA, email khôi phục và nhận diện phishing để giảm nguy cơ mất email trường, tài liệu và mạng xã hội."
-pillar: ky-nang-so
+category: ky-nang-may-tinh
 topic: An toàn số
 tags: [bảo mật, mật khẩu, MFA, phishing, tài khoản]
 publishedDate: 2026-09-04

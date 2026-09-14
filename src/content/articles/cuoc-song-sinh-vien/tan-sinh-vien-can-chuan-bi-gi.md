@@ -1,7 +1,7 @@
 ---
 title: "Tân sinh viên cần chuẩn bị gì? Checklist 30 ngày đầu"
 description: "Checklist nhập học, tài khoản, lịch học, chỗ ở, ngân sách và các mối quan hệ cần thiết để bắt đầu năm nhất bớt rối."
-pillar: cuoc-song
+category: cuoc-song-sinh-vien
 topic: Năm nhất
 tags: [tân sinh viên, năm nhất, nhập học, checklist]
 publishedDate: 2026-09-02

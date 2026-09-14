@@ -1,7 +1,7 @@
 ---
 title: "Active Recall là gì? Cách học bằng việc tự nhớ"
 description: "Hướng dẫn biến ghi chú và slide thành câu hỏi tự kiểm tra, nhận phản hồi và sửa khoảng trống thay vì chỉ đọc lại."
-pillar: hoc-tap
+category: hoc-tap-thi-cu
 topic: Phương pháp học
 tags: [Active Recall, tự kiểm tra, phương pháp học, ghi nhớ]
 publishedDate: 2026-09-11

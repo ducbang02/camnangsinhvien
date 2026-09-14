@@ -1,7 +1,7 @@
 ---
 title: "Viết email cho giảng viên: mẫu ngắn, đủ thông tin, dễ trả lời"
 description: "Cấu trúc subject, lời chào, bối cảnh, yêu cầu và deadline giúp sinh viên viết email rõ ràng mà không quá cứng hoặc thiếu lịch sự."
-pillar: hoc-tap
+category: ky-nang-mem-giao-tiep
 topic: Giao tiếp học thuật
 tags: [email giảng viên, xin phép, gia hạn deadline, giao tiếp]
 publishedDate: 2026-08-29

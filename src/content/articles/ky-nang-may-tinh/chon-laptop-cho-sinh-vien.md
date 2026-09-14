@@ -1,7 +1,7 @@
 ---
 title: "Laptop cho sinh viên: chọn theo phần mềm, không chọn theo ngành"
 description: "Quy trình xác định phần mềm, hiệu năng, pin, độ bền và ngân sách để chọn laptop phù hợp thay vì mua theo cấu hình truyền miệng."
-pillar: cuoc-song
+category: ky-nang-may-tinh
 topic: Đồ dùng & thiết bị
 tags: [laptop sinh viên, mua laptop, phần mềm, phụ kiện]
 publishedDate: 2026-08-30

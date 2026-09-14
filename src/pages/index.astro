@@ -4,7 +4,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import ArticleCard from '../components/ArticleCard.astro';
 import ToolCard from '../components/ToolCard.astro';
 import Icon from '../components/Icon.astro';
-import { pillars, tools } from '../data/site';
+import { categories, tools } from '../data/site';
 
 const articles = (await getCollection('articles', ({ data }) => !data.draft))
   .sort((a, b) => Number(b.data.featured) - Number(a.data.featured) || b.data.publishedDate.valueOf() - a.data.publishedDate.valueOf());
@@ -54,24 +54,24 @@ const schema = {
     </div>
   </section>
 
-  <section class="section pillars-section">
+  <section class="section categories-section">
     <div class="container">
       <div class="section-heading">
         <div>
-          <p class="eyebrow">Ba trụ cột</p>
-          <h2>Mọi nội dung đều giúp bạn tiến thêm một bước</h2>
+          <p class="eyebrow">10 trụ cột</p>
+          <h2>Mở đúng ngăn, giải quyết đúng việc</h2>
         </div>
-        <p>Ít chuyên mục hơn để mỗi hướng dẫn có chiều sâu và nối được thành hành trình.</p>
+        <p>Từ học tập đến nghề nghiệp, mỗi bài chỉ thuộc một trụ cột rõ ràng để bạn tìm và đọc tiếp dễ hơn.</p>
       </div>
-      <div class="pillar-grid">
-        {pillars.map((pillar) => (
-          <a class={`pillar-card pillar-${pillar.accent}`} href={`/chu-de/${pillar.id}/`}>
-            <span class="pillar-number">{pillar.number}</span>
+      <div class="category-grid">
+        {categories.map((category) => (
+          <a class={`category-card category-${category.accent}`} href={`/chu-de/${category.id}/`}>
+            <span class="category-number">{category.number}</span>
             <div>
-              <h3>{pillar.name}</h3>
-              <p>{pillar.description}</p>
+              <h3>{category.name}</h3>
+              <p>{category.menuDescription}</p>
             </div>
-            <span class="pillar-promise">{pillar.promise}</span>
+            <span class="category-promise">{category.promise}</span>
             <Icon name="arrow" size={22} />
           </a>
         ))}
@@ -142,31 +142,28 @@ const schema = {
   .quick-board li span { color: var(--yellow); font-family: var(--font-display); font-size: .7rem; }
   .quick-board li a:hover span { color: var(--ink); }
   .board-note { margin: 1rem 0 0; color: #8494ab; font-size: .72rem; text-align: right; }
-  .pillar-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; }
-  .pillar-card { display: grid; min-height: 390px; grid-template-rows: auto 1fr auto auto; gap: 1.2rem; padding: 1.5rem; border: 2px solid var(--ink); border-radius: 22px 8px 22px 8px; text-decoration: none; transition: transform 160ms ease, box-shadow 160ms ease; }
-  .pillar-card:hover { box-shadow: 7px 7px 0 var(--ink); transform: translate(-3px, -3px); }
-  .pillar-mint { background: var(--mint); }
-  .pillar-blue { background: var(--blue); }
-  .pillar-yellow { background: var(--yellow); }
-  .pillar-number { font-family: var(--font-display); font-size: .78rem; font-weight: 800; letter-spacing: .1em; }
-  .pillar-card h3 { margin-bottom: .9rem; font-size: clamp(1.45rem, 2.5vw, 2rem); }
-  .pillar-card p { font-size: .9rem; }
-  .pillar-promise { padding-top: 1rem; border-top: 1px solid rgba(16,33,63,.28); font-size: .76rem; font-weight: 800; }
-  .pillar-card > svg { justify-self: end; }
+  .category-grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: .8rem; }
+  .category-card { display: grid; min-height: 260px; grid-template-rows: auto 1fr auto auto; gap: .9rem; padding: 1.15rem; border: 2px solid var(--ink); border-radius: 18px 7px 18px 7px; text-decoration: none; transition: transform 160ms ease, box-shadow 160ms ease; }
+  .category-card:hover { box-shadow: 5px 5px 0 var(--ink); transform: translate(-2px, -2px); }
+  .category-mint { background: var(--mint); }
+  .category-blue { background: var(--blue); }
+  .category-yellow { background: var(--yellow); }
+  .category-coral { background: var(--coral); }
+  .category-number { font-family: var(--font-display); font-size: .72rem; font-weight: 800; letter-spacing: .1em; }
+  .category-card h3 { margin-bottom: .55rem; font-size: 1.18rem; }
+  .category-card p { margin: 0; font-size: .78rem; line-height: 1.5; }
+  .category-promise { padding-top: .8rem; border-top: 1px solid rgba(16,33,63,.28); font-size: .7rem; font-weight: 800; line-height: 1.45; }
+  .category-card > svg { justify-self: end; }
   .it-strip { padding-block: clamp(3rem, 7vw, 5rem); color: white; background: var(--ink); }
   .it-strip-grid { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 2rem; }
   .code-badge { display: grid; width: 88px; height: 88px; color: var(--ink); background: var(--blue); border-radius: 26px 10px 26px 10px; place-items: center; transform: rotate(-3deg); }
   .it-strip h2 { margin-bottom: .75rem; font-size: clamp(1.7rem, 4vw, 2.6rem); }
   .it-strip p:not(.eyebrow) { max-width: 650px; margin-bottom: 0; color: #bdc8d9; }
   .it-strip .eyebrow { color: var(--mint); }
+  @media (max-width: 1080px) { .category-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
   @media (max-width: 900px) {
     .hero-grid { grid-template-columns: 1fr; }
     .quick-board { width: min(100%, 620px); transform: none; }
-    .pillar-grid { grid-template-columns: 1fr; }
-    .pillar-card { min-height: 0; grid-template-columns: auto 1fr auto; grid-template-rows: auto auto; }
-    .pillar-card > div { grid-column: 2; grid-row: 1 / span 2; }
-    .pillar-promise { grid-column: 1 / -1; }
-    .pillar-card > svg { grid-column: 3; grid-row: 1; }
     .it-strip-grid { grid-template-columns: auto 1fr; }
     .it-strip .button { grid-column: 2; justify-self: start; }
   }
@@ -175,8 +172,9 @@ const schema = {
     .hero-copy h1 span { white-space: normal; }
     .hero-actions .button { width: 100%; }
     .quick-board { box-shadow: 7px 7px 0 var(--yellow); }
-    .pillar-card { display: flex; min-height: 310px; flex-direction: column; }
-    .pillar-promise { margin-top: auto; }
+    .category-grid { grid-template-columns: 1fr; }
+    .category-card { min-height: 230px; }
+    .category-promise { margin-top: auto; }
     .it-strip-grid { grid-template-columns: 1fr; }
     .it-strip .button { grid-column: auto; width: 100%; }
     .code-badge { width: 68px; height: 68px; }

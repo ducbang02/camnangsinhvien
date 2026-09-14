@@ -4,6 +4,28 @@ Ngày rà soát tài liệu: 14/09/2026.
 
 Cloudflare khuyến nghị Workers Static Assets cho dự án tĩnh mới. Dự án này không có Worker script, binding, database hoặc secret runtime.
 
+Các URL trụ cột cũ được chuyển hướng `301` bằng `public/_redirects`; file này được Astro chép vào `dist/` và Cloudflare Workers Static Assets xử lý khi deploy.
+
+## Production hiện tại
+
+- Worker: `cam-nang-sinh-vien`
+- URL: `https://cam-nang-sinh-vien.nguyenducbang-uit.workers.dev/`
+- Repository: `ducbang02/camnangsinhvien`
+- Production branch: `main`
+- Build command: `npm run build`
+- Deploy command: `npx wrangler deploy`
+- Build variable: `SITE_URL=https://cam-nang-sinh-vien.nguyenducbang-uit.workers.dev`
+- Cloudflare Access: tắt; website công khai.
+- Non-production branch builds: bật.
+
+Deployment đầu tiên ngày 14/09/2026 đã build và deploy thành công. Mỗi push mới lên `main` sẽ kích hoạt Workers Builds.
+
+Sau khi repository được transfer, cập nhật remote của clone local trước lần push tiếp theo:
+
+```powershell
+git remote set-url origin https://github.com/ducbang02/camnangsinhvien.git
+```
+
 ## Phương án đề xuất: Workers Builds + GitHub
 
 Ưu điểm: mỗi push vào `main` được build/deploy nhất quán; branch khác có thể tạo preview version; không cần lưu API token trong repository.
@@ -51,7 +73,7 @@ Không đưa domain `camnangsinhvien.example` lên production; đây chỉ là p
 
 ## Smoke test production
 
-- Mở `/`, `/cam-nang/`, một pillar và một bài.
+- Mở `/`, `/cam-nang/`, một trang trụ cột và một bài.
 - Dùng GPA Calculator với: 3 tín chỉ × 3.0, 3 tín chỉ × 4.0, 2 tín chỉ × 2.5; kết quả phải là 3.25.
 - Dùng Final Grade: quá trình 7.5, cuối kỳ 60%, mục tiêu 8.0; kết quả 8.33.
 - Kiểm tra `/robots.txt` và `/sitemap-index.xml` dùng đúng domain.

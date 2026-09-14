@@ -2,6 +2,33 @@
 
 Ngày kiểm thử: 14/09/2026.
 
+## Production smoke test — 14/09/2026
+
+URL: `https://cam-nang-sinh-vien.nguyenducbang-uit.workers.dev/`
+
+- Cloudflare Workers Builds hoàn tất đủ các bước initialize, clone, install, build và deploy.
+- Trang chủ trả `200 OK`; canonical và JSON-LD dùng đúng URL production.
+- `robots.txt` trả `200 OK` và trỏ đúng `sitemap-index.xml` production.
+- `sitemap-index.xml` trả `200 OK` và trỏ đúng `sitemap-0.xml` production.
+- URL không tồn tại trả `404 Not Found` và hiển thị trang 404 tùy chỉnh.
+- Security headers có `x-content-type-options`, `x-frame-options`, `referrer-policy`, `permissions-policy` và `cross-origin-opener-policy`.
+- GPA Calculator với 3 tín chỉ × 3.0, 3 tín chỉ × 4.0, 2 tín chỉ × 2.5 trả `3.25`.
+- Final Grade Calculator với điểm quá trình 7.5, trọng số cuối kỳ 60% và mục tiêu 8.0 trả `8.33`.
+- Giao diện production tải đúng CSS, điều hướng và nội dung tiếng Việt.
+
+## Local validation — kiến trúc 10 trụ cột
+
+- `npm run validate`: đạt, `astro check` có 0 error, 0 warning, 0 hint.
+- Production build sau khi bổ sung nội dung sinh 49 trang tĩnh: 27 bài, đủ 10 route `/chu-de/[slug]/`, các tool và route nền tảng.
+- Trang chủ và mega menu đều lấy đủ 10 trụ cột từ `src/data/categories.ts`.
+- Bộ lọc Cẩm nang có đủ 10 giá trị `data-filter`; card bài viết dùng `data-category` mới.
+- 13 route đại diện trên local trả `200`: trang chủ, Cẩm nang, bài GPA và đủ 10 trang trụ cột.
+- Bài GPA có breadcrumb trỏ về `hoc-tap-thi-cu`, Open Graph loại `article`, Twitter metadata và JSON-LD `articleSection`.
+- Ba URL trụ cột cũ có redirect `301` trong `public/_redirects` để Cloudflare giữ liên kết sau lần deploy kế tiếp.
+- Đã bổ sung 7 bài mẫu để mỗi trụ cột có ít nhất 2 bài. Phân bổ hiện tại: Học tập & thi cử 5; Kỹ năng máy tính 5; Cuộc sống sinh viên 3; bảy trụ cột còn lại 2 bài mỗi trụ cột.
+- Cả 7 route bài mẫu trả `200` trên local và có JSON-LD `articleSection`.
+- Tab local đã mở tại `http://127.0.0.1:4321/cam-nang/`. Quyền điều khiển trình duyệt bị hệ thống từ chối ở lượt kiểm tra này nên chưa thể ghi nhận click/resize tự động cho giao diện mới.
+
 ## Automated validation
 
 - `astro check`: 0 error, 0 warning, 0 hint.
@@ -10,7 +37,7 @@ Ngày kiểm thử: 14/09/2026.
 - Internal link scan trên output: 0 link nội bộ gãy.
 - `wrangler deploy --dry-run`: đọc thành công 77 static asset, không có binding.
 
-## Browser QA như người dùng thật
+## Browser QA MVP trước khi chuyển sang 10 trụ cột
 
 Đã kiểm tra trên Chrome ở desktop và viewport mobile 390 × 800:
 
@@ -32,9 +59,9 @@ Ngày kiểm thử: 14/09/2026.
 1. Pomodoro có thể giữ thời lượng cũ nếu người dùng sửa input rồi bấm Start ngay. Đã chuyển cập nhật thời lượng sang sự kiện `input` và kiểm tra lại 01:00.
 2. Bảng GPA có overflow ngang ở 390px. Đã chuyển mỗi dòng thành card trên màn hình nhỏ và xác nhận `scrollWidth` không vượt chiều rộng document.
 
-## Chưa kiểm thử production
+## Trạng thái production
 
-Chưa deploy vì chưa có Cloudflare account/Worker target và domain production được xác nhận. Cần chạy smoke test trong `docs/DEPLOYMENT.md` sau khi kết nối.
+Production hiện tại vẫn là bản trước khi chuyển sang 10 trụ cột. Không push hoặc deploy thay đổi giao diện trong lượt này; chỉ deploy sau khi giao diện local được duyệt.
 
 
 test dong moi

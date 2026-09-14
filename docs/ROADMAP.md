@@ -2,9 +2,11 @@
 
 ## Trạng thái hiện tại
 
-**Phase 1 — MVP đã hoàn thành local, chờ deploy production.** Kiến trúc đã chốt ngày 14/09/2026: Astro + Markdown/MDX + Cloudflare Workers Static Assets, không backend/database/login. Validation, route scan, internal-link scan và browser QA đã đạt; xem `docs/TESTING.md`.
+**Phase 1 — MVP đã deploy production.** Kiến trúc đã chốt ngày 14/09/2026: Astro + Markdown/MDX + Cloudflare Workers Static Assets, không backend/database/login. Validation, route scan, internal-link scan, browser QA local và production smoke test đã đạt; xem `docs/TESTING.md`.
 
-Repository Git local đã được khởi tạo với nhánh `main` và kết nối `origin` tới `https://github.com/sunny251010/camnangsinhvien.git`. Chưa tạo commit, chưa push và chưa deploy production.
+**Phase 1A — kiến trúc 10 trụ cột đã được duyệt local.** Mô hình ba pillar đã được thay bằng mười trụ cột dùng chung một nguồn `src/data/categories.ts`. Đã bổ sung 7 bài mẫu ngắn để mọi trụ cột có ít nhất 2 bài; website hiện có 27 bài. Chưa push hoặc deploy thay đổi này lên production.
+
+Repository đã chuyển ownership sang `ducbang02/camnangsinhvien`. Cloudflare Workers Builds theo dõi nhánh `main` và deploy Worker `cam-nang-sinh-vien` tại `https://cam-nang-sinh-vien.nguyenducbang-uit.workers.dev/`. Local `origin` vẫn đang dùng URL cũ của `sunny251010`; GitHub có redirect nhưng cần đổi sang URL owner mới trước lần push tiếp theo.
 
 ## Nguyên tắc ưu tiên
 
@@ -17,8 +19,8 @@ Repository Git local đã được khởi tạo với nhánh `main` và kết n�
 
 Mục tiêu: một hub có thể xuất bản thật, không phải landing page minh họa.
 
-- Ba pillar page, hub Sinh viên IT và danh mục bài viết.
-- 20 bài mở đầu tạo thành các đường đi hoàn chỉnh, ưu tiên GPA, phương pháp học, kỹ năng số/AI, năm nhất/chi tiêu và nền tảng IT.
+- Mười trang trụ cột, mega menu, hub Sinh viên IT và danh mục bài viết.
+- 20 bài mở đầu và 7 bài mẫu bổ sung tạo thành các đường đi hoàn chỉnh, ưu tiên GPA, phương pháp học, kỹ năng số/AI, năm nhất/chi tiêu và nền tảng IT.
 - 5 mini tool: GPA, điểm cuối kỳ, Pomodoro, chia nhóm và ngân sách tháng.
 - Content schema, article layout, nguồn tham khảo, internal link, sitemap, robots và trang 404.
 - Mobile-first, keyboard-accessible và browser QA.
@@ -45,7 +47,7 @@ Tiêu chí hoàn thành:
 
 ## Phase 3 — Scale content (P1/P2)
 
-- Mở rộng cluster thắng thay vì mở thêm pillar.
+- Mở rộng cluster thắng trong mười trụ cột đã chốt thay vì tạo thêm trụ cột tùy ý.
 - Bổ sung roadmap tương tác cho Sinh viên IT và kỹ năng số.
 - Xây kho tài nguyên có tiêu chí chọn, ngày kiểm tra và nguồn rõ ràng.
 - Content QA: độ chính xác, trùng intent, orphan page, liên kết gãy, nội dung lỗi thời.
@@ -86,7 +88,7 @@ Chỉ bắt đầu khi có returning users và nhu cầu đồng bộ được c
 6. Ôn thi trong 7 ngày — intent cấp bách, dùng lại planner.
 7. Dùng AI để học mà không copy đáp án — định vị đạo đức và khác biệt.
 8. Kiểm chứng câu trả lời của AI — nối research/fact-checking.
-9. Kỹ năng máy tính cần biết trước tốt nghiệp — pillar gateway.
+9. Kỹ năng máy tính cần biết trước tốt nghiệp — bài gateway của trụ cột Kỹ năng máy tính.
 10. Quản lý file và đặt tên file — pain point phổ quát, dễ hành động.
 11. Bảo vệ tài khoản sinh viên — giá trị cao, không phụ thuộc ngành.
 12. Gõ 10 ngón bắt đầu từ đâu — chuẩn bị cluster Typing Trainer P1.

@@ -1,7 +1,7 @@
 ---
 title: "12 kỹ năng máy tính sinh viên nên biết trước khi tốt nghiệp"
 description: "Danh sách kỹ năng số nền tảng theo công việc thực tế: quản lý file, tìm kiếm, tài liệu, bảng tính, bảo mật và tự xử lý lỗi."
-pillar: ky-nang-so
+category: ky-nang-may-tinh
 topic: Nền tảng số
 tags: [kỹ năng máy tính, kỹ năng số, tốt nghiệp, phần mềm]
 publishedDate: 2026-09-06

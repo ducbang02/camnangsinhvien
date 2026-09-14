@@ -1,7 +1,7 @@
 ---
 title: "Lập ngân sách tháng cho sinh viên bằng số tiền đang có"
 description: "Cách tách chi phí bắt buộc, quỹ linh hoạt và khoản dự phòng để biết mỗi tuần có thể tiêu bao nhiêu mà không tự lừa mình."
-pillar: cuoc-song
+category: cuoc-song-sinh-vien
 topic: Chi tiêu
 tags: [ngân sách, chi tiêu, tiết kiệm, sinh viên]
 publishedDate: 2026-09-01

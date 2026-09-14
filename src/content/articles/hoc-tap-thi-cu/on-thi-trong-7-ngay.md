@@ -1,7 +1,7 @@
 ---
 title: "Ôn thi trong 7 ngày: kế hoạch cứu nguy không học xuyên đêm"
 description: "Cách chia bảy ngày ôn thi theo mức ưu tiên, tự kiểm tra và đề thử để tận dụng thời gian còn lại mà không học dàn trải."
-pillar: hoc-tap
+category: hoc-tap-thi-cu
 topic: GPA & điểm số
 tags: [ôn thi, 7 ngày, kế hoạch, kỳ thi]
 publishedDate: 2026-09-09

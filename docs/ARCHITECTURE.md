@@ -30,11 +30,20 @@ Menu cấp một giữ ở mức sáu mục:
 5. Lộ trình
 6. Giới thiệu
 
-Ba trụ cột nội dung:
+Mười trụ cột nội dung cố định:
 
-1. **Học tập & phát triển bản thân**: phương pháp học, quản lý thời gian, research, tiếng Anh học thuật và kỹ năng giao tiếp trong môi trường đại học.
-2. **Kỹ năng số & công cụ**: máy tính, phần mềm, an toàn số, AI và workflow số. AI là lớp nội dung xuyên suốt, không tách thành pillar riêng ở V1.
-3. **Cuộc sống sinh viên**: năm nhất, ở trọ, chi tiêu, đồ dùng, thực tập và chuẩn bị đi làm.
+1. Học tập & thi cử
+2. Kỹ năng máy tính
+3. Kỹ năng mềm & giao tiếp
+4. Tiếng Anh
+5. Quản lý bản thân
+6. Cuộc sống sinh viên
+7. Nghiên cứu & xử lý thông tin
+8. Nghề nghiệp & chuẩn bị đi làm
+9. AI cho sinh viên
+10. Công cụ & phần mềm hữu ích
+
+Nguồn dữ liệu chuẩn của trụ cột là `src/data/categories.ts`. Header mega menu, footer, trang chủ, bộ lọc, trang chủ đề, metadata và schema bài viết đều đọc từ nguồn này; không tạo danh sách trụ cột riêng trong component.
 
 `Sinh viên IT` là một hub chuyên sâu dùng lại nội dung chung, sau đó phân nhánh theo nền tảng và hướng nghề nghiệp; không sao chép bài chỉ để thêm cụm “cho sinh viên IT”.
 
@@ -42,10 +51,10 @@ Ba trụ cột nội dung:
 
 | Route | Vai trò |
 | --- | --- |
-| `/` | Điểm vào theo nhu cầu và ba trụ cột |
+| `/` | Điểm vào theo nhu cầu và mười trụ cột |
 | `/cam-nang/` | Danh mục toàn bộ bài viết, có lọc client-side |
 | `/cam-nang/[slug]/` | Trang bài viết chuẩn hóa |
-| `/chu-de/[slug]/` | Pillar page và cụm nội dung |
+| `/chu-de/[slug]/` | Trang trụ cột và cụm nội dung |
 | `/cong-cu/` | Danh mục mini tool |
 | `/cong-cu/tinh-gpa/` | GPA Calculator |
 | `/cong-cu/diem-cuoi-ky/` | Final Grade Calculator |
@@ -102,6 +111,6 @@ Mỗi bài có tối đa ba CTA có ích: mở tool, tải/check checklist, đ�
 ## 10. Ranh giới mở rộng
 
 - Chỉ cân nhắc D1/KV khi có một use case cần đồng bộ đa thiết bị hoặc dữ liệu cộng đồng đã được xác thực.
-- Chỉ làm admin UI khi quy trình Markdown + Git trở thành bottleneck đo được.
+- CMS local chỉ được thêm khi quy trình Markdown + Git trở thành bottleneck đo được; CMS không được xuất hiện trong production build.
 - Không đặt LMS logic trong lớp giao diện; nếu có khóa học sau này, tách thành module/dịch vụ riêng.
 - Không tạo app mobile hoặc tài khoản chỉ để tăng “độ lớn” của sản phẩm.

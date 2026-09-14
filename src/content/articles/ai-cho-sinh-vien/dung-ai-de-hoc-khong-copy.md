@@ -1,7 +1,7 @@
 ---
 title: "Dùng AI để học mà không biến thành copy đáp án"
 description: "Một workflow dùng AI để giải thích, đặt câu hỏi và phản hồi bài làm trong khi bạn vẫn là người tư duy và chịu trách nhiệm."
-pillar: ky-nang-so
+category: ai-cho-sinh-vien
 topic: AI cho sinh viên
 tags: [AI, ChatGPT, học tập, academic integrity]
 publishedDate: 2026-09-08

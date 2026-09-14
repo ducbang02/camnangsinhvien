@@ -1,7 +1,7 @@
 ---
 title: "Project đầu tiên cho sinh viên IT: nhỏ nhưng phải chạy được"
 description: "Cách chọn phạm vi, viết yêu cầu, chia milestone, test và README để project đầu tiên chứng minh tư duy thay vì chỉ clone tutorial."
-pillar: ky-nang-so
+category: nghe-nghiep
 topic: Sinh viên IT
 tags: [project IT, portfolio, GitHub, lập trình, internship]
 publishedDate: 2026-08-26

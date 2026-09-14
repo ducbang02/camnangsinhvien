@@ -11,7 +11,7 @@
 
 ### Điểm yếu
 
-- Phạm vi ý tưởng ban đầu quá rộng; mười chuyên mục ngang hàng sẽ làm loãng topical authority.
+- Mười trụ cột cần được phát triển theo cluster có ưu tiên; không chia đều số bài chỉ để lấp danh mục.
 - Một người khó duy trì bài hướng dẫn phần mềm nếu không có lịch rà soát.
 - Nội dung học tập/self-help dễ chung chung nếu thiếu tình huống, mẫu và bằng chứng.
 
@@ -32,42 +32,22 @@
 
 **Cẩm nang sinh viên là nơi biến một vấn đề ở đại học thành bước làm cụ thể: hiểu đúng, dùng công cụ, hoàn thành việc và biết nên học gì tiếp theo.** Website ưu tiên sinh viên Việt Nam nói chung, với một nhánh sâu cho sinh viên IT.
 
-## 3. Ba trụ cột
+## 3. Mười trụ cột
 
-### Học tập & phát triển bản thân
+| Trụ cột | Phạm vi chính | Cụm ưu tiên ban đầu |
+| --- | --- | --- |
+| Học tập & thi cử | Điểm số và phương pháp học | GPA, điểm cuối kỳ, Active Recall, ôn thi |
+| Kỹ năng máy tính | Năng lực sử dụng thiết bị | File/folder, bàn phím, bảo mật, xử lý lỗi |
+| Kỹ năng mềm & giao tiếp | Giao tiếp trong môi trường đại học | Email, teamwork, thuyết trình, xử lý mâu thuẫn |
+| Tiếng Anh | Tiếng Anh phục vụ học và việc | Đọc tài liệu, viết, thuyết trình, phỏng vấn |
+| Quản lý bản thân | Thời gian, năng lượng và thói quen | Semester planning, tập trung, trì hoãn |
+| Cuộc sống sinh viên | Quyết định đời sống và tài chính | Năm nhất, ở trọ, ngân sách, đồ dùng |
+| Nghiên cứu & xử lý thông tin | Tìm và tổng hợp bằng chứng | Tìm nguồn, fact-check, ghi chú, Zotero |
+| Nghề nghiệp & chuẩn bị đi làm | Chuyển từ học sang làm | Project, CV, portfolio, internship |
+| AI cho sinh viên | AI-assisted learning có trách nhiệm | Prompt, kiểm chứng, academic integrity |
+| Công cụ & phần mềm hữu ích | Chọn và thiết lập workflow | Office, PDF, cloud, note-taking, phần mềm miễn phí |
 
-Mục tiêu: giúp sinh viên học chủ động và quản lý được học kỳ.
-
-Các cluster: GPA/thi cử, phương pháp học, kế hoạch–tập trung, research, giao tiếp học thuật, tiếng Anh phục vụ học tập.
-
-Topic tiêu biểu: tính GPA, điểm cuối kỳ, kéo GPA, Active Recall, Spaced Repetition, ôn thi 7 ngày, đọc slide, môn khó, semester planning, deadline, trì hoãn, smartphone distraction, email giảng viên, teamwork, đọc paper, Zotero, fact-check, ghi chú, tiếng Anh tài liệu, AI trong học tập.
-
-- SEO mạnh: GPA, điểm cuối kỳ, ôn thi, email giảng viên, Zotero.
-- Tool: GPA, final grade, Pomodoro, study planner.
-- Video phù hợp: demo phương pháp học, Zotero, note-taking.
-- Affiliate: rất hạn chế; chỉ ở tài nguyên/thiết bị thực sự liên quan.
-
-### Kỹ năng số & công cụ
-
-Mục tiêu: giúp sinh viên làm việc số an toàn, nhanh và có khả năng tự xử lý vấn đề.
-
-Topic tiêu biểu: gõ 10 ngón, phím tắt, file/folder, backup, cloud storage, password manager, bảo mật tài khoản, Word, Excel, PowerPoint, PDF, tìm kiếm Google, browser/bookmark, VS Code, Obsidian, Anki, phần mềm miễn phí, prompt, AI hallucination, academic integrity.
-
-- SEO mạnh: hướng dẫn cài/khắc phục lỗi, X vs Y, phần mềm miễn phí, gõ 10 ngón.
-- Tool: Typing Test/Trainer, Computer Skill Test, AI Skill Test.
-- Video phù hợp: mọi bài có thao tác phần mềm thay đổi theo phiên bản.
-- Affiliate: phần mềm trả phí chỉ khi đã so sánh rõ; phụ kiện khi gắn với use case.
-
-### Cuộc sống sinh viên
-
-Mục tiêu: giảm các quyết định tốn tiền/thời gian và giúp sinh viên chuyển tiếp qua các mốc năm nhất–ở trọ–thực tập.
-
-Topic tiêu biểu: checklist năm nhất, nhập học, ở trọ, tiền cọc, ngân sách, tiết kiệm, góc học tập, đồ dùng thiết yếu, laptop, phụ kiện, làm thêm, cân bằng học/làm, CV chưa có kinh nghiệm, internship, phỏng vấn, portfolio, LinkedIn, đọc JD, networking, chuẩn bị tốt nghiệp.
-
-- SEO mạnh: năm nhất cần gì, ở trọ cần gì, ngân sách, CV/internship, laptop.
-- Tool: ngân sách, chia nhóm, internship readiness.
-- Video phù hợp: setup phòng/góc học, kiểm tra laptop, mock interview.
-- Affiliate mạnh nhưng phải chọn lọc: đồ dùng ở trọ, bàn học, laptop/phụ kiện.
+Mười trụ cột là khung điều hướng cố định, không phải quota bài viết. Nội dung vẫn được ưu tiên theo search intent, nhu cầu thật và khả năng tạo cluster có chiều sâu.
 
 ## 4. Sinh viên IT
 
@@ -126,10 +106,10 @@ Flashcard, Career Quiz và AI Skill Test chưa ưu tiên vì dễ tạo cảm gi
 
 ## 7. Internal link
 
-- Mỗi bài link lên đúng một pillar page.
+- Mỗi bài link lên đúng một trang trụ cột.
 - Mỗi bài có 2–4 link theo ngữ cảnh: prerequisite, công cụ, bước tiếp theo, bài cùng cluster.
 - Tool luôn link ngược về bài giải thích công thức/phương pháp.
-- Pillar page không chỉ là danh sách; phải giải thích thứ tự đọc.
+- Trang trụ cột không chỉ là danh sách; phải giải thích thứ tự đọc.
 - Hub IT link sang bài chung như quản lý file/AI an toàn thay vì viết bản sao.
 - Kiểm tra orphan page và broken link trong mỗi chu kỳ xuất bản.
 
@@ -152,7 +132,7 @@ Các tín hiệu được dùng để **xếp ưu tiên**, không coi lượt t�
 
 - Thảo luận công khai của sinh viên lặp lại lo lắng về GPA, thiếu project, chọn laptop, định hướng cuối khóa và chi phí.
 - Nghiên cứu 2025 về năng lực số của 600 sinh viên nhấn mạnh thực hành sáng tạo nội dung số, kỹ năng nghề nghiệp và công nghệ mới.
-- Khung phổ cập kỹ năng số cho sinh viên của Bộ GD&ĐT củng cố việc đặt năng lực số/AI trong pillar chính.
+- Khung phổ cập kỹ năng số cho sinh viên của Bộ GD&ĐT củng cố việc duy trì các trụ cột Kỹ năng máy tính, AI và Công cụ/phần mềm.
 - Nội dung sẽ chỉ biến thành hướng dẫn sau khi công thức/quy trình được đối chiếu nguồn chính thức; đặc biệt quy chế GPA phải luôn nhắc người dùng kiểm tra trường của mình.
 
 Nguồn khởi đầu được lưu trong `docs/RESEARCH_SOURCES.md`; mỗi bài còn có danh sách nguồn riêng khi phù hợp.

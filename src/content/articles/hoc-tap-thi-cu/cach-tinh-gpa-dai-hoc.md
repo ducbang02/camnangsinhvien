@@ -1,7 +1,7 @@
 ---
 title: "Cách tính GPA đại học theo tín chỉ, không nhầm hệ số"
 description: "Hiểu công thức GPA hệ 4, cách xử lý số tín chỉ và những trường hợp phải kiểm tra lại quy chế của trường trước khi tính."
-pillar: hoc-tap
+category: hoc-tap-thi-cu
 topic: GPA & điểm số
 tags: [GPA, tín chỉ, điểm đại học, xếp loại]
 publishedDate: 2026-09-14

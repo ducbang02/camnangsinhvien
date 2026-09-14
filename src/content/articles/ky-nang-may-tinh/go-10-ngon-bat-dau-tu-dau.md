@@ -1,7 +1,7 @@
 ---
 title: "Gõ 10 ngón bắt đầu từ đâu? Lộ trình 15 phút mỗi ngày"
 description: "Lộ trình luyện độ chính xác, vị trí ngón và tốc độ gõ trong các phiên ngắn, kèm cách đo tiến bộ mà không chạy theo WPM."
-pillar: ky-nang-so
+category: ky-nang-may-tinh
 topic: Nền tảng số
 tags: [gõ 10 ngón, typing, WPM, bàn phím]
 publishedDate: 2026-09-03

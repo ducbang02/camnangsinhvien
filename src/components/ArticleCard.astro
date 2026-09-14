@@ -1,6 +1,6 @@
 ---
 import type { CollectionEntry } from 'astro:content';
-import { articleSlug, formatDate, getPillar } from '../data/site';
+import { articleSlug, formatDate, getCategory } from '../data/site';
 import Icon from './Icon.astro';
 
 interface Props {
@@ -9,12 +9,12 @@ interface Props {
 }
 
 const { article, compact = false } = Astro.props;
-const pillar = getPillar(article.data.pillar);
+const category = getCategory(article.data.category);
 ---
 
-<article class:list={['article-card', { compact }]} data-pillar={article.data.pillar} data-search={`${article.data.title} ${article.data.description} ${article.data.tags.join(' ')}`.toLowerCase()}>
+<article class:list={['article-card', { compact }]} data-category={article.data.category} data-search={`${article.data.title} ${article.data.description} ${article.data.tags.join(' ')}`.toLowerCase()}>
   <div class="article-meta">
-    <a class={`topic-label accent-${pillar?.accent}`} href={`/chu-de/${article.data.pillar}/`}>{pillar?.shortName}</a>
+    <a class={`topic-label accent-${category?.accent}`} href={`/chu-de/${article.data.category}/`}>{category?.shortName}</a>
     <span>{article.data.readingMinutes ?? 6} phút đọc</span>
   </div>
   <h3><a href={`/cam-nang/${articleSlug(article.id)}/`}>{article.data.title}</a></h3>

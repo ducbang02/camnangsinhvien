@@ -1,7 +1,7 @@
 ---
 title: "Điểm cuối kỳ cần bao nhiêu để đạt mục tiêu môn học?"
 description: "Công thức tính ngược điểm thi cuối kỳ từ điểm quá trình, trọng số và mục tiêu — kèm ví dụ để tránh nhầm phần trăm."
-pillar: hoc-tap
+category: hoc-tap-thi-cu
 topic: GPA & điểm số
 tags: [điểm cuối kỳ, trọng số, điểm quá trình, thi học kỳ]
 publishedDate: 2026-09-13

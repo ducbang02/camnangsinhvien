@@ -5,11 +5,14 @@ import { spawn } from 'node:child_process';
 import { createServer as createViteServer } from 'vite';
 import { categories } from '../src/data/categories.ts';
 import { ArticleStoreError, createArticleStore } from './lib/articles.mjs';
+import { createMediaStore, readImageBody } from './lib/media.mjs';
+import { createPublisher } from './lib/publish.mjs';
 
 const cmsDirectory = path.dirname(fileURLToPath(import.meta.url));
 const repositoryRoot = path.resolve(cmsDirectory, '..');
 const clientRoot = path.join(cmsDirectory, 'client');
 const articlesRoot = path.join(repositoryRoot, 'src', 'content', 'articles');
+const publicRoot = path.join(repositoryRoot, 'public');
 const host = '127.0.0.1';
 const port = Number(process.env.CMS_PORT || 4310);
 const astroUrl = process.env.ASTRO_URL || 'http://127.0.0.1:4321';
@@ -18,6 +21,8 @@ const allowedOrigins = new Set([
   `http://localhost:${port}`,
 ]);
 const store = createArticleStore({ root: articlesRoot, categories });
+const mediaStore = createMediaStore({ publicRoot });
+const publisher = createPublisher({ repositoryRoot, store });
 
 let astroProcess;
 
@@ -55,7 +60,7 @@ function verifyLocalRequest(request) {
 async function handleApi(request, response, url) {
   verifyLocalRequest(request);
   if (request.method === 'GET' && url.pathname === '/api/health') {
-    sendJson(response, 200, { ok: true, astroUrl });
+    sendJson(response, 200, { ok: true, astroUrl, phase: 2 });
     return;
   }
   if (request.method === 'GET' && url.pathname === '/api/categories') {
@@ -77,6 +82,27 @@ async function handleApi(request, response, url) {
       article,
       message: article.metadata.status === 'draft' ? 'Đã lưu nháp vào repository local.' : 'Đã lưu bài ở trạng thái Published trên local.',
     });
+    return;
+  }
+  if (request.method === 'POST' && url.pathname === '/api/media/upload') {
+    const originalName = decodeURIComponent(request.headers['x-file-name'] || 'anh-bai-viet');
+    const media = await mediaStore.upload({
+      slug: url.searchParams.get('slug'),
+      originalName,
+      mimeType: String(request.headers['content-type'] || '').split(';')[0].trim().toLowerCase(),
+      buffer: await readImageBody(request),
+    });
+    sendJson(response, 201, { media, message: 'Đã lưu ảnh vào thư mục media của bài viết.' });
+    return;
+  }
+  if (request.method === 'POST' && url.pathname === '/api/publish/prepare') {
+    const plan = await publisher.prepare(await readJson(request));
+    sendJson(response, 200, { plan });
+    return;
+  }
+  if (request.method === 'POST' && url.pathname === '/api/publish/confirm') {
+    const result = await publisher.confirm(await readJson(request));
+    sendJson(response, 200, { result });
     return;
   }
   sendJson(response, 404, { error: 'API không tồn tại.', code: 'NOT_FOUND' });
@@ -124,7 +150,7 @@ const server = createServer(async (request, response) => {
     try {
       await handleApi(request, response, url);
     } catch (error) {
-      const known = error instanceof ArticleStoreError;
+      const known = error instanceof ArticleStoreError || Number.isInteger(error?.status);
       if (!known) console.error(error);
       sendJson(response, known ? error.status : 500, {
         error: known ? error.message : 'CMS gặp lỗi khi xử lý yêu cầu.',

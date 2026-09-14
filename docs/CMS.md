@@ -2,9 +2,9 @@
 
 ## Phạm vi hiện tại
 
-CMS Phase 1 là công cụ biên tập chạy trên máy người vận hành. Công cụ chỉ tạo và sửa bài trong `src/content/articles/`; không có database, tài khoản, API production hay dịch vụ CMS bên ngoài. Thư mục `cms/` không được Astro import nên không xuất hiện trong `dist/`.
+CMS Phase 2 là công cụ biên tập và xuất bản chạy trên máy người vận hành. Công cụ tạo/sửa bài trong `src/content/articles/`, lưu media trong `public/media/articles/` và chỉ gọi Git sau bước xác nhận; không có database, tài khoản, API production hay dịch vụ CMS bên ngoài. Thư mục `cms/` không được Astro import nên không xuất hiện trong `dist/`.
 
-Phase 1 hỗ trợ:
+CMS hỗ trợ:
 
 - danh sách, tìm kiếm và lọc bài theo 10 trụ cột;
 - tạo hoặc mở bài Markdown/MDX hiện có;
@@ -13,8 +13,11 @@ Phase 1 hỗ trợ:
 - làm sạch style/font thừa khi dán từ Word hoặc Google Docs;
 - lưu local với kiểm tra dữ liệu, chống path traversal, chống trùng slug và cảnh báo file bị thay đổi bên ngoài;
 - preview bài draft bằng chính route và layout Astro thật.
+- upload thumbnail hoặc ảnh nội dung định dạng JPEG, PNG, GIF, WebP, AVIF, tối đa 10 MB;
+- alt text bắt buộc, caption tùy chọn và block YouTube từ URL;
+- xuất bản hai bước với validation, kiểm tra Git, danh sách file, commit và push branch hiện tại.
 
-Chưa có trong Phase 1: upload/chèn ảnh, caption ảnh, YouTube block và quy trình Git commit/push. Nút `Xuất bản · Phase 2` được khóa có chủ đích.
+CMS không tối ưu/chuyển đổi ảnh tự động; người vận hành nên ưu tiên WebP/AVIF đã nén trước khi upload.
 
 ## Cách chạy
 
@@ -38,7 +41,19 @@ Lệnh CMS tự dùng Astro server đang chạy ở cổng `4321`; nếu chưa c
 - `Lưu nháp` luôn đặt `draft: true`; `Lưu thay đổi` giữ trạng thái đang chọn.
 - Preview luôn lưu local trước, sau đó mở `/cam-nang/<slug>/` trên Astro dev server.
 - Astro dev hiển thị draft để preview; production build vẫn loại `draft: true`.
-- CMS không chạy Git trong Phase 1.
+- Ảnh nằm tại `public/media/articles/<slug>/`, không dùng base64 trong Markdown.
+- `Lưu nháp`, `Lưu thay đổi` và `Preview` không commit hoặc push.
+
+## Quy trình Xuất bản
+
+1. Nhấn `Xuất bản`; CMS ép trạng thái bài hiện tại thành Published và validate dữ liệu.
+2. CMS dừng nếu Git có staged file, detached HEAD, merge/rebase dở dang hoặc thay đổi không thuộc bài hiện tại.
+3. CMS chạy `npm run validate` và hiển thị branch, remote cùng đúng danh sách file sắp commit.
+4. Kiểm tra/sửa commit message rồi nhấn `Commit và push`.
+5. CMS stage đúng danh sách đã hiển thị, kiểm tra lại snapshot, commit và chạy `git push origin <branch>`; không force push.
+6. Cloudflare chỉ auto deploy production khi branch được push là branch đang được Cloudflare theo dõi (`main` ở cấu hình hiện tại).
+
+Nếu push thất bại sau khi commit, commit vẫn nằm an toàn trên máy. Kiểm tra kết nối/remote rồi chạy `git push origin <branch>` thủ công; CMS không tự hoàn tác commit và không force push.
 
 ## Metadata CMS
 
@@ -58,7 +73,7 @@ npm run validate
 
 `test:cms` chỉ tạo dữ liệu trong thư mục tạm của hệ điều hành, không sửa bài thật. Test bao phủ tạo/đọc/cập nhật Markdown, table/checklist và khóa ghi khi file bị thay đổi ngoài CMS.
 
-## Checklist thủ công Phase 1
+## Checklist thủ công
 
 - Mở danh sách và xác nhận đủ bài, đúng category/status.
 - Search theo một phần tiêu đề; lọc lần lượt một category.
@@ -71,3 +86,8 @@ npm run validate
 - Sửa file cùng lúc ngoài CMS rồi lưu để xác nhận cảnh báo version conflict.
 - Bấm Preview và xác nhận bài draft dùng đúng header, breadcrumb, article layout, related articles và footer của website.
 - Chạy production build và xác nhận route draft không có trong `dist/cam-nang/`.
+- Upload thumbnail, nhập alt rồi preview.
+- Chèn ảnh nội dung có alt/caption và xác nhận file nằm đúng thư mục theo slug.
+- Chèn YouTube bằng URL `watch`, `youtu.be` hoặc `shorts` và kiểm tra tỷ lệ 16:9.
+- Khi repository có file khác đang sửa, nhấn Xuất bản và xác nhận CMS dừng trước khi stage.
+- Trên repository sạch, kiểm tra danh sách file trong hộp xác nhận trước khi commit/push.

@@ -38,4 +38,5 @@ Sau khi code:
 - Hướng dẫn tôi tự active (plugins hoặc cái khác)trên wp-admin nếu có
 - Nếu thay đổi có liên quan đến deploy, theme, plugin hoặc cấu hình môi trường, sau khi hoàn tất phải hướng dẫn tôi thao tác tương ứng trên hosting/production, gồm deploy, active và smoke test nếu cần
 - Tự động cập nhật thêm các file trong folder docs khi thay đổi
-- gợi ý commit github
+- luôn gợi ý câu lệnh `git commit` cụ thể bằng tiếng Việt để người dùng có thể sao chép và chạy ngay; không tự commit/push nếu prompt không yêu cầu
+- luôn đề xuất 1–3 việc nên làm tiếp theo cho project, sắp theo mức ưu tiên và bám sát roadmap hiện tại

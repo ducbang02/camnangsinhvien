@@ -9,7 +9,7 @@
   "scripts": {
     "dev": "astro dev",
     "cms": "node cms/server.mjs",
-    "test:cms": "node --test cms/test/articles.test.mjs",
+    "test:cms": "node --test cms/test/articles.test.mjs cms/test/media.test.mjs cms/test/publish.test.mjs",
     "build": "astro build",
     "preview": "astro preview",
     "check": "astro check",

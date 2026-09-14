@@ -1,4 +1,4 @@
-import { Editor } from '@tiptap/core';
+import { Editor, Node } from '@tiptap/core';
 import StarterKit from '@tiptap/starter-kit';
 import { TableKit } from '@tiptap/extension-table';
 import { TaskItem, TaskList } from '@tiptap/extension-list';
@@ -21,6 +21,10 @@ const seoDescriptionInput = document.querySelector('#seoDescription');
 const saveState = document.querySelector('#save-state');
 const validationSummary = document.querySelector('#validation-summary');
 const toast = document.querySelector('#toast');
+const imageDialog = document.querySelector('#image-dialog');
+const imageForm = document.querySelector('#image-form');
+const publishDialog = document.querySelector('#publish-dialog');
+const publishForm = document.querySelector('#publish-form');
 
 let categories = [];
 let articles = [];
@@ -29,6 +33,56 @@ let isDirty = false;
 let isHydrating = false;
 let slugWasEdited = false;
 let toastTimer;
+let publishPlan = null;
+
+const ImageFigure = Node.create({
+  name: 'imageFigure',
+  group: 'block',
+  atom: true,
+  draggable: true,
+  addAttributes() {
+    return {
+      src: { default: '', parseHTML: (element) => element.querySelector('img')?.getAttribute('src') ?? '' },
+      alt: { default: '', parseHTML: (element) => element.querySelector('img')?.getAttribute('alt') ?? '' },
+      caption: { default: '', parseHTML: (element) => element.querySelector('figcaption')?.textContent?.trim() ?? '' },
+    };
+  },
+  parseHTML() {
+    return [{ tag: 'figure[data-cms-image]' }, { tag: 'figure.article-figure' }];
+  },
+  renderHTML({ node }) {
+    return ['figure', { class: 'article-figure', 'data-cms-image': '' },
+      ['img', { src: node.attrs.src, alt: node.attrs.alt, loading: 'lazy' }],
+      ['figcaption', {}, node.attrs.caption],
+    ];
+  },
+});
+
+const YoutubeEmbed = Node.create({
+  name: 'youtubeEmbed',
+  group: 'block',
+  atom: true,
+  draggable: true,
+  addAttributes() {
+    return {
+      videoId: { default: '', parseHTML: (element) => element.getAttribute('data-youtube-id') ?? '' },
+    };
+  },
+  parseHTML() {
+    return [{ tag: 'div[data-youtube-id]' }];
+  },
+  renderHTML({ node }) {
+    return ['div', { class: 'video-embed', 'data-youtube-id': node.attrs.videoId },
+      ['iframe', {
+        src: `https://www.youtube-nocookie.com/embed/${node.attrs.videoId}`,
+        title: 'Video YouTube',
+        loading: 'lazy',
+        allow: 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share',
+        allowfullscreen: 'true',
+      }],
+    ];
+  },
+});
 
 function cleanPastedHtml(html) {
   const documentFragment = new DOMParser().parseFromString(html, 'text/html');
@@ -74,6 +128,8 @@ const editor = new Editor({
     TableKit.configure({ table: { resizable: true } }),
     TaskList,
     TaskItem.configure({ nested: true }),
+    ImageFigure,
+    YoutubeEmbed,
   ],
   content: '<p>Bắt đầu viết nội dung tại đây…</p>',
   editorProps: {
@@ -107,6 +163,56 @@ async function api(path, options) {
   return payload;
 }
 
+function articlePayload({ forcePublished = false } = {}) {
+  const metadata = metadataFromForm();
+  if (forcePublished) metadata.status = 'published';
+  return {
+    originalId: currentArticle?.id,
+    version: currentArticle?.version,
+    extension: currentArticle?.extension,
+    metadata,
+    html: editor.getHTML(),
+  };
+}
+
+async function uploadImage(file) {
+  const slug = slugInput.value.trim();
+  if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug)) throw new Error('Hãy nhập tiêu đề/slug hợp lệ trước khi tải ảnh.');
+  if (!file) throw new Error('Hãy chọn một file ảnh.');
+  const response = await fetch(`/api/media/upload?slug=${encodeURIComponent(slug)}`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': file.type || 'application/octet-stream',
+      'X-File-Name': encodeURIComponent(file.name),
+    },
+    body: file,
+  });
+  const payload = await response.json().catch(() => ({}));
+  if (!response.ok) {
+    const error = new Error(payload.error || 'Không thể tải ảnh lên.');
+    error.code = payload.code;
+    error.details = payload.details ?? [];
+    throw error;
+  }
+  return payload.media;
+}
+
+function youtubeId(value) {
+  try {
+    const url = new URL(String(value).trim());
+    const host = url.hostname.replace(/^www\./, '');
+    let id = '';
+    if (host === 'youtu.be') id = url.pathname.split('/').filter(Boolean)[0] ?? '';
+    if (['youtube.com', 'm.youtube.com', 'music.youtube.com'].includes(host)) {
+      if (url.pathname === '/watch') id = url.searchParams.get('v') ?? '';
+      else if (/^\/(embed|shorts)\//.test(url.pathname)) id = url.pathname.split('/')[2] ?? '';
+    }
+    return /^[A-Za-z0-9_-]{11}$/.test(id) ? id : null;
+  } catch {
+    return null;
+  }
+}
+
 function slugify(value) {
   return value
     .normalize('NFD')
@@ -137,6 +243,7 @@ function setClean(message = 'Đã lưu local') {
 function autosizeTitle() {
   titleInput.style.height = 'auto';
   titleInput.style.height = `${titleInput.scrollHeight}px`;
+  titleInput.scrollTop = 0;
 }
 
 function setCounter(input, output, maximum) {
@@ -326,12 +433,7 @@ async function saveArticle({ forceDraft = false } = {}) {
   try {
     const payload = await api('/api/articles/save', {
       method: 'POST',
-      body: JSON.stringify({
-        originalId: currentArticle?.id,
-        version: currentArticle?.version,
-        metadata: metadataFromForm(),
-        html: editor.getHTML(),
-      }),
+      body: JSON.stringify(articlePayload()),
     });
     currentArticle = payload.article;
     slugWasEdited = true;
@@ -347,6 +449,68 @@ async function saveArticle({ forceDraft = false } = {}) {
     return null;
   } finally {
     buttonList.forEach((button) => { button.disabled = false; });
+  }
+}
+
+async function preparePublish() {
+  resetErrors();
+  saveState.textContent = 'Đang validate project…';
+  const buttons = [...document.querySelectorAll('.editor-actions button')];
+  buttons.forEach((button) => { button.disabled = true; });
+  try {
+    const { plan } = await api('/api/publish/prepare', {
+      method: 'POST',
+      body: JSON.stringify(articlePayload({ forcePublished: true })),
+    });
+    publishPlan = plan;
+    currentArticle = plan.article;
+    statusInput.value = 'published';
+    setClean('Đã validate — chờ xác nhận Git');
+    document.querySelector('#publish-target').textContent = `Branch: ${plan.branch} · Remote: ${plan.remote}`;
+    const fileList = document.querySelector('#publish-file-list');
+    fileList.replaceChildren(...plan.files.map((file) => {
+      const item = document.createElement('li');
+      item.textContent = file;
+      return item;
+    }));
+    document.querySelector('#commit-message').value = plan.suggestedMessage;
+    await refreshArticles();
+    publishDialog.showModal();
+  } catch (error) {
+    saveState.textContent = 'Chưa thể xuất bản';
+    displayErrors(error.details, error.message);
+    showToast(error.message, 'error');
+  } finally {
+    buttons.forEach((button) => { button.disabled = false; });
+  }
+}
+
+async function confirmPublish() {
+  if (!publishPlan) return;
+  const submit = publishForm.querySelector('button[type="submit"]');
+  const cancel = publishForm.querySelector('[data-action="close-publish-dialog"]');
+  submit.disabled = true;
+  cancel.disabled = true;
+  submit.textContent = 'Đang commit & push…';
+  try {
+    const { result } = await api('/api/publish/confirm', {
+      method: 'POST',
+      body: JSON.stringify({ token: publishPlan.token, message: document.querySelector('#commit-message').value.trim() }),
+    });
+    publishDialog.close();
+    publishPlan = null;
+    currentArticle = result.article;
+    setClean(`Đã push commit ${result.commit}`);
+    showToast(result.message);
+    await refreshArticles();
+  } catch (error) {
+    showToast(error.message, 'error');
+    const detail = error.details?.map((item) => item.message).filter(Boolean).join('\n');
+    if (detail) window.alert(`${error.message}\n\n${detail}`);
+  } finally {
+    submit.disabled = false;
+    cancel.disabled = false;
+    submit.textContent = 'Commit và push';
   }
 }
 
@@ -421,6 +585,31 @@ document.addEventListener('click', async (event) => {
   if (action === 'save-draft') await saveArticle({ forceDraft: true });
   if (action === 'save-local') await saveArticle();
   if (action === 'preview') await previewArticle();
+  if (action === 'prepare-publish') await preparePublish();
+  if (action === 'open-image-dialog') imageDialog.showModal();
+  if (action === 'close-image-dialog') imageDialog.close();
+  if (action === 'close-publish-dialog') {
+    publishPlan = null;
+    publishDialog.close();
+  }
+  if (action === 'insert-youtube') {
+    const url = window.prompt('Dán URL YouTube:');
+    if (url === null) return;
+    const id = youtubeId(url);
+    if (!id) showToast('URL YouTube không hợp lệ.', 'error');
+    else editor.chain().focus().insertContent({ type: 'youtubeEmbed', attrs: { videoId: id } }).run();
+  }
+  if (action === 'upload-thumbnail') {
+    try {
+      const media = await uploadImage(document.querySelector('#thumbnail-file').files[0]);
+      document.querySelector('#thumbnail').value = media.publicPath;
+      markDirty();
+      document.querySelector('#thumbnailAlt').focus();
+      showToast('Đã tải thumbnail. Hãy nhập alt text trước khi lưu.');
+    } catch (error) {
+      showToast(error.message, 'error');
+    }
+  }
   if (action === 'regenerate-slug') {
     slugInput.value = slugify(titleInput.value);
     slugPreview.textContent = slugInput.value || 'ten-bai-viet';
@@ -431,6 +620,37 @@ document.addEventListener('click', async (event) => {
     if (isDirty && !window.confirm('Bạn có thay đổi chưa lưu. Vẫn quay lại danh sách?')) return;
     showView('list');
   }
+});
+
+imageForm.addEventListener('submit', async (event) => {
+  event.preventDefault();
+  const file = document.querySelector('#body-image-file').files[0];
+  const alt = document.querySelector('#body-image-alt').value.trim();
+  const caption = document.querySelector('#body-image-caption').value.trim();
+  if (!file || !alt) {
+    showToast('Hãy chọn ảnh và nhập alt text.', 'error');
+    return;
+  }
+  const submit = imageForm.querySelector('button[type="submit"]');
+  submit.disabled = true;
+  submit.textContent = 'Đang tải…';
+  try {
+    const media = await uploadImage(file);
+    editor.chain().focus().insertContent({ type: 'imageFigure', attrs: { src: media.publicPath, alt, caption } }).run();
+    imageDialog.close();
+    imageForm.reset();
+    showToast('Đã chèn ảnh vào bài viết.');
+  } catch (error) {
+    showToast(error.message, 'error');
+  } finally {
+    submit.disabled = false;
+    submit.textContent = 'Tải lên và chèn';
+  }
+});
+
+publishForm.addEventListener('submit', async (event) => {
+  event.preventDefault();
+  await confirmPublish();
 });
 
 form.addEventListener('input', (event) => {

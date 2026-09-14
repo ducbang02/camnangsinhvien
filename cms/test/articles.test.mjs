@@ -91,3 +91,20 @@ test('từ chối slug trùng ở category khác vì route chỉ dùng tên file
     (error) => error instanceof ArticleStoreError && error.code === 'SLUG_EXISTS',
   );
 });
+
+test('giữ block ảnh có alt/caption và YouTube khi lưu rồi mở lại', async (t) => {
+  const root = await mkdtemp(path.join(tmpdir(), 'cnsv-cms-'));
+  t.after(() => rm(root, { recursive: true, force: true }));
+  const store = createArticleStore({ root, categories });
+  const mediaHtml = '<h2>Minh họa</h2><figure class="article-figure" data-cms-image><img src="/media/articles/bai-kiem-tra-cms-local/minh-hoa.webp" alt="Sinh viên đang học" loading="lazy"><figcaption>Góc học tập mẫu</figcaption></figure><div class="video-embed" data-youtube-id="dQw4w9WgXcQ"><iframe src="https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ"></iframe></div>';
+  const created = await store.save({ ...input(), html: mediaHtml });
+  const markdownPath = path.join(root, 'hoc-tap-thi-cu', 'bai-kiem-tra-cms-local.md');
+  const markdown = await readFile(markdownPath, 'utf8');
+  assert.match(markdown, /<figure class="article-figure" data-cms-image>/);
+  assert.match(markdown, /alt="Sinh viên đang học"/);
+  assert.match(markdown, /<figcaption>Góc học tập mẫu<\/figcaption>/);
+  assert.match(markdown, /data-youtube-id="dQw4w9WgXcQ"/);
+  const loaded = await store.get(created.id);
+  assert.match(loaded.html, /data-cms-image/);
+  assert.match(loaded.html, /data-youtube-id="dQw4w9WgXcQ"/);
+});

@@ -33,6 +33,8 @@ ID/slug được lấy từ đường dẫn file, ví dụ `hoc-tap-thi-cu/cach-
 
 CMS dùng slug làm tên file và kiểm tra slug duy nhất trên toàn collection vì route công khai không chứa category. Trạng thái form `Draft`/`Published` được lưu thành `draft: true`/`draft: false`. Các field cũ không xuất hiện trên form như `author`, `featured`, `tool`, `video` và `sources` được giữ nguyên khi sửa bài.
 
+Media do CMS tải lên nằm tại `public/media/articles/<slug>/`. Markdown không chứa base64. Ảnh trong nội dung được lưu bằng block `<figure class="article-figure" data-cms-image>` gồm `img` có alt bắt buộc và `figcaption` tùy chọn. YouTube được lưu bằng block `.video-embed` chỉ chứa video ID hợp lệ và iframe `youtube-nocookie.com`; cả hai block đều được Astro render trực tiếp trong article layout.
+
 ## 3. Category / trụ cột
 
 Trụ cột là dữ liệu TypeScript tĩnh trong `src/data/categories.ts`. Đây là nguồn chuẩn duy nhất cho toàn website:

@@ -8,6 +8,7 @@ import { gfm } from 'turndown-plugin-gfm';
 const ARTICLE_EXTENSIONS = new Set(['.md', '.mdx']);
 const SLUG_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 const DATE_PATTERN = /^\d{4}-\d{2}-\d{2}$/;
+const YOUTUBE_ID_PATTERN = /^[A-Za-z0-9_-]{11}$/;
 
 marked.use({ gfm: true, breaks: false });
 
@@ -20,6 +21,25 @@ function createTurndownService() {
     strongDelimiter: '**',
   });
   service.use(gfm);
+  service.addRule('articleImage', {
+    filter: (node) => node.nodeName === 'FIGURE' && node.hasAttribute('data-cms-image'),
+    replacement(_content, node) {
+      const image = node.querySelector('img');
+      if (!image) return '';
+      const src = escapeHtmlAttribute(image.getAttribute('src') ?? '');
+      const alt = escapeHtmlAttribute(image.getAttribute('alt') ?? '');
+      const caption = escapeHtml(node.querySelector('figcaption')?.textContent?.trim() ?? '');
+      return `\n\n<figure class="article-figure" data-cms-image>\n  <img src="${src}" alt="${alt}" loading="lazy" />${caption ? `\n  <figcaption>${caption}</figcaption>` : ''}\n</figure>\n\n`;
+    },
+  });
+  service.addRule('youtubeEmbed', {
+    filter: (node) => node.nodeName === 'DIV' && node.hasAttribute('data-youtube-id'),
+    replacement(_content, node) {
+      const videoId = node.getAttribute('data-youtube-id') ?? '';
+      if (!YOUTUBE_ID_PATTERN.test(videoId)) return '';
+      return `\n\n<div class="video-embed" data-youtube-id="${videoId}">\n  <iframe src="https://www.youtube-nocookie.com/embed/${videoId}" title="Video YouTube" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>\n</div>\n\n`;
+    },
+  });
   service.addRule('taskItem', {
     filter: (node) => node.nodeName === 'LI' && node.getAttribute('data-type') === 'taskItem',
     replacement(content, node) {
@@ -28,6 +48,17 @@ function createTurndownService() {
     },
   });
   return service;
+}
+
+function escapeHtml(value) {
+  return String(value)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+}
+
+function escapeHtmlAttribute(value) {
+  return escapeHtml(value).replace(/"/g, '&quot;');
 }
 
 function normalizeEditorHtml(html) {
@@ -39,7 +70,10 @@ function normalizeEditorHtml(html) {
 
 async function markdownToEditorHtml(markdown) {
   const html = await marked.parse(markdown);
-  const withTaskItems = html.replace(
+  const withCmsBlocks = html
+    .replace(/<figure class="article-figure"(?![^>]*data-cms-image)/gi, '<figure class="article-figure" data-cms-image')
+    .replace(/<div class="video-embed" data-youtube-id="([A-Za-z0-9_-]{11})">/gi, '<div class="video-embed" data-youtube-id="$1">');
+  const withTaskItems = withCmsBlocks.replace(
     /<li>\s*<input([^>]*)type="checkbox"([^>]*)>\s*([\s\S]*?)<\/li>/gi,
     (_match, before, after, content) => {
       const checked = /\bchecked(?:="")?/i.test(`${before} ${after}`);
@@ -200,8 +234,18 @@ export function createArticleStore({ root, categories }) {
     if (!['draft', 'published'].includes(metadata.status)) errors.push({ field: 'status', message: 'Trạng thái không hợp lệ.' });
     if (String(metadata.seoTitle ?? '').trim().length > 70) errors.push({ field: 'seoTitle', message: 'SEO title tối đa 70 ký tự.' });
     if (String(metadata.seoDescription ?? '').trim().length > 180) errors.push({ field: 'seoDescription', message: 'SEO description tối đa 180 ký tự.' });
-    if (metadata.thumbnail && !String(metadata.thumbnail).startsWith('/')) errors.push({ field: 'thumbnail', message: 'Thumbnail cần là đường dẫn public bắt đầu bằng /.' });
+    if (metadata.thumbnail && (!/^\/[A-Za-z0-9._/-]+$/.test(String(metadata.thumbnail)) || String(metadata.thumbnail).includes('..'))) errors.push({ field: 'thumbnail', message: 'Thumbnail cần là đường dẫn public an toàn bắt đầu bằng /.' });
     if (metadata.thumbnail && !String(metadata.thumbnailAlt ?? '').trim()) errors.push({ field: 'thumbnailAlt', message: 'Ảnh thumbnail cần alt text.' });
+    for (const figure of content.matchAll(/<figure\b[^>]*data-cms-image[^>]*>([\s\S]*?)<\/figure>/gi)) {
+      const image = figure[1].match(/<img\b[^>]*>/i)?.[0] ?? '';
+      const source = image.match(/\bsrc=["']([^"']+)["']/i)?.[1] ?? '';
+      const alt = image.match(/\balt=["']([^"']*)["']/i)?.[1]?.trim() ?? '';
+      if (!/^\/[A-Za-z0-9._/-]+$/.test(source) || source.includes('..')) errors.push({ field: 'content', message: 'Ảnh trong nội dung phải dùng đường dẫn public an toàn bắt đầu bằng /.' });
+      if (!alt) errors.push({ field: 'content', message: 'Mỗi ảnh trong nội dung cần có alt text.' });
+    }
+    for (const embed of content.matchAll(/\bdata-youtube-id=["']([^"']*)["']/gi)) {
+      if (!YOUTUBE_ID_PATTERN.test(embed[1])) errors.push({ field: 'content', message: 'Block YouTube có URL hoặc video ID không hợp lệ.' });
+    }
     if (!content || content === '<p></p>') errors.push({ field: 'content', message: 'Nội dung bài viết không được để trống.' });
     return errors;
   }

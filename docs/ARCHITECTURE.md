@@ -21,14 +21,13 @@ Website là một **Student Hub tĩnh, content-first** dành cho sinh viên Vi�
 
 ## 3. Information Architecture
 
-Menu cấp một giữ ở mức sáu mục:
+Header desktop chỉ giữ các điểm vào quan trọng nhất:
 
-1. Trang chủ
-2. Cẩm nang
+1. Logo về Trang chủ
+2. Cẩm nang — mở mega menu mười trụ cột
 3. Công cụ
-4. Sinh viên IT
-5. Lộ trình
-6. Giới thiệu
+
+`Sinh viên IT`, `Lộ trình` và `Giới thiệu` vẫn là các route độc lập nhưng không nằm trong header desktop. Chúng được dẫn từ nội dung liên quan và footer để điều hướng chính không cạnh tranh với định vị Cẩm nang sinh viên. Trên mobile, menu giữ thêm liên kết `Giới thiệu`; các route phụ còn lại vẫn có trong footer.
 
 Mười trụ cột nội dung cố định:
 
@@ -125,10 +124,14 @@ Luồng dữ liệu:
 CMS local
   -> đọc taxonomy từ src/data/categories.ts
   -> đọc/ghi frontmatter + Markdown trong src/content/articles/
+  -> lưu ảnh bài viết trong public/media/articles/<slug>/
   -> Astro dev render route /cam-nang/<slug>/ để preview
-  -> GitHub/Cloudflare không tham gia khi chỉ lưu nháp
+  -> khi xuất bản: validate -> kiểm tra Git -> stage đúng file -> commit -> push
+  -> Cloudflare tự deploy từ GitHub như hiện tại
 ```
 
 Server CMS giới hạn request về local origin, xác thực category/slug, chặn đường dẫn thoát khỏi content root và dùng version của file để tránh ghi đè khi bài đã đổi bên ngoài CMS. Astro chỉ đưa draft vào `getStaticPaths()` trong DEV; production build vẫn loại draft.
 
 Dependency CMS nằm ở `devDependencies` và không được import từ source website, vì vậy mã editor/server không nằm trong bundle hoặc static assets production.
+
+Publish là quy trình hai bước: bước chuẩn bị bắt buộc repository không có staged file, merge/rebase dở dang hoặc thay đổi ngoài bài hiện tại; sau validation, CMS hiển thị branch, remote và danh sách file chính xác. Chỉ khi người vận hành xác nhận, CMS mới stage danh sách đó, commit và chạy `git push origin <branch>`; không có force push.

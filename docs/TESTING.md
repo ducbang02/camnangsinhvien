@@ -52,6 +52,10 @@ URL: `https://cam-nang-sinh-vien.nguyenducbang-uit.workers.dev/`
 - Ngân sách: dữ liệu mẫu còn 1.900.000đ/tháng, khoảng 441.860đ/tuần; trường hợp âm hiển thị thiếu 1.600.000đ.
 - GPA mobile: bảng chuyển thành card, không còn document overflow ngang.
 - Hub Sinh viên IT: hero, terminal card, lộ trình và navigation hiển thị đúng desktop.
+- Header desktop: chỉ hiển thị `Cẩm nang` và `Công cụ`; mega menu mở đủ 10 trụ cột. `Sinh viên IT` và `Lộ trình` không còn trong header nhưng vẫn truy cập được từ nội dung/footer.
+- CMS Phase 2: 9 test tự động đạt, gồm round-trip ảnh/YouTube, kiểm tra file ảnh, publish commit/push vào remote tạm và chặn thay đổi không liên quan.
+- Media preview trên Astro dev: figure có alt/caption và iframe YouTube hiển thị đúng, không có horizontal overflow; dữ liệu smoke test đã được xóa sau khi kiểm tra.
+- Publish trên repository thật đang có thay đổi: CMS hiển thị đúng danh sách file không liên quan và dừng trước khi save/stage/commit.
 - Console sau các lượt kiểm tra đại diện: không có error/warning.
 
 ## Lỗi đã phát hiện và sửa

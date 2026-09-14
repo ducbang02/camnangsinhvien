@@ -42,9 +42,12 @@ h1 { margin: 0; font: 800 clamp(2.3rem, 5vw, 4.5rem)/.98 "Segoe UI", system-ui, 
 .button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible, .toolbar button:focus-visible { outline: 3px solid rgba(40,185,150,.32); outline-offset: 2px; }
 .button-primary { color: white; background: var(--navy); }
 .button-primary:hover { background: #19335e; }
+.button-publish { color: var(--navy); border-color: #1c9b7c; background: var(--mint); }
+.button-publish:hover { background: #52d4b3; }
 .button-secondary { border-color: #cbd3dd; background: white; }
 .button-quiet { border-color: transparent; background: transparent; }
 .button-disabled { color: #8a94a4; border-color: var(--line); background: #eef1f4; cursor: not-allowed; }
+.button-full { width: 100%; }
 
 .filter-bar { display: grid; grid-template-columns: minmax(240px, 1fr) minmax(220px, .35fr); gap: .75rem; padding: .9rem; background: white; border: 1px solid var(--line); border-bottom: 0; border-radius: 14px 14px 0 0; }
 .filter-bar input, .filter-bar select { width: 100%; min-height: 44px; padding: .65rem .8rem; border: 1px solid #cfd6df; border-radius: 8px; background: white; }
@@ -103,6 +106,12 @@ h1 { margin: 0; font: 800 clamp(2.3rem, 5vw, 4.5rem)/.98 "Segoe UI", system-ui, 
 .content-editor ul[data-type="taskList"] { padding: 0; list-style: none; }
 .content-editor ul[data-type="taskList"] li { display: flex; gap: .55rem; }
 .content-editor ul[data-type="taskList"] li > div { flex: 1; }
+.content-editor .article-figure { margin: 1.75rem 0; }
+.content-editor .article-figure img { display: block; width: 100%; max-height: 520px; object-fit: contain; border-radius: 10px; background: var(--soft); }
+.content-editor .article-figure figcaption { margin-top: .55rem; color: var(--muted); font: .82rem/1.5 Inter, sans-serif; text-align: center; }
+.content-editor .article-figure figcaption:empty::before { content: 'Không có caption'; opacity: .65; }
+.content-editor .video-embed { position: relative; aspect-ratio: 16 / 9; margin: 1.75rem 0; overflow: hidden; border-radius: 10px; background: #050a12; }
+.content-editor .video-embed iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
 .paste-note { max-width: 850px; margin: .75rem auto 0; color: var(--muted); font-size: .78rem; }
 
 .metadata-panel { padding: 1.25rem; border-left: 1px solid var(--line); background: white; }
@@ -127,6 +136,16 @@ h1 { margin: 0; font: 800 clamp(2.3rem, 5vw, 4.5rem)/.98 "Segoe UI", system-ui, 
 
 .toast { position: fixed; right: 1.25rem; bottom: 1.25rem; z-index: 40; max-width: 380px; padding: .9rem 1.1rem; border-radius: 9px; color: white; background: var(--navy); box-shadow: 0 14px 36px rgba(12,25,48,.25); }
 .toast.error { background: #8f3030; }
+
+.cms-dialog { width: min(92vw, 560px); padding: 0; border: 1px solid var(--line); border-radius: 16px; color: var(--ink); background: white; box-shadow: 0 26px 80px rgba(10,25,50,.28); }
+.cms-dialog::backdrop { background: rgba(10,22,42,.55); backdrop-filter: blur(3px); }
+.cms-dialog form { padding: 1.5rem; }
+.cms-dialog h2 { margin: 0 0 1rem; font-size: 1.55rem; }
+.dialog-actions { display: flex; justify-content: flex-end; gap: .6rem; margin-top: 1.25rem; }
+.publish-files { max-height: 220px; overflow: auto; margin: 1rem 0; padding: .85rem; border: 1px solid var(--line); border-radius: 8px; background: var(--soft); font-size: .82rem; }
+.publish-files ul { margin: .55rem 0 0; padding-left: 1.2rem; }
+.publish-files li { margin: .3rem 0; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; overflow-wrap: anywhere; }
+.publish-warning { padding: .7rem .8rem; border-left: 3px solid #d7a81b; color: #685515; background: #fff9df; font-size: .78rem; line-height: 1.5; }
 
 @media (max-width: 1050px) {
   .editor-topbar { grid-template-columns: auto 1fr; }

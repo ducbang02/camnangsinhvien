@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex,nofollow" />
+    <title>CMS local — Cẩm nang sinh viên</title>
+    <script type="module" src="/main.js"></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Bỏ qua điều hướng</a>
+    <div class="app-shell">
+      <header class="app-header">
+        <button class="brand" type="button" data-action="show-list" aria-label="Về danh sách bài viết">
+          <span class="brand-mark">C</span>
+          <span><strong>Cẩm nang sinh viên</strong><small>CMS local</small></span>
+        </button>
+        <div class="local-badge"><span></span> Chỉ chạy trên máy này</div>
+      </header>
+
+      <main id="main-content">
+        <section id="list-view" class="view" aria-labelledby="list-title">
+          <div class="page-heading">
+            <div>
+              <p class="eyebrow">Kho nội dung</p>
+              <h1 id="list-title">Bài viết</h1>
+              <p class="muted" id="article-count">Đang đọc repository…</p>
+            </div>
+            <button class="button button-primary" type="button" data-action="new-article">+ Tạo bài mới</button>
+          </div>
+
+          <div class="filter-bar">
+            <label class="search-field">
+              <span class="sr-only">Tìm theo tiêu đề</span>
+              <svg aria-hidden="true" viewBox="0 0 24 24"><path d="m21 21-4.4-4.4m2.4-5.1a7.5 7.5 0 1 1-15 0 7.5 7.5 0 0 1 15 0Z" /></svg>
+              <input id="article-search" type="search" placeholder="Tìm theo tiêu đề…" autocomplete="off" />
+            </label>
+            <label>
+              <span class="sr-only">Lọc theo trụ cột</span>
+              <select id="category-filter"><option value="">Tất cả trụ cột</option></select>
+            </label>
+          </div>
+
+          <div class="article-table-wrap">
+            <table class="article-table">
+              <thead><tr><th>Bài viết</th><th>Trụ cột</th><th>Trạng thái</th><th>Cập nhật</th><th><span class="sr-only">Thao tác</span></th></tr></thead>
+              <tbody id="article-list"></tbody>
+            </table>
+            <div id="empty-state" class="empty-state" hidden>
+              <span>⌕</span><h2>Không tìm thấy bài viết</h2><p>Thử đổi từ khóa hoặc bộ lọc trụ cột.</p>
+            </div>
+          </div>
+        </section>
+
+        <section id="editor-view" class="view" aria-labelledby="editor-title" hidden>
+          <div class="editor-topbar">
+            <button class="button button-quiet" type="button" data-action="back-to-list">← Danh sách</button>
+            <div class="document-state">
+              <strong id="editor-title">Bài viết mới</strong>
+              <span id="save-state">Chưa lưu</span>
+            </div>
+            <div class="editor-actions">
+              <button class="button button-secondary" type="button" data-action="save-draft">Lưu nháp</button>
+              <button class="button button-secondary" type="button" data-action="save-local">Lưu thay đổi</button>
+              <button class="button button-primary" type="button" data-action="preview">Preview ↗</button>
+              <button class="button button-disabled" type="button" disabled title="Sẽ được mở ở Phase 2">Xuất bản · Phase 2</button>
+            </div>
+          </div>
+
+          <form id="article-form" novalidate>
+            <div class="editor-workspace">
+              <div class="writing-panel">
+                <label class="title-field">
+                  <span class="title-visible-label">Tiêu đề bài viết</span>
+                  <textarea id="title" name="title" rows="2" maxlength="160" placeholder="Nhập tiêu đề bài viết tại đây…" required></textarea>
+                </label>
+
+                <div id="toolbar" class="toolbar" role="toolbar" aria-label="Định dạng nội dung">
+                  <div class="tool-group">
+                    <button type="button" data-command="heading2" title="Heading 2">H2</button>
+                    <button type="button" data-command="heading3" title="Heading 3">H3</button>
+                    <button type="button" data-command="paragraph" title="Đoạn văn">P</button>
+                  </div>
+                  <div class="tool-group">
+                    <button type="button" data-command="bold" title="In đậm"><strong>B</strong></button>
+                    <button type="button" data-command="italic" title="In nghiêng"><em>I</em></button>
+                    <button type="button" data-command="link" title="Chèn liên kết">↗ Link</button>
+                  </div>
+                  <div class="tool-group">
+                    <button type="button" data-command="bulletList" title="Danh sách chấm">• List</button>
+                    <button type="button" data-command="orderedList" title="Danh sách số">1. List</button>
+                    <button type="button" data-command="taskList" title="Checklist">☑ Check</button>
+                  </div>
+                  <div class="tool-group">
+                    <button type="button" data-command="blockquote" title="Trích dẫn">❝</button>
+                    <button type="button" data-command="codeBlock" title="Khối code">&lt;/&gt;</button>
+                    <button type="button" data-command="horizontalRule" title="Đường phân cách">—</button>
+                    <button type="button" data-command="table" title="Chèn bảng">▦ Bảng</button>
+                  </div>
+                  <div class="tool-group table-tools" hidden>
+                    <button type="button" data-command="addRow" title="Thêm hàng">+ hàng</button>
+                    <button type="button" data-command="addColumn" title="Thêm cột">+ cột</button>
+                    <button type="button" data-command="deleteTable" title="Xóa bảng">Xóa bảng</button>
+                  </div>
+                  <div class="tool-group toolbar-history">
+                    <button type="button" data-command="undo" title="Hoàn tác">↶</button>
+                    <button type="button" data-command="redo" title="Làm lại">↷</button>
+                  </div>
+                </div>
+                <div id="content-editor" class="content-editor" aria-label="Nội dung bài viết"></div>
+                <p class="paste-note">Có thể dán từ Word/Google Docs. CMS giữ cấu trúc nội dung và tự bỏ font, màu, style thừa.</p>
+              </div>
+
+              <aside class="metadata-panel" aria-label="Thông tin bài viết">
+                <details open>
+                  <summary>Xuất bản local</summary>
+                  <div class="field-grid">
+                    <label class="field"><span>Trạng thái</span><select id="status" name="status"><option value="draft">Draft</option><option value="published">Published</option></select></label>
+                    <label class="field"><span>Ngày đăng</span><input id="publishedDate" name="publishedDate" type="date" required /></label>
+                  </div>
+                  <label class="field"><span>Trụ cột</span><select id="category" name="category" required><option value="">Chọn trụ cột…</option></select></label>
+                  <label class="field"><span>Chủ đề nhỏ <i>bắt buộc theo schema</i></span><input id="topic" name="topic" type="text" placeholder="Ví dụ: Phương pháp học" required /></label>
+                  <label class="field"><span>Slug</span><div class="input-action"><input id="slug" name="slug" type="text" placeholder="ten-bai-viet" required /><button type="button" data-action="regenerate-slug" title="Tạo lại từ tiêu đề">↻</button></div><small>/cam-nang/<b id="slug-preview">ten-bai-viet</b>/</small></label>
+                  <label class="field"><span>Tags <i>phân cách bằng dấu phẩy</i></span><input id="tags" name="tags" type="text" placeholder="học tập, kế hoạch" required /></label>
+                </details>
+
+                <details open>
+                  <summary>Mô tả</summary>
+                  <label class="field"><span>Excerpt <i id="description-count">0/180</i></span><textarea id="description" name="description" rows="5" maxlength="180" placeholder="Tóm tắt 40–180 ký tự…" required></textarea></label>
+                </details>
+
+                <details>
+                  <summary>Thumbnail</summary>
+                  <p class="field-hint">Phase 1 nhận đường dẫn ảnh đã có trong thư mục public. Upload ảnh sẽ làm ở Phase 2.</p>
+                  <label class="field"><span>Đường dẫn ảnh</span><input id="thumbnail" name="thumbnail" type="text" placeholder="/media/ten-anh.webp" /></label>
+                  <label class="field"><span>Thumbnail alt</span><input id="thumbnailAlt" name="thumbnailAlt" type="text" placeholder="Mô tả nội dung ảnh" /></label>
+                </details>
+
+                <details>
+                  <summary>SEO</summary>
+                  <label class="field"><span>SEO title <i id="seo-title-count">0/70</i></span><input id="seoTitle" name="seoTitle" type="text" maxlength="70" placeholder="Để trống sẽ dùng tiêu đề bài" /></label>
+                  <label class="field"><span>SEO meta description <i id="seo-description-count">0/180</i></span><textarea id="seoDescription" name="seoDescription" rows="4" maxlength="180" placeholder="Để trống sẽ dùng excerpt"></textarea></label>
+                </details>
+
+                <div id="validation-summary" class="validation-summary" role="alert" hidden></div>
+              </aside>
+            </div>
+          </form>
+        </section>
+      </main>
+    </div>
+    <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+  </body>
+</html>

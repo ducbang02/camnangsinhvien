@@ -15,12 +15,14 @@ const { article, headings, related } = Astro.props;
 const { data } = article;
 const category = getCategory(data.category);
 const url = new URL(`/cam-nang/${articleSlug(article.id)}/`, Astro.site ?? Astro.url.origin);
+const metaTitle = data.seoTitle || data.title;
+const metaDescription = data.seoDescription || data.description;
 const schema = [
   {
     '@context': 'https://schema.org',
     '@type': 'Article',
     headline: data.title,
-    description: data.description,
+    description: metaDescription,
     datePublished: data.publishedDate.toISOString(),
     dateModified: (data.updatedDate ?? data.publishedDate).toISOString(),
     author: { '@type': 'Organization', name: data.author },
@@ -43,7 +45,7 @@ const schema = [
 ];
 ---
 
-<BaseLayout title={data.title} description={data.description} canonical={url.pathname} schema={schema} ogType="article">
+<BaseLayout title={metaTitle} description={metaDescription} canonical={url.pathname} schema={schema} ogType="article" image={data.thumbnail}>
   <article>
     <header class="article-header">
       <div class="narrow">
@@ -58,6 +60,11 @@ const schema = [
           <time datetime={(data.updatedDate ?? data.publishedDate).toISOString()}>Cập nhật {formatDate(data.updatedDate ?? data.publishedDate)}</time>
           <span aria-hidden="true">·</span><span>{data.readingMinutes ?? 6} phút đọc</span>
         </div>
+        {data.thumbnail && (
+          <figure class="article-thumbnail">
+            <img src={data.thumbnail} alt={data.thumbnailAlt || ''} loading="eager" fetchpriority="high" />
+          </figure>
+        )}
       </div>
     </header>
 

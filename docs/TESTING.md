@@ -65,3 +65,13 @@ Production hiện tại vẫn là bản trước khi chuyển sang 10 trụ cộ
 
 
 test dong moi
+# Kiểm thử CMS local
+
+Ngày 14/09/2026, CMS Phase 1 đã được kiểm tra theo ba lớp:
+
+- `npm run test:cms`: 4/4 test pass; tạo/đọc/cập nhật Markdown trong thư mục tạm, giữ table/checklist, từ chối stale write/path không hợp lệ và chặn slug trùng route.
+- Browser QA tại `http://127.0.0.1:4310/`: tải đủ 27 bài, search hoạt động, mở bài cũ nạp đúng metadata và nội dung, tạo bài nháp bằng form/editor, toolbar H2/checklist/table hoạt động.
+- Ô `Tiêu đề bài viết` có label, khung và chiều cao tối thiểu để không bị nhầm với H2 đầu tiên trong nội dung.
+- Preview thật: CMS lưu bài draft rồi mở thành công route Astro `/cam-nang/<slug>/`; trang có header, breadcrumb, metadata, article layout, related articles và footer giống website. File test thủ công đã được xóa sau khi kiểm tra.
+
+CMS Phase 1 không thực hiện commit/push. Danh sách kiểm tra đầy đủ cho người vận hành nằm trong `docs/CMS.md`.

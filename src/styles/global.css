@@ -1049,6 +1049,22 @@ h3 {
   font-size: 0.78rem;
 }
 
+.article-thumbnail {
+  margin: clamp(2rem, 5vw, 3.5rem) 0 0;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: var(--paper);
+}
+
+.article-thumbnail img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 560px;
+  object-fit: cover;
+}
+
 .article-shell {
   display: grid;
   grid-template-columns: 230px minmax(0, 760px);

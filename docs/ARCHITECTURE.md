@@ -114,3 +114,21 @@ Mỗi bài có tối đa ba CTA có ích: mở tool, tải/check checklist, đ�
 - CMS local chỉ được thêm khi quy trình Markdown + Git trở thành bottleneck đo được; CMS không được xuất hiện trong production build.
 - Không đặt LMS logic trong lớp giao diện; nếu có khóa học sau này, tách thành module/dịch vụ riêng.
 - Không tạo app mobile hoặc tài khoản chỉ để tăng “độ lớn” của sản phẩm.
+
+## 11. CMS local
+
+CMS biên tập bài viết được tách hoàn toàn trong `cms/` và chỉ chạy bằng `npm run cms` trên loopback `127.0.0.1:4310`. Đây là một Vite client dùng Tiptap Vanilla và một Node server nhỏ chỉ thao tác file; không thêm React/Vue, database, login hay backend production.
+
+Luồng dữ liệu:
+
+```text
+CMS local
+  -> đọc taxonomy từ src/data/categories.ts
+  -> đọc/ghi frontmatter + Markdown trong src/content/articles/
+  -> Astro dev render route /cam-nang/<slug>/ để preview
+  -> GitHub/Cloudflare không tham gia khi chỉ lưu nháp
+```
+
+Server CMS giới hạn request về local origin, xác thực category/slug, chặn đường dẫn thoát khỏi content root và dùng version của file để tránh ghi đè khi bài đã đổi bên ngoài CMS. Astro chỉ đưa draft vào `getStaticPaths()` trong DEV; production build vẫn loại draft.
+
+Dependency CMS nằm ở `devDependencies` và không được import từ source website, vì vậy mã editor/server không nằm trong bundle hoặc static assets production.

@@ -8,6 +8,8 @@
   },
   "scripts": {
     "dev": "astro dev",
+    "cms": "node cms/server.mjs",
+    "test:cms": "node --test cms/test/articles.test.mjs",
     "build": "astro build",
     "preview": "astro preview",
     "check": "astro check",
@@ -22,7 +24,17 @@
   },
   "devDependencies": {
     "@astrojs/check": "0.9.10",
+    "@tiptap/core": "^3.31.3",
+    "@tiptap/extension-list": "^3.31.3",
+    "@tiptap/extension-table": "^3.31.3",
+    "@tiptap/pm": "^3.31.3",
+    "@tiptap/starter-kit": "^3.31.3",
+    "gray-matter": "^4.0.3",
+    "marked": "^18.0.13",
+    "turndown": "^7.2.4",
+    "turndown-plugin-gfm": "^1.0.2",
     "typescript": "6.0.3",
+    "vite": "^8.3.0",
     "wrangler": "4.131.1"
   }
 }

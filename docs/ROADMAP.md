@@ -6,6 +6,10 @@
 
 **Phase 1A — kiến trúc 10 trụ cột đã được duyệt local.** Mô hình ba pillar đã được thay bằng mười trụ cột dùng chung một nguồn `src/data/categories.ts`. Đã bổ sung 7 bài mẫu ngắn để mọi trụ cột có ít nhất 2 bài; website hiện có 27 bài. Chưa push hoặc deploy thay đổi này lên production.
 
+**Phase 1B — CMS local Phase 1 đã hoàn tất.** CMS Tiptap Vanilla có danh sách/search/filter, editor, metadata theo Content Collection, load/save Markdown/MDX và preview bằng layout Astro thật. CMS không có database/login, chỉ bind local và không được đưa vào production build. Xem `docs/CMS.md`.
+
+**CMS Phase 2 — chờ người vận hành duyệt giao diện Phase 1.** Sau khi được xác nhận mới làm image upload/caption, YouTube block và workflow validate → liệt kê đúng file → stage chọn lọc → commit → push không force. Hạng mục này tách biệt với “Phase 2 — Có traffic ban đầu” của roadmap sản phẩm.
+
 Repository đã chuyển ownership sang `ducbang02/camnangsinhvien`. Cloudflare Workers Builds theo dõi nhánh `main` và deploy Worker `cam-nang-sinh-vien` tại `https://cam-nang-sinh-vien.nguyenducbang-uit.workers.dev/`. Local `origin` vẫn đang dùng URL cũ của `sunny251010`; GitHub có redirect nhưng cần đổi sang URL owner mới trước lần push tiếp theo.
 
 ## Nguyên tắc ưu tiên

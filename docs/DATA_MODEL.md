@@ -21,11 +21,17 @@ Collection: `articles`, định dạng `.md` hoặc `.mdx`.
 | `featured` | boolean | Không | Ưu tiên ở trang tổng hợp |
 | `draft` | boolean | Không | Không build ra route công khai khi `true` |
 | `readingMinutes` | number | Không | Thời gian đọc ước tính biên tập |
+| `thumbnail` | string | Không | Đường dẫn public của ảnh đại diện bài viết |
+| `thumbnailAlt` | string | Không | Mô tả thay thế cho thumbnail; CMS bắt buộc khi có thumbnail |
+| `seoTitle` | string | Không | Tiêu đề SEO tùy chỉnh, tối đa 70 ký tự; fallback về `title` |
+| `seoDescription` | string | Không | Meta description tùy chỉnh, tối đa 180 ký tự; fallback về `description` |
 | `tool` | string | Không | Route mini tool liên quan |
 | `video` | string URL | Không | Video bổ trợ đã được kiểm tra |
 | `sources` | object[] | Không | Nhãn và URL nguồn tham khảo |
 
 ID/slug được lấy từ đường dẫn file, ví dụ `hoc-tap-thi-cu/cach-tinh-gpa.md` thành `hoc-tap-thi-cu/cach-tinh-gpa` ở collection; route công khai sử dụng phần tên file để giữ URL ngắn.
+
+CMS dùng slug làm tên file và kiểm tra slug duy nhất trên toàn collection vì route công khai không chứa category. Trạng thái form `Draft`/`Published` được lưu thành `draft: true`/`draft: false`. Các field cũ không xuất hiện trên form như `author`, `featured`, `tool`, `video` và `sources` được giữ nguyên khi sửa bài.
 
 ## 3. Category / trụ cột
 

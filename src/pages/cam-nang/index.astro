@@ -1,0 +1,108 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ArticleCard from '../../components/ArticleCard.astro';
+import Icon from '../../components/Icon.astro';
+import { pillars } from '../../data/site';
+
+const articles = (await getCollection('articles', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.publishedDate.valueOf() - a.data.publishedDate.valueOf());
+---
+
+<BaseLayout title="Cẩm nang" description="Hướng dẫn thực tế về học tập, kỹ năng số và cuộc sống sinh viên — có checklist và công cụ để làm ngay.">
+  <section class="page-hero">
+    <div class="container">
+      <p class="eyebrow">{articles.length} hướng dẫn thực hành</p>
+      <h1>Tìm đúng việc bạn cần giải quyết</h1>
+      <p class="lead">Lọc theo trụ cột hoặc gõ vấn đề đang gặp. Danh sách đầy đủ luôn có sẵn, không cần đăng nhập.</p>
+    </div>
+  </section>
+  <section class="section-tight filter-section">
+    <div class="container">
+      <div class="filter-bar" role="search">
+        <label class="search-field">
+          <span class="sr-only">Tìm trong cẩm nang</span>
+          <Icon name="search" size={20} />
+          <input id="article-search" type="search" placeholder="Ví dụ: GPA, AI, ở trọ..." autocomplete="off" />
+        </label>
+        <div class="filter-pills" aria-label="Lọc theo chủ đề">
+          <button class="filter-pill active" type="button" data-filter="all" aria-pressed="true">Tất cả</button>
+          {pillars.map((pillar) => <button class="filter-pill" type="button" data-filter={pillar.id} aria-pressed="false">{pillar.shortName}</button>)}
+        </div>
+      </div>
+      <p id="result-count" class="result-count" aria-live="polite">Hiển thị {articles.length} bài viết</p>
+      <div id="article-grid" class="article-grid">
+        {articles.map((article) => <ArticleCard article={article} />)}
+      </div>
+      <div id="empty-state" class="empty-state" hidden>
+        <h2>Chưa có bài khớp với từ khóa này</h2>
+        <p>Thử từ ngắn hơn như “GPA”, “AI”, “laptop” hoặc chọn lại tất cả chủ đề.</p>
+        <button class="button button-primary" type="button" id="clear-filter">Xóa bộ lọc</button>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  const searchInput = document.querySelector<HTMLInputElement>('#article-search');
+  const buttons = [...document.querySelectorAll<HTMLButtonElement>('[data-filter]')];
+  const cards = [...document.querySelectorAll<HTMLElement>('.article-card')];
+  const count = document.querySelector<HTMLElement>('#result-count');
+  const empty = document.querySelector<HTMLElement>('#empty-state');
+  const clear = document.querySelector<HTMLButtonElement>('#clear-filter');
+  let activeFilter = 'all';
+
+  const applyFilters = () => {
+    const query = searchInput?.value.trim().toLocaleLowerCase('vi') ?? '';
+    let visible = 0;
+    for (const card of cards) {
+      const matchesPillar = activeFilter === 'all' || card.dataset.pillar === activeFilter;
+      const matchesSearch = !query || card.dataset.search?.includes(query);
+      card.hidden = !(matchesPillar && matchesSearch);
+      if (!card.hidden) visible += 1;
+    }
+    if (count) count.textContent = `Hiển thị ${visible} bài viết`;
+    if (empty) empty.hidden = visible !== 0;
+  };
+
+  for (const button of buttons) {
+    button.addEventListener('click', () => {
+      activeFilter = button.dataset.filter ?? 'all';
+      for (const item of buttons) {
+        const selected = item === button;
+        item.classList.toggle('active', selected);
+        item.setAttribute('aria-pressed', String(selected));
+      }
+      applyFilters();
+    });
+  }
+  searchInput?.addEventListener('input', applyFilters);
+  clear?.addEventListener('click', () => {
+    activeFilter = 'all';
+    if (searchInput) searchInput.value = '';
+    buttons.forEach((button, index) => {
+      button.classList.toggle('active', index === 0);
+      button.setAttribute('aria-pressed', String(index === 0));
+    });
+    applyFilters();
+    searchInput?.focus();
+  });
+</script>
+
+<style>
+  .filter-section { min-height: 640px; }
+  .filter-bar { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: .8rem; }
+  .search-field { display: flex; width: min(100%, 400px); min-height: 50px; align-items: center; gap: .65rem; padding: 0 .9rem; background: white; border: 1px solid var(--line-strong); border-radius: 999px; }
+  .search-field input { width: 100%; border: 0; background: transparent; outline: 0; }
+  .filter-pills { display: flex; flex-wrap: wrap; gap: .45rem; }
+  .filter-pill { min-height: 44px; padding: .55rem .8rem; background: transparent; border: 1px solid var(--line-strong); border-radius: 999px; cursor: pointer; font-size: .82rem; font-weight: 700; }
+  .filter-pill:hover, .filter-pill.active { color: white; background: var(--ink); border-color: var(--ink); }
+  .result-count { margin-bottom: 1.5rem; color: var(--ink-soft); font-size: .8rem; }
+  .article-card[hidden] { display: none; }
+  .empty-state { max-width: 580px; margin: 3rem auto; padding: 2rem; text-align: center; }
+  .empty-state[hidden] { display: none; }
+  .empty-state h2 { font-size: 1.5rem; }
+  .empty-state p { color: var(--ink-soft); }
+  .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+  @media (max-width: 800px) { .filter-bar { align-items: stretch; flex-direction: column; } .search-field { width: 100%; } }
+</style>

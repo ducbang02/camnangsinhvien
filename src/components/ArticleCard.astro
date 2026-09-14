@@ -1,0 +1,28 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { articleSlug, formatDate, getPillar } from '../data/site';
+import Icon from './Icon.astro';
+
+interface Props {
+  article: CollectionEntry<'articles'>;
+  compact?: boolean;
+}
+
+const { article, compact = false } = Astro.props;
+const pillar = getPillar(article.data.pillar);
+---
+
+<article class:list={['article-card', { compact }]} data-pillar={article.data.pillar} data-search={`${article.data.title} ${article.data.description} ${article.data.tags.join(' ')}`.toLowerCase()}>
+  <div class="article-meta">
+    <a class={`topic-label accent-${pillar?.accent}`} href={`/chu-de/${article.data.pillar}/`}>{pillar?.shortName}</a>
+    <span>{article.data.readingMinutes ?? 6} phút đọc</span>
+  </div>
+  <h3><a href={`/cam-nang/${articleSlug(article.id)}/`}>{article.data.title}</a></h3>
+  {!compact && <p>{article.data.description}</p>}
+  <div class="card-footer">
+    <span>{formatDate(article.data.updatedDate ?? article.data.publishedDate)}</span>
+    <a class="arrow-link" href={`/cam-nang/${articleSlug(article.id)}/`} aria-label={`Đọc ${article.data.title}`}>
+      Đọc bài <Icon name="arrow" size={18} />
+    </a>
+  </div>
+</article>

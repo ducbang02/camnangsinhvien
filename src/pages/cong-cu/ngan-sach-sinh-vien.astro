@@ -1,0 +1,130 @@
+---
+import ToolLayout from '../../layouts/ToolLayout.astro';
+---
+
+<ToolLayout
+  title="Lập ngân sách sinh viên"
+  description="Tính số tiền còn lại sau chi phí cố định và dự phòng, rồi quy đổi thành mức linh hoạt mỗi tuần. Số liệu được lưu trên thiết bị nếu bạn chọn lưu."
+  eyebrow="Cuộc sống · Budget Planner"
+  relatedArticle={{ href: '/cam-nang/lap-ngan-sach-thang-sinh-vien/', label: 'Đọc cách lập ngân sách' }}
+>
+  <div class="tool-panel">
+    <h2>Ngân sách một tháng</h2>
+    <p>Nhập số tiền bằng VNĐ. Chỉ tính nguồn thu chắc chắn trong tháng.</p>
+    <form id="budget-form" novalidate>
+      <div class="form-grid budget-grid">
+        <div class="field"><label for="income">Tổng thu nhập/hỗ trợ</label><input id="income" type="number" inputmode="numeric" min="0" step="1000" placeholder="5.500.000" required /></div>
+        <div class="field"><label for="rent">Trọ + điện nước</label><input id="rent" class="expense" type="number" inputmode="numeric" min="0" step="1000" placeholder="2.500.000" /></div>
+        <div class="field"><label for="transport">Đi lại cố định</label><input id="transport" class="expense" type="number" inputmode="numeric" min="0" step="1000" placeholder="300.000" /></div>
+        <div class="field"><label for="study-cost">Học tập/phí phân bổ</label><input id="study-cost" class="expense" type="number" inputmode="numeric" min="0" step="1000" placeholder="400.000" /></div>
+        <div class="field"><label for="other-fixed">Chi cố định khác</label><input id="other-fixed" class="expense" type="number" inputmode="numeric" min="0" step="1000" placeholder="0" /></div>
+        <div class="field"><label for="reserve">Dự phòng/tiết kiệm</label><input id="reserve" type="number" inputmode="numeric" min="0" step="1000" placeholder="400.000" /></div>
+      </div>
+      <div class="form-actions">
+        <button class="button button-primary" type="submit">Tính ngân sách</button>
+        <button id="save-budget" class="button button-ghost" type="button">Lưu trên thiết bị</button>
+        <button id="reset-budget" class="button button-ghost" type="reset">Xóa số liệu</button>
+      </div>
+      <p id="budget-error" class="error-message" aria-live="assertive"></p>
+      <p id="save-status" class="save-status" aria-live="polite"></p>
+    </form>
+    <section id="budget-result" class="budget-result" aria-live="polite" hidden>
+      <div class="budget-summary">
+        <div><span>Còn lại linh hoạt</span><strong id="monthly-flex">0đ</strong></div>
+        <div><span>Khoảng mỗi tuần</span><strong id="weekly-flex">0đ</strong></div>
+      </div>
+      <div class="budget-bar" aria-hidden="true"><span id="fixed-bar"></span><span id="reserve-bar"></span><span id="flex-bar"></span></div>
+      <div class="budget-legend"><span><i class="fixed"></i> Cố định</span><span><i class="reserve"></i> Dự phòng</span><span><i class="flex"></i> Linh hoạt</span></div>
+      <p id="budget-advice"></p>
+    </section>
+  </div>
+</ToolLayout>
+
+<script>
+  const storageKey = 'cnsv:v1:budget';
+  const form = document.querySelector<HTMLFormElement>('#budget-form');
+  const fields = ['income', 'rent', 'transport', 'study-cost', 'other-fixed', 'reserve'] as const;
+  const result = document.querySelector<HTMLElement>('#budget-result');
+  const error = document.querySelector<HTMLElement>('#budget-error');
+  const saveStatus = document.querySelector<HTMLElement>('#save-status');
+  const money = new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND', maximumFractionDigits: 0 });
+
+  function values() {
+    const data = Object.fromEntries(fields.map((id) => [id, Number(document.querySelector<HTMLInputElement>(`#${id}`)?.value || 0)])) as Record<(typeof fields)[number], number>;
+    return data;
+  }
+  function valid(data: ReturnType<typeof values>) {
+    return fields.every((id) => Number.isFinite(data[id]) && data[id] >= 0) && data.income > 0;
+  }
+  function calculate() {
+    const data = values();
+    if (error) error.textContent = '';
+    if (!valid(data)) {
+      if (error) error.textContent = 'Thu nhập phải lớn hơn 0; các khoản còn lại không được âm.';
+      if (result) result.hidden = true;
+      return false;
+    }
+    const fixed = data.rent + data.transport + data['study-cost'] + data['other-fixed'];
+    const flexible = data.income - fixed - data.reserve;
+    const monthly = document.querySelector<HTMLElement>('#monthly-flex');
+    const weekly = document.querySelector<HTMLElement>('#weekly-flex');
+    const advice = document.querySelector<HTMLElement>('#budget-advice');
+    if (monthly) monthly.textContent = money.format(flexible);
+    if (weekly) weekly.textContent = money.format(flexible / 4.3);
+    const base = Math.max(data.income, fixed + data.reserve);
+    const fixedBar = document.querySelector<HTMLElement>('#fixed-bar');
+    const reserveBar = document.querySelector<HTMLElement>('#reserve-bar');
+    const flexBar = document.querySelector<HTMLElement>('#flex-bar');
+    if (fixedBar) fixedBar.style.width = `${Math.min(100, fixed / base * 100)}%`;
+    if (reserveBar) reserveBar.style.width = `${Math.min(100, data.reserve / base * 100)}%`;
+    if (flexBar) flexBar.style.width = `${Math.max(0, flexible) / base * 100}%`;
+    if (advice) advice.textContent = flexible < 0
+      ? `Bạn đang thiếu ${money.format(Math.abs(flexible))}. Ưu tiên rà khoản cố định hoặc tìm hỗ trợ; chưa nên ép một mục tiêu tiết kiệm không thực tế.`
+      : flexible / data.income < 0.15
+        ? 'Phần linh hoạt khá mỏng. Hãy giữ một khoảng đệm cho thuốc, sửa xe hoặc thay đổi lịch học.'
+        : 'Chia mức linh hoạt theo tuần và rà lại vào cuối tuần để điều chỉnh trước khi hết tháng.';
+    result?.classList.toggle('negative', flexible < 0);
+    if (result) result.hidden = false;
+    return true;
+  }
+  form?.addEventListener('submit', (event) => { event.preventDefault(); calculate(); });
+  document.querySelector('#save-budget')?.addEventListener('click', () => {
+    const data = values();
+    if (!calculate() || !valid(data)) return;
+    localStorage.setItem(storageKey, JSON.stringify(data));
+    if (saveStatus) saveStatus.textContent = 'Đã lưu số liệu trên trình duyệt này.';
+  });
+  form?.addEventListener('reset', () => {
+    localStorage.removeItem(storageKey);
+    setTimeout(() => {
+      if (result) result.hidden = true;
+      if (error) error.textContent = '';
+      if (saveStatus) saveStatus.textContent = 'Đã xóa số liệu đã lưu.';
+    }, 0);
+  });
+  try {
+    const saved = JSON.parse(localStorage.getItem(storageKey) ?? 'null') as Record<string, number> | null;
+    if (saved) for (const id of fields) { const input = document.querySelector<HTMLInputElement>(`#${id}`); if (input && Number.isFinite(saved[id])) input.value = String(saved[id]); }
+  } catch { localStorage.removeItem(storageKey); }
+</script>
+
+<style>
+  .budget-result { margin-top: 2rem; padding: 1.3rem; background: #ecf8f5; border: 1px solid #a4ddcf; border-radius: var(--radius); }
+  .budget-result[hidden] { display: none; }
+  .budget-result.negative { background: #fff0ed; border-color: #efb0a8; }
+  .budget-summary { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .budget-summary > div { display: grid; gap: .25rem; }
+  .budget-summary span { color: var(--ink-soft); font-size: .78rem; }
+  .budget-summary strong { font-family: var(--font-display); font-size: clamp(1.5rem, 4vw, 2.2rem); }
+  .budget-bar { display: flex; height: 15px; margin-top: 1.4rem; overflow: hidden; background: var(--line); border-radius: 999px; }
+  .budget-bar span { transition: width 240ms ease; }
+  #fixed-bar, .budget-legend .fixed { background: var(--blue-dark); }
+  #reserve-bar, .budget-legend .reserve { background: var(--yellow); }
+  #flex-bar, .budget-legend .flex { background: var(--mint-dark); }
+  .budget-legend { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: .6rem; color: var(--ink-soft); font-size: .7rem; }
+  .budget-legend span { display: inline-flex; align-items: center; gap: .3rem; }
+  .budget-legend i { width: 9px; height: 9px; border-radius: 50%; }
+  #budget-advice { margin: 1rem 0 0; font-size: .85rem; }
+  .save-status { margin: .7rem 0 0; color: var(--success); font-size: .8rem; }
+  @media (max-width: 600px) { .budget-summary { grid-template-columns: 1fr; } }
+</style>

@@ -1,0 +1,92 @@
+---
+import ToolLayout from '../../layouts/ToolLayout.astro';
+---
+
+<ToolLayout
+  title="Điểm cuối kỳ cần bao nhiêu?"
+  description="Tính ngược điểm thi cần đạt từ điểm quá trình, trọng số cuối kỳ và mục tiêu tổng kết. Nhớ kiểm tra điểm liệt trong đề cương môn."
+  eyebrow="Học tập · Final Grade Calculator"
+  relatedArticle={{ href: '/cam-nang/diem-cuoi-ky-can-bao-nhieu/', label: 'Hiểu công thức tính điểm' }}
+>
+  <div class="tool-panel">
+    <h2>Nhập dữ liệu môn học</h2>
+    <p>Điểm dùng cùng một thang, mặc định từ 0 đến 10.</p>
+    <form id="final-grade-form" novalidate>
+      <div class="form-grid">
+        <div class="field">
+          <label for="current-grade">Điểm quá trình hiện tại</label>
+          <input id="current-grade" type="number" inputmode="decimal" min="0" max="10" step="0.01" placeholder="7.5" required />
+          <span class="field-hint">Nếu có nhiều đầu điểm, nhập trung bình có trọng số của phần quá trình.</span>
+        </div>
+        <div class="field">
+          <label for="final-weight">Trọng số cuối kỳ (%)</label>
+          <input id="final-weight" type="number" inputmode="decimal" min="1" max="100" step="1" placeholder="60" required />
+        </div>
+        <div class="field">
+          <label for="target-grade">Điểm tổng kết mục tiêu</label>
+          <input id="target-grade" type="number" inputmode="decimal" min="0" max="10" step="0.01" placeholder="8" required />
+        </div>
+        <div class="field">
+          <label for="max-grade">Thang điểm tối đa</label>
+          <select id="max-grade"><option value="10">10</option><option value="4">4</option></select>
+        </div>
+      </div>
+      <div class="form-actions">
+        <button class="button button-primary" type="submit">Tính điểm cần đạt</button>
+        <button id="reset-final" class="button button-ghost" type="reset">Đặt lại</button>
+      </div>
+      <p id="final-error" class="error-message" aria-live="assertive"></p>
+    </form>
+    <section id="final-result" class="result-box" aria-live="polite" hidden>
+      <span>Điểm cuối kỳ cần đạt</span>
+      <p id="final-number" class="result-number">0.00</p>
+      <p id="final-message"></p>
+    </section>
+  </div>
+</ToolLayout>
+
+<script>
+  const form = document.querySelector<HTMLFormElement>('#final-grade-form');
+  const currentInput = document.querySelector<HTMLInputElement>('#current-grade');
+  const weightInput = document.querySelector<HTMLInputElement>('#final-weight');
+  const targetInput = document.querySelector<HTMLInputElement>('#target-grade');
+  const maxInput = document.querySelector<HTMLSelectElement>('#max-grade');
+  const error = document.querySelector<HTMLElement>('#final-error');
+  const result = document.querySelector<HTMLElement>('#final-result');
+  const resultNumber = document.querySelector<HTMLElement>('#final-number');
+  const message = document.querySelector<HTMLElement>('#final-message');
+
+  function setLimits() {
+    const max = Number(maxInput?.value ?? 10);
+    for (const input of [currentInput, targetInput]) input?.setAttribute('max', String(max));
+  }
+
+  maxInput?.addEventListener('change', setLimits);
+  form?.addEventListener('submit', (event) => {
+    event.preventDefault();
+    if (error) error.textContent = '';
+    const current = Number(currentInput?.value);
+    const weight = Number(weightInput?.value);
+    const target = Number(targetInput?.value);
+    const max = Number(maxInput?.value ?? 10);
+    const valid = Number.isFinite(current) && current >= 0 && current <= max && Number.isFinite(target) && target >= 0 && target <= max && Number.isFinite(weight) && weight > 0 && weight <= 100;
+    if (!valid) {
+      if (error) error.textContent = `Điểm phải nằm trong khoảng 0–${max}; trọng số cuối kỳ từ 1–100%.`;
+      if (result) result.hidden = true;
+      return;
+    }
+    const finalWeight = weight / 100;
+    const required = (target - current * (1 - finalWeight)) / finalWeight;
+    if (resultNumber) resultNumber.textContent = Math.max(0, required).toFixed(2);
+    if (message) {
+      if (required > max) message.textContent = `Mục tiêu này không thể đạt chỉ bằng bài cuối kỳ: kết quả cần vượt thang ${max}. Hãy kiểm tra bonus, học cải thiện hoặc điều chỉnh mục tiêu.`;
+      else if (required <= 0) message.textContent = 'Phần điểm hiện có đã đủ cho mục tiêu theo phép tính này. Vẫn kiểm tra điểm liệt hoặc điều kiện dự thi.';
+      else message.textContent = `Bạn cần khoảng ${required.toFixed(2)}/${max}. Hãy kiểm tra quy tắc làm tròn và điểm liệt trong đề cương môn.`;
+    }
+    if (result) result.hidden = false;
+  });
+  form?.addEventListener('reset', () => {
+    setTimeout(() => { if (error) error.textContent = ''; if (result) result.hidden = true; setLimits(); }, 0);
+  });
+  setLimits();
+</script>

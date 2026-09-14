@@ -1,0 +1,167 @@
+---
+import ToolLayout from '../../layouts/ToolLayout.astro';
+---
+
+<ToolLayout
+  title="Tính GPA hệ 4"
+  description="Nhập điểm hệ 4 và số tín chỉ của từng môn để tính GPA có trọng số. Công cụ không tự quy đổi điểm chữ vì mỗi trường có thể áp dụng quy chế khác nhau."
+  eyebrow="Học tập · GPA Calculator"
+  relatedArticle={{ href: '/cam-nang/cach-tinh-gpa-dai-hoc/', label: 'Đọc cách tính GPA' }}
+>
+  <div class="tool-panel">
+    <h2>Các môn được tính GPA</h2>
+    <p>Lấy điểm hệ 4 và tín chỉ từ bảng điểm/quy chế chính thức của trường.</p>
+    <div class="data-table-wrap">
+      <table class="data-table">
+        <thead><tr><th scope="col">Tên môn</th><th scope="col">Tín chỉ</th><th scope="col">Điểm hệ 4</th><th scope="col"><span class="sr-only">Xóa</span></th></tr></thead>
+        <tbody id="course-rows"></tbody>
+      </table>
+    </div>
+    <div class="form-actions">
+      <button id="add-course" class="button button-ghost" type="button">+ Thêm môn</button>
+      <button id="calculate-gpa" class="button button-primary" type="button">Tính GPA</button>
+      <button id="reset-gpa" class="button button-ghost" type="button">Đặt lại</button>
+    </div>
+    <p id="gpa-error" class="error-message" aria-live="assertive"></p>
+    <section id="gpa-result" class="result-box" aria-live="polite" hidden>
+      <span>GPA có trọng số</span>
+      <p id="gpa-number" class="result-number">0.00</p>
+      <p id="gpa-detail"></p>
+    </section>
+    <section id="gpa-history" class="history" hidden>
+      <div class="history-heading"><h3>Lần tính gần đây</h3><button id="clear-history" type="button">Xóa lịch sử</button></div>
+      <ul id="history-list"></ul>
+    </section>
+  </div>
+
+  <template id="course-row-template">
+    <tr>
+      <td><input class="input course-name" type="text" aria-label="Tên môn" placeholder="Ví dụ: Toán cao cấp" /></td>
+      <td><input class="input course-credit" type="number" aria-label="Số tín chỉ" inputmode="decimal" min="0.5" max="30" step="0.5" placeholder="3" /></td>
+      <td><input class="input course-grade" type="number" aria-label="Điểm hệ 4" inputmode="decimal" min="0" max="4" step="0.01" placeholder="3.5" /></td>
+      <td><button class="remove-row" type="button" aria-label="Xóa môn">×</button></td>
+    </tr>
+  </template>
+</ToolLayout>
+
+<script>
+  type Course = { name: string; credits: number; grade: number };
+  type HistoryItem = { gpa: number; credits: number; date: string };
+  const storageKey = 'cnsv:v1:gpa-history';
+  const rows = document.querySelector<HTMLTableSectionElement>('#course-rows');
+  const template = document.querySelector<HTMLTemplateElement>('#course-row-template');
+  const error = document.querySelector<HTMLElement>('#gpa-error');
+  const result = document.querySelector<HTMLElement>('#gpa-result');
+  const number = document.querySelector<HTMLElement>('#gpa-number');
+  const detail = document.querySelector<HTMLElement>('#gpa-detail');
+  const historySection = document.querySelector<HTMLElement>('#gpa-history');
+  const historyList = document.querySelector<HTMLUListElement>('#history-list');
+
+  function addRow(course?: Partial<Course>) {
+    if (!rows || !template) return;
+    const fragment = template.content.cloneNode(true) as DocumentFragment;
+    const row = fragment.querySelector('tr');
+    const name = fragment.querySelector<HTMLInputElement>('.course-name');
+    const credits = fragment.querySelector<HTMLInputElement>('.course-credit');
+    const grade = fragment.querySelector<HTMLInputElement>('.course-grade');
+    if (name) name.value = course?.name ?? '';
+    if (credits) credits.value = course?.credits?.toString() ?? '';
+    if (grade) grade.value = course?.grade?.toString() ?? '';
+    fragment.querySelector('.remove-row')?.addEventListener('click', () => {
+      if ((rows.children.length ?? 0) > 1) row?.remove();
+      else {
+        for (const input of row?.querySelectorAll<HTMLInputElement>('input') ?? []) input.value = '';
+      }
+    });
+    rows.append(fragment);
+  }
+
+  function readCourses(): Course[] | null {
+    if (!rows) return null;
+    const courses: Course[] = [];
+    let invalid = false;
+    for (const row of rows.querySelectorAll('tr')) {
+      const nameInput = row.querySelector<HTMLInputElement>('.course-name');
+      const creditInput = row.querySelector<HTMLInputElement>('.course-credit');
+      const gradeInput = row.querySelector<HTMLInputElement>('.course-grade');
+      const hasAny = Boolean(nameInput?.value.trim() || creditInput?.value || gradeInput?.value);
+      if (!hasAny) continue;
+      const credits = Number(creditInput?.value);
+      const grade = Number(gradeInput?.value);
+      const rowInvalid = !Number.isFinite(credits) || credits <= 0 || !Number.isFinite(grade) || grade < 0 || grade > 4;
+      creditInput?.setAttribute('aria-invalid', String(rowInvalid));
+      gradeInput?.setAttribute('aria-invalid', String(rowInvalid));
+      if (rowInvalid) invalid = true;
+      else courses.push({ name: nameInput?.value.trim() || 'Môn chưa đặt tên', credits, grade });
+    }
+    return invalid ? null : courses;
+  }
+
+  function getHistory(): HistoryItem[] {
+    try { return JSON.parse(localStorage.getItem(storageKey) ?? '[]') as HistoryItem[]; }
+    catch { return []; }
+  }
+
+  function renderHistory() {
+    const items = getHistory();
+    if (!historySection || !historyList) return;
+    historySection.hidden = items.length === 0;
+    historyList.replaceChildren(...items.map((item) => {
+      const li = document.createElement('li');
+      li.innerHTML = `<strong>${item.gpa.toFixed(2)}</strong><span>${item.credits} tín chỉ · ${new Date(item.date).toLocaleDateString('vi-VN')}</span>`;
+      return li;
+    }));
+  }
+
+  document.querySelector('#add-course')?.addEventListener('click', () => addRow());
+  document.querySelector('#calculate-gpa')?.addEventListener('click', () => {
+    if (error) error.textContent = '';
+    const courses = readCourses();
+    if (!courses) {
+      if (error) error.textContent = 'Kiểm tra lại: tín chỉ phải lớn hơn 0 và điểm nằm trong khoảng 0–4.';
+      if (result) result.hidden = true;
+      return;
+    }
+    if (courses.length === 0) {
+      if (error) error.textContent = 'Hãy nhập ít nhất một môn có số tín chỉ và điểm.';
+      if (result) result.hidden = true;
+      return;
+    }
+    const credits = courses.reduce((sum, course) => sum + course.credits, 0);
+    const weighted = courses.reduce((sum, course) => sum + course.credits * course.grade, 0);
+    const gpa = weighted / credits;
+    if (number) number.textContent = gpa.toFixed(2);
+    if (detail) detail.textContent = `${courses.length} môn · ${credits} tín chỉ · ${weighted.toFixed(2)} điểm quy đổi`;
+    if (result) result.hidden = false;
+    const history = [{ gpa, credits, date: new Date().toISOString() }, ...getHistory()].slice(0, 3);
+    localStorage.setItem(storageKey, JSON.stringify(history));
+    renderHistory();
+  });
+  document.querySelector('#reset-gpa')?.addEventListener('click', () => {
+    rows?.replaceChildren();
+    addRow(); addRow(); addRow();
+    if (error) error.textContent = '';
+    if (result) result.hidden = true;
+  });
+  document.querySelector('#clear-history')?.addEventListener('click', () => {
+    localStorage.removeItem(storageKey);
+    renderHistory();
+  });
+
+  addRow(); addRow(); addRow();
+  renderHistory();
+</script>
+
+<style>
+  .history { margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--line); }
+  .history[hidden] { display: none; }
+  .history-heading { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+  .history-heading h3 { margin: 0; font-size: 1rem; }
+  .history-heading button { padding: .4rem; color: var(--ink-soft); background: transparent; border: 0; cursor: pointer; font-size: .76rem; text-decoration: underline; }
+  .history ul { display: grid; grid-template-columns: repeat(3, 1fr); gap: .7rem; margin: 1rem 0 0; padding: 0; list-style: none; }
+  .history li { display: grid; gap: .2rem; padding: .8rem; background: var(--paper); border-radius: var(--radius-sm); }
+  .history li strong { font-family: var(--font-display); font-size: 1.3rem; }
+  .history li span { color: var(--ink-soft); font-size: .72rem; }
+  .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; }
+  @media (max-width: 620px) { .history ul { grid-template-columns: 1fr; } }
+</style>

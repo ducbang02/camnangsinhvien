@@ -1,0 +1,46 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import Icon from '../components/Icon.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  eyebrow: string;
+  relatedArticle?: { href: string; label: string };
+}
+
+const { title, description, eyebrow, relatedArticle } = Astro.props;
+---
+
+<BaseLayout title={title} description={description}>
+  <section class="tool-hero section-tight">
+    <div class="container tool-hero-grid">
+      <div>
+        <a class="back-link" href="/cong-cu/">← Tất cả công cụ</a>
+        <p class="eyebrow">{eyebrow}</p>
+        <h1>{title}</h1>
+        <p class="lead">{description}</p>
+      </div>
+      <div class="privacy-note">
+        <Icon name="shield" size={22} />
+        <p><strong>Dữ liệu thuộc về bạn.</strong> Công cụ chạy trên trình duyệt và không gửi thông tin lên máy chủ.</p>
+      </div>
+    </div>
+  </section>
+  <section class="section tool-section">
+    <div class="container tool-shell">
+      <slot />
+    </div>
+  </section>
+  {relatedArticle && (
+    <section class="section section-muted">
+      <div class="container inline-cta">
+        <div>
+          <p class="eyebrow">Đọc trước khi tính</p>
+          <h2>Hiểu công thức, tránh nhập sai dữ liệu</h2>
+        </div>
+        <a class="button button-dark" href={relatedArticle.href}>{relatedArticle.label} <Icon name="arrow" size={18} /></a>
+      </div>
+    </section>
+  )}
+</BaseLayout>

@@ -1,0 +1,184 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ArticleCard from '../components/ArticleCard.astro';
+import ToolCard from '../components/ToolCard.astro';
+import Icon from '../components/Icon.astro';
+import { pillars, tools } from '../data/site';
+
+const articles = (await getCollection('articles', ({ data }) => !data.draft))
+  .sort((a, b) => Number(b.data.featured) - Number(a.data.featured) || b.data.publishedDate.valueOf() - a.data.publishedDate.valueOf());
+const featured = articles.slice(0, 6);
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'Cẩm nang sinh viên',
+  url: new URL('/', Astro.site ?? Astro.url.origin).href,
+  description: 'Hướng dẫn, checklist và công cụ thực hành dành cho sinh viên Việt Nam.',
+  inLanguage: 'vi-VN',
+};
+---
+
+<BaseLayout schema={schema}>
+  <section class="home-hero">
+    <div class="container hero-grid">
+      <div class="hero-copy">
+        <p class="eyebrow">Student hub dành cho sinh viên Việt Nam</p>
+        <h1>Đại học có nhiều việc khó. Mình giải quyết <span>từng việc một.</span></h1>
+        <p class="lead">Không chỉ đọc mẹo. Chọn đúng vấn đề, làm theo hướng dẫn và dùng công cụ ngay trên cùng một nơi.</p>
+        <div class="hero-actions">
+          <a class="button button-primary" href="/cong-cu/tinh-gpa/">Tính GPA ngay <Icon name="arrow" size={19} /></a>
+          <a class="button button-ghost" href="/cam-nang/">Xem tất cả cẩm nang</a>
+        </div>
+        <div class="hero-proof" aria-label="Điểm nổi bật">
+          <span><Icon name="check" size={17} /> 5 công cụ miễn phí</span>
+          <span><Icon name="shield" size={17} /> Dữ liệu nằm trên thiết bị</span>
+        </div>
+      </div>
+
+      <aside class="quick-board" aria-labelledby="quick-title">
+        <div class="board-top">
+          <span class="board-kicker">Bắt đầu trong 2 phút</span>
+          <span class="board-dot" aria-hidden="true"></span>
+        </div>
+        <h2 id="quick-title">Bạn đang cần làm gì?</h2>
+        <ul>
+          <li><a href="/cong-cu/diem-cuoi-ky/"><span>01</span>Tính điểm thi cần đạt <Icon name="arrow" size={17} /></a></li>
+          <li><a href="/cam-nang/on-thi-trong-7-ngay/"><span>02</span>Lên kế hoạch ôn thi <Icon name="arrow" size={17} /></a></li>
+          <li><a href="/cam-nang/tan-sinh-vien-can-chuan-bi-gi/"><span>03</span>Chuẩn bị vào năm nhất <Icon name="arrow" size={17} /></a></li>
+          <li><a href="/sinh-vien-it/"><span>04</span>Chọn lộ trình học IT <Icon name="arrow" size={17} /></a></li>
+        </ul>
+        <p class="board-note">Không cần đăng ký tài khoản.</p>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section pillars-section">
+    <div class="container">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Ba trụ cột</p>
+          <h2>Mọi nội dung đều giúp bạn tiến thêm một bước</h2>
+        </div>
+        <p>Ít chuyên mục hơn để mỗi hướng dẫn có chiều sâu và nối được thành hành trình.</p>
+      </div>
+      <div class="pillar-grid">
+        {pillars.map((pillar) => (
+          <a class={`pillar-card pillar-${pillar.accent}`} href={`/chu-de/${pillar.id}/`}>
+            <span class="pillar-number">{pillar.number}</span>
+            <div>
+              <h3>{pillar.name}</h3>
+              <p>{pillar.description}</p>
+            </div>
+            <span class="pillar-promise">{pillar.promise}</span>
+            <Icon name="arrow" size={22} />
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-muted">
+    <div class="container">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Làm ngay</p>
+          <h2>Công cụ nhỏ cho việc đang cần giải quyết</h2>
+        </div>
+        <a class="arrow-link" href="/cong-cu/">Xem đủ 5 công cụ <Icon name="arrow" size={18} /></a>
+      </div>
+      <div class="tools-grid">
+        {tools.slice(0, 4).map((tool) => <ToolCard tool={tool} />)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Nên đọc trước</p>
+          <h2>Những hướng dẫn giải quyết nhu cầu thường gặp</h2>
+        </div>
+        <a class="arrow-link" href="/cam-nang/">Mở thư viện bài viết <Icon name="arrow" size={18} /></a>
+      </div>
+      <div class="article-grid">
+        {featured.map((article) => <ArticleCard article={article} />)}
+      </div>
+    </div>
+  </section>
+
+  <section class="it-strip">
+    <div class="container it-strip-grid">
+      <div class="code-badge" aria-hidden="true"><Icon name="code" size={42} /></div>
+      <div>
+        <p class="eyebrow">Nhánh chuyên sâu</p>
+        <h2>Sinh viên IT: học nền tảng, rồi mới chọn hướng</h2>
+        <p>Không mặc định ai cũng phải thành Software Engineer. Bắt đầu từ nền tảng chung, project đầu tiên và bản đồ nghề phù hợp.</p>
+      </div>
+      <a class="button button-primary" href="/sinh-vien-it/">Mở cẩm nang IT <Icon name="arrow" size={19} /></a>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .home-hero { padding-block: clamp(3rem, 7vw, 6.5rem); overflow: hidden; }
+  .hero-grid { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(350px, .75fr); align-items: center; gap: clamp(2rem, 6vw, 6rem); }
+  .hero-copy h1 { max-width: 820px; margin-bottom: 1.4rem; }
+  .hero-copy h1 span { position: relative; white-space: nowrap; }
+  .hero-copy h1 span::after { position: absolute; right: 0; bottom: .04em; left: 0; z-index: -1; height: .22em; content: ''; background: var(--mint); transform: rotate(-1deg); }
+  .hero-actions { display: flex; flex-wrap: wrap; gap: .75rem; margin-top: 2rem; }
+  .hero-proof { display: flex; flex-wrap: wrap; gap: 1.25rem; margin-top: 1.5rem; color: var(--ink-soft); font-size: .78rem; font-weight: 600; }
+  .hero-proof span { display: inline-flex; align-items: center; gap: .4rem; }
+  .quick-board { position: relative; padding: 1.45rem; background: var(--ink); border: 2px solid var(--ink); border-radius: 26px 10px 26px 10px; color: white; box-shadow: 12px 12px 0 var(--yellow); transform: rotate(1deg); }
+  .quick-board::before { position: absolute; top: -22px; left: 50%; width: 78px; height: 30px; content: ''; background: rgba(99, 230, 190, .75); transform: translateX(-50%) rotate(-3deg); }
+  .board-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: .65rem; color: #a9b7cc; font-size: .72rem; font-weight: 700; letter-spacing: .09em; text-transform: uppercase; }
+  .board-dot { width: 10px; height: 10px; background: var(--coral); border-radius: 50%; box-shadow: 0 0 0 4px rgba(255, 128, 111, .16); }
+  .quick-board h2 { margin-bottom: 1rem; font-size: 1.45rem; }
+  .quick-board ul { display: grid; gap: .45rem; margin: 0; padding: 0; list-style: none; }
+  .quick-board li a { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: .75rem; padding: .8rem; border: 1px solid #334764; border-radius: 11px; font-size: .86rem; font-weight: 600; text-decoration: none; }
+  .quick-board li a:hover { color: var(--ink); background: var(--mint); border-color: var(--mint); }
+  .quick-board li span { color: var(--yellow); font-family: var(--font-display); font-size: .7rem; }
+  .quick-board li a:hover span { color: var(--ink); }
+  .board-note { margin: 1rem 0 0; color: #8494ab; font-size: .72rem; text-align: right; }
+  .pillar-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; }
+  .pillar-card { display: grid; min-height: 390px; grid-template-rows: auto 1fr auto auto; gap: 1.2rem; padding: 1.5rem; border: 2px solid var(--ink); border-radius: 22px 8px 22px 8px; text-decoration: none; transition: transform 160ms ease, box-shadow 160ms ease; }
+  .pillar-card:hover { box-shadow: 7px 7px 0 var(--ink); transform: translate(-3px, -3px); }
+  .pillar-mint { background: var(--mint); }
+  .pillar-blue { background: var(--blue); }
+  .pillar-yellow { background: var(--yellow); }
+  .pillar-number { font-family: var(--font-display); font-size: .78rem; font-weight: 800; letter-spacing: .1em; }
+  .pillar-card h3 { margin-bottom: .9rem; font-size: clamp(1.45rem, 2.5vw, 2rem); }
+  .pillar-card p { font-size: .9rem; }
+  .pillar-promise { padding-top: 1rem; border-top: 1px solid rgba(16,33,63,.28); font-size: .76rem; font-weight: 800; }
+  .pillar-card > svg { justify-self: end; }
+  .it-strip { padding-block: clamp(3rem, 7vw, 5rem); color: white; background: var(--ink); }
+  .it-strip-grid { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 2rem; }
+  .code-badge { display: grid; width: 88px; height: 88px; color: var(--ink); background: var(--blue); border-radius: 26px 10px 26px 10px; place-items: center; transform: rotate(-3deg); }
+  .it-strip h2 { margin-bottom: .75rem; font-size: clamp(1.7rem, 4vw, 2.6rem); }
+  .it-strip p:not(.eyebrow) { max-width: 650px; margin-bottom: 0; color: #bdc8d9; }
+  .it-strip .eyebrow { color: var(--mint); }
+  @media (max-width: 900px) {
+    .hero-grid { grid-template-columns: 1fr; }
+    .quick-board { width: min(100%, 620px); transform: none; }
+    .pillar-grid { grid-template-columns: 1fr; }
+    .pillar-card { min-height: 0; grid-template-columns: auto 1fr auto; grid-template-rows: auto auto; }
+    .pillar-card > div { grid-column: 2; grid-row: 1 / span 2; }
+    .pillar-promise { grid-column: 1 / -1; }
+    .pillar-card > svg { grid-column: 3; grid-row: 1; }
+    .it-strip-grid { grid-template-columns: auto 1fr; }
+    .it-strip .button { grid-column: 2; justify-self: start; }
+  }
+  @media (max-width: 600px) {
+    .home-hero { padding-top: 2.6rem; }
+    .hero-copy h1 span { white-space: normal; }
+    .hero-actions .button { width: 100%; }
+    .quick-board { box-shadow: 7px 7px 0 var(--yellow); }
+    .pillar-card { display: flex; min-height: 310px; flex-direction: column; }
+    .pillar-promise { margin-top: auto; }
+    .it-strip-grid { grid-template-columns: 1fr; }
+    .it-strip .button { grid-column: auto; width: 100%; }
+    .code-badge { width: 68px; height: 68px; }
+  }
+</style>

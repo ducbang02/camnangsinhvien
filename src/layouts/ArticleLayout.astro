@@ -1,0 +1,99 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import BaseLayout from './BaseLayout.astro';
+import ArticleCard from '../components/ArticleCard.astro';
+import Icon from '../components/Icon.astro';
+import { articleSlug, formatDate, getPillar } from '../data/site';
+
+interface Props {
+  article: CollectionEntry<'articles'>;
+  headings: { depth: number; slug: string; text: string }[];
+  related: CollectionEntry<'articles'>[];
+}
+
+const { article, headings, related } = Astro.props;
+const { data } = article;
+const pillar = getPillar(data.pillar);
+const url = new URL(`/cam-nang/${articleSlug(article.id)}/`, Astro.site ?? Astro.url.origin);
+const schema = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: data.title,
+    description: data.description,
+    datePublished: data.publishedDate.toISOString(),
+    dateModified: (data.updatedDate ?? data.publishedDate).toISOString(),
+    author: { '@type': 'Organization', name: data.author },
+    publisher: { '@type': 'Organization', name: 'Cẩm nang sinh viên' },
+    mainEntityOfPage: url.href,
+    inLanguage: 'vi-VN',
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Trang chủ', item: new URL('/', url).href },
+      { '@type': 'ListItem', position: 2, name: 'Cẩm nang', item: new URL('/cam-nang/', url).href },
+      { '@type': 'ListItem', position: 3, name: data.title, item: url.href },
+    ],
+  },
+];
+---
+
+<BaseLayout title={data.title} description={data.description} canonical={url.pathname} schema={schema}>
+  <article>
+    <header class="article-header">
+      <div class="narrow">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+          <a href="/">Trang chủ</a><span>/</span><a href="/cam-nang/">Cẩm nang</a><span>/</span><span aria-current="page">{data.topic}</span>
+        </nav>
+        <a class={`topic-label accent-${pillar?.accent}`} href={`/chu-de/${data.pillar}/`}>{pillar?.name}</a>
+        <h1>{data.title}</h1>
+        <p class="article-dek">{data.description}</p>
+        <div class="byline">
+          <span>{data.author}</span><span aria-hidden="true">·</span>
+          <time datetime={(data.updatedDate ?? data.publishedDate).toISOString()}>Cập nhật {formatDate(data.updatedDate ?? data.publishedDate)}</time>
+          <span aria-hidden="true">·</span><span>{data.readingMinutes ?? 6} phút đọc</span>
+        </div>
+      </div>
+    </header>
+
+    <div class="container article-shell">
+      {headings.filter((heading) => heading.depth === 2).length > 1 && (
+        <aside class="toc" aria-labelledby="toc-title">
+          <p id="toc-title">Trong bài này</p>
+          <ol>
+            {headings.filter((heading) => heading.depth === 2).map((heading) => <li><a href={`#${heading.slug}`}>{heading.text}</a></li>)}
+          </ol>
+        </aside>
+      )}
+      <div class="article-body prose">
+        <slot />
+        {data.tool && (
+          <div class="article-tool-cta">
+            <span class="tool-icon"><Icon name="spark" size={24} /></span>
+            <div><strong>Đừng chỉ đọc — thử với số liệu của bạn</strong><p>Công cụ chạy ngay trên trình duyệt, không cần tài khoản.</p></div>
+            <a class="button button-primary" href={data.tool}>Mở công cụ <Icon name="arrow" size={18} /></a>
+          </div>
+        )}
+        {data.sources.length > 0 && (
+          <section class="sources" aria-labelledby="sources-title">
+            <h2 id="sources-title">Nguồn tham khảo</h2>
+            <ul>
+              {data.sources.map((source) => <li><a href={source.url} rel="noopener noreferrer" target="_blank">{source.label} <span aria-hidden="true">↗</span></a></li>)}
+            </ul>
+          </section>
+        )}
+      </div>
+    </div>
+  </article>
+
+  {related.length > 0 && (
+    <section class="section section-muted">
+      <div class="container">
+        <div class="section-heading"><div><p class="eyebrow">Bước tiếp theo</p><h2>Đọc tiếp trong cùng hành trình</h2></div></div>
+        <div class="article-grid">{related.map((item) => <ArticleCard article={item} compact />)}</div>
+      </div>
+    </section>
+  )}
+</BaseLayout>

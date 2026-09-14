@@ -1,0 +1,25 @@
+---
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import ArticleLayout from '../../layouts/ArticleLayout.astro';
+import { articleSlug } from '../../data/site';
+
+export async function getStaticPaths() {
+  const articles = await getCollection('articles', ({ data }) => !data.draft);
+  return articles.map((article) => ({ params: { slug: articleSlug(article.id) }, props: { article, articles } }));
+}
+
+interface Props {
+  article: CollectionEntry<'articles'>;
+  articles: CollectionEntry<'articles'>[];
+}
+const { article, articles } = Astro.props;
+const { Content, headings } = await render(article);
+const related = articles
+  .filter((item) => item.id !== article.id && (item.data.topic === article.data.topic || item.data.pillar === article.data.pillar))
+  .sort((a, b) => Number(b.data.topic === article.data.topic) - Number(a.data.topic === article.data.topic))
+  .slice(0, 3);
+---
+
+<ArticleLayout {article} {headings} {related}>
+  <Content />
+</ArticleLayout>

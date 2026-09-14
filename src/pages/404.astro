@@ -1,0 +1,17 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Icon from '../components/Icon.astro';
+---
+
+<BaseLayout title="Không tìm thấy trang" description="Trang bạn tìm không tồn tại hoặc đã đổi địa chỉ." noindex>
+  <section class="not-found"><div class="container not-found-inner"><span>404</span><p class="eyebrow">Trang này đi lạc rồi</p><h1>Không tìm thấy nội dung bạn cần</h1><p>Đường dẫn có thể đã thay đổi. Bạn có thể quay về thư viện cẩm nang hoặc mở một công cụ.</p><div><a class="button button-primary" href="/cam-nang/">Tìm trong cẩm nang <Icon name="arrow" size={18} /></a><a class="button button-ghost" href="/">Về trang chủ</a></div></div></section>
+</BaseLayout>
+
+<style>
+  .not-found { display: grid; min-height: 70vh; place-items: center; text-align: center; }
+  .not-found-inner { max-width: 720px; }
+  .not-found-inner > span { color: var(--blue-dark); font-family: var(--font-display); font-size: clamp(5rem, 20vw, 10rem); font-weight: 800; letter-spacing: -.08em; line-height: .8; opacity: .16; }
+  .not-found h1 { margin: 1rem 0; font-size: clamp(2rem, 6vw, 3.5rem); }
+  .not-found p:not(.eyebrow) { color: var(--ink-soft); }
+  .not-found-inner > div { display: flex; justify-content: center; flex-wrap: wrap; gap: .7rem; margin-top: 1.5rem; }
+</style>

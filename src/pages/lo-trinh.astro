@@ -1,0 +1,53 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Icon from '../components/Icon.astro';
+
+const phases = [
+  { status: 'Đang làm', phase: 'Phase 1', title: 'MVP hữu ích', description: 'Ba trụ cột, 20 bài mở đầu, 5 công cụ và nhánh Sinh viên IT.', items: ['Static, nhanh và SEO-ready', 'Không login hoặc database', 'Tự kiểm tra trên mobile'] },
+  { status: 'Tiếp theo', phase: 'Phase 2', title: 'Có traffic ban đầu', description: 'Dùng dữ liệu tìm kiếm thật để mở rộng những cluster đang thắng.', items: ['Typing Test/Trainer', 'Template tải về', 'Affiliate thử nghiệm có disclosure'] },
+  { status: 'Khi đã chứng minh', phase: 'Phase 3', title: 'Scale nội dung', description: 'Mở rộng chiều sâu, quy trình cập nhật và khả năng khám phá.', items: ['Roadmap tương tác', 'Kho tài nguyên có ngày rà soát', 'Search khi số bài đủ lớn'] },
+  { status: 'Để sau', phase: 'Phase 4–5', title: 'Kiếm tiền rồi thành platform', description: 'Chỉ thêm sản phẩm, quảng cáo hoặc đồng bộ khi UX và nhu cầu cho phép.', items: ['Template/khóa học nhỏ', 'Display Ads có giới hạn', 'Tài khoản tùy chọn nếu cần sync'] },
+];
+---
+
+<BaseLayout title="Lộ trình phát triển" description="Lộ trình công khai của Cẩm nang sinh viên: ưu tiên MVP hữu ích, traffic thật và trải nghiệm trước khi mở rộng hoặc kiếm tiền.">
+  <section class="page-hero"><div class="container"><p class="eyebrow">Xây nhỏ, kiểm chứng, rồi mở rộng</p><h1>Lộ trình công khai</h1><p class="lead">Website không cần hàng trăm bài hoặc tài khoản ngay từ đầu. Mỗi phase chỉ mở khi phase trước tạo giá trị thật.</p></div></section>
+  <section class="section">
+    <div class="container roadmap-list">
+      {phases.map((phase, index) => (
+        <article class:list={['phase-card', { current: index === 0 }]}>
+          <div class="phase-marker"><span>{index + 1}</span><i></i></div>
+          <div class="phase-content">
+            <div class="phase-top"><span>{phase.phase}</span><mark>{phase.status}</mark></div>
+            <h2>{phase.title}</h2><p>{phase.description}</p>
+            <ul>{phase.items.map((item) => <li><Icon name="check" size={18} /> {item}</li>)}</ul>
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+  <section class="section section-muted"><div class="container not-now"><div><p class="eyebrow">Không làm trong V1</p><h2>Những thứ trông lớn nhưng chưa tạo thêm giá trị</h2></div><p>Admin/CMS tùy biến, mobile app, LMS, forum, login chỉ để lưu cài đặt, hàng trăm bài AI-generated và 20 tool cùng lúc. Mỗi hạng mục chỉ được quay lại khi có một nhu cầu đo được.</p></div></section>
+</BaseLayout>
+
+<style>
+  .roadmap-list { max-width: 900px; }
+  .phase-card { display: grid; grid-template-columns: 50px 1fr; gap: 1rem; }
+  .phase-marker { display: flex; align-items: center; flex-direction: column; }
+  .phase-marker span { display: grid; width: 42px; height: 42px; flex: 0 0 auto; color: white; background: var(--ink); border-radius: 50%; font-family: var(--font-display); font-weight: 800; place-items: center; }
+  .phase-marker i { width: 2px; height: 100%; min-height: 60px; background: var(--line); }
+  .phase-card:last-child .phase-marker i { display: none; }
+  .phase-content { margin-bottom: 1rem; padding: 1.5rem; background: white; border: 1px solid var(--line); border-radius: var(--radius); }
+  .phase-card.current .phase-content { border: 2px solid var(--ink); box-shadow: 6px 6px 0 var(--mint); }
+  .phase-top { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+  .phase-top > span { color: var(--ink-soft); font-size: .75rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+  .phase-top mark { padding: .25rem .55rem; color: var(--ink); background: var(--yellow); border-radius: 999px; font-size: .7rem; font-weight: 800; }
+  .phase-content h2 { margin: 1rem 0 .6rem; font-size: 1.7rem; }
+  .phase-content > p { color: var(--ink-soft); }
+  .phase-content ul { display: grid; gap: .5rem; margin: 1rem 0 0; padding: 0; list-style: none; }
+  .phase-content li { display: flex; align-items: center; gap: .5rem; font-size: .86rem; }
+  .phase-content li svg { color: var(--mint-dark); }
+  .not-now { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; }
+  .not-now h2 { margin: 0; }
+  .not-now > p { color: var(--ink-soft); }
+  @media (max-width: 650px) { .phase-card { grid-template-columns: 35px 1fr; } .phase-marker span { width: 34px; height: 34px; font-size: .8rem; } .phase-content { padding: 1.1rem; } .not-now { grid-template-columns: 1fr; gap: 1rem; } }
+</style>

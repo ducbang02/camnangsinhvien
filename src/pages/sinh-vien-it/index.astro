@@ -1,0 +1,127 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ArticleCard from '../../components/ArticleCard.astro';
+import Icon from '../../components/Icon.astro';
+
+const articles = (await getCollection('articles', ({ data }) => !data.draft && data.topic === 'Sinh viên IT'))
+  .sort((a, b) => b.data.publishedDate.valueOf() - a.data.publishedDate.valueOf());
+
+const foundations = [
+  ['01', 'Tư duy lập trình', 'Một ngôn ngữ, giải bài toán, debug và test input nhỏ.'],
+  ['02', 'Công cụ làm việc', 'Git/GitHub, terminal, IDE và cách đọc tài liệu.'],
+  ['03', 'Dữ liệu & hệ thống', 'SQL, mô hình dữ liệu, HTTP, hệ điều hành ở mức nền.'],
+  ['04', 'Chất lượng đầu ra', 'README, test, bug report và deploy một sản phẩm chạy được.'],
+];
+
+const careers = [
+  { name: 'Developer', core: 'Lập trình + project', next: 'Framework, testing, deployment' },
+  { name: 'Data Analyst', core: 'Spreadsheet + SQL', next: 'Thống kê, BI, data storytelling' },
+  { name: 'Business Analyst', core: 'Domain + giao tiếp', next: 'Requirement, process, stakeholder' },
+  { name: 'Data Engineer', core: 'Python + SQL', next: 'Data model, pipeline, distributed systems' },
+  { name: 'QA / Tester', core: 'Tư duy chất lượng', next: 'Test design, API test, automation' },
+];
+---
+
+<BaseLayout title="Cẩm nang sinh viên IT" description="Lộ trình nền tảng và bản đồ hướng nghề cho sinh viên IT — không mặc định ai cũng phải trở thành Software Engineer.">
+  <section class="it-hero">
+    <div class="container it-hero-grid">
+      <div>
+        <p class="eyebrow">Nhánh chuyên sâu · Sinh viên IT</p>
+        <h1>Học nền tảng đủ chắc để <span>chọn hướng</span>, không chạy theo mọi trend.</h1>
+        <p class="lead">Bắt đầu bằng năng lực dùng chung, hoàn thành một project chạy được, rồi thử hướng nghề bằng trải nghiệm nhỏ.</p>
+        <a class="button button-primary" href="#lo-trinh">Xem lộ trình nền tảng <Icon name="arrow" size={19} /></a>
+      </div>
+      <div class="terminal-card" aria-label="Nguyên tắc học IT">
+        <div class="terminal-top"><i></i><i></i><i></i><span>student-roadmap.txt</span></div>
+        <div class="terminal-body">
+          <p><span>$</span> chọn_một_ngôn_ngữ</p>
+          <p><span>✓</span> hiểu code đang chạy</p>
+          <p><span>✓</span> đọc lỗi và tự debug</p>
+          <p><span>✓</span> làm project nhỏ đến cùng</p>
+          <p class="muted"><span>→</span> rồi mới chọn framework</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="lo-trinh" class="section">
+    <div class="container">
+      <div class="section-heading"><div><p class="eyebrow">Phần phải học chắc</p><h2>Bốn tầng nền tảng dùng được ở nhiều hướng</h2></div><p>Không cần hoàn hảo từng tầng rồi mới đi tiếp; hãy quay lại củng cố khi project làm lộ khoảng trống.</p></div>
+      <div class="foundation-grid">
+        {foundations.map(([number, name, description]) => (
+          <article><span>{number}</span><h3>{name}</h3><p>{description}</p></article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-muted">
+    <div class="container">
+      <div class="section-heading"><div><p class="eyebrow">Không chỉ có Software Engineer</p><h2>Chọn nhánh bằng công việc bạn muốn làm</h2></div></div>
+      <div class="career-table" role="table" aria-label="So sánh hướng nghề IT">
+        <div class="career-row career-head" role="row"><span role="columnheader">Hướng</span><span role="columnheader">Nền chung nên chắc</span><span role="columnheader">Học tiếp</span></div>
+        {careers.map((career) => <div class="career-row" role="row"><strong role="cell">{career.name}</strong><span role="cell">{career.core}</span><span role="cell">{career.next}</span></div>)}
+      </div>
+      <p class="career-note">Chưa biết chọn? Làm một project 1–2 tuần cho mỗi hướng thay vì mua ngay khóa dài.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-heading"><div><p class="eyebrow">Bắt đầu tại đây</p><h2>Cẩm nang IT đầu tiên</h2></div></div>
+      <div class="article-grid">{articles.map((article) => <ArticleCard article={article} />)}</div>
+    </div>
+  </section>
+
+  <section class="anti-list">
+    <div class="container anti-grid">
+      <div><p class="eyebrow">Tạm thời chưa cần</p><h2>Đừng học mọi thứ cùng lúc</h2></div>
+      <ul>
+        <li><Icon name="check" size={19} /> Ba ngôn ngữ lập trình trong một học kỳ</li>
+        <li><Icon name="check" size={19} /> Framework trước khi hiểu HTTP và debug</li>
+        <li><Icon name="check" size={19} /> Portfolio chứa toàn tutorial clone</li>
+        <li><Icon name="check" size={19} /> Code do AI tạo mà bạn không thể test</li>
+      </ul>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .it-hero { padding-block: clamp(4rem, 9vw, 8rem); color: white; background: var(--ink); overflow: hidden; }
+  .it-hero-grid { display: grid; grid-template-columns: 1.25fr .75fr; align-items: center; gap: clamp(2rem, 7vw, 6rem); }
+  .it-hero h1 { margin-bottom: 1.3rem; font-size: clamp(2.5rem, 6vw, 4.9rem); }
+  .it-hero h1 span { color: var(--mint); }
+  .it-hero .lead { margin-bottom: 2rem; color: #bdc8d9; }
+  .it-hero .eyebrow { color: var(--blue); }
+  .terminal-card { background: #0a1429; border: 1px solid #384b69; border-radius: 18px; box-shadow: 12px 12px 0 var(--blue); transform: rotate(1.5deg); overflow: hidden; }
+  .terminal-top { display: flex; align-items: center; gap: .4rem; padding: .7rem; background: #172640; color: #8291a9; font-family: ui-monospace, monospace; font-size: .65rem; }
+  .terminal-top i { width: 9px; height: 9px; background: var(--coral); border-radius: 50%; }
+  .terminal-top i:nth-child(2) { background: var(--yellow); }
+  .terminal-top i:nth-child(3) { background: var(--mint); }
+  .terminal-top span { margin-left: .4rem; }
+  .terminal-body { padding: 1.3rem; font-family: ui-monospace, monospace; font-size: .84rem; }
+  .terminal-body p { margin-bottom: .75rem; }
+  .terminal-body span { display: inline-block; width: 22px; color: var(--mint); }
+  .terminal-body .muted { color: #7f90aa; }
+  .foundation-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
+  .foundation-grid article { min-height: 260px; padding: 1.3rem; background: white; border: 1px solid var(--line); border-top: 5px solid var(--mint-dark); border-radius: var(--radius); }
+  .foundation-grid article > span { color: var(--mint-dark); font-family: var(--font-display); font-size: .75rem; font-weight: 800; }
+  .foundation-grid h3 { margin: 3rem 0 .7rem; }
+  .foundation-grid p { margin: 0; color: var(--ink-soft); font-size: .84rem; }
+  .career-table { background: white; border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
+  .career-row { display: grid; grid-template-columns: .7fr 1fr 1.4fr; gap: 1rem; padding: 1rem 1.2rem; border-bottom: 1px solid var(--line); }
+  .career-row:last-child { border-bottom: 0; }
+  .career-head { color: var(--ink-soft); background: #e5eaf2; font-size: .72rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
+  .career-row:not(.career-head) { font-size: .88rem; }
+  .career-note { margin: 1rem 0 0; color: var(--ink-soft); font-size: .8rem; }
+  .anti-list { padding-block: clamp(3rem, 7vw, 5rem); background: var(--yellow); border-top: 2px solid var(--ink); }
+  .anti-grid { display: grid; grid-template-columns: .8fr 1.2fr; gap: 3rem; }
+  .anti-grid h2 { margin: 0; }
+  .anti-grid .eyebrow { color: var(--ink); }
+  .anti-grid ul { display: grid; gap: .8rem; margin: 0; padding: 0; list-style: none; }
+  .anti-grid li { display: flex; gap: .6rem; font-weight: 600; }
+  @media (max-width: 900px) { .foundation-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 720px) { .it-hero-grid, .anti-grid { grid-template-columns: 1fr; } .terminal-card { transform: none; box-shadow: 7px 7px 0 var(--blue); } .career-head { display: none; } .career-row { grid-template-columns: 1fr; gap: .3rem; } .career-row span:last-child { color: var(--ink-soft); } }
+  @media (max-width: 500px) { .foundation-grid { grid-template-columns: 1fr; } .foundation-grid article { min-height: 210px; } }
+</style>

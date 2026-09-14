@@ -1,0 +1,23 @@
+---
+import Icon from './Icon.astro';
+
+interface Props {
+  tool: {
+    slug: string;
+    name: string;
+    description: string;
+    icon: string;
+  };
+}
+
+const { tool } = Astro.props;
+---
+
+<a class="tool-card" href={`/cong-cu/${tool.slug}/`}>
+  <span class="tool-icon"><Icon name={tool.icon} size={25} /></span>
+  <span class="tool-copy">
+    <strong>{tool.name}</strong>
+    <span>{tool.description}</span>
+  </span>
+  <span class="tool-arrow"><Icon name="arrow" size={20} /></span>
+</a>

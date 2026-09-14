@@ -1,0 +1,31 @@
+---
+import { primaryNav, site } from '../data/site';
+
+const pathname = Astro.url.pathname;
+const isActive = (href: string) => href !== '/' && pathname.startsWith(href);
+---
+
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="brand" href="/" aria-label={`${site.name} — Trang chủ`}>
+      <span class="brand-mark" aria-hidden="true">C</span>
+      <span class="brand-text">Cẩm nang <strong>sinh viên</strong></span>
+    </a>
+
+    <nav class="desktop-nav" aria-label="Điều hướng chính">
+      {primaryNav.map((item) => (
+        <a href={item.href} aria-current={isActive(item.href) ? 'page' : undefined}>{item.label}</a>
+      ))}
+    </nav>
+
+    <details class="mobile-nav">
+      <summary><span>Menu</span><span class="menu-lines" aria-hidden="true"></span></summary>
+      <nav aria-label="Điều hướng trên điện thoại">
+        {primaryNav.map((item) => (
+          <a href={item.href} aria-current={isActive(item.href) ? 'page' : undefined}>{item.label}</a>
+        ))}
+        <a href="/gioi-thieu/">Giới thiệu</a>
+      </nav>
+    </details>
+  </div>
+</header>

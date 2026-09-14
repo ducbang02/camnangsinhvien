@@ -1,0 +1,156 @@
+---
+import ToolLayout from '../../layouts/ToolLayout.astro';
+---
+
+<ToolLayout
+  title="Pomodoro học tập"
+  description="Chọn một việc, tập trung trọn phiên rồi nghỉ. Bộ đếm dựa trên thời gian thực nên không bị chậm khi bạn chuyển tab."
+  eyebrow="Học tập · Focus Timer"
+  relatedArticle={{ href: '/cam-nang/lap-ke-hoach-hoc-ky-30-phut/', label: 'Đọc cách lên kế hoạch học' }}
+>
+  <div class="tool-panel timer-panel">
+    <div class="timer-settings">
+      <div class="field">
+        <label for="focus-minutes">Phút tập trung</label>
+        <input id="focus-minutes" type="number" min="1" max="120" value="25" inputmode="numeric" />
+      </div>
+      <div class="field">
+        <label for="break-minutes">Phút nghỉ</label>
+        <input id="break-minutes" type="number" min="1" max="60" value="5" inputmode="numeric" />
+      </div>
+    </div>
+    <div class="field task-field">
+      <label for="focus-task">Việc duy nhất trong phiên này</label>
+      <input id="focus-task" type="text" maxlength="100" placeholder="Ví dụ: Làm bài 1–8 chương 2" />
+    </div>
+    <div class="timer-face" aria-live="polite">
+      <span id="timer-mode">Phiên tập trung</span>
+      <strong id="timer-display">25:00</strong>
+      <p id="timer-task">Chọn một việc cụ thể trước khi bắt đầu.</p>
+    </div>
+    <div class="timer-actions">
+      <button id="timer-toggle" class="button button-primary" type="button">Bắt đầu</button>
+      <button id="timer-reset" class="button button-ghost" type="button">Đặt lại</button>
+      <button id="timer-skip" class="button button-ghost" type="button">Chuyển phiên</button>
+    </div>
+    <p id="timer-status" class="timer-status" aria-live="assertive"></p>
+    <div class="session-count"><span>Phiên tập trung đã xong hôm nay</span><strong id="session-number">0</strong></div>
+  </div>
+</ToolLayout>
+
+<script>
+  const settingsKey = 'cnsv:v1:pomodoro-settings';
+  const dayKey = () => `cnsv:v1:pomodoro:${new Date().toISOString().slice(0, 10)}`;
+  const focusInput = document.querySelector<HTMLInputElement>('#focus-minutes');
+  const breakInput = document.querySelector<HTMLInputElement>('#break-minutes');
+  const taskInput = document.querySelector<HTMLInputElement>('#focus-task');
+  const display = document.querySelector<HTMLElement>('#timer-display');
+  const modeLabel = document.querySelector<HTMLElement>('#timer-mode');
+  const taskLabel = document.querySelector<HTMLElement>('#timer-task');
+  const toggle = document.querySelector<HTMLButtonElement>('#timer-toggle');
+  const status = document.querySelector<HTMLElement>('#timer-status');
+  const sessionNumber = document.querySelector<HTMLElement>('#session-number');
+  let mode: 'focus' | 'break' = 'focus';
+  let remaining = 25 * 60;
+  let endTime = 0;
+  let interval: number | undefined;
+  let running = false;
+
+  function readDuration() {
+    const input = mode === 'focus' ? focusInput : breakInput;
+    const max = mode === 'focus' ? 120 : 60;
+    const value = Math.min(max, Math.max(1, Number(input?.value) || (mode === 'focus' ? 25 : 5)));
+    if (input) input.value = String(value);
+    return value * 60;
+  }
+  function render() {
+    const minutes = Math.floor(remaining / 60).toString().padStart(2, '0');
+    const seconds = Math.max(0, remaining % 60).toString().padStart(2, '0');
+    if (display) display.textContent = `${minutes}:${seconds}`;
+    if (modeLabel) modeLabel.textContent = mode === 'focus' ? 'Phiên tập trung' : 'Giờ nghỉ';
+    document.title = running ? `${minutes}:${seconds} · ${mode === 'focus' ? 'Tập trung' : 'Nghỉ'}` : 'Pomodoro học tập | Cẩm nang sinh viên';
+  }
+  function saveSettings() {
+    localStorage.setItem(settingsKey, JSON.stringify({ focus: focusInput?.value, break: breakInput?.value }));
+  }
+  function updateSessions(increment = false) {
+    const current = Number(localStorage.getItem(dayKey()) ?? 0) + (increment ? 1 : 0);
+    if (increment) localStorage.setItem(dayKey(), String(current));
+    if (sessionNumber) sessionNumber.textContent = String(current);
+  }
+  function pause() {
+    if (interval) window.clearInterval(interval);
+    interval = undefined;
+    running = false;
+    if (toggle) toggle.textContent = 'Tiếp tục';
+    render();
+  }
+  function complete() {
+    if (interval) window.clearInterval(interval);
+    running = false;
+    interval = undefined;
+    if (mode === 'focus') updateSessions(true);
+    mode = mode === 'focus' ? 'break' : 'focus';
+    remaining = readDuration();
+    if (status) status.textContent = mode === 'break' ? 'Đã xong một phiên. Đứng dậy, uống nước và nghỉ mắt nhé.' : 'Hết giờ nghỉ. Chọn việc tiếp theo khi bạn sẵn sàng.';
+    if (toggle) toggle.textContent = 'Bắt đầu';
+    render();
+  }
+  function tick() {
+    remaining = Math.max(0, Math.ceil((endTime - Date.now()) / 1000));
+    render();
+    if (remaining <= 0) complete();
+  }
+  function start() {
+    if (remaining <= 0) remaining = readDuration();
+    endTime = Date.now() + remaining * 1000;
+    running = true;
+    if (toggle) toggle.textContent = 'Tạm dừng';
+    if (status) status.textContent = '';
+    if (taskLabel) taskLabel.textContent = mode === 'focus' ? (taskInput?.value.trim() || 'Tập trung vào một việc trong phiên này.') : 'Rời màn hình một chút nếu có thể.';
+    interval = window.setInterval(tick, 250);
+    tick();
+  }
+  function resetTimer() {
+    if (interval) window.clearInterval(interval);
+    running = false;
+    interval = undefined;
+    remaining = readDuration();
+    if (toggle) toggle.textContent = 'Bắt đầu';
+    if (status) status.textContent = '';
+    render();
+  }
+  function switchMode() {
+    mode = mode === 'focus' ? 'break' : 'focus';
+    resetTimer();
+    if (taskLabel) taskLabel.textContent = mode === 'focus' ? 'Chọn một việc cụ thể trước khi bắt đầu.' : 'Rời màn hình một chút nếu có thể.';
+  }
+  toggle?.addEventListener('click', () => running ? pause() : start());
+  document.querySelector('#timer-reset')?.addEventListener('click', resetTimer);
+  document.querySelector('#timer-skip')?.addEventListener('click', switchMode);
+  for (const input of [focusInput, breakInput]) input?.addEventListener('input', () => { saveSettings(); if (!running) resetTimer(); });
+  taskInput?.addEventListener('input', () => { if (!running && taskLabel) taskLabel.textContent = taskInput.value.trim() || 'Chọn một việc cụ thể trước khi bắt đầu.'; });
+  try {
+    const saved = JSON.parse(localStorage.getItem(settingsKey) ?? '{}') as { focus?: string; break?: string };
+    if (saved.focus && focusInput) focusInput.value = saved.focus;
+    if (saved.break && breakInput) breakInput.value = saved.break;
+  } catch { localStorage.removeItem(settingsKey); }
+  remaining = readDuration();
+  updateSessions();
+  render();
+</script>
+
+<style>
+  .timer-panel { max-width: 720px; margin-inline: auto; }
+  .timer-settings { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .task-field { margin-top: 1rem; }
+  .timer-face { display: grid; margin-block: 2rem; text-align: center; place-items: center; }
+  .timer-face > span { color: var(--mint-dark); font-size: .78rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+  .timer-face strong { font-family: var(--font-display); font-size: clamp(4.5rem, 16vw, 8rem); letter-spacing: -.08em; line-height: 1; font-variant-numeric: tabular-nums; }
+  .timer-face p { min-height: 1.5em; margin: 1rem 0 0; color: var(--ink-soft); }
+  .timer-actions { display: flex; justify-content: center; flex-wrap: wrap; gap: .7rem; }
+  .timer-status { margin: 1rem 0 0; color: var(--success); font-size: .85rem; font-weight: 600; text-align: center; }
+  .session-count { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-top: 2rem; padding-top: 1rem; border-top: 1px solid var(--line); color: var(--ink-soft); font-size: .8rem; }
+  .session-count strong { color: var(--ink); font-family: var(--font-display); font-size: 1.4rem; }
+  @media (max-width: 520px) { .timer-settings { grid-template-columns: 1fr 1fr; } .timer-actions .button { width: 100%; } }
+</style>

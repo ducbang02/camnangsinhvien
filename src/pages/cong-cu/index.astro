@@ -1,0 +1,43 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ToolCard from '../../components/ToolCard.astro';
+import Icon from '../../components/Icon.astro';
+import { tools } from '../../data/site';
+---
+
+<BaseLayout title="Công cụ sinh viên" description="Năm công cụ miễn phí giúp tính GPA, điểm cuối kỳ, tập trung, chia nhóm và quản lý ngân sách sinh viên.">
+  <section class="page-hero">
+    <div class="container">
+      <p class="eyebrow">Miễn phí · Không cần tài khoản</p>
+      <h1>Công cụ nhỏ, giải quyết việc thật</h1>
+      <p class="lead">Mỗi công cụ tập trung vào một quyết định cụ thể. Dữ liệu chỉ nằm trên trình duyệt của bạn.</p>
+    </div>
+  </section>
+  <section class="section">
+    <div class="container">
+      <div class="tools-list">
+        {tools.map((tool, index) => (
+          <div class="tool-row">
+            <span class="tool-order">0{index + 1}</span>
+            <ToolCard tool={tool} />
+          </div>
+        ))}
+      </div>
+      <div class="tool-principles">
+        <Icon name="shield" size={30} />
+        <div><h2>Không đăng ký, không upload dữ liệu</h2><p>Các phép tính chạy ngay trên thiết bị. Nếu một công cụ có lưu lựa chọn, bạn có thể xóa bằng nút đặt lại hoặc xóa dữ liệu trình duyệt.</p></div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .tools-list { display: grid; gap: 1rem; max-width: 900px; }
+  .tool-row { display: grid; grid-template-columns: 42px 1fr; align-items: center; gap: .7rem; }
+  .tool-order { color: #8591a4; font-family: var(--font-display); font-size: .75rem; font-weight: 800; }
+  .tool-principles { display: flex; max-width: 900px; gap: 1rem; margin-top: 3rem; padding: 1.4rem; background: #e4f7f1; border: 1px solid #aadfd2; border-radius: var(--radius); }
+  .tool-principles svg { flex: 0 0 auto; color: var(--mint-dark); }
+  .tool-principles h2 { margin-bottom: .4rem; font-size: 1.05rem; }
+  .tool-principles p { margin: 0; color: var(--ink-soft); font-size: .85rem; }
+  @media (max-width: 500px) { .tool-row { grid-template-columns: 1fr; } .tool-order { display: none; } }
+</style>

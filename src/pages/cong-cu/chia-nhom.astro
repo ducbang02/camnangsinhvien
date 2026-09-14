@@ -1,0 +1,128 @@
+---
+import ToolLayout from '../../layouts/ToolLayout.astro';
+---
+
+<ToolLayout
+  title="Chia nhóm ngẫu nhiên"
+  description="Dán danh sách, chọn số nhóm và nhận các nhóm cân bằng về số lượng. Tên không được tải lên hoặc lưu lại."
+  eyebrow="Cuộc sống · Random Group Generator"
+  relatedArticle={{ href: '/cam-nang/lam-viec-nhom-khi-co-nguoi-khong-lam/', label: 'Đọc cách làm việc nhóm rõ ràng' }}
+>
+  <div class="tool-panel">
+    <div class="split-form">
+      <div class="field">
+        <label for="member-list">Danh sách thành viên</label>
+        <textarea id="member-list" placeholder="Mỗi dòng một người&#10;An&#10;Bình&#10;Chi&#10;Dũng"></textarea>
+        <span class="field-hint">Dòng trống và tên trùng khớp hoàn toàn sẽ được loại.</span>
+      </div>
+      <div>
+        <div class="field">
+          <label for="group-count">Số nhóm</label>
+          <input id="group-count" type="number" inputmode="numeric" min="2" max="20" value="2" />
+        </div>
+        <div class="form-actions vertical-actions">
+          <button id="split-groups" class="button button-primary" type="button">Chia nhóm</button>
+          <button id="split-again" class="button button-ghost" type="button">Chia lại</button>
+          <button id="clear-groups" class="button button-ghost" type="button">Xóa tất cả</button>
+        </div>
+        <p id="group-error" class="error-message" aria-live="assertive"></p>
+      </div>
+    </div>
+    <section id="group-result" class="group-result" aria-live="polite" hidden>
+      <div class="result-heading"><h2>Kết quả</h2><button id="copy-groups" type="button">Sao chép</button></div>
+      <div id="group-grid" class="group-grid"></div>
+      <p id="copy-status" class="copy-status" aria-live="polite"></p>
+    </section>
+  </div>
+</ToolLayout>
+
+<script>
+  const listInput = document.querySelector<HTMLTextAreaElement>('#member-list');
+  const countInput = document.querySelector<HTMLInputElement>('#group-count');
+  const error = document.querySelector<HTMLElement>('#group-error');
+  const result = document.querySelector<HTMLElement>('#group-result');
+  const grid = document.querySelector<HTMLElement>('#group-grid');
+  const copyStatus = document.querySelector<HTMLElement>('#copy-status');
+  let latestGroups: string[][] = [];
+
+  function randomIndex(max: number) {
+    if (max <= 1) return 0;
+    const limit = Math.floor(0x100000000 / max) * max;
+    const data = new Uint32Array(1);
+    do crypto.getRandomValues(data); while (data[0] >= limit);
+    return data[0] % max;
+  }
+  function shuffle<T>(items: T[]) {
+    const output = [...items];
+    for (let i = output.length - 1; i > 0; i -= 1) {
+      const j = randomIndex(i + 1);
+      [output[i], output[j]] = [output[j], output[i]];
+    }
+    return output;
+  }
+  function split() {
+    if (error) error.textContent = '';
+    const names = [...new Set((listInput?.value ?? '').split('\n').map((name) => name.trim()).filter(Boolean))];
+    const count = Math.floor(Number(countInput?.value));
+    if (names.length < 2) {
+      if (error) error.textContent = 'Hãy nhập ít nhất hai tên, mỗi người một dòng.';
+      if (result) result.hidden = true;
+      return;
+    }
+    if (!Number.isFinite(count) || count < 2 || count > Math.min(20, names.length)) {
+      if (error) error.textContent = `Số nhóm phải từ 2 đến ${Math.min(20, names.length)}.`;
+      if (result) result.hidden = true;
+      return;
+    }
+    latestGroups = Array.from({ length: count }, () => [] as string[]);
+    shuffle(names).forEach((name, index) => latestGroups[index % count].push(name));
+    if (grid) {
+      grid.replaceChildren(...latestGroups.map((group, index) => {
+        const article = document.createElement('article');
+        const heading = document.createElement('h3');
+        heading.textContent = `Nhóm ${index + 1}`;
+        const meta = document.createElement('span');
+        meta.textContent = `${group.length} người`;
+        const ul = document.createElement('ul');
+        for (const name of group) { const li = document.createElement('li'); li.textContent = name; ul.append(li); }
+        article.append(heading, meta, ul);
+        return article;
+      }));
+    }
+    if (copyStatus) copyStatus.textContent = '';
+    if (result) result.hidden = false;
+  }
+  document.querySelector('#split-groups')?.addEventListener('click', split);
+  document.querySelector('#split-again')?.addEventListener('click', split);
+  document.querySelector('#clear-groups')?.addEventListener('click', () => {
+    if (listInput) listInput.value = '';
+    if (countInput) countInput.value = '2';
+    if (error) error.textContent = '';
+    if (result) result.hidden = true;
+    latestGroups = [];
+    listInput?.focus();
+  });
+  document.querySelector('#copy-groups')?.addEventListener('click', async () => {
+    const text = latestGroups.map((group, index) => `Nhóm ${index + 1}:\n${group.map((name) => `- ${name}`).join('\n')}`).join('\n\n');
+    try { await navigator.clipboard.writeText(text); if (copyStatus) copyStatus.textContent = 'Đã sao chép kết quả.'; }
+    catch { if (copyStatus) copyStatus.textContent = 'Không thể sao chép tự động. Hãy chọn và sao chép thủ công.'; }
+  });
+</script>
+
+<style>
+  .split-form { display: grid; grid-template-columns: minmax(0, 1.7fr) minmax(220px, .7fr); gap: 1.5rem; }
+  .vertical-actions { align-items: stretch; flex-direction: column; }
+  .group-result { margin-top: 2.5rem; padding-top: 2rem; border-top: 1px solid var(--line); }
+  .group-result[hidden] { display: none; }
+  .result-heading { display: flex; align-items: center; justify-content: space-between; }
+  .result-heading h2 { margin: 0; }
+  .result-heading button { padding: .5rem .7rem; background: transparent; border: 1px solid var(--line-strong); border-radius: 8px; cursor: pointer; font-size: .8rem; font-weight: 700; }
+  .group-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: .8rem; margin-top: 1rem; }
+  .group-grid article { padding: 1rem; background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius); }
+  .group-grid h3 { display: inline; margin: 0; font-size: 1rem; }
+  .group-grid article > span { margin-left: .5rem; color: var(--ink-soft); font-size: .72rem; }
+  .group-grid ul { margin: .8rem 0 0; padding-left: 1.2rem; }
+  .group-grid li { font-size: .86rem; }
+  .copy-status { margin: .8rem 0 0; color: var(--success); font-size: .8rem; }
+  @media (max-width: 760px) { .split-form, .group-grid { grid-template-columns: 1fr; } }
+</style>

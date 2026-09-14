@@ -1,0 +1,106 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ArticleCard from '../../components/ArticleCard.astro';
+import Icon from '../../components/Icon.astro';
+import { pillars, tools } from '../../data/site';
+
+export function getStaticPaths() {
+  return pillars.map((pillar) => ({ params: { slug: pillar.id }, props: { pillar } }));
+}
+
+type Pillar = (typeof pillars)[number];
+interface Props { pillar: Pillar }
+const { pillar } = Astro.props;
+const articles = (await getCollection('articles', ({ data }) => !data.draft && data.pillar === pillar.id))
+  .sort((a, b) => Number(b.data.featured) - Number(a.data.featured) || b.data.publishedDate.valueOf() - a.data.publishedDate.valueOf());
+const pillarTools = tools.filter((tool) => tool.pillar === pillar.id);
+
+const pathMap: Record<string, { step: string; text: string }[]> = {
+  'hoc-tap': [
+    { step: 'Bắt đầu', text: 'Hiểu cách tính điểm và đặt mục tiêu học kỳ.' },
+    { step: 'Thực hành', text: 'Dùng Active Recall, Spaced Repetition và phiên tập trung.' },
+    { step: 'Tự chủ', text: 'Quản lý deadline, research và giao tiếp học thuật.' },
+  ],
+  'ky-nang-so': [
+    { step: 'Nền tảng', text: 'Quản lý file, trình duyệt, tài khoản và backup.' },
+    { step: 'Công việc', text: 'Dùng bộ Office, tìm kiếm và phần mềm theo workflow.' },
+    { step: 'AI an toàn', text: 'Đặt câu hỏi, kiểm chứng và chịu trách nhiệm với đầu ra.' },
+  ],
+  'cuoc-song': [
+    { step: 'Ổn định', text: 'Chuẩn bị năm nhất, chỗ ở và ngân sách tối thiểu.' },
+    { step: 'Phối hợp', text: 'Giao tiếp, làm nhóm và cân bằng học với việc làm.' },
+    { step: 'Sẵn sàng', text: 'Xây CV, portfolio và chuẩn bị thực tập.' },
+  ],
+};
+---
+
+<BaseLayout title={pillar.name} description={pillar.description}>
+  <section class={`pillar-hero hero-${pillar.accent}`}>
+    <div class="container pillar-hero-grid">
+      <div>
+        <p class="eyebrow">Trụ cột {pillar.number}</p>
+        <h1>{pillar.name}</h1>
+        <p class="lead">{pillar.description}</p>
+      </div>
+      <p class="big-promise">{pillar.promise}</p>
+    </div>
+  </section>
+
+  <section class="section-tight path-section">
+    <div class="container">
+      <p class="eyebrow">Nên đi theo thứ tự</p>
+      <div class="path-grid">
+        {pathMap[pillar.id].map((item, index) => (
+          <div class="path-step">
+            <span>{index + 1}</span>
+            <div><strong>{item.step}</strong><p>{item.text}</p></div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-heading">
+        <div><p class="eyebrow">Cẩm nang chọn lọc</p><h2>{articles.length} bài để bắt đầu</h2></div>
+        <a class="arrow-link" href="/cam-nang/">Tìm trong tất cả bài <Icon name="arrow" size={18} /></a>
+      </div>
+      <div class="article-grid">
+        {articles.map((article) => <ArticleCard article={article} />)}
+      </div>
+    </div>
+  </section>
+
+  {pillarTools.length > 0 && (
+    <section class="section section-muted">
+      <div class="container">
+        <div class="section-heading"><div><p class="eyebrow">Thực hành ngay</p><h2>Công cụ cho trụ cột này</h2></div></div>
+        <div class="tool-buttons">
+          {pillarTools.map((tool) => <a class="button button-dark" href={`/cong-cu/${tool.slug}/`}>{tool.name} <Icon name="arrow" size={18} /></a>)}
+        </div>
+      </div>
+    </section>
+  )}
+</BaseLayout>
+
+<style>
+  .pillar-hero { padding-block: clamp(4rem, 9vw, 8rem); border-bottom: 2px solid var(--ink); }
+  .hero-mint { background: var(--mint); }
+  .hero-blue { background: var(--blue); }
+  .hero-yellow { background: var(--yellow); }
+  .pillar-hero-grid { display: grid; grid-template-columns: 1.5fr .7fr; align-items: end; gap: 3rem; }
+  .pillar-hero h1 { max-width: 860px; margin-bottom: 1.2rem; }
+  .pillar-hero .lead { color: var(--ink); opacity: .78; }
+  .pillar-hero .eyebrow { color: var(--ink); }
+  .big-promise { margin: 0; padding: 1.25rem; border: 2px solid var(--ink); border-radius: 18px 6px 18px 6px; font-family: var(--font-display); font-size: 1.15rem; font-weight: 800; box-shadow: 6px 6px 0 var(--ink); }
+  .path-section { background: white; border-bottom: 1px solid var(--line); }
+  .path-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+  .path-step { display: flex; gap: .8rem; }
+  .path-step > span { display: grid; width: 34px; height: 34px; flex: 0 0 auto; color: white; background: var(--ink); border-radius: 50%; font-family: var(--font-display); font-size: .78rem; font-weight: 800; place-items: center; }
+  .path-step strong { font-family: var(--font-display); }
+  .path-step p { margin: .25rem 0 0; color: var(--ink-soft); font-size: .82rem; line-height: 1.55; }
+  .tool-buttons { display: flex; flex-wrap: wrap; gap: .75rem; }
+  @media (max-width: 760px) { .pillar-hero-grid, .path-grid { grid-template-columns: 1fr; } .pillar-hero-grid { gap: 1.5rem; } }
+</style>

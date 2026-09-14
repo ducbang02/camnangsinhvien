@@ -1,0 +1,34 @@
+---
+import { pillars, site } from '../data/site';
+---
+
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div>
+      <a class="brand brand-footer" href="/">
+        <span class="brand-mark" aria-hidden="true">C</span>
+        <span class="brand-text">{site.name}</span>
+      </a>
+      <p>Biến vấn đề ở đại học thành bước làm cụ thể.</p>
+    </div>
+    <div>
+      <h2>Khám phá</h2>
+      <ul>
+        {pillars.map((pillar) => <li><a href={`/chu-de/${pillar.id}/`}>{pillar.shortName}</a></li>)}
+        <li><a href="/sinh-vien-it/">Sinh viên IT</a></li>
+      </ul>
+    </div>
+    <div>
+      <h2>Thông tin</h2>
+      <ul>
+        <li><a href="/gioi-thieu/">Cách chúng mình biên tập</a></li>
+        <li><a href="/lo-trinh/">Lộ trình phát triển</a></li>
+        <li><a href="/sitemap-index.xml">Sitemap</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="container footer-bottom">
+    <span>© {new Date().getFullYear()} {site.name}</span>
+    <span>Không quảng cáo trá hình. Không thu thập dữ liệu từ các công cụ.</span>
+  </div>
+</footer>

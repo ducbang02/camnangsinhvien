@@ -35,3 +35,6 @@ Ngày kiểm thử: 14/09/2026.
 ## Chưa kiểm thử production
 
 Chưa deploy vì chưa có Cloudflare account/Worker target và domain production được xác nhận. Cần chạy smoke test trong `docs/DEPLOYMENT.md` sau khi kết nối.
+
+
+test dong moi

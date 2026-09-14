@@ -75,3 +75,12 @@ Ngày 14/09/2026, CMS Phase 1 đã được kiểm tra theo ba lớp:
 - Preview thật: CMS lưu bài draft rồi mở thành công route Astro `/cam-nang/<slug>/`; trang có header, breadcrumb, metadata, article layout, related articles và footer giống website. File test thủ công đã được xóa sau khi kiểm tra.
 
 CMS Phase 1 không thực hiện commit/push. Danh sách kiểm tra đầy đủ cho người vận hành nằm trong `docs/CMS.md`.
+
+## Smoke test publish từ GitHub lên Cloudflare — 14/09/2026
+
+- Local `origin` đã đổi sang `https://github.com/ducbang02/camnangsinhvien.git`.
+- Commit CMS Phase 1: `66b5894`.
+- Commit bài Published `test-cms123`: `3eaed0e`.
+- Push `main` thành công; Cloudflare Workers Build `#76c3243e` nhận đúng commit `3eaed0e` và hoàn tất trong 49 giây.
+- Production route `/cam-nang/test-cms123/` chuyển từ 404 sang 200 sau deploy.
+- Browser smoke test production xác nhận title, breadcrumb, mục lục, nội dung, bảng, checklist, related articles và footer hiển thị đúng.

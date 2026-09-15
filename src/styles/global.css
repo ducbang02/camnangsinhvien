@@ -1,3 +1,5 @@
+@import './fonts.css';
+
 :root {
   --ink: #10213f;
   --ink-soft: #40506d;
@@ -19,8 +21,8 @@
   --radius: 18px;
   --radius-lg: 28px;
   --container: 1180px;
-  --font-body: 'Segoe UI', 'Noto Sans', Arial, sans-serif;
-  --font-display: 'Segoe UI', 'Noto Sans', Arial, sans-serif;
+  --font-body: 'Noto Sans', Arial, sans-serif;
+  --font-display: 'Noto Sans', Arial, sans-serif;
 }
 
 * {

@@ -80,6 +80,15 @@ Ngày 14/09/2026, CMS Phase 1 đã được kiểm tra theo ba lớp:
 
 CMS Phase 1 không thực hiện commit/push. Danh sách kiểm tra đầy đủ cho người vận hành nằm trong `docs/CMS.md`.
 
+## Kiểm thử typography Noto Sans
+
+- Website public và CMS local cùng tải Noto Sans variable từ `public/fonts/noto-sans/`, không phụ thuộc Google Fonts ở runtime.
+- Kiểm tra các chuỗi tiếng Việt có đủ dấu ở heading, nội dung bài viết, menu, form metadata và editor.
+- Code block, đường dẫn file và terminal vẫn giữ font monospace để dễ đọc.
+- Ngày 16/09/2026: `npm run validate` đạt với 0 error, 0 warning, 0 hint và build đủ 51 trang.
+- `npm run test:cms` đạt 9/9 test; `wrangler deploy --dry-run` đọc thành công 118 static asset, không có binding.
+- Browser QA xác nhận trang chủ desktop/mobile, danh sách CMS và editor đều dùng Noto Sans đã tải xong; không có console error/warning và không có overflow ngang ở viewport mobile.
+
 ## Smoke test publish từ GitHub lên Cloudflare — 14/09/2026
 
 - Local `origin` đã đổi sang `https://github.com/ducbang02/camnangsinhvien.git`.

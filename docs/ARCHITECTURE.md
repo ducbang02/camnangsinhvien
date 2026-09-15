@@ -134,4 +134,6 @@ Server CMS giới hạn request về local origin, xác thực category/slug, ch
 
 Dependency CMS nằm ở `devDependencies` và không được import từ source website, vì vậy mã editor/server không nằm trong bundle hoặc static assets production.
 
+Typography của website và CMS dùng chung Noto Sans variable tự host trong `public/fonts/noto-sans/`. CSS nguồn nằm tại `src/styles/fonts.css`; CMS cấu hình Vite `publicDir` trỏ tới `public/` để dùng đúng cùng asset, không gọi Google Fonts khi chạy local hoặc production.
+
 Publish là quy trình hai bước: bước chuẩn bị bắt buộc repository không có staged file, merge/rebase dở dang hoặc thay đổi ngoài bài hiện tại; sau validation, CMS hiển thị branch, remote và danh sách file chính xác. Chỉ khi người vận hành xác nhận, CMS mới stage danh sách đó, commit và chạy `git push origin <branch>`; không có force push.

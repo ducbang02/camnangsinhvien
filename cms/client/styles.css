@@ -1,3 +1,5 @@
+@import '../../src/styles/fonts.css';
+
 :root {
   color-scheme: light;
   --ink: #17243d;
@@ -9,7 +11,7 @@
   --mint: #28b996;
   --mint-soft: #e7f7f2;
   --danger: #b33a3a;
-  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-family: 'Noto Sans', Arial, sans-serif;
 }
 
 * { box-sizing: border-box; }
@@ -24,7 +26,7 @@ button { color: inherit; }
 
 .app-header { height: 72px; padding: 0 clamp(1rem, 4vw, 3.5rem); display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--line); background: rgba(255,255,255,.94); position: sticky; top: 0; z-index: 15; backdrop-filter: blur(12px); }
 .brand { display: flex; align-items: center; gap: .75rem; padding: 0; border: 0; background: none; text-align: left; cursor: pointer; }
-.brand-mark { width: 38px; height: 38px; display: grid; place-items: center; border-radius: 11px; color: white; background: var(--navy); font: 800 1.15rem Georgia, serif; }
+.brand-mark { width: 38px; height: 38px; display: grid; place-items: center; border-radius: 11px; color: white; background: var(--navy); font: 800 1.15rem 'Noto Sans', Arial, sans-serif; }
 .brand strong, .brand small { display: block; }
 .brand small { margin-top: .1rem; color: var(--muted); }
 .local-badge { display: flex; align-items: center; gap: .45rem; padding: .5rem .75rem; border: 1px solid #bfe6dc; border-radius: 999px; color: #176753; background: var(--mint-soft); font-size: .82rem; font-weight: 650; }
@@ -33,7 +35,7 @@ button { color: inherit; }
 .view { max-width: 1440px; margin: 0 auto; padding: clamp(2rem, 5vw, 4.5rem) clamp(1rem, 4vw, 3.5rem); }
 .page-heading { display: flex; align-items: end; justify-content: space-between; gap: 1.5rem; margin-bottom: 2rem; }
 .eyebrow { margin: 0 0 .45rem; color: #168168; font-size: .75rem; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; }
-h1 { margin: 0; font: 800 clamp(2.3rem, 5vw, 4.5rem)/.98 "Segoe UI", system-ui, sans-serif; letter-spacing: -.055em; }
+h1 { margin: 0; font: 800 clamp(2.3rem, 5vw, 4.5rem)/.98 'Noto Sans', Arial, sans-serif; letter-spacing: -.055em; }
 .muted { color: var(--muted); }
 .page-heading .muted { margin: .75rem 0 0; }
 
@@ -82,7 +84,7 @@ h1 { margin: 0; font: 800 clamp(2.3rem, 5vw, 4.5rem)/.98 "Segoe UI", system-ui, 
 .writing-panel { padding: clamp(2rem, 5vw, 5rem) clamp(1rem, 7vw, 7rem) 6rem; background: #f8f9fa; }
 .title-field { display: block; max-width: 850px; margin: 0 auto 1.5rem; padding: 1rem 1.15rem; border: 1px solid #cfd7e2; border-radius: 11px; background: white; box-shadow: 0 10px 28px rgba(25,38,58,.05); }
 .title-visible-label { display: block; margin-bottom: .65rem; color: #168168; font-size: .72rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
-.title-field textarea { width: 100%; min-height: 3.2rem; resize: none; overflow: hidden; padding: 0; border: 0; color: var(--ink); background: transparent; font: 750 clamp(2rem, 4vw, 3.4rem)/1.06 "Segoe UI", system-ui, sans-serif; letter-spacing: -.045em; }
+.title-field textarea { width: 100%; min-height: 3.2rem; resize: none; overflow: hidden; padding: 0; border: 0; color: var(--ink); background: transparent; font: 750 clamp(2rem, 4vw, 3.4rem)/1.06 'Noto Sans', Arial, sans-serif; letter-spacing: -.045em; }
 .title-field textarea::placeholder { color: #8e99a9; }
 .toolbar { max-width: 850px; display: flex; flex-wrap: wrap; align-items: center; gap: .35rem; margin: 0 auto; padding: .55rem; border: 1px solid var(--line); border-radius: 11px 11px 0 0; background: white; position: sticky; top: 151px; z-index: 8; box-shadow: 0 6px 16px rgba(21,34,55,.05); }
 .tool-group { display: flex; gap: .15rem; padding-right: .35rem; border-right: 1px solid var(--line); }
@@ -91,10 +93,10 @@ h1 { margin: 0; font: 800 clamp(2.3rem, 5vw, 4.5rem)/.98 "Segoe UI", system-ui, 
 .toolbar button:hover { background: var(--soft); }
 .toolbar button.is-active { color: #0d715b; background: var(--mint-soft); }
 .content-editor { max-width: 850px; min-height: 680px; margin: 0 auto; padding: clamp(2rem, 4vw, 4rem); border: 1px solid var(--line); border-top: 0; border-radius: 0 0 11px 11px; background: white; box-shadow: 0 20px 50px rgba(25,38,58,.06); }
-.content-editor .tiptap { min-height: 580px; outline: none; font: 1.05rem/1.75 Georgia, serif; }
+.content-editor .tiptap { min-height: 580px; outline: none; font: 1.05rem/1.75 'Noto Sans', Arial, sans-serif; }
 .content-editor .tiptap > :first-child { margin-top: 0; }
-.content-editor h2 { margin: 2.4rem 0 .8rem; font: 700 1.8rem/1.2 Georgia, serif; }
-.content-editor h3 { margin: 1.8rem 0 .65rem; font: 700 1.35rem/1.25 Georgia, serif; }
+.content-editor h2 { margin: 2.4rem 0 .8rem; font: 700 1.8rem/1.2 'Noto Sans', Arial, sans-serif; }
+.content-editor h3 { margin: 1.8rem 0 .65rem; font: 700 1.35rem/1.25 'Noto Sans', Arial, sans-serif; }
 .content-editor p { margin: 0 0 1rem; }
 .content-editor ul, .content-editor ol { padding-left: 1.5rem; }
 .content-editor blockquote { margin: 1.5rem 0; padding: .25rem 0 .25rem 1.2rem; border-left: 4px solid var(--mint); color: #40506a; }
@@ -108,7 +110,7 @@ h1 { margin: 0; font: 800 clamp(2.3rem, 5vw, 4.5rem)/.98 "Segoe UI", system-ui, 
 .content-editor ul[data-type="taskList"] li > div { flex: 1; }
 .content-editor .article-figure { margin: 1.75rem 0; }
 .content-editor .article-figure img { display: block; width: 100%; max-height: 520px; object-fit: contain; border-radius: 10px; background: var(--soft); }
-.content-editor .article-figure figcaption { margin-top: .55rem; color: var(--muted); font: .82rem/1.5 Inter, sans-serif; text-align: center; }
+.content-editor .article-figure figcaption { margin-top: .55rem; color: var(--muted); font: .82rem/1.5 'Noto Sans', Arial, sans-serif; text-align: center; }
 .content-editor .article-figure figcaption:empty::before { content: 'Không có caption'; opacity: .65; }
 .content-editor .video-embed { position: relative; aspect-ratio: 16 / 9; margin: 1.75rem 0; overflow: hidden; border-radius: 10px; background: #050a12; }
 .content-editor .video-embed iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }

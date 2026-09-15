@@ -139,6 +139,7 @@ await ensureAstroServer();
 
 const vite = await createViteServer({
   root: clientRoot,
+  publicDir: publicRoot,
   configFile: false,
   appType: 'spa',
   server: { middlewareMode: true },

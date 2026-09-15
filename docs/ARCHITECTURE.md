@@ -136,4 +136,6 @@ Dependency CMS nằm ở `devDependencies` và không được import từ sourc
 
 Typography của website và CMS dùng chung Noto Sans variable tự host trong `public/fonts/noto-sans/`. CSS nguồn nằm tại `src/styles/fonts.css`; CMS cấu hình Vite `publicDir` trỏ tới `public/` để dùng đúng cùng asset, không gọi Google Fonts khi chạy local hoặc production.
 
+Article dùng hero ảnh toàn chiều ngang, cao khoảng nửa viewport, với title và metadata đặt trên lớp phủ. Mỗi category khai báo một `heroImage` mặc định trong nguồn taxonomy chung; `thumbnail` của article ghi đè ảnh này khi có. Cách fallback này giữ giao diện đồng nhất mà không buộc người vận hành chuẩn bị ảnh riêng cho mọi bài.
+
 Publish là quy trình hai bước: bước chuẩn bị bắt buộc repository không có staged file, merge/rebase dở dang hoặc thay đổi ngoài bài hiện tại; sau validation, CMS hiển thị branch, remote và danh sách file chính xác. Chỉ khi người vận hành xác nhận, CMS mới stage danh sách đó, commit và chạy `git push origin <branch>`; không có force push.

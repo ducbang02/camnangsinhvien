@@ -97,3 +97,14 @@ CMS Phase 1 không thực hiện commit/push. Danh sách kiểm tra đầy đủ
 - Push `main` thành công; Cloudflare Workers Build `#76c3243e` nhận đúng commit `3eaed0e` và hoàn tất trong 49 giây.
 - Production route `/cam-nang/test-cms123/` chuyển từ 404 sang 200 sau deploy.
 - Browser smoke test production xác nhận title, breadcrumb, mục lục, nội dung, bảng, checklist, related articles và footer hiển thị đúng.
+
+## Kiểm thử article hero theo trụ cột — 16/09/2026
+
+- `npm run validate` đạt: `astro check` có 0 error, 0 warning, 0 hint và production build đủ 51 trang.
+- `npm run test:cms` đạt 9/9 test; thay đổi gợi ý thumbnail không làm ảnh hưởng quy trình đọc, lưu và publish Markdown.
+- `wrangler deploy --dry-run` đọc thành công 130 static asset, không có binding và không thực hiện deploy thật.
+- 10 ảnh hero mặc định được tối ưu thành WebP 1536 × 864, tổng dung lượng khoảng 900 KB; mỗi trụ cột lấy ảnh từ cùng nguồn `src/data/categories.ts`.
+- Desktop: route `/cam-nang/active-recall-la-gi/` hiển thị hero cao 50vh, ảnh tải đúng 1536 × 864, tiêu đề và metadata dễ đọc trên lớp phủ tối.
+- Mobile: kiểm tra ở viewport 390 × 800, hero chuyển về chiều cao tối thiểu 400px, breadcrumb có thể xuống dòng và trang không bị overflow ngang.
+- Đã mở một bài đại diện thuộc từng trụ cột; cả 10 ảnh mặc định đều tải thành công, đúng category và không có console error/warning.
+- Ảnh `thumbnail` riêng của bài (khi có) được ưu tiên; bài không có thumbnail tự dùng ảnh mặc định của trụ cột. Ảnh mặc định có `alt=""` vì chỉ mang tính trang trí và tiêu đề đã xuất hiện ngay trong hero.

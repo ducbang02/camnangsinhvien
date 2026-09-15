@@ -44,6 +44,7 @@ type Category = {
   id: CategoryId;
   name: string;
   shortName: string;
+  heroImage: string;
   description: string;
   menuDescription: string;
   promise: string;
@@ -53,6 +54,8 @@ type Category = {
   steps: { label: string; text: string }[];
 };
 ```
+
+`heroImage` là ảnh hero mặc định của trụ cột trong `public/media/category-heroes/`. Article ưu tiên `thumbnail` riêng; khi field này trống, article tự dùng `heroImage` của category để không bắt buộc tạo ảnh mới cho mọi bài.
 
 ## 4. Tool
 

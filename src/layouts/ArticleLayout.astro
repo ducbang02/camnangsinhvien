@@ -14,6 +14,7 @@ interface Props {
 const { article, headings, related } = Astro.props;
 const { data } = article;
 const category = getCategory(data.category);
+const heroImage = data.thumbnail || category?.heroImage;
 const url = new URL(`/cam-nang/${articleSlug(article.id)}/`, Astro.site ?? Astro.url.origin);
 const metaTitle = data.seoTitle || data.title;
 const metaDescription = data.seoDescription || data.description;
@@ -29,6 +30,7 @@ const schema = [
     publisher: { '@type': 'Organization', name: 'Cẩm nang sinh viên' },
     mainEntityOfPage: url.href,
     articleSection: category?.name,
+    image: heroImage ? new URL(heroImage, url).href : undefined,
     keywords: data.tags.join(', '),
     inLanguage: 'vi-VN',
   },
@@ -45,28 +47,39 @@ const schema = [
 ];
 ---
 
-<BaseLayout title={metaTitle} description={metaDescription} canonical={url.pathname} schema={schema} ogType="article" image={data.thumbnail}>
+<BaseLayout title={metaTitle} description={metaDescription} canonical={url.pathname} schema={schema} ogType="article" image={heroImage}>
   <article>
-    <header class="article-header">
-      <div class="narrow">
+    <header class="article-hero">
+      {heroImage && (
+        <img
+          class="article-hero-image"
+          src={heroImage}
+          alt={data.thumbnail ? data.thumbnailAlt || '' : ''}
+          width="1536"
+          height="864"
+          loading="eager"
+          fetchpriority="high"
+          decoding="async"
+        />
+      )}
+      <div class="article-hero-shade" aria-hidden="true"></div>
+      <div class="article-hero-content container">
         <nav class="breadcrumb" aria-label="Breadcrumb">
           <a href="/">Trang chủ</a><span>/</span><a href="/cam-nang/">Cẩm nang</a><span>/</span><a href={`/chu-de/${data.category}/`}>{category?.shortName}</a><span>/</span><span aria-current="page">{data.title}</span>
         </nav>
         <a class={`topic-label accent-${category?.accent}`} href={`/chu-de/${data.category}/`}>{category?.name}</a>
         <h1>{data.title}</h1>
-        <p class="article-dek">{data.description}</p>
         <div class="byline">
           <span>{data.author}</span><span aria-hidden="true">·</span>
           <time datetime={(data.updatedDate ?? data.publishedDate).toISOString()}>Cập nhật {formatDate(data.updatedDate ?? data.publishedDate)}</time>
           <span aria-hidden="true">·</span><span>{data.readingMinutes ?? 6} phút đọc</span>
         </div>
-        {data.thumbnail && (
-          <figure class="article-thumbnail">
-            <img src={data.thumbnail} alt={data.thumbnailAlt || ''} loading="eager" fetchpriority="high" />
-          </figure>
-        )}
       </div>
     </header>
+
+    <div class="article-intro">
+      <p class="article-dek narrow">{data.description}</p>
+    </div>
 
     <div class="container article-shell">
       {headings.filter((heading) => heading.depth === 2).length > 1 && (

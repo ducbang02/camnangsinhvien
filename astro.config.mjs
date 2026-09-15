@@ -6,5 +6,8 @@ export default defineConfig({
   site: process.env.SITE_URL || 'https://camnangsinhvien.example',
   output: 'static',
   trailingSlash: 'always',
-  integrations: [mdx(), sitemap()],
+  integrations: [
+    mdx(),
+    sitemap({ filter: (page) => !page.endsWith('/lien-he/') }),
+  ],
 });

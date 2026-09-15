@@ -14,6 +14,18 @@ interface Props {
 }
 const { article, articles } = Astro.props;
 const { Content, headings } = await render(article);
+const inlineAdPreview = `
+  <aside class="ad-slot-preview ad-slot-preview-inline" data-ad-preview="article-inline" aria-label="Vị trí quảng cáo mẫu trong bài viết">
+    <span>Quảng cáo</span>
+    <strong>Vị trí quảng cáo giữa bài</strong>
+    <small>Bản mẫu chỉ hiển thị trên local</small>
+  </aside>
+`;
+const articleHtml = article.rendered?.html;
+const h2Matches = articleHtml ? [...articleHtml.matchAll(/<h2(?:\s|>)/g)] : [];
+const previewHtml = import.meta.env.DEV && articleHtml && h2Matches.length >= 3
+  ? `${articleHtml.slice(0, h2Matches[2].index)}${inlineAdPreview}${articleHtml.slice(h2Matches[2].index)}`
+  : undefined;
 const related = articles
   .filter((item) => item.id !== article.id)
   .map((item) => ({
@@ -30,5 +42,5 @@ const related = articles
 ---
 
 <ArticleLayout {article} {headings} {related}>
-  <Content />
+  {previewHtml ? <Fragment set:html={previewHtml} /> : <Content />}
 </ArticleLayout>

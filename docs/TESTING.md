@@ -108,3 +108,14 @@ CMS Phase 1 không thực hiện commit/push. Danh sách kiểm tra đầy đủ
 - Mobile: kiểm tra ở viewport 390 × 800, hero chuyển về chiều cao tối thiểu 400px, breadcrumb có thể xuống dòng và trang không bị overflow ngang.
 - Đã mở một bài đại diện thuộc từng trụ cột; cả 10 ảnh mặc định đều tải thành công, đúng category và không có console error/warning.
 - Ảnh `thumbnail` riêng của bài (khi có) được ưu tiên; bài không có thumbnail tự dùng ảnh mặc định của trụ cột. Ảnh mặc định có `alt=""` vì chỉ mang tính trang trí và tiêu đề đã xuất hiện ngay trong hero.
+
+## Kiểm thử điều hướng thông tin và mẫu quảng cáo — 16/09/2026
+
+- `npm run validate` đạt: 0 error, 0 warning, 0 hint và production build đủ 52 trang.
+- `npm run test:cms` đạt 9/9; `wrangler deploy --dry-run` đọc thành công 132 static asset và không deploy thật.
+- Article hero title có cỡ tối đa `3.8rem` (60.8px ở desktop), giảm từ 4.8rem.
+- Header desktop hiển thị `Cẩm nang`, `Công cụ`, `Về chúng tôi`, `Liên hệ`; cả hai route thông tin có active state đúng và footer có đủ liên kết.
+- Route `/lien-he/` hiển thị ba nhóm nhu cầu, trạng thái chờ thông tin thật, có `noindex,follow` và được loại khỏi sitemap trong thời gian là trang mẫu.
+- Bài có ít nhất ba H2 hiển thị đúng hai slot mẫu: slot giữa bài nằm trước H2 thứ ba, slot cuối nằm trước related articles. Bài ngắn không có H2 chỉ hiển thị slot cuối.
+- Placeholder quảng cáo chỉ tồn tại khi chạy local; production build không chứa nhãn mẫu hoặc script đặt slot.
+- Browser QA desktop và mobile 500 × 800 xác nhận điều hướng, trang Liên hệ và khung quảng cáo không bị overflow ngang; console không có error/warning.

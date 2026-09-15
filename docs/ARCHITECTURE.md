@@ -26,8 +26,10 @@ Header desktop chỉ giữ các điểm vào quan trọng nhất:
 1. Logo về Trang chủ
 2. Cẩm nang — mở mega menu mười trụ cột
 3. Công cụ
+4. Về chúng tôi
+5. Liên hệ
 
-`Sinh viên IT`, `Lộ trình` và `Giới thiệu` vẫn là các route độc lập nhưng không nằm trong header desktop. Chúng được dẫn từ nội dung liên quan và footer để điều hướng chính không cạnh tranh với định vị Cẩm nang sinh viên. Trên mobile, menu giữ thêm liên kết `Giới thiệu`; các route phụ còn lại vẫn có trong footer.
+`Sinh viên IT` và `Lộ trình` vẫn là các route độc lập nhưng không nằm trong header desktop. Chúng được dẫn từ nội dung liên quan và footer để điều hướng chính không cạnh tranh với định vị Cẩm nang sinh viên. `Về chúng tôi` và `Liên hệ` có mặt nhất quán trên desktop, mobile và footer.
 
 Mười trụ cột nội dung cố định:
 
@@ -63,6 +65,7 @@ Nguồn dữ liệu chuẩn của trụ cột là `src/data/categories.ts`. Head
 | `/sinh-vien-it/` | Hub và lộ trình IT |
 | `/lo-trinh/` | Lộ trình phát triển sản phẩm/nội dung công khai |
 | `/gioi-thieu/` | Nguyên tắc biên tập, nguồn và affiliate disclosure |
+| `/lien-he/` | Góp ý nội dung, báo lỗi và hợp tác; tạm `noindex` cho tới khi có kênh liên hệ thật |
 
 ## 5. Luồng nội dung
 
@@ -137,5 +140,7 @@ Dependency CMS nằm ở `devDependencies` và không được import từ sourc
 Typography của website và CMS dùng chung Noto Sans variable tự host trong `public/fonts/noto-sans/`. CSS nguồn nằm tại `src/styles/fonts.css`; CMS cấu hình Vite `publicDir` trỏ tới `public/` để dùng đúng cùng asset, không gọi Google Fonts khi chạy local hoặc production.
 
 Article dùng hero ảnh toàn chiều ngang, cao khoảng nửa viewport, với title và metadata đặt trên lớp phủ. Mỗi category khai báo một `heroImage` mặc định trong nguồn taxonomy chung; `thumbnail` của article ghi đè ảnh này khi có. Cách fallback này giữ giao diện đồng nhất mà không buộc người vận hành chuẩn bị ảnh riêng cho mọi bài.
+
+Mẫu quảng cáo trong article chỉ hoạt động ở môi trường local: markup được chèn ngay lúc render, không cần client JavaScript. Bài có từ ba H2 nhận một slot trước H2 thứ ba và một slot cuối bài trước related articles; bài ngắn chỉ có slot cuối. Production build không chứa placeholder hoặc script quảng cáo. Khi có nhà cung cấp thật mới thay nội dung slot, thêm disclosure/consent cần thiết và mở cấu hình production.
 
 Publish là quy trình hai bước: bước chuẩn bị bắt buộc repository không có staged file, merge/rebase dở dang hoặc thay đổi ngoài bài hiện tại; sau validation, CMS hiển thị branch, remote và danh sách file chính xác. Chỉ khi người vận hành xác nhận, CMS mới stage danh sách đó, commit và chạy `git push origin <branch>`; không có force push.

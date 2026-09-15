@@ -56,6 +56,8 @@ export type Tool = (typeof tools)[number] & { category: CategoryId };
 
 export const primaryNav = [
   { href: '/cong-cu/', label: 'Công cụ' },
+  { href: '/gioi-thieu/', label: 'Về chúng tôi' },
+  { href: '/lien-he/', label: 'Liên hệ' },
 ];
 
 export function articleSlug(id: string) {

@@ -48,7 +48,6 @@ const isActive = (href: string) => href !== '/' && pathname.startsWith(href);
         {primaryNav.map((item) => (
           <a href={item.href} aria-current={isActive(item.href) ? 'page' : undefined}>{item.label}</a>
         ))}
-        <a href="/gioi-thieu/">Giới thiệu</a>
       </nav>
     </details>
   </div>

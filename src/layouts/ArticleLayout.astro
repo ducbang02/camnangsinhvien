@@ -18,6 +18,7 @@ const heroImage = data.thumbnail || category?.heroImage;
 const url = new URL(`/cam-nang/${articleSlug(article.id)}/`, Astro.site ?? Astro.url.origin);
 const metaTitle = data.seoTitle || data.title;
 const metaDescription = data.seoDescription || data.description;
+const showAdPreview = import.meta.env.DEV;
 const schema = [
   {
     '@context': 'https://schema.org',
@@ -110,6 +111,16 @@ const schema = [
       </div>
     </div>
   </article>
+
+  {showAdPreview && (
+    <div class="container ad-slot-end-wrap">
+      <aside class="ad-slot-preview ad-slot-preview-end" aria-label="Vị trí quảng cáo mẫu cuối bài viết">
+        <span>Quảng cáo</span>
+        <strong>Vị trí quảng cáo cuối bài</strong>
+        <small>Bản mẫu chỉ hiển thị trên local</small>
+      </aside>
+    </div>
+  )}
 
   {related.length > 0 && (
     <section class="section section-muted">

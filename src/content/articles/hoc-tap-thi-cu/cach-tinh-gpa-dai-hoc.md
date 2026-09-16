@@ -1,20 +1,28 @@
 ---
-title: "Cách tính GPA đại học theo tín chỉ, không nhầm hệ số"
-description: "Hiểu công thức GPA hệ 4, cách xử lý số tín chỉ và những trường hợp phải kiểm tra lại quy chế của trường trước khi tính."
+title: 'Cách tính GPA đại học theo tín chỉ, không nhầm hệ số'
+description: >-
+  Hiểu công thức GPA hệ 4, cách xử lý số tín chỉ và những trường hợp phải kiểm
+  tra lại quy chế của trường trước khi tính.
 category: hoc-tap-thi-cu
 topic: GPA & điểm số
-tags: [GPA, tín chỉ, điểm đại học, xếp loại]
-publishedDate: 2026-09-14
-updatedDate: 2026-09-14
+tags:
+  - GPA
+  - tín chỉ
+  - điểm đại học
+  - xếp loại
+publishedDate: '2026-09-14'
+updatedDate: '2026-09-16'
 author: Cẩm nang sinh viên
 featured: true
-readingMinutes: 7
+readingMinutes: 3
 tool: /cong-cu/tinh-gpa/
 sources:
-  - label: "Thông tư 08/2021/TT-BGDĐT — Quy chế đào tạo trình độ đại học"
-    url: "https://vanban.chinhphu.vn/default.aspx?pageid=27160&docid=203318"
+  - label: Thông tư 08/2021/TT-BGDĐT — Quy chế đào tạo trình độ đại học
+    url: 'https://vanban.chinhphu.vn/default.aspx?pageid=27160&docid=203318'
+draft: false
+thumbnail: /media/articles/cach-tinh-gpa-dai-hoc/dog.jpg
+thumbnailAlt: dog
 ---
-
 GPA không phải trung bình cộng đơn giản của tất cả môn. Môn nhiều tín chỉ ảnh hưởng mạnh hơn môn ít tín chỉ, vì vậy cách tính đúng phải dùng **trọng số tín chỉ**.
 
 > Công thức ngắn gọn: GPA = tổng (điểm hệ 4 × số tín chỉ) / tổng số tín chỉ được tính.
@@ -24,7 +32,7 @@ GPA không phải trung bình cộng đơn giản của tất cả môn. Môn nh
 Giả sử bạn có bốn môn:
 
 | Môn | Điểm hệ 4 | Tín chỉ | Điểm × tín chỉ |
-| --- | ---: | ---: | ---: |
+| --- | --- | --- | --- |
 | Toán cao cấp | 3.0 | 3 | 9.0 |
 | Tin học | 4.0 | 3 | 12.0 |
 | Pháp luật | 2.5 | 2 | 5.0 |
@@ -62,10 +70,15 @@ Có trường dùng điểm lần gần nhất, có nơi quy định chi tiết 
 
 ## Checklist trước khi bấm tính
 
-- Lấy điểm hệ 4 từ bảng điểm hoặc bảng quy đổi chính thức của trường.
-- Kiểm tra đúng số tín chỉ từng học phần.
-- Loại các môn không tham gia GPA theo quy chế.
-- Kiểm tra cách trường xử lý môn học lại/học cải thiện.
-- Giữ nhiều chữ số trong phép tính, chỉ làm tròn ở kết quả cuối.
+-   Lấy điểm hệ 4 từ bảng điểm hoặc bảng quy đổi chính thức của trường.
+    
+-   Kiểm tra đúng số tín chỉ từng học phần.
+    
+-   Loại các môn không tham gia GPA theo quy chế.
+    
+-   Kiểm tra cách trường xử lý môn học lại/học cải thiện.
+    
+-   Giữ nhiều chữ số trong phép tính, chỉ làm tròn ở kết quả cuối.
+    
 
 Sau khi có con số, hãy dùng nó để ra quyết định: môn nào có số tín chỉ lớn, mục tiêu kỳ tới có thực tế không, và cần ưu tiên cải thiện thói quen nào. GPA là một chỉ báo, không phải bản tóm tắt toàn bộ năng lực của bạn.

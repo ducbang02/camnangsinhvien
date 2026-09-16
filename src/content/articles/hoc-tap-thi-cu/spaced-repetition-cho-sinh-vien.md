@@ -4,7 +4,7 @@ description: "Cách giãn các lần ôn theo thời gian, chọn nội dung đ�
 category: hoc-tap-thi-cu
 topic: Phương pháp học
 group: hoc-dung-cach
-articleOrder: 2
+articleOrder: 3
 tags: [Spaced Repetition, ôn cách quãng, Anki, ghi nhớ]
 publishedDate: 2026-09-10
 updatedDate: 2026-09-14

@@ -18,6 +18,8 @@
 
 **Grouping của category đã dùng chung toàn website.** Category có thể khai báo số lượng `groups` bất kỳ trong `src/data/categories.ts`; article tham chiếu bằng `group` và sắp thứ tự bằng `articleOrder`. Trang có group sinh navigation/section tương ứng, còn trang không có group giữ nguyên danh sách phẳng. Hiện mới cấu hình ba group cho Học tập & thi cử, chưa tạo thêm bài mới.
 
+**Nhóm Học đúng cách đã có bài mở đầu hoàn chỉnh.** Bài “Học đại học nên bắt đầu từ đâu?” đứng đầu group, hướng dẫn đọc đề cương, xác định mục tiêu, hiểu cách đánh giá và chọn cách học trước khi đi sâu vào Active Recall hoặc Spaced Repetition.
+
 **Điều hướng thông tin và mẫu quảng cáo đã được chuẩn bị local.** Header có thêm `Về chúng tôi` và `Liên hệ`; route Liên hệ đang dùng nội dung mẫu và `noindex` cho tới khi có email thật. Article có tối đa hai placeholder quảng cáo local để duyệt vị trí, chưa tích hợp ad network và production không render placeholder.
 
 **CMS Phase 2 — đã hoàn tất local, chờ duyệt giao diện.** CMS đã có upload ảnh/thumbnail vào repository, alt/caption, YouTube block và workflow validate → liệt kê đúng file → stage chọn lọc → commit → push không force. Publish được kiểm thử end-to-end bằng Git repository/remote tạm; trên repository thật chỉ smoke test nhánh cảnh báo, không tạo commit hoặc push ngoài yêu cầu. Hạng mục này tách biệt với “Phase 2 — Có traffic ban đầu” của roadmap sản phẩm.

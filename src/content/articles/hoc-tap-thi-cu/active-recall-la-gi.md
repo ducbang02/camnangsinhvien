@@ -6,7 +6,7 @@ description: >-
 category: hoc-tap-thi-cu
 topic: Phương pháp học
 group: hoc-dung-cach
-articleOrder: 1
+articleOrder: 2
 tags:
   - Active Recall
   - tự kiểm tra

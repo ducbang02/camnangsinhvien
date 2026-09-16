@@ -19,7 +19,7 @@ tool: /cong-cu/tinh-gpa/
 sources:
   - label: Thông tư 08/2021/TT-BGDĐT — Quy chế đào tạo trình độ đại học
     url: 'https://vanban.chinhphu.vn/default.aspx?pageid=27160&docid=203318'
-draft: false
+draft: true
 thumbnail: /media/articles/cach-tinh-gpa-dai-hoc/dog.jpg
 thumbnailAlt: dog
 ---

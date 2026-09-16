@@ -1,0 +1,38 @@
+---
+interface Props {
+  desktop: string;
+  mobile: string;
+  alt: string;
+  class?: string;
+}
+
+const { desktop, mobile, alt, class: className } = Astro.props;
+---
+
+<picture class:list={['hero-picture', className]}>
+  <source media="(max-width: 640px)" srcset={mobile} />
+  <img
+    src={desktop}
+    alt={alt}
+    width="1672"
+    height="941"
+    loading="eager"
+    fetchpriority="high"
+    decoding="async"
+  />
+</picture>
+
+<style>
+  .hero-picture {
+    display: block;
+    overflow: hidden;
+    background: #dbe8e3;
+  }
+
+  .hero-picture img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+</style>

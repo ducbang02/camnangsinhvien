@@ -231,8 +231,8 @@ export function createArticleStore({ root, categories }) {
 
     if (title.length < 8) errors.push({ field: 'title', message: 'Tiêu đề cần ít nhất 8 ký tự.' });
     if (!SLUG_PATTERN.test(slug)) errors.push({ field: 'slug', message: 'Slug chỉ gồm chữ thường không dấu, số và dấu gạch ngang.' });
-    if (!categoryIds.has(metadata.category)) errors.push({ field: 'category', message: 'Hãy chọn một trụ cột hợp lệ.' });
-    if (!topic) errors.push({ field: 'topic', message: 'Chủ đề nhỏ không được để trống.' });
+    if (!categoryIds.has(metadata.category)) errors.push({ field: 'category', message: 'Hãy chọn một chủ đề hợp lệ.' });
+    if (!topic) errors.push({ field: 'topic', message: 'Nhóm nội dung không được để trống.' });
     if (description.length < 40 || description.length > 180) errors.push({ field: 'description', message: 'Mô tả cần từ 40 đến 180 ký tự.' });
     if (!tags.length) errors.push({ field: 'tags', message: 'Cần ít nhất một tag.' });
     if (!DATE_PATTERN.test(String(metadata.publishedDate ?? ''))) errors.push({ field: 'publishedDate', message: 'Ngày đăng không hợp lệ.' });
@@ -306,7 +306,7 @@ export function createArticleStore({ root, categories }) {
     if (!original || path.resolve(original.filePath) !== target) {
       try {
         const existing = await stat(target);
-        if (existing.isFile()) throw new ArticleStoreError('Slug này đã được dùng trong trụ cột đã chọn.', 409, 'SLUG_EXISTS');
+        if (existing.isFile()) throw new ArticleStoreError('Slug này đã được dùng trong chủ đề đã chọn.', 409, 'SLUG_EXISTS');
       } catch (error) {
         if (error instanceof ArticleStoreError) throw error;
         if (error.code !== 'ENOENT') throw error;

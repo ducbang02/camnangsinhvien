@@ -4,7 +4,7 @@ Ngày rà soát tài liệu: 14/09/2026.
 
 Cloudflare khuyến nghị Workers Static Assets cho dự án tĩnh mới. Dự án này không có Worker script, binding, database hoặc secret runtime.
 
-Các URL trụ cột cũ được chuyển hướng `301` bằng `public/_redirects`; file này được Astro chép vào `dist/` và Cloudflare Workers Static Assets xử lý khi deploy.
+Các URL chủ đề cũ được chuyển hướng `301` bằng `public/_redirects`; file này được Astro chép vào `dist/` và Cloudflare Workers Static Assets xử lý khi deploy.
 
 ## Production hiện tại
 
@@ -73,7 +73,7 @@ Không đưa domain `camnangsinhvien.example` lên production; đây chỉ là p
 
 ## Smoke test production
 
-- Mở `/`, `/cam-nang/`, một trang trụ cột và một bài.
+- Mở `/`, `/cam-nang/`, một trang chủ đề và một bài.
 - Dùng GPA Calculator với: 3 tín chỉ × 3.0, 3 tín chỉ × 4.0, 2 tín chỉ × 2.5; kết quả phải là 3.25.
 - Dùng Final Grade: quá trình 7.5, cuối kỳ 60%, mục tiêu 8.0; kết quả 8.33.
 - Kiểm tra `/robots.txt` và `/sitemap-index.xml` dùng đúng domain.

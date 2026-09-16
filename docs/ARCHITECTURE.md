@@ -24,14 +24,14 @@ Website là một **Student Hub tĩnh, content-first** dành cho sinh viên Vi�
 Header desktop chỉ giữ các điểm vào quan trọng nhất:
 
 1. Logo về Trang chủ
-2. Cẩm nang — mở mega menu mười trụ cột
+2. Cẩm nang — mở mega menu mười chủ đề
 3. Công cụ
 4. Về chúng tôi
 5. Liên hệ
 
 `Sinh viên IT` và `Lộ trình` vẫn là các route độc lập nhưng không nằm trong header desktop. Chúng được dẫn từ nội dung liên quan và footer để điều hướng chính không cạnh tranh với định vị Cẩm nang sinh viên. `Về chúng tôi` và `Liên hệ` có mặt nhất quán trên desktop, mobile và footer.
 
-Mười trụ cột nội dung cố định:
+Mười chủ đề nội dung cố định:
 
 1. Học tập & thi cử
 2. Kỹ năng máy tính
@@ -44,7 +44,9 @@ Mười trụ cột nội dung cố định:
 9. AI cho sinh viên
 10. Công cụ & phần mềm hữu ích
 
-Nguồn dữ liệu chuẩn của trụ cột là `src/data/categories.ts`. Header mega menu, footer, trang chủ, bộ lọc, trang chủ đề, metadata và schema bài viết đều đọc từ nguồn này; không tạo danh sách trụ cột riêng trong component.
+Nguồn dữ liệu chuẩn của chủ đề là `src/data/categories.ts`. Header mega menu, footer, trang chủ, bộ lọc, trang chủ đề, metadata và schema bài viết đều đọc từ nguồn này; không tạo danh sách chủ đề riêng trong component.
+
+Ba landing page chính (`/`, `/cam-nang/`, `/cong-cu/`) dùng chung `HeroPicture.astro`. Mỗi trang có một ảnh WebP desktop và một ảnh WebP mobile trong `public/media/page-heroes/`; phần tử `<picture>` chỉ tải nguồn phù hợp với viewport. Ảnh category dùng cho article vẫn nằm riêng trong `public/media/category-heroes/`.
 
 `Sinh viên IT` là một hub chuyên sâu dùng lại nội dung chung, sau đó phân nhánh theo nền tảng và hướng nghề nghiệp; không sao chép bài chỉ để thêm cụm “cho sinh viên IT”.
 
@@ -52,10 +54,10 @@ Nguồn dữ liệu chuẩn của trụ cột là `src/data/categories.ts`. Head
 
 | Route | Vai trò |
 | --- | --- |
-| `/` | Điểm vào theo nhu cầu và mười trụ cột |
+| `/` | Điểm vào theo nhu cầu và mười chủ đề |
 | `/cam-nang/` | Danh mục toàn bộ bài viết, có lọc client-side |
 | `/cam-nang/[slug]/` | Trang bài viết chuẩn hóa |
-| `/chu-de/[slug]/` | Trang trụ cột và cụm nội dung |
+| `/chu-de/[slug]/` | Trang chủ đề và cụm nội dung |
 | `/cong-cu/` | Danh mục mini tool |
 | `/cong-cu/tinh-gpa/` | GPA Calculator |
 | `/cong-cu/diem-cuoi-ky/` | Final Grade Calculator |
@@ -74,7 +76,7 @@ Search intent / pain point
   -> Bài giải thích và các bước thực hiện
   -> Checklist / ví dụ / công cụ liên quan
   -> Bài tiếp theo trong cùng cluster
-  -> Pillar page hoặc hub chuyên sâu
+  -> Trang chủ đề hoặc hub chuyên sâu
 ```
 
 Mỗi bài có tối đa ba CTA có ích: mở tool, tải/check checklist, đọc bước kế tiếp. Affiliate chỉ xuất hiện khi có purchase intent tự nhiên và phải có nhãn minh bạch.

@@ -37,9 +37,9 @@ Vòng đời bài viết không cần database: gỡ khỏi website chỉ đổi
 
 Media do CMS tải lên nằm tại `public/media/articles/<slug>/`. Markdown không chứa base64. Ảnh trong nội dung được lưu bằng block `<figure class="article-figure" data-cms-image>` gồm `img` có alt bắt buộc và `figcaption` tùy chọn. YouTube được lưu bằng block `.video-embed` chỉ chứa video ID hợp lệ và iframe `youtube-nocookie.com`; cả hai block đều được Astro render trực tiếp trong article layout.
 
-## 3. Category / trụ cột
+## 3. Category / chủ đề
 
-Trụ cột là dữ liệu TypeScript tĩnh trong `src/data/categories.ts`. Đây là nguồn chuẩn duy nhất cho toàn website:
+Chủ đề là dữ liệu TypeScript tĩnh trong `src/data/categories.ts`. Đây là nguồn chuẩn duy nhất cho toàn website:
 
 ```ts
 type Category = {
@@ -57,7 +57,7 @@ type Category = {
 };
 ```
 
-`heroImage` là ảnh hero mặc định của trụ cột trong `public/media/category-heroes/`. Article ưu tiên `thumbnail` riêng; khi field này trống, article tự dùng `heroImage` của category để không bắt buộc tạo ảnh mới cho mọi bài.
+`heroImage` là ảnh hero mặc định của chủ đề trong `public/media/category-heroes/`. Article ưu tiên `thumbnail` riêng; khi field này trống, article tự dùng `heroImage` của category để không bắt buộc tạo ảnh mới cho mọi bài.
 
 ## 4. Tool
 

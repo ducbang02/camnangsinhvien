@@ -36,18 +36,18 @@
               <input id="article-search" type="search" placeholder="Tìm theo tiêu đề…" autocomplete="off" />
             </label>
             <label>
-              <span class="sr-only">Lọc theo trụ cột</span>
-              <select id="category-filter"><option value="">Tất cả trụ cột</option></select>
+              <span class="sr-only">Lọc theo chủ đề</span>
+              <select id="category-filter"><option value="">Tất cả chủ đề</option></select>
             </label>
           </div>
 
           <div class="article-table-wrap">
             <table class="article-table">
-              <thead><tr><th>Bài viết</th><th>Trụ cột</th><th>Trạng thái</th><th>Cập nhật</th><th><span class="sr-only">Thao tác</span></th></tr></thead>
+              <thead><tr><th>Bài viết</th><th>Chủ đề</th><th>Trạng thái</th><th>Cập nhật</th><th><span class="sr-only">Thao tác</span></th></tr></thead>
               <tbody id="article-list"></tbody>
             </table>
             <div id="empty-state" class="empty-state" hidden>
-              <span>⌕</span><h2>Không tìm thấy bài viết</h2><p>Thử đổi từ khóa hoặc bộ lọc trụ cột.</p>
+              <span>⌕</span><h2>Không tìm thấy bài viết</h2><p>Thử đổi từ khóa hoặc bộ lọc chủ đề.</p>
             </div>
           </div>
         </section>
@@ -122,8 +122,8 @@
                     <label class="field"><span>Trạng thái</span><select id="status" name="status"><option value="draft">Draft</option><option value="published">Published</option></select></label>
                     <label class="field"><span>Ngày đăng</span><input id="publishedDate" name="publishedDate" type="date" required /></label>
                   </div>
-                  <label class="field"><span>Trụ cột</span><select id="category" name="category" required><option value="">Chọn trụ cột…</option></select></label>
-                  <label class="field"><span>Chủ đề nhỏ <i>bắt buộc theo schema</i></span><input id="topic" name="topic" type="text" placeholder="Ví dụ: Phương pháp học" required /></label>
+                  <label class="field"><span>Chủ đề</span><select id="category" name="category" required><option value="">Chọn chủ đề…</option></select></label>
+                  <label class="field"><span>Nhóm nội dung <i>bắt buộc theo schema</i></span><input id="topic" name="topic" type="text" placeholder="Ví dụ: Phương pháp học" required /></label>
                   <label class="field"><span>Slug</span><div class="input-action"><input id="slug" name="slug" type="text" placeholder="ten-bai-viet" required /><button type="button" data-action="regenerate-slug" title="Tạo lại từ tiêu đề">↻</button></div><small>/cam-nang/<b id="slug-preview">ten-bai-viet</b>/</small></label>
                   <label class="field"><span>Tags <i>phân cách bằng dấu phẩy</i></span><input id="tags" name="tags" type="text" placeholder="học tập, kế hoạch" required /></label>
                 </details>
@@ -149,7 +149,7 @@
 
                 <details>
                   <summary>Thumbnail</summary>
-                  <p class="field-hint">Để trống để dùng ảnh mặc định của trụ cột. Ảnh riêng được lưu tại <code>public/media/articles/&lt;slug&gt;/</code>, không nhúng base64.</p>
+                  <p class="field-hint">Để trống để dùng ảnh mặc định của chủ đề. Ảnh riêng được lưu tại <code>public/media/articles/&lt;slug&gt;/</code>, không nhúng base64.</p>
                   <label class="field"><span>Chọn ảnh thumbnail</span><input id="thumbnail-file" type="file" accept="image/jpeg,image/png,image/gif,image/webp,image/avif" /></label>
                   <button class="button button-secondary button-full" type="button" data-action="upload-thumbnail">Tải thumbnail lên</button>
                   <label class="field"><span>Đường dẫn ảnh</span><input id="thumbnail" name="thumbnail" type="text" placeholder="/media/ten-anh.webp" /></label>

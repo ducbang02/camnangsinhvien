@@ -32,7 +32,7 @@ const schema = {
     <div class="container category-hero-grid">
       <div>
         <nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Trang chủ</a><span>/</span><a href="/cam-nang/">Cẩm nang</a><span>/</span><span aria-current="page">{category.shortName}</span></nav>
-        <p class="eyebrow">Trụ cột {category.number}</p>
+        <p class="eyebrow">Chủ đề {category.number}</p>
         <h1>{category.name}</h1>
         <p class="lead">{category.description}</p>
       </div>
@@ -65,7 +65,7 @@ const schema = {
       ) : (
         <div class="category-empty">
           <span aria-hidden="true">{category.number}</span>
-          <div><h3>Nội dung đang được chuẩn bị</h3><p>Trụ cột này đã có cấu trúc riêng. Bài mẫu sẽ được thêm sau khi giao diện được duyệt.</p></div>
+          <div><h3>Nội dung đang được chuẩn bị</h3><p>Chủ đề này đã có cấu trúc riêng. Bài mẫu sẽ được thêm sau khi giao diện được duyệt.</p></div>
         </div>
       )}
     </div>
@@ -74,7 +74,7 @@ const schema = {
   {categoryTools.length > 0 && (
     <section class="section section-muted">
       <div class="container">
-        <div class="section-heading"><div><p class="eyebrow">Thực hành ngay</p><h2>Công cụ cho trụ cột này</h2></div></div>
+        <div class="section-heading"><div><p class="eyebrow">Thực hành ngay</p><h2>Công cụ cho chủ đề này</h2></div></div>
         <div class="tool-buttons">
           {categoryTools.map((tool) => <a class="button button-dark" href={`/cong-cu/${tool.slug}/`}>{tool.name} <Icon name="arrow" size={18} /></a>)}
         </div>

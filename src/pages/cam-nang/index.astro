@@ -3,6 +3,7 @@ import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ArticleCard from '../../components/ArticleCard.astro';
 import Icon from '../../components/Icon.astro';
+import HeroPicture from '../../components/HeroPicture.astro';
 import { categories } from '../../data/site';
 
 const articles = (await getCollection('articles', ({ data }) => !data.draft))
@@ -10,11 +11,19 @@ const articles = (await getCollection('articles', ({ data }) => !data.draft))
 ---
 
 <BaseLayout title="Cẩm nang" description="Hướng dẫn thực tế về học tập, kỹ năng số và cuộc sống sinh viên — có checklist và công cụ để làm ngay.">
-  <section class="page-hero">
-    <div class="container">
-      <p class="eyebrow">{articles.length} hướng dẫn thực hành</p>
-      <h1>Tìm đúng việc bạn cần giải quyết</h1>
-      <p class="lead">Lọc theo 10 trụ cột hoặc gõ vấn đề đang gặp. Danh sách đầy đủ luôn có sẵn, không cần đăng nhập.</p>
+  <section class="page-hero page-hero-with-image">
+    <div class="container page-hero-grid">
+      <div class="page-hero-copy">
+        <p class="eyebrow">{articles.length} hướng dẫn thực hành</p>
+        <h1>Tìm đúng việc bạn cần giải quyết</h1>
+        <p class="lead">Lọc theo 10 chủ đề hoặc gõ vấn đề đang gặp. Danh sách đầy đủ luôn có sẵn, không cần đăng nhập.</p>
+      </div>
+      <HeroPicture
+        class="page-hero-picture"
+        desktop="/media/page-heroes/cam-nang-desktop.webp"
+        mobile="/media/page-heroes/cam-nang-mobile.webp"
+        alt="Sinh viên ghi chú và tra cứu tài liệu học tập trong thư viện"
+      />
     </div>
   </section>
   <section class="section-tight filter-section">

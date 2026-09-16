@@ -2,15 +2,24 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ToolCard from '../../components/ToolCard.astro';
 import Icon from '../../components/Icon.astro';
+import HeroPicture from '../../components/HeroPicture.astro';
 import { tools } from '../../data/site';
 ---
 
 <BaseLayout title="Công cụ sinh viên" description="Năm công cụ miễn phí giúp tính GPA, điểm cuối kỳ, tập trung, chia nhóm và quản lý ngân sách sinh viên.">
-  <section class="page-hero">
-    <div class="container">
-      <p class="eyebrow">Miễn phí · Không cần tài khoản</p>
-      <h1>Công cụ nhỏ, giải quyết việc thật</h1>
-      <p class="lead">Mỗi công cụ tập trung vào một quyết định cụ thể. Dữ liệu chỉ nằm trên trình duyệt của bạn.</p>
+  <section class="page-hero page-hero-with-image">
+    <div class="container page-hero-grid">
+      <div class="page-hero-copy">
+        <p class="eyebrow">Miễn phí · Không cần tài khoản</p>
+        <h1>Công cụ nhỏ, giải quyết việc thật</h1>
+        <p class="lead">Mỗi công cụ tập trung vào một quyết định cụ thể. Dữ liệu chỉ nằm trên trình duyệt của bạn.</p>
+      </div>
+      <HeroPicture
+        class="page-hero-picture"
+        desktop="/media/page-heroes/cong-cu-desktop.webp"
+        mobile="/media/page-heroes/cong-cu-mobile.webp"
+        alt="Sinh viên dùng laptop, máy tính và đồng hồ tập trung tại bàn học"
+      />
     </div>
   </section>
   <section class="section">

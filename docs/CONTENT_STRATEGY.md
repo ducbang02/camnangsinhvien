@@ -11,7 +11,7 @@
 
 ### Điểm yếu
 
-- Mười trụ cột cần được phát triển theo cluster có ưu tiên; không chia đều số bài chỉ để lấp danh mục.
+- Mười chủ đề cần được phát triển theo cluster có ưu tiên; không chia đều số bài chỉ để lấp danh mục.
 - Một người khó duy trì bài hướng dẫn phần mềm nếu không có lịch rà soát.
 - Nội dung học tập/self-help dễ chung chung nếu thiếu tình huống, mẫu và bằng chứng.
 
@@ -32,9 +32,9 @@
 
 **Cẩm nang sinh viên là nơi biến một vấn đề ở đại học thành bước làm cụ thể: hiểu đúng, dùng công cụ, hoàn thành việc và biết nên học gì tiếp theo.** Website ưu tiên sinh viên Việt Nam nói chung, với một nhánh sâu cho sinh viên IT.
 
-## 3. Mười trụ cột
+## 3. Mười chủ đề
 
-| Trụ cột | Phạm vi chính | Cụm ưu tiên ban đầu |
+| Chủ đề | Phạm vi chính | Cụm ưu tiên ban đầu |
 | --- | --- | --- |
 | Học tập & thi cử | Điểm số và phương pháp học | GPA, điểm cuối kỳ, Active Recall, ôn thi |
 | Kỹ năng máy tính | Năng lực sử dụng thiết bị | File/folder, bàn phím, bảo mật, xử lý lỗi |
@@ -47,7 +47,7 @@
 | AI cho sinh viên | AI-assisted learning có trách nhiệm | Prompt, kiểm chứng, academic integrity |
 | Công cụ & phần mềm hữu ích | Chọn và thiết lập workflow | Office, PDF, cloud, note-taking, phần mềm miễn phí |
 
-Mười trụ cột là khung điều hướng cố định, không phải quota bài viết. Nội dung vẫn được ưu tiên theo search intent, nhu cầu thật và khả năng tạo cluster có chiều sâu.
+Mười chủ đề là khung điều hướng cố định, không phải quota bài viết. Nội dung vẫn được ưu tiên theo search intent, nhu cầu thật và khả năng tạo cluster có chiều sâu.
 
 ## 4. Sinh viên IT
 
@@ -106,10 +106,10 @@ Flashcard, Career Quiz và AI Skill Test chưa ưu tiên vì dễ tạo cảm gi
 
 ## 7. Internal link
 
-- Mỗi bài link lên đúng một trang trụ cột.
+- Mỗi bài link lên đúng một trang chủ đề.
 - Mỗi bài có 2–4 link theo ngữ cảnh: prerequisite, công cụ, bước tiếp theo, bài cùng cluster.
 - Tool luôn link ngược về bài giải thích công thức/phương pháp.
-- Trang trụ cột không chỉ là danh sách; phải giải thích thứ tự đọc.
+- Trang chủ đề không chỉ là danh sách; phải giải thích thứ tự đọc.
 - Hub IT link sang bài chung như quản lý file/AI an toàn thay vì viết bản sao.
 - Kiểm tra orphan page và broken link trong mỗi chu kỳ xuất bản.
 
@@ -132,7 +132,7 @@ Các tín hiệu được dùng để **xếp ưu tiên**, không coi lượt t�
 
 - Thảo luận công khai của sinh viên lặp lại lo lắng về GPA, thiếu project, chọn laptop, định hướng cuối khóa và chi phí.
 - Nghiên cứu 2025 về năng lực số của 600 sinh viên nhấn mạnh thực hành sáng tạo nội dung số, kỹ năng nghề nghiệp và công nghệ mới.
-- Khung phổ cập kỹ năng số cho sinh viên của Bộ GD&ĐT củng cố việc duy trì các trụ cột Kỹ năng máy tính, AI và Công cụ/phần mềm.
+- Khung phổ cập kỹ năng số cho sinh viên của Bộ GD&ĐT củng cố việc duy trì các chủ đề Kỹ năng máy tính, AI và Công cụ/phần mềm.
 - Nội dung sẽ chỉ biến thành hướng dẫn sau khi công thức/quy trình được đối chiếu nguồn chính thức; đặc biệt quy chế GPA phải luôn nhắc người dùng kiểm tra trường của mình.
 
 Nguồn khởi đầu được lưu trong `docs/RESEARCH_SOURCES.md`; mỗi bài còn có danh sách nguồn riêng khi phù hợp.

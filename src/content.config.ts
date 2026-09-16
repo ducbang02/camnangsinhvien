@@ -9,7 +9,7 @@ const articles = defineCollection({
     title: z.string().min(8),
     description: z.string().min(40).max(180),
     category: z.string()
-      .refine(isCategoryId, { message: 'Trụ cột không tồn tại trong src/data/categories.ts' })
+      .refine(isCategoryId, { message: 'Chủ đề không tồn tại trong src/data/categories.ts' })
       .transform((value) => value as CategoryId),
     topic: z.string(),
     tags: z.array(z.string()).min(1),

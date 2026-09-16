@@ -4,13 +4,15 @@
 
 **Phase 1 — MVP đã deploy production.** Kiến trúc đã chốt ngày 14/09/2026: Astro + Markdown/MDX + Cloudflare Workers Static Assets, không backend/database/login. Validation, route scan, internal-link scan, browser QA local và production smoke test đã đạt; xem `docs/TESTING.md`.
 
-**Phase 1A — kiến trúc 10 trụ cột đã được duyệt local.** Mô hình ba pillar đã được thay bằng mười trụ cột dùng chung một nguồn `src/data/categories.ts`. Đã bổ sung 7 bài mẫu ngắn để mọi trụ cột có ít nhất 2 bài; website hiện có 27 bài. Chưa push hoặc deploy thay đổi này lên production.
+**Phase 1A — kiến trúc 10 chủ đề đã được duyệt local.** Mô hình ba nhóm nội dung ban đầu đã được thay bằng mười chủ đề dùng chung một nguồn `src/data/categories.ts`. Đã bổ sung 7 bài mẫu ngắn để mọi chủ đề có ít nhất 2 bài; website hiện có 27 bài. Chưa push hoặc deploy thay đổi này lên production.
 
 **Phase 1B — CMS local Phase 1 đã hoàn tất.** CMS Tiptap Vanilla có danh sách/search/filter, editor, metadata theo Content Collection, load/save Markdown/MDX và preview bằng layout Astro thật. CMS không có database/login, chỉ bind local và không được đưa vào production build. Xem `docs/CMS.md`.
 
 **Điều hướng chính đã được tinh gọn.** Header desktop chỉ giữ mega menu `Cẩm nang` và liên kết `Công cụ`. Hub `Sinh viên IT` và trang `Lộ trình` vẫn tồn tại nhưng được dẫn từ nội dung/footer, tránh làm loãng định vị của website.
 
 **Article hero đã chuyển sang layout ưu tiên hình ảnh.** Title và metadata nằm trên hero cao khoảng nửa viewport; mười category có ảnh mặc định tự host và article vẫn có thể ghi đè bằng thumbnail riêng từ CMS.
+
+**Landing page chính có hero image responsive.** Trang chủ, Cẩm nang và Công cụ dùng `HeroPicture.astro` với ảnh WebP desktop/mobile riêng trong `public/media/page-heroes/`; trình duyệt chọn nguồn theo viewport để giữ đúng bố cục mà không tải cả hai ảnh.
 
 **Điều hướng thông tin và mẫu quảng cáo đã được chuẩn bị local.** Header có thêm `Về chúng tôi` và `Liên hệ`; route Liên hệ đang dùng nội dung mẫu và `noindex` cho tới khi có email thật. Article có tối đa hai placeholder quảng cáo local để duyệt vị trí, chưa tích hợp ad network và production không render placeholder.
 
@@ -33,7 +35,7 @@ Repository và local `origin` đã chuyển sang `ducbang02/camnangsinhvien`. Cl
 
 Mục tiêu: một hub có thể xuất bản thật, không phải landing page minh họa.
 
-- Mười trang trụ cột, mega menu, hub Sinh viên IT và danh mục bài viết.
+- Mười trang chủ đề, mega menu, hub Sinh viên IT và danh mục bài viết.
 - 20 bài mở đầu và 7 bài mẫu bổ sung tạo thành các đường đi hoàn chỉnh, ưu tiên GPA, phương pháp học, kỹ năng số/AI, năm nhất/chi tiêu và nền tảng IT.
 - 5 mini tool: GPA, điểm cuối kỳ, Pomodoro, chia nhóm và ngân sách tháng.
 - Content schema, article layout, nguồn tham khảo, internal link, sitemap, robots và trang 404.
@@ -61,7 +63,7 @@ Tiêu chí hoàn thành:
 
 ## Phase 3 — Scale content (P1/P2)
 
-- Mở rộng cluster thắng trong mười trụ cột đã chốt thay vì tạo thêm trụ cột tùy ý.
+- Mở rộng cluster thắng trong mười chủ đề đã chốt thay vì tạo thêm chủ đề tùy ý.
 - Bổ sung roadmap tương tác cho Sinh viên IT và kỹ năng số.
 - Xây kho tài nguyên có tiêu chí chọn, ngày kiểm tra và nguồn rõ ràng.
 - Content QA: độ chính xác, trùng intent, orphan page, liên kết gãy, nội dung lỗi thời.
@@ -102,7 +104,7 @@ Chỉ bắt đầu khi có returning users và nhu cầu đồng bộ được c
 6. Ôn thi trong 7 ngày — intent cấp bách, dùng lại planner.
 7. Dùng AI để học mà không copy đáp án — định vị đạo đức và khác biệt.
 8. Kiểm chứng câu trả lời của AI — nối research/fact-checking.
-9. Kỹ năng máy tính cần biết trước tốt nghiệp — bài gateway của trụ cột Kỹ năng máy tính.
+9. Kỹ năng máy tính cần biết trước tốt nghiệp — bài gateway của chủ đề Kỹ năng máy tính.
 10. Quản lý file và đặt tên file — pain point phổ quát, dễ hành động.
 11. Bảo vệ tài khoản sinh viên — giá trị cao, không phụ thuộc ngành.
 12. Gõ 10 ngón bắt đầu từ đâu — chuẩn bị cluster Typing Trainer P1.

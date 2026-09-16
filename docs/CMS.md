@@ -6,7 +6,7 @@ CMS Phase 2 là công cụ biên tập và xuất bản chạy trên máy ngư�
 
 CMS hỗ trợ:
 
-- danh sách, tìm kiếm và lọc bài theo 10 trụ cột;
+- danh sách, tìm kiếm và lọc bài theo 10 chủ đề;
 - tạo hoặc mở bài Markdown/MDX hiện có;
 - editor Tiptap Vanilla với H2/H3, bold, italic, link, bullet list, numbered list, checklist, blockquote, code block, horizontal rule và table;
 - form metadata dùng trực tiếp schema Content Collection;

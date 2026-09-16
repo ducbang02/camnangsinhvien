@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { execFile } from 'node:child_process';
-import { mkdir, mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
+import { access, mkdir, mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { promisify } from 'node:util';
@@ -40,7 +40,8 @@ async function fixture(t) {
   await git(repositoryRoot, 'config', 'user.name', 'CMS Test');
   await git(repositoryRoot, 'config', 'user.email', 'cms-test@example.com');
   await writeFile(path.join(repositoryRoot, 'README.md'), '# Test\n');
-  await git(repositoryRoot, 'add', 'README.md');
+  await writeFile(path.join(repositoryRoot, '.gitignore'), '.cms-trash/\n');
+  await git(repositoryRoot, 'add', 'README.md', '.gitignore');
   await git(repositoryRoot, 'commit', '-m', 'test: khởi tạo');
   await git(repositoryRoot, 'branch', '-M', 'main');
   await git(parent, 'init', '--bare', remote);
@@ -75,4 +76,54 @@ test('dừng trước khi lưu nếu repository có thay đổi không liên qua
     () => publisher.prepare(articleInput()),
     (error) => error.code === 'GIT_UNRELATED_CHANGES' && error.details[0].message === 'README.md',
   );
+});
+
+test('gỡ bài chuyển trạng thái thành Draft rồi commit và push', async (t) => {
+  const { repositoryRoot, publisher } = await fixture(t);
+  const publishPlan = await publisher.prepare(articleInput());
+  const published = await publisher.confirm({ token: publishPlan.token, message: 'feat: xuất bản bài trước khi gỡ' });
+
+  const unpublishPlan = await publisher.prepare({
+    ...articleInput(),
+    originalId: published.article.id,
+    version: published.article.version,
+    extension: published.article.extension,
+    publicationAction: 'unpublish',
+  });
+  assert.equal(unpublishPlan.publicationAction, 'unpublish');
+  assert.equal(unpublishPlan.article.metadata.status, 'draft');
+  await publisher.confirm({ token: unpublishPlan.token, message: 'chore: gỡ bài kiểm tra khỏi website' });
+  assert.match(await readFile(path.join(repositoryRoot, unpublishPlan.files[0]), 'utf8'), /draft: true/);
+});
+
+test('xóa bài và media qua thùng rác rồi commit và push', async (t) => {
+  const { repositoryRoot, publisher } = await fixture(t);
+  const slug = articleInput().metadata.slug;
+  const articlePath = `src/content/articles/hoc-tap-thi-cu/${slug}.md`;
+  const mediaPath = `public/media/articles/${slug}/thumbnail.webp`;
+  await mkdir(path.dirname(path.join(repositoryRoot, mediaPath)), { recursive: true });
+  await writeFile(path.join(repositoryRoot, mediaPath), 'fake-webp-for-publish-test');
+  const input = articleInput();
+  input.metadata.thumbnail = `/media/articles/${slug}/thumbnail.webp`;
+  input.metadata.thumbnailAlt = 'Thumbnail kiểm tra';
+  const publishPlan = await publisher.prepare(input);
+  const published = await publisher.confirm({ token: publishPlan.token, message: 'feat: xuất bản bài để kiểm tra xóa' });
+
+  await assert.rejects(
+    () => publisher.prepareDelete({ id: published.article.id, version: published.article.version, confirmation: 'slug-sai', deleteMedia: true }),
+    (error) => error.code === 'DELETE_CONFIRMATION_MISMATCH',
+  );
+  const deletePlan = await publisher.prepareDelete({
+    id: published.article.id,
+    version: published.article.version,
+    confirmation: slug,
+    deleteMedia: true,
+  });
+  assert.deepEqual(deletePlan.files.sort(), [articlePath, mediaPath].sort());
+  const deleted = await publisher.confirmDelete({ token: deletePlan.token, message: 'chore: xóa bài kiểm tra an toàn' });
+  await assert.rejects(() => access(path.join(repositoryRoot, articlePath)), { code: 'ENOENT' });
+  await assert.rejects(() => access(path.join(repositoryRoot, mediaPath)), { code: 'ENOENT' });
+  await access(path.join(repositoryRoot, deleted.trashDirectory, articlePath));
+  await access(path.join(repositoryRoot, deleted.trashDirectory, mediaPath));
+  assert.match((await git(repositoryRoot, 'log', '-1', '--pretty=%s')).stdout, /xóa bài kiểm tra an toàn/);
 });

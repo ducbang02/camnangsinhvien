@@ -18,6 +18,8 @@
 
 **Metadata CTA và nguồn đã có thể biên tập trong CMS.** Người vận hành chọn mini tool từ nguồn dữ liệu chung, thêm/xóa/sửa nguồn tham khảo và xem title đầy đủ trong editor; không cần sửa frontmatter thủ công cho các field này.
 
+**Vòng đời bài viết đã được quản lý trong CMS.** Nút xuất bản nói rõ workflow Git/Cloudflare; bài có thể được gỡ bằng cách push trạng thái Draft hoặc xóa qua xác nhận slug, thùng rác local và commit/push chọn lọc. Media chỉ bị xóa khi người vận hành chủ động chọn.
+
 Repository và local `origin` đã chuyển sang `ducbang02/camnangsinhvien`. Cloudflare Workers Builds theo dõi nhánh `main` và deploy Worker `cam-nang-sinh-vien` tại `https://cam-nang-sinh-vien.nguyenducbang-uit.workers.dev/`.
 
 ## Nguyên tắc ưu tiên

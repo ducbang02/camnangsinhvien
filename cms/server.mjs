@@ -106,6 +106,16 @@ async function handleApi(request, response, url) {
     sendJson(response, 200, { result });
     return;
   }
+  if (request.method === 'POST' && url.pathname === '/api/delete/prepare') {
+    const plan = await publisher.prepareDelete(await readJson(request));
+    sendJson(response, 200, { plan });
+    return;
+  }
+  if (request.method === 'POST' && url.pathname === '/api/delete/confirm') {
+    const result = await publisher.confirmDelete(await readJson(request));
+    sendJson(response, 200, { result });
+    return;
+  }
   sendJson(response, 404, { error: 'API không tồn tại.', code: 'NOT_FOUND' });
 }
 

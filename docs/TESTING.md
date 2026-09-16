@@ -130,3 +130,13 @@ CMS Phase 1 không thực hiện commit/push. Danh sách kiểm tra đầy đủ
 - Ô tiêu đề tự giãn thành hai dòng; phép đo thực tế có `clientHeight = scrollHeight = 103px`, nên toàn bộ tiêu đề hiển thị mà không bị cắt.
 - Thêm thử một nguồn chỉ có tên rồi bấm Lưu thay đổi: CMS chặn ghi file, đánh dấu đúng nhóm Nguồn tham khảo và báo “Mỗi nguồn tham khảo cần đủ tên hiển thị và URL.” Dòng kiểm thử đã được xóa khỏi form sau đó.
 - Không có bài viết thật nào bị sửa trong lượt browser QA này.
+
+## Kiểm thử vòng đời bài viết trong CMS — 16/09/2026
+
+- `npm run test:cms` đạt 12/12 test; test Git remote tạm xác nhận xuất bản, gỡ thành Draft, xóa bài + media, commit và push đúng branch mà không dùng force push.
+- Trường hợp nhập sai slug trả `DELETE_CONFIRMATION_MISMATCH`; file bài và media không bị di chuyển.
+- Khi xóa thành công trong repository tạm, file bài và thư mục media không còn ở đường dẫn public nhưng vẫn tồn tại dưới `.cms-trash/<timestamp>/` để phục hồi.
+- `npm run validate` đạt: `astro check` có 0 error, 0 warning, 0 hint và production build hiện tại sinh 50 trang (hai bài Draft không được build thành route public).
+- Browser QA tại CMS local xác nhận nút `Xuất bản lên website`, `Gỡ khỏi website (chuyển Draft)` và `Xóa bài…` hiển thị đúng với bài đã lưu; hai nút quản lý bị disable với bài mới chưa lưu.
+- Hộp xóa hiển thị đúng title/path, yêu cầu slug, mặc định không chọn xóa media; nhập slug sai giữ nguyên bài và báo lỗi rõ ràng. Không có bài thật nào bị xóa hoặc push trong browser QA.
+- Console CMS không có error hoặc warning.

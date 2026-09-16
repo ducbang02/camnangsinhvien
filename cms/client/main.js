@@ -25,6 +25,10 @@ const validationSummary = document.querySelector('#validation-summary');
 const toast = document.querySelector('#toast');
 const imageDialog = document.querySelector('#image-dialog');
 const imageForm = document.querySelector('#image-form');
+const deleteDialog = document.querySelector('#delete-dialog');
+const deleteForm = document.querySelector('#delete-form');
+const unpublishButton = document.querySelector('#unpublish-button');
+const deleteArticleButton = document.querySelector('#delete-article-button');
 const publishDialog = document.querySelector('#publish-dialog');
 const publishForm = document.querySelector('#publish-form');
 
@@ -460,6 +464,8 @@ function hydrateEditor(article) {
   setCounter(descriptionInput, document.querySelector('#description-count'), 180);
   setCounter(seoTitleInput, document.querySelector('#seo-title-count'), 70);
   setCounter(seoDescriptionInput, document.querySelector('#seo-description-count'), 180);
+  unpublishButton.disabled = !article.id;
+  deleteArticleButton.disabled = !article.id;
   resetErrors();
   isHydrating = false;
   setClean(article.id ? 'Đã tải từ repository' : 'Chưa lưu');
@@ -525,7 +531,32 @@ async function saveArticle({ forceDraft = false } = {}) {
   }
 }
 
-async function preparePublish() {
+function showPublishPlan(plan) {
+  publishPlan = plan;
+  const isDelete = plan.kind === 'delete';
+  const isUnpublish = plan.publicationAction === 'unpublish';
+  document.querySelector('#publish-dialog-title').textContent = isDelete
+    ? 'Xác nhận xóa và push'
+    : isUnpublish ? 'Xác nhận gỡ bài khỏi website' : 'Xác nhận xuất bản';
+  document.querySelector('#publish-file-heading').textContent = isDelete
+    ? 'Các file sẽ bị xóa:'
+    : 'Chỉ commit các file sau:';
+  document.querySelector('#publish-warning').textContent = isDelete
+    ? 'Sau khi xác nhận, CMS chuyển file vào thùng rác local, validate, commit và push. Không dùng force push.'
+    : 'CMS sẽ commit và push lên branch hiện tại; Cloudflare tự deploy từ GitHub. Không dùng force push.';
+  publishForm.querySelector('button[type="submit"]').textContent = isDelete ? 'Xóa, commit và push' : 'Commit và push';
+  document.querySelector('#publish-target').textContent = `Branch: ${plan.branch} · Remote: ${plan.remote}`;
+  const fileList = document.querySelector('#publish-file-list');
+  fileList.replaceChildren(...plan.files.map((file) => {
+    const item = document.createElement('li');
+    item.textContent = file;
+    return item;
+  }));
+  document.querySelector('#commit-message').value = plan.suggestedMessage;
+  publishDialog.showModal();
+}
+
+async function preparePublish(publicationAction = 'publish') {
   resetErrors();
   saveState.textContent = 'Đang validate project…';
   const buttons = [...document.querySelectorAll('.editor-actions button')];
@@ -533,22 +564,16 @@ async function preparePublish() {
   try {
     const { plan } = await api('/api/publish/prepare', {
       method: 'POST',
-      body: JSON.stringify(articlePayload({ forcePublished: true })),
+      body: JSON.stringify({
+        ...articlePayload({ forcePublished: publicationAction === 'publish' }),
+        publicationAction,
+      }),
     });
-    publishPlan = plan;
     currentArticle = plan.article;
-    statusInput.value = 'published';
+    statusInput.value = publicationAction === 'unpublish' ? 'draft' : 'published';
     setClean('Đã validate — chờ xác nhận Git');
-    document.querySelector('#publish-target').textContent = `Branch: ${plan.branch} · Remote: ${plan.remote}`;
-    const fileList = document.querySelector('#publish-file-list');
-    fileList.replaceChildren(...plan.files.map((file) => {
-      const item = document.createElement('li');
-      item.textContent = file;
-      return item;
-    }));
-    document.querySelector('#commit-message').value = plan.suggestedMessage;
     await refreshArticles();
-    publishDialog.showModal();
+    showPublishPlan(plan);
   } catch (error) {
     saveState.textContent = 'Chưa thể xuất bản';
     displayErrors(error.details, error.message);
@@ -566,14 +591,21 @@ async function confirmPublish() {
   cancel.disabled = true;
   submit.textContent = 'Đang commit & push…';
   try {
-    const { result } = await api('/api/publish/confirm', {
+    const deleting = publishPlan.kind === 'delete';
+    const { result } = await api(deleting ? '/api/delete/confirm' : '/api/publish/confirm', {
       method: 'POST',
       body: JSON.stringify({ token: publishPlan.token, message: document.querySelector('#commit-message').value.trim() }),
     });
     publishDialog.close();
     publishPlan = null;
-    currentArticle = result.article;
-    setClean(`Đã push commit ${result.commit}`);
+    if (deleting) {
+      currentArticle = null;
+      setClean(result.commit ? `Đã push commit ${result.commit}` : 'Đã xóa local');
+      showView('list');
+    } else {
+      currentArticle = result.article;
+      setClean(`Đã push commit ${result.commit}`);
+    }
     showToast(result.message);
     await refreshArticles();
   } catch (error) {
@@ -584,6 +616,49 @@ async function confirmPublish() {
     submit.disabled = false;
     cancel.disabled = false;
     submit.textContent = 'Commit và push';
+  }
+}
+
+function openDeleteDialog() {
+  if (!currentArticle?.id) {
+    showToast('Bài mới chưa được lưu nên không có file để xóa.', 'error');
+    return;
+  }
+  const { title, slug } = currentArticle.metadata;
+  document.querySelector('#delete-target').textContent = `${title} · ${currentArticle.id}${currentArticle.extension}`;
+  const confirmation = document.querySelector('#delete-confirmation');
+  confirmation.value = '';
+  confirmation.placeholder = slug;
+  document.querySelector('#delete-media').checked = false;
+  deleteDialog.showModal();
+  confirmation.focus();
+}
+
+async function prepareDelete() {
+  if (!currentArticle?.id) return;
+  const submit = deleteForm.querySelector('button[type="submit"]');
+  const cancel = deleteForm.querySelector('[data-action="close-delete-dialog"]');
+  submit.disabled = true;
+  cancel.disabled = true;
+  submit.textContent = 'Đang kiểm tra…';
+  try {
+    const { plan } = await api('/api/delete/prepare', {
+      method: 'POST',
+      body: JSON.stringify({
+        id: currentArticle.id,
+        version: currentArticle.version,
+        confirmation: document.querySelector('#delete-confirmation').value.trim(),
+        deleteMedia: document.querySelector('#delete-media').checked,
+      }),
+    });
+    deleteDialog.close();
+    showPublishPlan(plan);
+  } catch (error) {
+    showToast(error.message, 'error');
+  } finally {
+    submit.disabled = false;
+    cancel.disabled = false;
+    submit.textContent = 'Kiểm tra file sắp xóa';
   }
 }
 
@@ -659,6 +734,15 @@ document.addEventListener('click', async (event) => {
   if (action === 'save-local') await saveArticle();
   if (action === 'preview') await previewArticle();
   if (action === 'prepare-publish') await preparePublish();
+  if (action === 'prepare-unpublish') {
+    const confirmed = window.confirm('Bài sẽ chuyển thành Draft, được commit và push. Sau khi Cloudflare deploy xong, route bài sẽ biến mất khỏi website. Tiếp tục?');
+    if (confirmed) await preparePublish('unpublish');
+  }
+  if (action === 'open-delete-dialog') {
+    const canContinue = !isDirty || window.confirm('Bạn có thay đổi chưa lưu. Nếu xóa, CMS sẽ chuyển file đang có trên ổ đĩa vào thùng rác và bỏ qua thay đổi chưa lưu. Tiếp tục?');
+    if (canContinue) openDeleteDialog();
+  }
+  if (action === 'close-delete-dialog') deleteDialog.close();
   if (action === 'open-image-dialog') imageDialog.showModal();
   if (action === 'close-image-dialog') imageDialog.close();
   if (action === 'close-publish-dialog') {
@@ -734,6 +818,11 @@ imageForm.addEventListener('submit', async (event) => {
 publishForm.addEventListener('submit', async (event) => {
   event.preventDefault();
   await confirmPublish();
+});
+
+deleteForm.addEventListener('submit', async (event) => {
+  event.preventDefault();
+  await prepareDelete();
 });
 
 form.addEventListener('input', (event) => {

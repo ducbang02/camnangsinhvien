@@ -63,7 +63,7 @@
               <button class="button button-secondary" type="button" data-action="save-draft">Lưu nháp</button>
               <button class="button button-secondary" type="button" data-action="save-local">Lưu thay đổi</button>
               <button class="button button-primary" type="button" data-action="preview">Preview ↗</button>
-              <button class="button button-publish" type="button" data-action="prepare-publish">Xuất bản</button>
+              <button class="button button-publish" type="button" data-action="prepare-publish" title="Validate, commit, push GitHub rồi Cloudflare tự deploy">Xuất bản lên website</button>
             </div>
           </div>
 
@@ -162,6 +162,13 @@
                   <label class="field"><span>SEO meta description <i id="seo-description-count">0/180</i></span><textarea id="seoDescription" name="seoDescription" rows="4" maxlength="180" placeholder="Để trống sẽ dùng excerpt"></textarea></label>
                 </details>
 
+                <details id="article-management" class="danger-zone">
+                  <summary>Quản lý bài viết</summary>
+                  <p class="field-hint">Gỡ bài sẽ chuyển sang Draft và push để route biến mất sau lần deploy kế tiếp. Xóa bài sẽ chuyển file vào thùng rác local trước khi commit.</p>
+                  <button id="unpublish-button" class="button button-secondary button-full" type="button" data-action="prepare-unpublish">Gỡ khỏi website (chuyển Draft)</button>
+                  <button id="delete-article-button" class="button button-danger button-full" type="button" data-action="open-delete-dialog">Xóa bài…</button>
+                </details>
+
                 <div id="validation-summary" class="validation-summary" role="alert" hidden></div>
               </aside>
             </div>
@@ -184,14 +191,29 @@
       </form>
     </dialog>
 
+    <dialog id="delete-dialog" class="cms-dialog delete-dialog" aria-labelledby="delete-dialog-title">
+      <form id="delete-form" method="dialog">
+        <p class="eyebrow">Thao tác có thể phục hồi</p>
+        <h2 id="delete-dialog-title">Xóa bài viết</h2>
+        <p id="delete-target" class="delete-target"></p>
+        <p class="publish-warning">Bài sẽ được chuyển vào <code>.cms-trash/</code>. CMS chỉ xóa khỏi website sau khi bạn kiểm tra danh sách file và xác nhận commit/push ở bước kế tiếp.</p>
+        <label class="field"><span>Nhập slug để xác nhận</span><input id="delete-confirmation" type="text" autocomplete="off" required /></label>
+        <label class="check-field"><input id="delete-media" type="checkbox" /> <span>Xóa cả thư mục media riêng của bài (mặc định giữ lại)</span></label>
+        <div class="dialog-actions">
+          <button class="button button-quiet" type="button" data-action="close-delete-dialog">Hủy</button>
+          <button class="button button-danger" type="submit">Kiểm tra file sắp xóa</button>
+        </div>
+      </form>
+    </dialog>
+
     <dialog id="publish-dialog" class="cms-dialog publish-dialog" aria-labelledby="publish-dialog-title">
       <form id="publish-form" method="dialog">
         <p class="eyebrow">Kiểm tra trước khi đẩy Git</p>
         <h2 id="publish-dialog-title">Xác nhận xuất bản</h2>
         <p id="publish-target" class="field-hint"></p>
-        <div class="publish-files"><strong>Chỉ commit các file sau:</strong><ul id="publish-file-list"></ul></div>
+        <div class="publish-files"><strong id="publish-file-heading">Chỉ commit các file sau:</strong><ul id="publish-file-list"></ul></div>
         <label class="field"><span>Commit message</span><input id="commit-message" type="text" minlength="8" maxlength="160" required /></label>
-        <p class="publish-warning">Sau khi xác nhận, CMS sẽ commit và push lên branch hiện tại. Không dùng force push.</p>
+        <p id="publish-warning" class="publish-warning">Sau khi xác nhận, CMS sẽ commit và push lên branch hiện tại. Không dùng force push.</p>
         <div class="dialog-actions">
           <button class="button button-quiet" type="button" data-action="close-publish-dialog">Hủy</button>
           <button class="button button-publish" type="submit">Commit và push</button>

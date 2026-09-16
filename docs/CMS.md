@@ -17,6 +17,7 @@ CMS hỗ trợ:
 - upload thumbnail hoặc ảnh nội dung định dạng JPEG, PNG, GIF, WebP, AVIF, tối đa 10 MB;
 - alt text bắt buộc, caption tùy chọn và block YouTube từ URL;
 - xuất bản hai bước với validation, kiểm tra Git, danh sách file, commit và push branch hiện tại.
+- gỡ bài khỏi website bằng trạng thái Draft và xóa bài qua xác nhận slug/thùng rác local.
 
 CMS không tối ưu/chuyển đổi ảnh tự động; người vận hành nên ưu tiên WebP/AVIF đã nén trước khi upload.
 
@@ -47,7 +48,7 @@ Lệnh CMS tự dùng Astro server đang chạy ở cổng `4321`; nếu chưa c
 
 ## Quy trình Xuất bản
 
-1. Nhấn `Xuất bản`; CMS ép trạng thái bài hiện tại thành Published và validate dữ liệu.
+1. Nhấn `Xuất bản lên website`; CMS ép trạng thái bài hiện tại thành Published và validate dữ liệu.
 2. CMS dừng nếu Git có staged file, detached HEAD, merge/rebase dở dang hoặc thay đổi không thuộc bài hiện tại.
 3. CMS chạy `npm run validate` và hiển thị branch, remote cùng đúng danh sách file sắp commit.
 4. Kiểm tra/sửa commit message rồi nhấn `Commit và push`.
@@ -55,6 +56,13 @@ Lệnh CMS tự dùng Astro server đang chạy ở cổng `4321`; nếu chưa c
 6. Cloudflare chỉ auto deploy production khi branch được push là branch đang được Cloudflare theo dõi (`main` ở cấu hình hiện tại).
 
 Nếu push thất bại sau khi commit, commit vẫn nằm an toàn trên máy. Kiểm tra kết nối/remote rồi chạy `git push origin <branch>` thủ công; CMS không tự hoàn tác commit và không force push.
+
+## Gỡ hoặc xóa bài
+
+- `Gỡ khỏi website (chuyển Draft)` dùng cùng quy trình validate → liệt kê file → commit → push, nhưng lưu `draft: true`. Cloudflare sẽ gỡ route public sau lần build tiếp theo; bài vẫn còn trong CMS để sửa và xuất bản lại.
+- `Xóa bài…` yêu cầu nhập đúng slug. CMS kiểm tra Git và hiển thị danh sách trước khi thực hiện; chỉ ở lần xác nhận thứ hai mới chuyển file vào `.cms-trash/`, validate, commit deletion và push.
+- Media mặc định được giữ lại. Chỉ khi chọn `Xóa cả thư mục media riêng của bài`, thư mục `public/media/articles/<slug>/` mới được chuyển vào cùng thùng rác.
+- Có thể phục hồi thủ công bằng cách chép nội dung bên trong `.cms-trash/<timestamp>/` về đúng đường dẫn tương ứng trong project. Không commit thư mục `.cms-trash/`.
 
 ## Metadata CMS
 
@@ -98,3 +106,5 @@ npm run validate
 - Chèn YouTube bằng URL `watch`, `youtu.be` hoặc `shorts` và kiểm tra tỷ lệ 16:9.
 - Khi repository có file khác đang sửa, nhấn Xuất bản và xác nhận CMS dừng trước khi stage.
 - Trên repository sạch, kiểm tra danh sách file trong hộp xác nhận trước khi commit/push.
+- Gỡ một bài test trong repository tạm và xác nhận frontmatter chuyển thành `draft: true` sau push.
+- Mở hộp xóa, thử slug sai để xác nhận CMS không xóa; thử lại slug đúng, giữ media mặc định và kiểm tra danh sách file trước bước commit.

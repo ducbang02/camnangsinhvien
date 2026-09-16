@@ -33,6 +33,8 @@ ID/slug được lấy từ đường dẫn file, ví dụ `hoc-tap-thi-cu/cach-
 
 CMS dùng slug làm tên file và kiểm tra slug duy nhất trên toàn collection vì route công khai không chứa category. Trạng thái form `Draft`/`Published` được lưu thành `draft: true`/`draft: false`. CMS cho phép chỉnh `tool` bằng danh sách công cụ chung và chỉnh `sources` bằng các cặp tên nguồn/URL. Các field chưa xuất hiện trên form như `author`, `featured` và `video` vẫn được giữ nguyên khi sửa bài.
 
+Vòng đời bài viết không cần database: gỡ khỏi website chỉ đổi `draft: true`; xóa sẽ di chuyển file nguồn vào `.cms-trash/<timestamp>/src/content/articles/...` trên máy local. Nếu chọn xóa media, thư mục `public/media/articles/<slug>/` cũng được chuyển vào cùng bản thùng rác. Thùng rác không thuộc Git và có thể phục hồi thủ công bằng cách chép file về đường dẫn cũ.
+
 Media do CMS tải lên nằm tại `public/media/articles/<slug>/`. Markdown không chứa base64. Ảnh trong nội dung được lưu bằng block `<figure class="article-figure" data-cms-image>` gồm `img` có alt bắt buộc và `figcaption` tùy chọn. YouTube được lưu bằng block `.video-embed` chỉ chứa video ID hợp lệ và iframe `youtube-nocookie.com`; cả hai block đều được Astro render trực tiếp trong article layout.
 
 ## 3. Category / trụ cột

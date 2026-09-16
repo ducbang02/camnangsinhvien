@@ -133,6 +133,20 @@
                   <label class="field"><span>Excerpt <i id="description-count">0/180</i></span><textarea id="description" name="description" rows="5" maxlength="180" placeholder="Tóm tắt 40–180 ký tự…" required></textarea></label>
                 </details>
 
+                <details open>
+                  <summary>Công cụ &amp; nguồn tham khảo</summary>
+                  <label class="field">
+                    <span>Công cụ liên quan <i>không bắt buộc</i></span>
+                    <select id="tool" name="tool"><option value="">Không hiển thị nút Mở công cụ</option></select>
+                    <small>Danh sách lấy trực tiếp từ các công cụ hiện có trên website.</small>
+                  </label>
+                  <div class="field sources-field">
+                    <div class="sources-heading"><span>Nguồn tham khảo</span><button class="button button-secondary button-small" type="button" data-action="add-source">+ Thêm nguồn</button></div>
+                    <p class="field-hint">Mỗi nguồn cần tên hiển thị và URL đầy đủ bắt đầu bằng https:// hoặc http://.</p>
+                    <div id="sources-list" class="sources-list"></div>
+                  </div>
+                </details>
+
                 <details>
                   <summary>Thumbnail</summary>
                   <p class="field-hint">Để trống để dùng ảnh mặc định của trụ cột. Ảnh riêng được lưu tại <code>public/media/articles/&lt;slug&gt;/</code>, không nhúng base64.</p>

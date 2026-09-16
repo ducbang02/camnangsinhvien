@@ -16,6 +16,8 @@
 
 **CMS Phase 2 — đã hoàn tất local, chờ duyệt giao diện.** CMS đã có upload ảnh/thumbnail vào repository, alt/caption, YouTube block và workflow validate → liệt kê đúng file → stage chọn lọc → commit → push không force. Publish được kiểm thử end-to-end bằng Git repository/remote tạm; trên repository thật chỉ smoke test nhánh cảnh báo, không tạo commit hoặc push ngoài yêu cầu. Hạng mục này tách biệt với “Phase 2 — Có traffic ban đầu” của roadmap sản phẩm.
 
+**Metadata CTA và nguồn đã có thể biên tập trong CMS.** Người vận hành chọn mini tool từ nguồn dữ liệu chung, thêm/xóa/sửa nguồn tham khảo và xem title đầy đủ trong editor; không cần sửa frontmatter thủ công cho các field này.
+
 Repository và local `origin` đã chuyển sang `ducbang02/camnangsinhvien`. Cloudflare Workers Builds theo dõi nhánh `main` và deploy Worker `cam-nang-sinh-vien` tại `https://cam-nang-sinh-vien.nguyenducbang-uit.workers.dev/`.
 
 ## Nguyên tắc ưu tiên

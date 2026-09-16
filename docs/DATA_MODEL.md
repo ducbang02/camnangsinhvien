@@ -31,7 +31,7 @@ Collection: `articles`, định dạng `.md` hoặc `.mdx`.
 
 ID/slug được lấy từ đường dẫn file, ví dụ `hoc-tap-thi-cu/cach-tinh-gpa.md` thành `hoc-tap-thi-cu/cach-tinh-gpa` ở collection; route công khai sử dụng phần tên file để giữ URL ngắn.
 
-CMS dùng slug làm tên file và kiểm tra slug duy nhất trên toàn collection vì route công khai không chứa category. Trạng thái form `Draft`/`Published` được lưu thành `draft: true`/`draft: false`. Các field cũ không xuất hiện trên form như `author`, `featured`, `tool`, `video` và `sources` được giữ nguyên khi sửa bài.
+CMS dùng slug làm tên file và kiểm tra slug duy nhất trên toàn collection vì route công khai không chứa category. Trạng thái form `Draft`/`Published` được lưu thành `draft: true`/`draft: false`. CMS cho phép chỉnh `tool` bằng danh sách công cụ chung và chỉnh `sources` bằng các cặp tên nguồn/URL. Các field chưa xuất hiện trên form như `author`, `featured` và `video` vẫn được giữ nguyên khi sửa bài.
 
 Media do CMS tải lên nằm tại `public/media/articles/<slug>/`. Markdown không chứa base64. Ảnh trong nội dung được lưu bằng block `<figure class="article-figure" data-cms-image>` gồm `img` có alt bắt buộc và `figcaption` tùy chọn. YouTube được lưu bằng block `.video-embed` chỉ chứa video ID hợp lệ và iframe `youtube-nocookie.com`; cả hai block đều được Astro render trực tiếp trong article layout.
 

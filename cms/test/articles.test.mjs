@@ -22,6 +22,8 @@ function input(overrides = {}) {
       thumbnailAlt: '',
       seoTitle: '',
       seoDescription: '',
+      tool: '/cong-cu/tinh-gpa/',
+      sources: [{ label: 'Nguồn kiểm tra', url: 'https://example.com/tai-lieu' }],
       status: 'draft',
       publishedDate: '2026-09-14',
       tags: ['cms', 'kiểm thử'],
@@ -44,10 +46,14 @@ test('tạo, đọc và cập nhật một bài Markdown trong thư mục tạm'
   assert.match(markdown, /draft: true/);
   assert.match(markdown, /- \[x\] Kiểm tra nội dung/);
   assert.match(markdown, /\| A \| B \|/);
+  assert.match(markdown, /tool: \/cong-cu\/tinh-gpa\//);
+  assert.match(markdown, /label: Nguồn kiểm tra/);
 
   const loaded = await store.get(created.id);
   assert.match(loaded.html, /data-type="taskList"/);
   assert.match(loaded.html, /data-checked="true"/);
+  assert.equal(loaded.metadata.tool, '/cong-cu/tinh-gpa/');
+  assert.deepEqual(loaded.metadata.sources, [{ label: 'Nguồn kiểm tra', url: 'https://example.com/tai-lieu' }]);
   const updated = await store.save({
     ...input({ title: 'Bài kiểm tra CMS local đã cập nhật' }),
     html: loaded.html,
@@ -79,6 +85,20 @@ test('từ chối slug và category không hợp lệ', async (t) => {
   const store = createArticleStore({ root, categories });
   const errors = store.validate(input({ slug: '../ra-ngoai', category: 'khong-ton-tai' }));
   assert.deepEqual(errors.map((error) => error.field), ['slug', 'category']);
+});
+
+test('từ chối route công cụ và nguồn tham khảo không hợp lệ', async (t) => {
+  const root = await mkdtemp(path.join(tmpdir(), 'cnsv-cms-'));
+  t.after(() => rm(root, { recursive: true, force: true }));
+  const store = createArticleStore({ root, categories });
+  const errors = store.validate(input({
+    tool: 'https://example.com/cong-cu',
+    sources: [
+      { label: '', url: 'https://example.com' },
+      { label: 'Nguồn sai URL', url: 'javascript:alert(1)' },
+    ],
+  }));
+  assert.deepEqual(errors.map((error) => error.field), ['tool', 'sources', 'sources']);
 });
 
 test('từ chối slug trùng ở category khác vì route chỉ dùng tên file', async (t) => {

@@ -84,7 +84,7 @@ h1 { margin: 0; font: 800 clamp(2.3rem, 5vw, 4.5rem)/.98 'Noto Sans', Arial, san
 .writing-panel { padding: clamp(2rem, 5vw, 5rem) clamp(1rem, 7vw, 7rem) 6rem; background: #f8f9fa; }
 .title-field { display: block; max-width: 850px; margin: 0 auto 1.5rem; padding: 1rem 1.15rem; border: 1px solid #cfd7e2; border-radius: 11px; background: white; box-shadow: 0 10px 28px rgba(25,38,58,.05); }
 .title-visible-label { display: block; margin-bottom: .65rem; color: #168168; font-size: .72rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
-.title-field textarea { width: 100%; min-height: 3.2rem; resize: none; overflow: hidden; padding: 0; border: 0; color: var(--ink); background: transparent; font: 750 clamp(2rem, 4vw, 3.4rem)/1.06 'Noto Sans', Arial, sans-serif; letter-spacing: -.045em; }
+.title-field textarea { width: 100%; min-height: 3.7rem; field-sizing: content; resize: none; overflow: hidden; overflow-wrap: anywhere; padding: .1rem 0 .25rem; border: 0; color: var(--ink); background: transparent; font: 750 clamp(1.7rem, 3vw, 2.65rem)/1.14 'Noto Sans', Arial, sans-serif; letter-spacing: -.035em; }
 .title-field textarea::placeholder { color: #8e99a9; }
 .toolbar { max-width: 850px; display: flex; flex-wrap: wrap; align-items: center; gap: .35rem; margin: 0 auto; padding: .55rem; border: 1px solid var(--line); border-radius: 11px 11px 0 0; background: white; position: sticky; top: 151px; z-index: 8; box-shadow: 0 6px 16px rgba(21,34,55,.05); }
 .tool-group { display: flex; gap: .15rem; padding-right: .35rem; border-right: 1px solid var(--line); }
@@ -127,6 +127,16 @@ h1 { margin: 0; font: 800 clamp(2.3rem, 5vw, 4.5rem)/.98 'Noto Sans', Arial, san
 .field textarea { resize: vertical; line-height: 1.45; }
 .field small, .field-hint { color: var(--muted); font-size: .72rem; }
 .field-hint { line-height: 1.5; }
+.sources-heading { display: flex; align-items: center; justify-content: space-between; gap: .75rem; margin-top: .8rem; font-size: .8rem; font-weight: 700; }
+.button-small { min-height: 34px; padding: .35rem .6rem; font-size: .75rem; }
+.sources-list { display: grid; gap: .65rem; margin-top: .7rem; }
+.source-row { position: relative; display: grid; gap: .5rem; padding: .7rem 2.55rem .7rem .7rem; border: 1px solid var(--line); border-radius: 8px; background: var(--soft); }
+.source-control { display: grid; grid-template-columns: 68px minmax(0, 1fr); align-items: center; gap: .5rem; }
+.source-control span { color: var(--muted); font-size: .7rem; font-weight: 700; }
+.source-control input { width: 100%; min-width: 0; padding: .58rem .65rem; border: 1px solid #ccd4de; border-radius: 7px; color: var(--ink); background: white; }
+.source-remove { position: absolute; top: .65rem; right: .65rem; width: 28px; height: 28px; padding: 0; border: 1px solid #d4dbe4; border-radius: 6px; color: #7b4650; background: white; font-size: 1.15rem; line-height: 1; cursor: pointer; }
+.source-remove:hover { color: white; border-color: var(--danger); background: var(--danger); }
+.sources-field.has-error .sources-list { padding: .35rem; border: 1px solid #d25454; border-radius: 9px; box-shadow: 0 0 0 2px rgba(210,84,84,.1); }
 .field-grid { display: grid; grid-template-columns: 1fr 1fr; gap: .6rem; }
 .input-action { display: flex; }
 .input-action input { border-radius: 7px 0 0 7px; }

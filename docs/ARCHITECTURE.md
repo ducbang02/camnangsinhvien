@@ -135,6 +135,8 @@ CMS local
 
 Server CMS giới hạn request về local origin, xác thực category/slug, chặn đường dẫn thoát khỏi content root và dùng version của file để tránh ghi đè khi bài đã đổi bên ngoài CMS. Astro chỉ đưa draft vào `getStaticPaths()` trong DEV; production build vẫn loại draft.
 
+Danh sách mini tool có nguồn chuẩn tại `src/data/tools.ts`; website re-export qua `src/data/site.ts`, còn CMS server đọc trực tiếp module dữ liệu này nên client không hard-code route. Field `tool` và `sources` được round-trip qua frontmatter; server kiểm tra route nội bộ của tool và chỉ chấp nhận URL nguồn dùng `http/https`.
+
 Dependency CMS nằm ở `devDependencies` và không được import từ source website, vì vậy mã editor/server không nằm trong bundle hoặc static assets production.
 
 Typography của website và CMS dùng chung Noto Sans variable tự host trong `public/fonts/noto-sans/`. CSS nguồn nằm tại `src/styles/fonts.css`; CMS cấu hình Vite `publicDir` trỏ tới `public/` để dùng đúng cùng asset, không gọi Google Fonts khi chạy local hoặc production.

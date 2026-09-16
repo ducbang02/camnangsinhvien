@@ -4,6 +4,7 @@ import { fileURLToPath } from 'node:url';
 import { spawn } from 'node:child_process';
 import { createServer as createViteServer } from 'vite';
 import { categories } from '../src/data/categories.ts';
+import { tools } from '../src/data/tools.ts';
 import { ArticleStoreError, createArticleStore } from './lib/articles.mjs';
 import { createMediaStore, readImageBody } from './lib/media.mjs';
 import { createPublisher } from './lib/publish.mjs';
@@ -64,7 +65,7 @@ async function handleApi(request, response, url) {
     return;
   }
   if (request.method === 'GET' && url.pathname === '/api/categories') {
-    sendJson(response, 200, { categories });
+    sendJson(response, 200, { categories, tools });
     return;
   }
   if (request.method === 'GET' && url.pathname === '/api/articles') {

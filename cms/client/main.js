@@ -18,6 +18,8 @@ const statusInput = document.querySelector('#status');
 const descriptionInput = document.querySelector('#description');
 const seoTitleInput = document.querySelector('#seoTitle');
 const seoDescriptionInput = document.querySelector('#seoDescription');
+const toolSelect = document.querySelector('#tool');
+const sourcesList = document.querySelector('#sources-list');
 const saveState = document.querySelector('#save-state');
 const validationSummary = document.querySelector('#validation-summary');
 const toast = document.querySelector('#toast');
@@ -27,6 +29,7 @@ const publishDialog = document.querySelector('#publish-dialog');
 const publishForm = document.querySelector('#publish-form');
 
 let categories = [];
+let siteTools = [];
 let articles = [];
 let currentArticle = null;
 let isDirty = false;
@@ -259,6 +262,70 @@ function populateCategories() {
   }
 }
 
+function populateTools() {
+  for (const tool of siteTools) {
+    toolSelect.add(new Option(tool.name, `/cong-cu/${tool.slug}/`));
+  }
+}
+
+function ensureToolOption(value) {
+  if (!value || [...toolSelect.options].some((option) => option.value === value)) return;
+  toolSelect.add(new Option(`Đường dẫn hiện có: ${value}`, value));
+}
+
+function addSourceRow(source = {}, { focus = false } = {}) {
+  const row = document.createElement('div');
+  row.className = 'source-row';
+
+  const labelControl = document.createElement('label');
+  labelControl.className = 'source-control';
+  const labelText = document.createElement('span');
+  labelText.textContent = 'Tên nguồn';
+  const labelInput = document.createElement('input');
+  labelInput.name = 'sources';
+  labelInput.type = 'text';
+  labelInput.placeholder = 'Ví dụ: Quy chế đào tạo của trường';
+  labelInput.value = source.label ?? '';
+  labelControl.append(labelText, labelInput);
+
+  const urlControl = document.createElement('label');
+  urlControl.className = 'source-control';
+  const urlText = document.createElement('span');
+  urlText.textContent = 'URL';
+  const urlInput = document.createElement('input');
+  urlInput.name = 'sources';
+  urlInput.type = 'url';
+  urlInput.placeholder = 'https://...';
+  urlInput.value = source.url ?? '';
+  urlControl.append(urlText, urlInput);
+
+  const remove = document.createElement('button');
+  remove.className = 'source-remove';
+  remove.type = 'button';
+  remove.dataset.action = 'remove-source';
+  remove.setAttribute('aria-label', 'Xóa nguồn tham khảo này');
+  remove.textContent = '×';
+
+  row.append(labelControl, urlControl, remove);
+  sourcesList.append(row);
+  if (focus) labelInput.focus();
+}
+
+function renderSources(sources = []) {
+  sourcesList.replaceChildren();
+  for (const source of sources) addSourceRow(source);
+  if (!sources.length) addSourceRow();
+}
+
+function sourcesFromForm() {
+  return [...sourcesList.querySelectorAll('.source-row')]
+    .map((row) => {
+      const [label, url] = row.querySelectorAll('input');
+      return { label: label.value.trim(), url: url.value.trim() };
+    })
+    .filter((source) => source.label || source.url);
+}
+
 function categoryName(id) {
   return categories.find((category) => category.id === id)?.shortName || id;
 }
@@ -366,6 +433,8 @@ function metadataFromForm() {
     thumbnailAlt: document.querySelector('#thumbnailAlt').value.trim(),
     seoTitle: seoTitleInput.value.trim(),
     seoDescription: seoDescriptionInput.value.trim(),
+    tool: toolSelect.value,
+    sources: sourcesFromForm(),
     status: statusInput.value,
     publishedDate: document.querySelector('#publishedDate').value,
     tags: document.querySelector('#tags').value.split(',').map((tag) => tag.trim()).filter(Boolean),
@@ -377,15 +446,17 @@ function hydrateEditor(article) {
   currentArticle = article;
   const metadata = article.metadata;
   for (const [name, value] of Object.entries(metadata)) {
+    if (name === 'sources') continue;
     const field = form.elements.namedItem(name);
     if (!field) continue;
+    if (name === 'tool') ensureToolOption(value);
     field.value = name === 'tags' ? value.join(', ') : value;
   }
+  renderSources(metadata.sources ?? []);
   editor.commands.setContent(article.html || '<p></p>');
   document.querySelector('#editor-title').textContent = metadata.title || 'Bài viết mới';
   slugPreview.textContent = metadata.slug || 'ten-bai-viet';
   slugWasEdited = Boolean(article.id);
-  autosizeTitle();
   setCounter(descriptionInput, document.querySelector('#description-count'), 180);
   setCounter(seoTitleInput, document.querySelector('#seo-title-count'), 70);
   setCounter(seoDescriptionInput, document.querySelector('#seo-description-count'), 180);
@@ -394,6 +465,8 @@ function hydrateEditor(article) {
   setClean(article.id ? 'Đã tải từ repository' : 'Chưa lưu');
   if (!article.id) isDirty = true;
   showView('editor');
+  requestAnimationFrame(autosizeTitle);
+  document.fonts?.ready.then(autosizeTitle);
   titleInput.focus();
 }
 
@@ -403,7 +476,7 @@ function newArticle() {
     version: null,
     metadata: {
       title: '', slug: '', category: '', topic: '', description: '', thumbnail: '', thumbnailAlt: '',
-      seoTitle: '', seoDescription: '', status: 'draft', publishedDate: today(), tags: [],
+      seoTitle: '', seoDescription: '', tool: '', sources: [], status: 'draft', publishedDate: today(), tags: [],
     },
     html: '<p></p>',
   });
@@ -616,6 +689,16 @@ document.addEventListener('click', async (event) => {
     slugWasEdited = true;
     markDirty();
   }
+  if (action === 'add-source') {
+    addSourceRow({}, { focus: true });
+    markDirty();
+  }
+  if (action === 'remove-source') {
+    event.target.closest('.source-row')?.remove();
+    if (!sourcesList.children.length) addSourceRow();
+    if (!validationSummary.hidden) resetErrors();
+    markDirty();
+  }
   if (action === 'show-list' || action === 'back-to-list') {
     if (isDirty && !window.confirm('Bạn có thay đổi chưa lưu. Vẫn quay lại danh sách?')) return;
     showView('list');
@@ -654,6 +737,7 @@ publishForm.addEventListener('submit', async (event) => {
 });
 
 form.addEventListener('input', (event) => {
+  if (!validationSummary.hidden) resetErrors();
   markDirty();
   if (event.target === titleInput) {
     autosizeTitle();
@@ -674,6 +758,7 @@ form.addEventListener('input', (event) => {
 
 searchInput.addEventListener('input', renderArticles);
 categoryFilter.addEventListener('change', renderArticles);
+window.addEventListener('resize', autosizeTitle);
 window.addEventListener('beforeunload', (event) => {
   if (!isDirty) return;
   event.preventDefault();
@@ -682,8 +767,10 @@ window.addEventListener('beforeunload', (event) => {
 try {
   const [categoryPayload, articlePayload] = await Promise.all([api('/api/categories'), api('/api/articles')]);
   categories = categoryPayload.categories;
+  siteTools = categoryPayload.tools ?? [];
   articles = articlePayload.articles;
   populateCategories();
+  populateTools();
   renderArticles();
 } catch (error) {
   document.querySelector('#article-count').textContent = 'Không thể đọc nội dung';

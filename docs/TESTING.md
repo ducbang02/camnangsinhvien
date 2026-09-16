@@ -101,6 +101,7 @@ CMS Phase 1 không thực hiện commit/push. Danh sách kiểm tra đầy đủ
 ## Kiểm thử article hero theo trụ cột — 16/09/2026
 
 - `npm run validate` đạt: `astro check` có 0 error, 0 warning, 0 hint và production build đủ 51 trang.
+- `npm run deploy:dry` đọc thành công 130 static asset, không có binding và không deploy thật.
 - `npm run test:cms` đạt 9/9 test; thay đổi gợi ý thumbnail không làm ảnh hưởng quy trình đọc, lưu và publish Markdown.
 - `wrangler deploy --dry-run` đọc thành công 130 static asset, không có binding và không thực hiện deploy thật.
 - 10 ảnh hero mặc định được tối ưu thành WebP 1536 × 864, tổng dung lượng khoảng 900 KB; mỗi trụ cột lấy ảnh từ cùng nguồn `src/data/categories.ts`.
@@ -119,3 +120,13 @@ CMS Phase 1 không thực hiện commit/push. Danh sách kiểm tra đầy đủ
 - Bài có ít nhất ba H2 hiển thị đúng hai slot mẫu: slot giữa bài nằm trước H2 thứ ba, slot cuối nằm trước related articles. Bài ngắn không có H2 chỉ hiển thị slot cuối.
 - Placeholder quảng cáo chỉ tồn tại khi chạy local; production build không chứa nhãn mẫu hoặc script đặt slot.
 - Browser QA desktop và mobile 500 × 800 xác nhận điều hướng, trang Liên hệ và khung quảng cáo không bị overflow ngang; console không có error/warning.
+
+## Kiểm thử CMS chỉnh công cụ và nguồn tham khảo — 16/09/2026
+
+- `npm run test:cms` đạt 10/10 test; dữ liệu `tool` và `sources` được giữ nguyên sau vòng lưu–mở lại Markdown, đồng thời route công cụ hoặc URL nguồn sai bị từ chối.
+- `npm run validate` đạt: `astro check` có 0 error, 0 warning, 0 hint và production build đủ 51 trang.
+- Browser QA mở bài `/cam-nang/cach-tinh-gpa-dai-hoc/` trong CMS: trường Công cụ tự chọn đúng `Tính GPA`; nguồn Thông tư hiện có nạp đúng tên và URL.
+- Danh sách Công cụ trong CMS có đủ năm công cụ hiện có và lấy từ `src/data/tools.ts`, không hard-code thêm một bản riêng trong client.
+- Ô tiêu đề tự giãn thành hai dòng; phép đo thực tế có `clientHeight = scrollHeight = 103px`, nên toàn bộ tiêu đề hiển thị mà không bị cắt.
+- Thêm thử một nguồn chỉ có tên rồi bấm Lưu thay đổi: CMS chặn ghi file, đánh dấu đúng nhóm Nguồn tham khảo và báo “Mỗi nguồn tham khảo cần đủ tên hiển thị và URL.” Dòng kiểm thử đã được xóa khỏi form sau đó.
+- Không có bài viết thật nào bị sửa trong lượt browser QA này.

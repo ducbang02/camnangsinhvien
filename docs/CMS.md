@@ -10,6 +10,7 @@ CMS hỗ trợ:
 - tạo hoặc mở bài Markdown/MDX hiện có;
 - editor Tiptap Vanilla với H2/H3, bold, italic, link, bullet list, numbered list, checklist, blockquote, code block, horizontal rule và table;
 - form metadata dùng trực tiếp schema Content Collection;
+- chọn CTA `Mở công cụ` từ danh sách tool chung và thêm/xóa/sửa nguồn tham khảo;
 - làm sạch style/font thừa khi dán từ Word hoặc Google Docs;
 - lưu local với kiểm tra dữ liệu, chống path traversal, chống trùng slug và cảnh báo file bị thay đổi bên ngoài;
 - preview bài draft bằng chính route và layout Astro thật.
@@ -62,7 +63,12 @@ Các trường `title`, `description`, `category`, `topic`, `tags`, `publishedDa
 - `thumbnail` và `thumbnailAlt`;
 - `seoTitle` và `seoDescription`.
 
-Nếu SEO title/description trống, trang bài viết tiếp tục dùng title/description chính. Upload media sẽ được bổ sung ở CMS Phase 2; Phase 1 chỉ nhận đường dẫn file đã có trong `public/`.
+CMS cũng đọc/ghi trực tiếp hai field có sẵn của article:
+
+- `tool`: chọn một mini tool hiện có; để trống sẽ không hiển thị CTA `Mở công cụ`;
+- `sources`: danh sách tối đa 20 cặp tên nguồn và URL `http/https`, giữ đúng thứ tự trên form.
+
+Nếu SEO title/description trống, trang bài viết tiếp tục dùng title/description chính. CMS Phase 2 đã hỗ trợ tải thumbnail và ảnh nội dung vào `public/media/articles/<slug>/`.
 
 ## Kiểm tra tự động
 
@@ -78,6 +84,7 @@ npm run validate
 - Mở danh sách và xác nhận đủ bài, đúng category/status.
 - Search theo một phần tiêu đề; lọc lần lượt một category.
 - Mở bài cũ và kiểm tra metadata/nội dung được nạp đúng.
+- Mở bài có CTA/nguồn tham khảo, đổi tool, thêm/xóa/sửa nguồn rồi lưu và preview.
 - Tạo bài mới, kiểm tra slug tự sinh và có thể sửa tay.
 - Thử đủ nút toolbar, đặc biệt checklist và table.
 - Dán một đoạn từ Word/Google Docs có heading, bold, list, table và link.

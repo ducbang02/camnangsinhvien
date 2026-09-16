@@ -128,6 +128,10 @@ function publicMetadata(data) {
     thumbnailAlt: data.thumbnailAlt ?? '',
     seoTitle: data.seoTitle ?? '',
     seoDescription: data.seoDescription ?? '',
+    tool: data.tool ?? '',
+    sources: Array.isArray(data.sources)
+      ? data.sources.map((source) => ({ label: source?.label ?? '', url: source?.url ?? '' }))
+      : [],
     status: data.draft === true ? 'draft' : 'published',
     publishedDate: dateOnly(data.publishedDate),
     tags: Array.isArray(data.tags) ? data.tags : [],
@@ -222,6 +226,7 @@ export function createArticleStore({ root, categories }) {
     const description = String(metadata.description ?? '').trim();
     const topic = String(metadata.topic ?? '').trim();
     const tags = Array.isArray(metadata.tags) ? metadata.tags.map((tag) => String(tag).trim()).filter(Boolean) : [];
+    const sources = Array.isArray(metadata.sources) ? metadata.sources : [];
     const content = String(input?.html ?? '').trim();
 
     if (title.length < 8) errors.push({ field: 'title', message: 'Tiêu đề cần ít nhất 8 ký tự.' });
@@ -236,6 +241,23 @@ export function createArticleStore({ root, categories }) {
     if (String(metadata.seoDescription ?? '').trim().length > 180) errors.push({ field: 'seoDescription', message: 'SEO description tối đa 180 ký tự.' });
     if (metadata.thumbnail && (!/^\/[A-Za-z0-9._/-]+$/.test(String(metadata.thumbnail)) || String(metadata.thumbnail).includes('..'))) errors.push({ field: 'thumbnail', message: 'Thumbnail cần là đường dẫn public an toàn bắt đầu bằng /.' });
     if (metadata.thumbnail && !String(metadata.thumbnailAlt ?? '').trim()) errors.push({ field: 'thumbnailAlt', message: 'Ảnh thumbnail cần alt text.' });
+    if (metadata.tool && !/^\/cong-cu\/[a-z0-9]+(?:-[a-z0-9]+)*\/$/.test(String(metadata.tool))) errors.push({ field: 'tool', message: 'Công cụ liên quan cần là một route /cong-cu/.../ hợp lệ.' });
+    if (metadata.sources !== undefined && !Array.isArray(metadata.sources)) errors.push({ field: 'sources', message: 'Danh sách nguồn tham khảo không hợp lệ.' });
+    if (sources.length > 20) errors.push({ field: 'sources', message: 'Mỗi bài có tối đa 20 nguồn tham khảo.' });
+    for (const source of sources) {
+      const label = String(source?.label ?? '').trim();
+      const url = String(source?.url ?? '').trim();
+      if (!label || !url) {
+        errors.push({ field: 'sources', message: 'Mỗi nguồn tham khảo cần đủ tên hiển thị và URL.' });
+        continue;
+      }
+      try {
+        const parsedUrl = new URL(url);
+        if (!['http:', 'https:'].includes(parsedUrl.protocol)) throw new Error('invalid protocol');
+      } catch {
+        errors.push({ field: 'sources', message: `URL nguồn “${label}” không hợp lệ.` });
+      }
+    }
     for (const figure of content.matchAll(/<figure\b[^>]*data-cms-image[^>]*>([\s\S]*?)<\/figure>/gi)) {
       const image = figure[1].match(/<img\b[^>]*>/i)?.[0] ?? '';
       const source = image.match(/\bsrc=["']([^"']+)["']/i)?.[1] ?? '';
@@ -311,7 +333,11 @@ export function createArticleStore({ root, categories }) {
       thumbnailAlt: optionalText(metadata.thumbnailAlt),
       seoTitle: optionalText(metadata.seoTitle),
       seoDescription: optionalText(metadata.seoDescription),
-      sources: previousData.sources ?? [],
+      tool: optionalText(metadata.tool),
+      sources: (Array.isArray(metadata.sources) ? metadata.sources : []).map((source) => ({
+        label: String(source.label).trim(),
+        url: String(source.url).trim(),
+      })),
     };
     for (const key of Object.keys(nextData)) {
       if (nextData[key] === undefined) delete nextData[key];

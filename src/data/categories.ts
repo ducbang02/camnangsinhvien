@@ -1,4 +1,33 @@
-export const categories = [
+export type CategoryGroup = {
+  id: string;
+  title: string;
+  shortTitle?: string;
+  description: string;
+  navigationDescription?: string;
+  order: number;
+};
+
+type CategoryDefinition = {
+  id: string;
+  name: string;
+  shortName: string;
+  number: string;
+  heroImage: string;
+  description: string;
+  menuDescription: string;
+  promise: string;
+  accent: 'mint' | 'blue' | 'yellow' | 'coral';
+  seoTitle: string;
+  metaDescription: string;
+  steps?: readonly { label: string; text: string }[];
+  groups?: readonly CategoryGroup[];
+};
+
+function defineCategories<const T extends readonly CategoryDefinition[]>(items: T) {
+  return items;
+}
+
+export const categories = defineCategories([
   {
     id: 'hoc-tap-thi-cu',
     name: 'Học tập & thi cử',
@@ -11,10 +40,31 @@ export const categories = [
     accent: 'mint',
     seoTitle: 'Học tập & thi cử dành cho sinh viên',
     metaDescription: 'Cẩm nang phương pháp học, tính GPA, ôn thi và quản lý môn học dành cho sinh viên đại học.',
-    steps: [
-      { label: 'Hiểu điểm số', text: 'Biết cách tính GPA và xác định mục tiêu cho từng môn.' },
-      { label: 'Học chủ động', text: 'Dùng Active Recall, Spaced Repetition và đề thử đúng lúc.' },
-      { label: 'Vào kỳ thi', text: 'Ưu tiên phần cần cứu trước, không học dàn trải hoặc xuyên đêm.' },
+    groups: [
+      {
+        id: 'hoc-dung-cach',
+        title: 'Học đúng cách',
+        shortTitle: 'Học đúng cách',
+        description: 'Nắm nền tảng và tìm ra phương pháp học phù hợp.',
+        navigationDescription: 'Tìm ra cách học phù hợp trước khi cố học nhiều.',
+        order: 1,
+      },
+      {
+        id: 'hoc-deu',
+        title: 'Học đều & không trì hoãn',
+        shortTitle: 'Học đều',
+        description: 'Biến việc học thành một phần ổn định của tuần thay vì đợi sát deadline.',
+        navigationDescription: 'Quản lý thời gian, deadline và duy trì việc học trong cả học kỳ.',
+        order: 2,
+      },
+      {
+        id: 'vao-ky-thi',
+        title: 'Vào kỳ thi',
+        shortTitle: 'Vào kỳ thi',
+        description: 'Chuyển từ học kiến thức sang tối ưu điểm số và chuẩn bị cho kỳ thi.',
+        navigationDescription: 'Ưu tiên đúng kiến thức, luyện đề và ôn tập có chiến lược.',
+        order: 3,
+      },
     ],
   },
   {
@@ -179,7 +229,7 @@ export const categories = [
       { label: 'Đánh giá lại', text: 'Kiểm tra chi phí, quyền riêng tư và khả năng xuất dữ liệu.' },
     ],
   },
-] as const;
+]);
 
 export type CategoryId = (typeof categories)[number]['id'];
 
@@ -191,4 +241,12 @@ export function isCategoryId(value: string): value is CategoryId {
 
 export function getCategory(id: string) {
   return categories.find((category) => category.id === id);
+}
+
+export function getCategoryGroups(category: CategoryDefinition | undefined): readonly CategoryGroup[] {
+  return category?.groups ?? [];
+}
+
+export function getCategorySteps(category: CategoryDefinition | undefined) {
+  return category?.steps ?? [];
 }

@@ -5,6 +5,8 @@ description: >-
   tra lại quy chế của trường trước khi tính.
 category: hoc-tap-thi-cu
 topic: GPA & điểm số
+group: hoc-dung-cach
+articleOrder: 4
 tags:
   - GPA
   - tín chỉ

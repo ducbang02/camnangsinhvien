@@ -123,7 +123,15 @@
                     <label class="field"><span>Ngày đăng</span><input id="publishedDate" name="publishedDate" type="date" required /></label>
                   </div>
                   <label class="field"><span>Chủ đề</span><select id="category" name="category" required><option value="">Chọn chủ đề…</option></select></label>
-                  <label class="field"><span>Nhóm nội dung <i>bắt buộc theo schema</i></span><input id="topic" name="topic" type="text" placeholder="Ví dụ: Phương pháp học" required /></label>
+                  <label id="group-field" class="field" hidden>
+                    <span>Nhóm trong chủ đề <i>theo cấu hình chung</i></span>
+                    <select id="group" name="group"><option value="">Chọn nhóm…</option></select>
+                    <small id="group-help">Chỉ hiện khi chủ đề được chia thành các nhóm.</small>
+                  </label>
+                  <div class="field-grid">
+                    <label class="field"><span>Chủ đề nhỏ / topic <i>bắt buộc theo schema</i></span><input id="topic" name="topic" type="text" placeholder="Ví dụ: Phương pháp học" required /></label>
+                    <label class="field"><span>Thứ tự bài <i>không bắt buộc</i></span><input id="articleOrder" name="articleOrder" type="number" min="1" step="1" placeholder="Ví dụ: 2" /><small>Dùng trong group hoặc danh sách phẳng.</small></label>
+                  </div>
                   <label class="field"><span>Slug</span><div class="input-action"><input id="slug" name="slug" type="text" placeholder="ten-bai-viet" required /><button type="button" data-action="regenerate-slug" title="Tạo lại từ tiêu đề">↻</button></div><small>/cam-nang/<b id="slug-preview">ten-bai-viet</b>/</small></label>
                   <label class="field"><span>Tags <i>phân cách bằng dấu phẩy</i></span><input id="tags" name="tags" type="text" placeholder="học tập, kế hoạch" required /></label>
                 </details>

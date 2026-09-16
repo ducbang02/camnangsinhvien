@@ -3,6 +3,8 @@ title: "Spaced Repetition cho sinh viên: ôn đúng lúc, không ôn mọi th�
 description: "Cách giãn các lần ôn theo thời gian, chọn nội dung đáng lặp lại và kết hợp tự kiểm tra mà không biến flashcard thành gánh nặng."
 category: hoc-tap-thi-cu
 topic: Phương pháp học
+group: hoc-dung-cach
+articleOrder: 2
 tags: [Spaced Repetition, ôn cách quãng, Anki, ghi nhớ]
 publishedDate: 2026-09-10
 updatedDate: 2026-09-14

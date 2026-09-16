@@ -13,6 +13,9 @@ const slugInput = document.querySelector('#slug');
 const slugPreview = document.querySelector('#slug-preview');
 const categorySelect = document.querySelector('#category');
 const categoryFilter = document.querySelector('#category-filter');
+const groupField = document.querySelector('#group-field');
+const groupSelect = document.querySelector('#group');
+const groupHelp = document.querySelector('#group-help');
 const searchInput = document.querySelector('#article-search');
 const statusInput = document.querySelector('#status');
 const descriptionInput = document.querySelector('#description');
@@ -266,6 +269,29 @@ function populateCategories() {
   }
 }
 
+function populateGroups(selectedGroup = '') {
+  const category = categories.find((item) => item.id === categorySelect.value);
+  const groups = [...(category?.groups ?? [])].sort((a, b) => a.order - b.order);
+  groupSelect.replaceChildren(new Option('Chọn nhóm…', ''));
+
+  for (const group of groups) {
+    groupSelect.add(new Option(`${String(group.order).padStart(2, '0')}. ${group.title}`, group.id));
+  }
+
+  if (selectedGroup && !groups.some((group) => group.id === selectedGroup)) {
+    groupSelect.add(new Option(`Group không còn trong cấu hình: ${selectedGroup}`, selectedGroup));
+  }
+
+  const hasGroups = groups.length > 0;
+  groupField.hidden = !hasGroups;
+  groupSelect.disabled = !hasGroups;
+  groupSelect.required = hasGroups;
+  groupSelect.value = hasGroups ? selectedGroup : '';
+  groupHelp.textContent = hasGroups
+    ? 'Danh sách lấy trực tiếp từ cấu hình của chủ đề.'
+    : 'Chủ đề này không chia group; bài sẽ nằm trong danh sách phẳng.';
+}
+
 function populateTools() {
   for (const tool of siteTools) {
     toolSelect.add(new Option(tool.name, `/cong-cu/${tool.slug}/`));
@@ -432,6 +458,8 @@ function metadataFromForm() {
     slug: slugInput.value.trim(),
     category: categorySelect.value,
     topic: document.querySelector('#topic').value.trim(),
+    group: groupSelect.disabled ? '' : groupSelect.value,
+    articleOrder: document.querySelector('#articleOrder').value.trim(),
     description: descriptionInput.value.trim(),
     thumbnail: document.querySelector('#thumbnail').value.trim(),
     thumbnailAlt: document.querySelector('#thumbnailAlt').value.trim(),
@@ -450,12 +478,13 @@ function hydrateEditor(article) {
   currentArticle = article;
   const metadata = article.metadata;
   for (const [name, value] of Object.entries(metadata)) {
-    if (name === 'sources') continue;
+    if (name === 'sources' || name === 'group') continue;
     const field = form.elements.namedItem(name);
     if (!field) continue;
     if (name === 'tool') ensureToolOption(value);
     field.value = name === 'tags' ? value.join(', ') : value;
   }
+  populateGroups(metadata.group ?? '');
   renderSources(metadata.sources ?? []);
   editor.commands.setContent(article.html || '<p></p>');
   document.querySelector('#editor-title').textContent = metadata.title || 'Bài viết mới';
@@ -481,7 +510,7 @@ function newArticle() {
     id: null,
     version: null,
     metadata: {
-      title: '', slug: '', category: '', topic: '', description: '', thumbnail: '', thumbnailAlt: '',
+      title: '', slug: '', category: '', topic: '', group: '', articleOrder: '', description: '', thumbnail: '', thumbnailAlt: '',
       seoTitle: '', seoDescription: '', tool: '', sources: [], status: 'draft', publishedDate: today(), tags: [],
     },
     html: '<p></p>',
@@ -847,6 +876,7 @@ form.addEventListener('input', (event) => {
 
 searchInput.addEventListener('input', renderArticles);
 categoryFilter.addEventListener('change', renderArticles);
+categorySelect.addEventListener('change', () => populateGroups());
 window.addEventListener('resize', autosizeTitle);
 window.addEventListener('beforeunload', (event) => {
   if (!isDirty) return;
@@ -859,6 +889,7 @@ try {
   siteTools = categoryPayload.tools ?? [];
   articles = articlePayload.articles;
   populateCategories();
+  populateGroups();
   populateTools();
   renderArticles();
 } catch (error) {

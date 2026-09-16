@@ -14,6 +14,8 @@ Collection: `articles`, định dạng `.md` hoặc `.mdx`.
 | `description` | string | Có | Mô tả ngắn, dùng trong card/meta |
 | `category` | enum | Có | Một trong mười ID khai báo tại `src/data/categories.ts` |
 | `topic` | string | Có | Nhóm nhỏ để gom cluster |
+| `group` | string | Tùy category | ID group khai báo trong chính category; bắt buộc khi category có `groups`, không dùng khi category không chia group |
+| `articleOrder` | integer dương | Không | Thứ tự bài trong group hoặc trong danh sách phẳng; bài không khai báo được xếp sau các bài có thứ tự |
 | `tags` | string[] | Có | Từ khóa điều hướng, không dùng để nhồi SEO |
 | `publishedDate` | date | Có | Ngày xuất bản |
 | `updatedDate` | date | Không | Ngày kiểm tra nội dung gần nhất |
@@ -53,11 +55,23 @@ type Category = {
   accent: 'mint' | 'blue' | 'yellow' | 'coral';
   seoTitle: string;
   metaDescription: string;
-  steps: { label: string; text: string }[];
+  steps?: { label: string; text: string }[];
+  groups?: CategoryGroup[];
+};
+
+type CategoryGroup = {
+  id: string;
+  title: string;
+  shortTitle?: string;
+  description: string;
+  navigationDescription?: string;
+  order: number;
 };
 ```
 
 `heroImage` là ảnh hero mặc định của chủ đề trong `public/media/category-heroes/`. Article ưu tiên `thumbnail` riêng; khi field này trống, article tự dùng `heroImage` của category để không bắt buộc tạo ảnh mới cho mọi bài.
+
+`groups` là tùy chọn và có số lượng bất kỳ. Trang chủ đề có `groups` sẽ tạo navigation anchor và chia bài theo `group`; trang không khai báo hoặc dùng `groups: []` tiếp tục render danh sách phẳng. Schema kiểm tra chéo để `group` của article phải thuộc đúng category. `group.order` điều khiển thứ tự group, còn `articleOrder` điều khiển thứ tự bài nên hai khái niệm không bị nhập nhằng.
 
 ## 4. Tool
 

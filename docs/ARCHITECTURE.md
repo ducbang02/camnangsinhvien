@@ -46,6 +46,8 @@ Mười chủ đề nội dung cố định:
 
 Nguồn dữ liệu chuẩn của chủ đề là `src/data/categories.ts`. Header mega menu, footer, trang chủ, bộ lọc, trang chủ đề, metadata và schema bài viết đều đọc từ nguồn này; không tạo danh sách chủ đề riêng trong component.
 
+Mỗi category có thể khai báo `groups` tùy chọn trong cùng nguồn dữ liệu. Page `/chu-de/[slug]/` dùng một render flow chung: category có group sinh navigation anchor và các section theo cấu hình; category không có group giữ danh sách bài phẳng. Article chỉ lưu `group` và `articleOrder`, còn title, mô tả và thứ tự group thuộc category config; không có component hoặc field `stage` riêng cho Học tập & thi cử.
+
 Ba landing page chính (`/`, `/cam-nang/`, `/cong-cu/`) dùng chung `HeroPicture.astro`. Mỗi trang có một ảnh WebP desktop và một ảnh WebP mobile trong `public/media/page-heroes/`; phần tử `<picture>` chỉ tải nguồn phù hợp với viewport. Ảnh category dùng cho article vẫn nằm riêng trong `public/media/category-heroes/`.
 
 `Sinh viên IT` là một hub chuyên sâu dùng lại nội dung chung, sau đó phân nhánh theo nền tảng và hướng nghề nghiệp; không sao chép bài chỉ để thêm cụm “cho sinh viên IT”.
@@ -88,6 +90,7 @@ Mỗi bài có tối đa ba CTA có ích: mở tool, tải/check checklist, đ�
 - Mini tool dùng script nhỏ, cô lập theo từng trang.
 - Bộ lọc bài viết chạy client-side nhưng danh sách đầy đủ vẫn có trong HTML để người dùng và crawler đọc được.
 - Trang chủ đề render cùng một danh sách bài và mặc định trình bày dạng list gọn; nút `Danh sách`/`Dạng thẻ` chỉ đổi class hiển thị client-side, không nhân đôi nội dung và không lưu trạng thái.
+- Với category có group, navigation dùng link hash thật và từng section có `scroll-margin-top`; CSS `scroll-behavior` chung xử lý cuộn mượt, không cần JavaScript riêng. Category không có group không render navigation/section rỗng.
 - Không dùng SPA routing.
 
 ## 7. SEO và metadata
@@ -137,6 +140,8 @@ CMS local
 ```
 
 Server CMS giới hạn request về local origin, xác thực category/slug, chặn đường dẫn thoát khỏi content root và dùng version của file để tránh ghi đè khi bài đã đổi bên ngoài CMS. Astro chỉ đưa draft vào `getStaticPaths()` trong DEV; production build vẫn loại draft.
+
+Form CMS đọc `groups` từ category config qua API local. Khi category có group, CMS hiện dropdown bắt buộc; khi không có group, control được ẩn và bài giữ danh sách phẳng. `articleOrder` là số nguyên dương tùy chọn và được round-trip qua frontmatter.
 
 Danh sách mini tool có nguồn chuẩn tại `src/data/tools.ts`; website re-export qua `src/data/site.ts`, còn CMS server đọc trực tiếp module dữ liệu này nên client không hard-code route. Field `tool` và `sources` được round-trip qua frontmatter; server kiểm tra route nội bộ của tool và chỉ chấp nhận URL nguồn dùng `http/https`.
 

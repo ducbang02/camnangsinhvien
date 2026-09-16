@@ -123,6 +123,8 @@ function publicMetadata(data) {
     slug: '',
     category: data.category ?? '',
     topic: data.topic ?? '',
+    group: data.group ?? '',
+    articleOrder: Number.isInteger(data.articleOrder) ? data.articleOrder : '',
     description: data.description ?? '',
     thumbnail: data.thumbnail ?? '',
     thumbnailAlt: data.thumbnailAlt ?? '',
@@ -166,6 +168,7 @@ export class ArticleStoreError extends Error {
 export function createArticleStore({ root, categories }) {
   const articleRoot = path.resolve(root);
   const categoryIds = new Set(categories.map((category) => category.id));
+  const categoriesById = new Map(categories.map((category) => [category.id, category]));
 
   async function list() {
     const files = await walkArticles(articleRoot);
@@ -225,14 +228,25 @@ export function createArticleStore({ root, categories }) {
     const slug = String(metadata.slug ?? '').trim();
     const description = String(metadata.description ?? '').trim();
     const topic = String(metadata.topic ?? '').trim();
+    const group = String(metadata.group ?? '').trim();
+    const articleOrder = metadata.articleOrder === '' || metadata.articleOrder === undefined || metadata.articleOrder === null
+      ? undefined
+      : Number(metadata.articleOrder);
     const tags = Array.isArray(metadata.tags) ? metadata.tags.map((tag) => String(tag).trim()).filter(Boolean) : [];
     const sources = Array.isArray(metadata.sources) ? metadata.sources : [];
     const content = String(input?.html ?? '').trim();
 
     if (title.length < 8) errors.push({ field: 'title', message: 'Tiêu đề cần ít nhất 8 ký tự.' });
     if (!SLUG_PATTERN.test(slug)) errors.push({ field: 'slug', message: 'Slug chỉ gồm chữ thường không dấu, số và dấu gạch ngang.' });
+    const category = categoriesById.get(metadata.category);
     if (!categoryIds.has(metadata.category)) errors.push({ field: 'category', message: 'Hãy chọn một chủ đề hợp lệ.' });
+    if (category) {
+      const groups = Array.isArray(category.groups) ? category.groups : [];
+      if (groups.length > 0 && !group) errors.push({ field: 'group', message: 'Hãy chọn một nhóm của chủ đề.' });
+      if (group && !groups.some((item) => item.id === group)) errors.push({ field: 'group', message: 'Nhóm không thuộc chủ đề đã chọn.' });
+    }
     if (!topic) errors.push({ field: 'topic', message: 'Nhóm nội dung không được để trống.' });
+    if (articleOrder !== undefined && (!Number.isInteger(articleOrder) || articleOrder < 1)) errors.push({ field: 'articleOrder', message: 'Thứ tự bài phải là số nguyên từ 1 trở lên.' });
     if (description.length < 40 || description.length > 180) errors.push({ field: 'description', message: 'Mô tả cần từ 40 đến 180 ký tự.' });
     if (!tags.length) errors.push({ field: 'tags', message: 'Cần ít nhất một tag.' });
     if (!DATE_PATTERN.test(String(metadata.publishedDate ?? ''))) errors.push({ field: 'publishedDate', message: 'Ngày đăng không hợp lệ.' });
@@ -322,6 +336,10 @@ export function createArticleStore({ root, categories }) {
       description: String(metadata.description).trim(),
       category: metadata.category,
       topic: String(metadata.topic).trim(),
+      group: optionalText(metadata.group),
+      articleOrder: metadata.articleOrder === '' || metadata.articleOrder === undefined || metadata.articleOrder === null
+        ? undefined
+        : Number(metadata.articleOrder),
       tags: metadata.tags.map((tag) => String(tag).trim()).filter(Boolean),
       publishedDate: metadata.publishedDate,
       updatedDate: original ? today : undefined,

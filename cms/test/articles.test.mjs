@@ -6,7 +6,14 @@ import test from 'node:test';
 import { ArticleStoreError, createArticleStore } from '../lib/articles.mjs';
 
 const categories = [
-  { id: 'hoc-tap-thi-cu', name: 'Học tập & thi cử' },
+  {
+    id: 'hoc-tap-thi-cu',
+    name: 'Học tập & thi cử',
+    groups: [
+      { id: 'hoc-dung-cach', title: 'Học đúng cách', order: 1 },
+      { id: 'vao-ky-thi', title: 'Vào kỳ thi', order: 2 },
+    ],
+  },
   { id: 'ky-nang-may-tinh', name: 'Kỹ năng máy tính' },
 ];
 
@@ -17,6 +24,8 @@ function input(overrides = {}) {
       slug: 'bai-kiem-tra-cms-local',
       category: 'hoc-tap-thi-cu',
       topic: 'Kiểm thử',
+      group: 'hoc-dung-cach',
+      articleOrder: '2',
       description: 'Mô tả đủ dài để kiểm tra schema bài viết của CMS local hoạt động chính xác.',
       thumbnail: '',
       thumbnailAlt: '',
@@ -47,12 +56,16 @@ test('tạo, đọc và cập nhật một bài Markdown trong thư mục tạm'
   assert.match(markdown, /- \[x\] Kiểm tra nội dung/);
   assert.match(markdown, /\| A \| B \|/);
   assert.match(markdown, /tool: \/cong-cu\/tinh-gpa\//);
+  assert.match(markdown, /group: hoc-dung-cach/);
+  assert.match(markdown, /articleOrder: 2/);
   assert.match(markdown, /label: Nguồn kiểm tra/);
 
   const loaded = await store.get(created.id);
   assert.match(loaded.html, /data-type="taskList"/);
   assert.match(loaded.html, /data-checked="true"/);
   assert.equal(loaded.metadata.tool, '/cong-cu/tinh-gpa/');
+  assert.equal(loaded.metadata.group, 'hoc-dung-cach');
+  assert.equal(loaded.metadata.articleOrder, 2);
   assert.deepEqual(loaded.metadata.sources, [{ label: 'Nguồn kiểm tra', url: 'https://example.com/tai-lieu' }]);
   const updated = await store.save({
     ...input({ title: 'Bài kiểm tra CMS local đã cập nhật' }),
@@ -101,13 +114,32 @@ test('từ chối route công cụ và nguồn tham khảo không hợp lệ', a
   assert.deepEqual(errors.map((error) => error.field), ['tool', 'sources', 'sources']);
 });
 
+test('kiểm tra group theo cấu hình category và thứ tự bài', async (t) => {
+  const root = await mkdtemp(path.join(tmpdir(), 'cnsv-cms-'));
+  t.after(() => rm(root, { recursive: true, force: true }));
+  const store = createArticleStore({ root, categories });
+
+  assert.deepEqual(
+    store.validate(input({ group: '', articleOrder: '0' })).map((error) => error.field),
+    ['group', 'articleOrder'],
+  );
+  assert.deepEqual(
+    store.validate(input({ category: 'ky-nang-may-tinh', group: 'hoc-dung-cach', articleOrder: '' })).map((error) => error.field),
+    ['group'],
+  );
+  assert.deepEqual(
+    store.validate(input({ category: 'ky-nang-may-tinh', group: '', articleOrder: '4' })).map((error) => error.field),
+    [],
+  );
+});
+
 test('từ chối slug trùng ở category khác vì route chỉ dùng tên file', async (t) => {
   const root = await mkdtemp(path.join(tmpdir(), 'cnsv-cms-'));
   t.after(() => rm(root, { recursive: true, force: true }));
   const store = createArticleStore({ root, categories });
   await store.save(input());
   await assert.rejects(
-    () => store.save(input({ category: 'ky-nang-may-tinh' })),
+    () => store.save(input({ category: 'ky-nang-may-tinh', group: '' })),
     (error) => error instanceof ArticleStoreError && error.code === 'SLUG_EXISTS',
   );
 });

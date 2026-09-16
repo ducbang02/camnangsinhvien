@@ -5,6 +5,8 @@ description: >-
   sửa khoảng trống thay vì chỉ đọc lại.
 category: hoc-tap-thi-cu
 topic: Phương pháp học
+group: hoc-dung-cach
+articleOrder: 1
 tags:
   - Active Recall
   - tự kiểm tra

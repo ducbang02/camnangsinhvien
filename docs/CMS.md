@@ -40,6 +40,8 @@ Lệnh CMS tự dùng Astro server đang chạy ở cổng `4321`; nếu chưa c
 
 - File nằm tại `src/content/articles/<category>/<slug>.md` hoặc giữ đuôi `.mdx` nếu bài cũ là MDX.
 - Category đọc trực tiếp từ `src/data/categories.ts`, không có danh sách hard-code thứ hai.
+- Nếu category có `groups`, CMS hiện dropdown lấy từ chính cấu hình đó và bắt buộc chọn một group hợp lệ; category không có group sẽ không hiện control này.
+- `articleOrder` là số nguyên dương tùy chọn để sắp bài trong group hoặc danh sách phẳng.
 - `Lưu nháp` luôn đặt `draft: true`; `Lưu thay đổi` giữ trạng thái đang chọn.
 - Preview luôn lưu local trước, sau đó mở `/cam-nang/<slug>/` trên Astro dev server.
 - Astro dev hiển thị draft để preview; production build vẫn loại `draft: true`.
@@ -66,7 +68,12 @@ Nếu push thất bại sau khi commit, commit vẫn nằm an toàn trên máy. 
 
 ## Metadata CMS
 
-Các trường `title`, `description`, `category`, `topic`, `tags`, `publishedDate` và `draft` ánh xạ trực tiếp vào schema cũ. Các trường tùy chọn mới có backward compatibility:
+Các trường `title`, `description`, `category`, `topic`, `tags`, `publishedDate` và `draft` ánh xạ trực tiếp vào schema. Hai field cấu trúc nội dung là:
+
+- `group`: bắt buộc khi category có group, không dùng khi category không chia group;
+- `articleOrder`: tùy chọn, điều khiển thứ tự bài.
+
+Các trường tùy chọn khác có backward compatibility:
 
 - `thumbnail` và `thumbnailAlt`;
 - `seoTitle` và `seoDescription`.
@@ -94,6 +101,7 @@ npm run validate
 - Mở bài cũ và kiểm tra metadata/nội dung được nạp đúng.
 - Mở bài có CTA/nguồn tham khảo, đổi tool, thêm/xóa/sửa nguồn rồi lưu và preview.
 - Tạo bài mới, kiểm tra slug tự sinh và có thể sửa tay.
+- Chọn category có group và xác nhận dropdown group xuất hiện; đổi sang category không có group và xác nhận dropdown biến mất.
 - Thử đủ nút toolbar, đặc biệt checklist và table.
 - Dán một đoạn từ Word/Google Docs có heading, bold, list, table và link.
 - Bỏ trống từng trường bắt buộc để xem thông báo validation.

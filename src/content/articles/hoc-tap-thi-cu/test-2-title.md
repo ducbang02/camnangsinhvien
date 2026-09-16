@@ -6,12 +6,14 @@ description: >-
   pháp học Phương pháp học Phươ
 category: hoc-tap-thi-cu
 topic: Phương pháp học
+group: hoc-dung-cach
+articleOrder: 99
 tags:
   - học tập
 publishedDate: '2026-09-16'
 author: Cẩm nang sinh viên
 featured: false
-draft: false
+draft: true
 readingMinutes: 1
 sources: []
 updatedDate: '2026-09-16'

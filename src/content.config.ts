@@ -1,7 +1,7 @@
 import { defineCollection } from 'astro:content';
 import { glob } from 'astro/loaders';
 import { z } from 'astro/zod';
-import { isCategoryId, type CategoryId } from './data/categories';
+import { getCategory, getCategoryGroups, isCategoryId, type CategoryId } from './data/categories';
 
 const articles = defineCollection({
   loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/articles' }),
@@ -12,6 +12,8 @@ const articles = defineCollection({
       .refine(isCategoryId, { message: 'Chủ đề không tồn tại trong src/data/categories.ts' })
       .transform((value) => value as CategoryId),
     topic: z.string(),
+    group: z.string().trim().min(1).optional(),
+    articleOrder: z.number().int().positive().optional(),
     tags: z.array(z.string()).min(1),
     publishedDate: z.coerce.date(),
     updatedDate: z.coerce.date().optional(),
@@ -26,6 +28,17 @@ const articles = defineCollection({
     tool: z.string().optional(),
     video: z.url().optional(),
     sources: z.array(z.object({ label: z.string(), url: z.url() })).default([]),
+  }).superRefine((data, context) => {
+    const groups = getCategoryGroups(getCategory(data.category));
+
+    if (groups.length > 0 && !data.group) {
+      context.addIssue({ code: 'custom', path: ['group'], message: 'Bài viết cần chọn một group của chủ đề.' });
+      return;
+    }
+
+    if (data.group && !groups.some((group) => group.id === data.group)) {
+      context.addIssue({ code: 'custom', path: ['group'], message: 'Group không tồn tại trong cấu hình của chủ đề.' });
+    }
   }),
 });
 

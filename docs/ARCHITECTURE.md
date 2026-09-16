@@ -87,6 +87,7 @@ Mỗi bài có tối đa ba CTA có ích: mở tool, tải/check checklist, đ�
 - Header, card, breadcrumb và article layout không cần hydration.
 - Mini tool dùng script nhỏ, cô lập theo từng trang.
 - Bộ lọc bài viết chạy client-side nhưng danh sách đầy đủ vẫn có trong HTML để người dùng và crawler đọc được.
+- Trang chủ đề render cùng một danh sách bài và mặc định trình bày dạng list gọn; nút `Danh sách`/`Dạng thẻ` chỉ đổi class hiển thị client-side, không nhân đôi nội dung và không lưu trạng thái.
 - Không dùng SPA routing.
 
 ## 7. SEO và metadata

@@ -58,10 +58,18 @@ const schema = {
     <div class="container">
       <div class="section-heading">
         <div><p class="eyebrow">Cẩm nang chọn lọc</p><h2>{articles.length} bài để bắt đầu</h2></div>
-        <a class="arrow-link" href="/cam-nang/">Tìm trong tất cả bài <Icon name="arrow" size={18} /></a>
+        <div class="article-section-actions">
+          <a class="arrow-link" href="/cam-nang/">Tìm trong tất cả bài <Icon name="arrow" size={18} /></a>
+          {articles.length > 0 && (
+            <div class="view-switcher" role="group" aria-label="Kiểu hiển thị bài viết">
+              <button class="view-button active" type="button" data-article-view="list" aria-pressed="true" aria-controls="category-articles">Danh sách</button>
+              <button class="view-button" type="button" data-article-view="card" aria-pressed="false" aria-controls="category-articles">Dạng thẻ</button>
+            </div>
+          )}
+        </div>
       </div>
       {articles.length > 0 ? (
-        <div class="article-grid">{articles.map((article) => <ArticleCard article={article} />)}</div>
+        <div id="category-articles" class="article-grid article-collection view-list">{articles.map((article) => <ArticleCard article={article} />)}</div>
       ) : (
         <div class="category-empty">
           <span aria-hidden="true">{category.number}</span>
@@ -83,6 +91,25 @@ const schema = {
   )}
 </BaseLayout>
 
+<script>
+  const articleCollection = document.querySelector<HTMLElement>('#category-articles');
+  const viewButtons = [...document.querySelectorAll<HTMLButtonElement>('[data-article-view]')];
+
+  for (const button of viewButtons) {
+    button.addEventListener('click', () => {
+      const view = button.dataset.articleView === 'card' ? 'card' : 'list';
+      articleCollection?.classList.toggle('view-list', view === 'list');
+      articleCollection?.classList.toggle('view-card', view === 'card');
+
+      for (const item of viewButtons) {
+        const selected = item === button;
+        item.classList.toggle('active', selected);
+        item.setAttribute('aria-pressed', String(selected));
+      }
+    });
+  }
+</script>
+
 <style>
   .category-hero { padding-block: clamp(3.5rem, 8vw, 7rem); border-bottom: 2px solid var(--ink); }
   .hero-mint { background: var(--mint); }
@@ -101,10 +128,30 @@ const schema = {
   .path-step > span { display: grid; width: 34px; height: 34px; flex: 0 0 auto; color: white; background: var(--ink); border-radius: 50%; font-family: var(--font-display); font-size: .78rem; font-weight: 800; place-items: center; }
   .path-step strong { font-family: var(--font-display); }
   .path-step p { margin: .25rem 0 0; color: var(--ink-soft); font-size: .82rem; line-height: 1.55; }
+  .article-section-actions { display: flex; align-items: flex-end; flex-direction: column; gap: .8rem; }
+  .view-switcher { display: inline-flex; padding: .25rem; background: #e8edf4; border: 1px solid var(--line-strong); border-radius: 999px; }
+  .view-button { min-height: 38px; padding: .45rem .8rem; background: transparent; border: 0; border-radius: 999px; cursor: pointer; font-size: .78rem; font-weight: 800; }
+  .view-button:hover { background: rgba(255, 255, 255, .65); }
+  .view-button.active { color: white; background: var(--ink); }
+  .article-collection.view-list { grid-template-columns: 1fr; gap: .7rem; }
+  .article-collection.view-list :global(.article-card) { position: relative; display: grid; min-height: 0; grid-template-areas: 'title meta' 'summary meta'; grid-template-columns: minmax(0, 1fr) auto; gap: .3rem 1.5rem; padding: 1rem 1.15rem; border-radius: 13px; }
+  .article-collection.view-list :global(.article-card:hover) { box-shadow: 0 8px 22px rgba(16, 33, 63, .06); transform: translateY(-1px); }
+  .article-collection.view-list :global(.article-meta) { grid-area: meta; align-self: center; justify-content: flex-end; white-space: nowrap; }
+  .article-collection.view-list :global(.topic-label) { display: none; }
+  .article-collection.view-list :global(.article-card h3) { min-width: 0; grid-area: title; margin: 0; font-size: 1.08rem; }
+  .article-collection.view-list :global(.article-card h3 a)::after { position: absolute; inset: 0; content: ''; }
+  .article-collection.view-list :global(.article-card > p) { min-width: 0; grid-area: summary; margin: 0; overflow: hidden; color: var(--ink-soft); font-size: .82rem; line-height: 1.5; text-overflow: ellipsis; white-space: nowrap; }
+  .article-collection.view-list :global(.card-footer) { display: none; }
   .tool-buttons { display: flex; flex-wrap: wrap; gap: .75rem; }
   .category-empty { display: flex; align-items: center; gap: 1.25rem; padding: 1.5rem; background: white; border: 1px dashed var(--line-strong); border-radius: var(--radius); }
   .category-empty > span { display: grid; width: 54px; height: 54px; flex: 0 0 auto; color: white; background: var(--ink); border-radius: 16px 7px 16px 7px; font-family: var(--font-display); font-weight: 800; place-items: center; }
   .category-empty h3 { margin-bottom: .35rem; }
   .category-empty p { margin: 0; color: var(--ink-soft); }
-  @media (max-width: 760px) { .category-hero-grid, .path-grid { grid-template-columns: 1fr; } .category-hero-grid { gap: 1.5rem; } }
+  @media (max-width: 760px) {
+    .category-hero-grid, .path-grid { grid-template-columns: 1fr; }
+    .category-hero-grid { gap: 1.5rem; }
+    .article-section-actions { align-items: flex-start; margin-top: 1rem; }
+    .article-collection.view-list :global(.article-card) { grid-template-areas: 'title' 'summary' 'meta'; grid-template-columns: 1fr; gap: .35rem; }
+    .article-collection.view-list :global(.article-meta) { justify-content: flex-start; }
+  }
 </style>

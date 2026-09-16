@@ -14,6 +14,8 @@
 
 **Landing page chính có hero image responsive.** Trang chủ, Cẩm nang và Công cụ dùng `HeroPicture.astro` với ảnh WebP desktop/mobile riêng trong `public/media/page-heroes/`; trình duyệt chọn nguồn theo viewport để giữ đúng bố cục mà không tải cả hai ảnh.
 
+**Danh sách bài trong từng chủ đề đã được tinh gọn.** Mặc định bài hiển thị theo list một cột gồm title, mô tả ngắn và thời gian đọc; người đọc có thể chuyển sang lưới card ngay trên trang mà không tải lại hoặc nhân đôi nội dung.
+
 **Điều hướng thông tin và mẫu quảng cáo đã được chuẩn bị local.** Header có thêm `Về chúng tôi` và `Liên hệ`; route Liên hệ đang dùng nội dung mẫu và `noindex` cho tới khi có email thật. Article có tối đa hai placeholder quảng cáo local để duyệt vị trí, chưa tích hợp ad network và production không render placeholder.
 
 **CMS Phase 2 — đã hoàn tất local, chờ duyệt giao diện.** CMS đã có upload ảnh/thumbnail vào repository, alt/caption, YouTube block và workflow validate → liệt kê đúng file → stage chọn lọc → commit → push không force. Publish được kiểm thử end-to-end bằng Git repository/remote tạm; trên repository thật chỉ smoke test nhánh cảnh báo, không tạo commit hoặc push ngoài yêu cầu. Hạng mục này tách biệt với “Phase 2 — Có traffic ban đầu” của roadmap sản phẩm.

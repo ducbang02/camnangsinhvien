@@ -11,9 +11,10 @@ tags:
 publishedDate: '2026-09-16'
 author: Cẩm nang sinh viên
 featured: false
-draft: true
+draft: false
 readingMinutes: 1
 sources: []
+updatedDate: '2026-09-16'
 ---
 <div class="video-embed" data-youtube-id="hmiaVzAJdTU">
   <iframe src="https://www.youtube-nocookie.com/embed/hmiaVzAJdTU" title="Video YouTube" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>

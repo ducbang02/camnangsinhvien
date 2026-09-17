@@ -1,75 +1,159 @@
 ---
-title: "Ôn thi trong 7 ngày: kế hoạch cứu nguy không học xuyên đêm"
-description: "Cách chia bảy ngày ôn thi theo mức ưu tiên, tự kiểm tra và đề thử để tận dụng thời gian còn lại mà không học dàn trải."
+title: "Còn 1 tháng, 1 tuần hay vài ngày trước kỳ thi: nên học gì trước?"
+description: "Bài cứu nguy giúp bạn chọn phần cần học trước khi thiếu thời gian: còn 1 tháng, 1 tuần, 2-3 ngày hoặc chỉ tối trước ngày thi."
 category: hoc-tap-thi-cu
-topic: GPA & điểm số
+topic: Ôn thi
 group: vao-ky-thi
 articleOrder: 2
-tags: [ôn thi, 7 ngày, kế hoạch, kỳ thi]
+tags:
+  - ôn thi
+  - cứu nguy
+  - kỳ thi
+  - ưu tiên
 publishedDate: 2026-09-09
-updatedDate: 2026-09-14
+updatedDate: 2026-09-17
 author: Cẩm nang sinh viên
 featured: true
-readingMinutes: 9
-tool: /cong-cu/pomodoro/
+readingMinutes: 8
+seoTitle: "Còn 1 tháng, 1 tuần hay vài ngày trước kỳ thi học gì trước?"
+seoDescription: "Cách ưu tiên khi thiếu thời gian ôn thi: xây lại nền nếu còn 1 tháng, tập trung trọng số cao nếu còn 1 tuần, bảo toàn điểm nếu chỉ còn vài ngày."
 ---
 
-Bảy ngày không đủ để học hoàn hảo cả môn, nhưng đủ để chuyển từ hoảng loạn sang một kế hoạch có ưu tiên. Mục tiêu là **tối đa số điểm có thể lấy**, không phải đọc hết mọi trang.
+Nếu bạn mở bài này khi kỳ thi đã gần, việc cần nhất không phải là tự trách “sao mình không học sớm hơn”. Tự trách thường chỉ làm bạn mất thêm thời gian.
 
-## Ngày 1: chẩn đoán trước khi học
+Việc cần làm là xác định mình còn bao lâu, phần nào đáng ưu tiên và cách nào giúp lấy lại nhiều điểm nhất mà không tự phá sức.
 
-Gom đề cương, slide, bài tập, đề cũ hợp lệ và thông tin cấu trúc bài thi. Viết danh sách chương rồi đánh dấu:
+Khi thiếu thời gian, thứ cần giảm trước tiên không phải giấc ngủ. Thứ cần giảm là phạm vi học ít quan trọng.
 
-- **A — chắc xuất hiện hoặc là nền tảng:** phải học.
-- **B — có khả năng xuất hiện:** học sau A.
-- **C — ít điểm, quá khó hoặc phụ thuộc nhiều kiến thức:** để cuối.
+## Khi đang hoảng, đừng lập kế hoạch bằng cảm giác
 
-Làm nhanh vài câu không xem tài liệu. Kết quả cho biết bạn thật sự yếu ở đâu; cảm giác “mình chưa biết gì” không đủ chính xác để lên lịch.
+Cảm giác “mình chưa học gì” không phải kế hoạch. Nó có thể đúng một phần, nhưng quá mơ hồ để quyết định học gì trước.
 
-## Ngày 2–4: học phần điểm cao trước
+Hãy làm diagnostic ngắn:
 
-Mỗi ngày chọn hai hoặc ba khối nội dung A. Với mỗi khối:
+- thử 10-20 câu không nhìn tài liệu; hoặc
+- viết ra những gì bạn nhớ về từng chương; hoặc
+- mở đề cương và tự đánh dấu: chắc, lơ mơ, chưa biết.
 
-1. Ôn khái niệm/công thức cần dùng.
-2. Đóng tài liệu và tự giải thích.
-3. Làm bài mẫu không nhìn lời giải.
-4. Ghi lỗi vào một danh sách duy nhất.
-5. Làm lại câu sai sau vài giờ hoặc ngày hôm sau.
+Sau đó mới quyết định. Nếu bạn sai nhiều ở phần nền, học mẹo khó không giúp nhiều. Nếu bạn làm được câu cơ bản nhưng chậm, cần luyện tốc độ. Nếu bạn không nhớ công thức, cần rà công thức và làm câu đại diện.
 
-Đặt phiên tập trung 25–50 phút, nghỉ thật sự giữa các phiên. Nếu một câu khiến bạn mắc hơn 20 phút mà không tiến triển, đánh dấu, xem đúng một gợi ý rồi làm lại từ đầu.
+Bạn có thể dùng thêm bài [Chiến lược ôn thi đại học từ A–Z](/cam-nang/chien-luoc-on-thi-dai-hoc-tu-a-z/) nếu vẫn còn đủ thời gian để đi theo quy trình đầy đủ.
 
-## Ngày 5: trộn chương
+## Nếu còn khoảng 1 tháng
 
-Thi thật không báo câu này thuộc mục nào. Làm một bộ câu hỏi trộn để luyện nhận dạng phương pháp. Sau mỗi câu sai, phân loại lỗi:
+Mục tiêu lúc này là xây lại nền và bắt đầu luyện sớm. Một tháng không quá dài, nhưng vẫn đủ để đi từ mơ hồ sang có hệ thống nếu bạn bắt đầu đúng.
 
-- Không nhớ kiến thức.
-- Hiểu sai điều kiện.
-- Không biết chọn cách làm.
-- Sai tính toán hoặc đọc đề.
-- Thiếu thời gian.
+Hãy làm:
 
-Mỗi loại lỗi cần cách sửa khác nhau; đọc lại slide chỉ giúp một phần loại đầu.
+- xem cấu trúc thi: trọng số, hình thức, thời lượng, phạm vi;
+- đánh giá phần mình biết/chưa biết;
+- học chắc nền trước;
+- chia syllabus theo tuần;
+- bắt đầu làm bài hoặc đề sớm;
+- tạo danh sách lỗi từ những câu sai.
 
-## Ngày 6: làm đề có giới hạn thời gian
+Đừng dành ba tuần đầu chỉ đọc lại tài liệu rồi tuần cuối mới làm bài. Làm bài sớm giúp bạn biết mình yếu thật ở đâu.
 
-Mô phỏng thời lượng, dụng cụ và mức độ được tra cứu giống kỳ thi nhất có thể. Chấm bài ngay, chọn tối đa năm khoảng trống quan trọng để vá. Đừng mở thêm một giáo trình mới vào tối ngày sáu.
+Một cách chia đơn giản:
 
-## Ngày 7: củng cố và giữ đầu óc tỉnh
-
-- Ôn danh sách lỗi và công thức trọng tâm.
-- Làm một vài câu đại diện, không chạy marathon đề.
-- Chuẩn bị giấy tờ, đường đi, máy tính và giờ báo thức.
-- Dừng học đủ sớm để ngủ.
-
-Một đêm thức trắng thường đổi vài giờ đọc thêm lấy khả năng tập trung kém trong bài thi. Nếu thiếu thời gian, cắt nội dung C trước khi cắt giấc ngủ.
-
-## Lịch ngày mẫu
-
-| Khung | Việc |
+| Tuần | Mục tiêu |
 | --- | --- |
-| Sáng | Nội dung khó nhất + bài tập |
-| Đầu chiều | Nội dung A thứ hai |
-| Cuối chiều | Đi bộ/nghỉ, sau đó làm câu trộn |
-| Tối | Sửa lỗi, tự nhớ ý chính, lên lịch ngày sau |
+| Tuần 1 | map đề, học lại nền, làm diagnostic |
+| Tuần 2 | xử lý phần A và B quan trọng |
+| Tuần 3 | làm bài trộn chương, tạo error list |
+| Tuần 4 | làm đề/mô phỏng, sửa lỗi, ôn nhẹ phần trọng tâm |
 
-Nếu còn nhiều môn, phân bổ theo ngày thi, số tín chỉ, mức điểm cần và khoảng trống hiện tại. Có thể dùng [công cụ tính điểm cuối kỳ](/cong-cu/diem-cuoi-ky/) để biết môn nào cần mức điểm cao hơn, nhưng đừng bỏ hẳn môn có ngưỡng điểm liệt.
+Có thể tăng cường độ so với bình thường, nhưng vẫn phải bền. Nếu bạn học kiệt sức ngay tuần đầu, ba tuần sau sẽ rất khó giữ nhịp.
+
+## Nếu còn 1 tuần
+
+Một tuần không còn đủ để học mọi thứ như nhau. Mục tiêu là chọn phần có tác động lớn nhất.
+
+Ưu tiên:
+
+- phần trọng số cao;
+- phần thường xuất hiện trong quiz, bài tập, đề cương;
+- câu cơ bản và trung bình;
+- điểm yếu có khả năng sửa nhanh;
+- luyện đề hoặc tự kiểm tra;
+- bỏ bớt chi tiết giá trị thấp.
+
+Đây là lúc tư duy [80/20](/cam-nang/hoc-theo-nguyen-tac-80-20-uu-tien-kien-thuc/) rất hữu ích: không phải học tủ, mà là không chia sức bằng nhau cho mọi thứ.
+
+Lịch 7 ngày có thể rất ngắn như sau:
+
+| Ngày | Việc chính |
+| --- | --- |
+| Ngày 1 | map cấu trúc thi + diagnostic |
+| Ngày 2-4 | học và luyện phần chính |
+| Ngày 5 | làm đề thử hoặc bộ câu trộn |
+| Ngày 6 | sửa lỗi, học lại phần sai |
+| Ngày 7 | ôn nhẹ, xem error list, chuẩn bị thi |
+
+Không cần lịch từng giờ nếu điều đó làm bạn rối. Điều quan trọng là mỗi ngày có một mục tiêu rõ và không mở quá nhiều mảng cùng lúc.
+
+Với môn lý thuyết, dùng [Active Recall](/cam-nang/active-recall-la-gi/): đóng tài liệu và tự trả lời. Với môn tính hoặc code, làm bài không nhìn lời giải trước.
+
+## Nếu còn 2-3 ngày
+
+Mục tiêu lúc này là bảo toàn số điểm có thể lấy.
+
+Đừng mở một chủ đề khổng lồ mới nếu nó không thật sự cần cho phần điểm lớn. Bạn có thể mất cả ngày để hiểu nửa chương khó, trong khi phần cơ bản còn nhiều câu có thể lấy điểm nhanh hơn.
+
+Ưu tiên:
+
+- chắc câu dễ và trung bình;
+- công thức hoặc khái niệm nền;
+- error list;
+- một số câu đại diện cho mỗi dạng;
+- điểm mù quan trọng cần hỏi ngay.
+
+Nếu có 100 câu ôn tập và bạn biết 40 câu cơ bản có thể hoàn thành khá nhanh, hãy bảo đảm 40 câu đó trước. Sau đó xử lý phần trung bình. Câu cực khó chỉ nên lấy thời gian còn lại, trừ khi đề chắc chắn đánh nặng vào dạng đó.
+
+Nếu đang kẹt một điểm quan trọng, hỏi ngay. Hỏi bạn, trợ giảng, giảng viên hoặc tìm một nguồn giải thích khác. Đừng ngồi 3 tiếng ở một điểm mù rồi mất luôn thời gian cho phần khác.
+
+## Nếu chỉ còn tối trước ngày thi
+
+Đừng cố “học bù cả học kỳ” trong một đêm. Bạn có thể ôn thêm, nhưng đừng biến tối cuối thành một cuộc đua kiệt sức.
+
+Ưu tiên:
+
+- checklist kiến thức chính;
+- lỗi thường gặp;
+- công thức/chủ điểm nền;
+- vài câu đại diện;
+- chuẩn bị đồ dùng;
+- ngủ.
+
+Hãy kiểm tra: thẻ sinh viên, bút, máy tính, giấy tờ, địa điểm thi, giờ báo thức. Những lỗi hậu cần rất tiếc, vì chúng không liên quan đến năng lực học nhưng vẫn làm bạn mất điểm hoặc mất bình tĩnh.
+
+Nếu phải chọn giữa nhồi thêm một chủ đề ít khả năng xuất hiện và ngủ đủ hơn một chút, hãy cân nhắc tác động lên sự tỉnh táo trong phòng thi. Một cái đầu quá mệt có thể làm sai cả câu bạn vốn biết.
+
+## Nếu mục tiêu chỉ là qua môn
+
+Đây là lúc cần tối thiểu hóa rủi ro, không phải đánh bạc.
+
+Hãy xác định:
+
+- mức điểm cần để qua;
+- phần cơ bản chắc chắn phải lấy;
+- phần nền tảng ảnh hưởng nhiều câu;
+- dạng có thể luyện nhanh;
+- phần quá khó đang ăn quá nhiều thời gian.
+
+Nếu chưa biết mình cần bao nhiêu điểm, có thể dùng [công cụ tính điểm cuối kỳ](/cong-cu/diem-cuoi-ky/) hoặc đọc bài [Điểm cuối kỳ cần bao nhiêu để đạt mục tiêu môn học?](/cam-nang/diem-cuoi-ky-can-bao-nhieu/).
+
+Tối thiểu hóa rủi ro không có nghĩa là học tủ hay gian lận. Nó nghĩa là đảm bảo phần có thể lấy điểm trước, không tiêu hết thời gian cho câu quá khó trong khi câu cơ bản còn bỏ trống.
+
+## Checklist nếu kỳ thi là ngày mai
+
+- [ ] Mình biết hình thức thi và thời lượng chưa?
+- [ ] Mình đã rà phần trọng số cao chưa?
+- [ ] Mình có danh sách lỗi thường gặp chưa?
+- [ ] Mình đã làm vài câu đại diện chưa?
+- [ ] Công thức/khái niệm nền đã nằm trong một trang dễ xem chưa?
+- [ ] Có điểm mù quan trọng nào cần hỏi ngay không?
+- [ ] Đồ dùng đi thi đã sẵn sàng chưa?
+- [ ] Mình sẽ dừng học lúc mấy giờ để ngủ?
+
+Khi thiếu thời gian, đừng cố biến mình thành phiên bản hoàn hảo trong một đêm. Hãy tỉnh táo chọn phạm vi. Học phần đáng học nhất, sửa lỗi dễ mất điểm nhất, và giữ đầu óc đủ khỏe để làm bài.

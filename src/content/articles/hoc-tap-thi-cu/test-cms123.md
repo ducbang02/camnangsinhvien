@@ -4,7 +4,7 @@ description: "Quy trình dùng AI để đặt câu hỏi, kiểm tra hiểu bi�
 category: hoc-tap-thi-cu
 topic: "Phương pháp học"
 group: hoc-dung-cach
-articleOrder: 4
+articleOrder: 8
 tags: [học tập, AI, Active Recall, kiểm chứng]
 publishedDate: 2026-09-14
 updatedDate: 2026-09-14

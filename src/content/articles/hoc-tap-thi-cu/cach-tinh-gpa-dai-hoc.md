@@ -6,7 +6,7 @@ description: >-
 category: hoc-tap-thi-cu
 topic: GPA & điểm số
 group: hoc-dung-cach
-articleOrder: 5
+articleOrder: 9
 tags:
   - GPA
   - tín chỉ

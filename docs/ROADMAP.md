@@ -28,6 +28,8 @@
 
 **Vòng đời bài viết đã được quản lý trong CMS.** Nút xuất bản nói rõ workflow Git/Cloudflare; bài có thể được gỡ bằng cách push trạng thái Draft hoặc xóa qua xác nhận slug, thùng rác local và commit/push chọn lọc. Media chỉ bị xóa khi người vận hành chủ động chọn.
 
+**Cấu trúc chủ đề và nhóm đã được quản lý trong CMS local.** Màn hình danh sách có cây chủ đề/nhóm để lọc bài; người vận hành có thể thêm, sửa và xóa category hoặc group tùy chọn trong nguồn `src/data/categories.ts`. ID được giữ ổn định, thao tác xóa bị chặn khi còn article/tool tham chiếu và publish cấu trúc chỉ stage đúng file taxonomy.
+
 Repository và local `origin` đã chuyển sang `ducbang02/camnangsinhvien`. Cloudflare Workers Builds theo dõi nhánh `main` và deploy Worker `cam-nang-sinh-vien` tại `https://cam-nang-sinh-vien.nguyenducbang-uit.workers.dev/`.
 
 ## Nguyên tắc ưu tiên

@@ -13,6 +13,8 @@ const slugInput = document.querySelector('#slug');
 const slugPreview = document.querySelector('#slug-preview');
 const categorySelect = document.querySelector('#category');
 const categoryFilter = document.querySelector('#category-filter');
+const groupFilterField = document.querySelector('#group-filter-field');
+const groupFilter = document.querySelector('#group-filter');
 const groupField = document.querySelector('#group-field');
 const groupSelect = document.querySelector('#group');
 const groupHelp = document.querySelector('#group-help');
@@ -34,6 +36,10 @@ const unpublishButton = document.querySelector('#unpublish-button');
 const deleteArticleButton = document.querySelector('#delete-article-button');
 const publishDialog = document.querySelector('#publish-dialog');
 const publishForm = document.querySelector('#publish-form');
+const categoryDialog = document.querySelector('#category-dialog');
+const categoryForm = document.querySelector('#category-form');
+const groupDialog = document.querySelector('#group-dialog');
+const groupForm = document.querySelector('#group-form');
 
 let categories = [];
 let siteTools = [];
@@ -44,6 +50,11 @@ let isHydrating = false;
 let slugWasEdited = false;
 let toastTimer;
 let publishPlan = null;
+let taxonomyVersion = '';
+let selectedCategoryId = '';
+let selectedGroupId = '';
+let editingCategoryId = '';
+let editingGroupId = '';
 
 const ImageFigure = Node.create({
   name: 'imageFigure',
@@ -261,12 +272,18 @@ function setCounter(input, output, maximum) {
 }
 
 function populateCategories() {
+  const editorValue = categorySelect.value;
+  const filterValue = categoryFilter.value;
+  categorySelect.replaceChildren(new Option('Chọn chủ đề…', ''));
+  categoryFilter.replaceChildren(new Option('Tất cả chủ đề', ''));
   for (const category of categories) {
     const editorOption = new Option(`${category.number}. ${category.name}`, category.id);
     const filterOption = new Option(`${category.number}. ${category.name}`, category.id);
     categorySelect.add(editorOption);
     categoryFilter.add(filterOption);
   }
+  categorySelect.value = categories.some((category) => category.id === editorValue) ? editorValue : '';
+  categoryFilter.value = categories.some((category) => category.id === filterValue) ? filterValue : '';
 }
 
 function populateGroups(selectedGroup = '') {
@@ -290,6 +307,146 @@ function populateGroups(selectedGroup = '') {
   groupHelp.textContent = hasGroups
     ? 'Danh sách lấy trực tiếp từ cấu hình của chủ đề.'
     : 'Chủ đề này không chia group; bài sẽ nằm trong danh sách phẳng.';
+}
+
+function selectedCategory() {
+  return categories.find((category) => category.id === selectedCategoryId);
+}
+
+function syncGroupFilter() {
+  const category = categories.find((item) => item.id === categoryFilter.value);
+  const groups = [...(category?.groups ?? [])].sort((a, b) => a.order - b.order);
+  groupFilter.replaceChildren(new Option('Tất cả nhóm', ''));
+  for (const group of groups) groupFilter.add(new Option(`${String(group.order).padStart(2, '0')}. ${group.title}`, group.id));
+  groupFilterField.hidden = groups.length === 0;
+  groupFilter.value = groups.some((group) => group.id === selectedGroupId) ? selectedGroupId : '';
+  if (!groups.length) selectedGroupId = '';
+}
+
+function selectTaxonomy(categoryId = '', groupId = '') {
+  selectedCategoryId = categoryId;
+  selectedGroupId = groupId;
+  categoryFilter.value = categoryId;
+  syncGroupFilter();
+  groupFilter.value = groupId;
+  renderTaxonomy();
+  renderArticles();
+}
+
+function renderTaxonomy() {
+  document.querySelector('.taxonomy-all').classList.toggle('is-active', !selectedCategoryId);
+  const categoryTree = document.querySelector('#category-tree');
+  categoryTree.replaceChildren();
+  for (const category of categories) {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = `taxonomy-item ${selectedCategoryId === category.id && !selectedGroupId ? 'is-active' : ''}`;
+    button.dataset.action = 'select-category';
+    button.dataset.categoryId = category.id;
+    const number = document.createElement('span');
+    number.textContent = category.number;
+    const label = document.createElement('strong');
+    label.textContent = category.name;
+    const count = document.createElement('small');
+    count.textContent = `${articles.filter((article) => article.category === category.id).length} bài`;
+    button.append(number, label, count);
+    categoryTree.append(button);
+  }
+
+  const category = selectedCategory();
+  const selectedPanel = document.querySelector('#selected-taxonomy');
+  selectedPanel.hidden = !category;
+  if (!category) return;
+  document.querySelector('#selected-category-name').textContent = category.name;
+  const groups = [...(category.groups ?? [])].sort((a, b) => a.order - b.order);
+  const groupTree = document.querySelector('#group-tree');
+  groupTree.replaceChildren();
+  for (const group of groups) {
+    const row = document.createElement('div');
+    row.className = `group-item ${selectedGroupId === group.id ? 'is-active' : ''}`;
+    const select = document.createElement('button');
+    select.type = 'button';
+    select.dataset.action = 'select-group';
+    select.dataset.groupId = group.id;
+    select.innerHTML = `<span>${String(group.order).padStart(2, '0')}</span><strong></strong><small></small>`;
+    select.querySelector('strong').textContent = group.title;
+    select.querySelector('small').textContent = `${articles.filter((article) => article.category === category.id && article.group === group.id).length} bài`;
+    const edit = document.createElement('button');
+    edit.type = 'button';
+    edit.className = 'group-edit';
+    edit.dataset.action = 'edit-group';
+    edit.dataset.groupId = group.id;
+    edit.textContent = 'Sửa';
+    row.append(select, edit);
+    groupTree.append(row);
+  }
+  document.querySelector('#group-empty').hidden = groups.length > 0;
+}
+
+function showTaxonomyErrors(target, error) {
+  target.replaceChildren();
+  const strong = document.createElement('strong');
+  strong.textContent = error.message;
+  target.append(strong);
+  if (error.details?.length) {
+    const list = document.createElement('ul');
+    for (const detail of error.details) {
+      const item = document.createElement('li');
+      item.textContent = detail.message;
+      list.append(item);
+    }
+    target.append(list);
+  }
+  target.hidden = false;
+}
+
+function openCategoryDialog(category = null) {
+  editingCategoryId = category?.id ?? '';
+  categoryForm.reset();
+  document.querySelector('#category-errors').hidden = true;
+  document.querySelector('#category-dialog-title').textContent = category ? 'Sửa chủ đề' : 'Thêm chủ đề';
+  for (const field of categoryForm.elements) {
+    if (field.name && category && category[field.name] !== undefined) field.value = category[field.name];
+  }
+  const idField = categoryForm.elements.namedItem('id');
+  idField.readOnly = Boolean(category);
+  if (!category) {
+    categoryForm.elements.namedItem('number').value = String(Math.max(0, ...categories.map((item) => Number(item.number) || 0)) + 1).padStart(2, '0');
+    categoryForm.elements.namedItem('heroImage').value = categories[0]?.heroImage ?? '/media/category-heroes/hoc-tap-thi-cu.webp';
+  }
+  categoryDialog.showModal();
+  categoryForm.elements.namedItem('name').focus();
+}
+
+function openGroupDialog(group = null) {
+  const category = selectedCategory();
+  if (!category) return;
+  editingGroupId = group?.id ?? '';
+  groupForm.reset();
+  document.querySelector('#group-errors').hidden = true;
+  document.querySelector('#group-dialog-title').textContent = group ? `Sửa nhóm · ${category.name}` : `Thêm nhóm · ${category.name}`;
+  for (const field of groupForm.elements) {
+    if (field.name && group && group[field.name] !== undefined) field.value = group[field.name];
+  }
+  const idField = groupForm.elements.namedItem('id');
+  idField.readOnly = Boolean(group);
+  document.querySelector('#delete-group-button').hidden = !group;
+  if (!group) idField.value = '';
+  if (!group) groupForm.elements.namedItem('order').value = Math.max(0, ...(category.groups ?? []).map((item) => item.order)) + 1;
+  groupDialog.showModal();
+  groupForm.elements.namedItem('title').focus();
+}
+
+async function applyTaxonomyResponse(payload, message) {
+  categories = payload.categories;
+  taxonomyVersion = payload.version;
+  populateCategories();
+  categoryFilter.value = selectedCategoryId;
+  syncGroupFilter();
+  populateGroups(groupSelect.value);
+  renderTaxonomy();
+  renderArticles();
+  showToast(message);
 }
 
 function populateTools() {
@@ -363,9 +520,11 @@ function categoryName(id) {
 function renderArticles() {
   const query = searchInput.value.trim().toLocaleLowerCase('vi');
   const selectedCategory = categoryFilter.value;
+  const selectedGroup = groupFilter.value;
   const filtered = articles.filter((article) =>
     (!query || article.title.toLocaleLowerCase('vi').includes(query))
-    && (!selectedCategory || article.category === selectedCategory),
+    && (!selectedCategory || article.category === selectedCategory)
+    && (!selectedGroup || article.group === selectedGroup),
   );
   const tableBody = document.querySelector('#article-list');
   tableBody.replaceChildren();
@@ -386,6 +545,14 @@ function renderArticles() {
     category.className = 'category-chip';
     category.textContent = categoryName(article.category);
     categoryCell.append(category);
+    const categoryDefinition = categories.find((item) => item.id === article.category);
+    const articleGroup = categoryDefinition?.groups?.find((item) => item.id === article.group);
+    if (articleGroup) {
+      const group = document.createElement('span');
+      group.className = 'article-group';
+      group.textContent = articleGroup.title;
+      categoryCell.append(group);
+    }
 
     const statusCell = document.createElement('td');
     const status = document.createElement('span');
@@ -529,6 +696,7 @@ async function openArticle(id) {
 async function refreshArticles() {
   const payload = await api('/api/articles');
   articles = payload.articles;
+  renderTaxonomy();
   renderArticles();
 }
 
@@ -563,16 +731,20 @@ async function saveArticle({ forceDraft = false } = {}) {
 function showPublishPlan(plan) {
   publishPlan = plan;
   const isDelete = plan.kind === 'delete';
+  const isTaxonomy = plan.kind === 'taxonomy';
   const isUnpublish = plan.publicationAction === 'unpublish';
   document.querySelector('#publish-dialog-title').textContent = isDelete
     ? 'Xác nhận xóa và push'
-    : isUnpublish ? 'Xác nhận gỡ bài khỏi website' : 'Xác nhận xuất bản';
+    : isTaxonomy ? 'Xác nhận cấu trúc và push'
+      : isUnpublish ? 'Xác nhận gỡ bài khỏi website' : 'Xác nhận xuất bản';
   document.querySelector('#publish-file-heading').textContent = isDelete
     ? 'Các file sẽ bị xóa:'
     : 'Chỉ commit các file sau:';
   document.querySelector('#publish-warning').textContent = isDelete
     ? 'Sau khi xác nhận, CMS chuyển file vào thùng rác local, validate, commit và push. Không dùng force push.'
-    : 'CMS sẽ commit và push lên branch hiện tại; Cloudflare tự deploy từ GitHub. Không dùng force push.';
+    : isTaxonomy
+      ? 'CMS sẽ chỉ commit file cấu trúc chủ đề rồi push branch hiện tại. Không dùng force push.'
+      : 'CMS sẽ commit và push lên branch hiện tại; Cloudflare tự deploy từ GitHub. Không dùng force push.';
   publishForm.querySelector('button[type="submit"]').textContent = isDelete ? 'Xóa, commit và push' : 'Commit và push';
   document.querySelector('#publish-target').textContent = `Branch: ${plan.branch} · Remote: ${plan.remote}`;
   const fileList = document.querySelector('#publish-file-list');
@@ -621,7 +793,9 @@ async function confirmPublish() {
   submit.textContent = 'Đang commit & push…';
   try {
     const deleting = publishPlan.kind === 'delete';
-    const { result } = await api(deleting ? '/api/delete/confirm' : '/api/publish/confirm', {
+    const taxonomy = publishPlan.kind === 'taxonomy';
+    const endpoint = deleting ? '/api/delete/confirm' : taxonomy ? '/api/taxonomy/publish/confirm' : '/api/publish/confirm';
+    const { result } = await api(endpoint, {
       method: 'POST',
       body: JSON.stringify({ token: publishPlan.token, message: document.querySelector('#commit-message').value.trim() }),
     });
@@ -630,6 +804,9 @@ async function confirmPublish() {
     if (deleting) {
       currentArticle = null;
       setClean(result.commit ? `Đã push commit ${result.commit}` : 'Đã xóa local');
+      showView('list');
+    } else if (taxonomy) {
+      setClean(`Đã push commit ${result.commit}`);
       showView('list');
     } else {
       currentArticle = result.article;
@@ -645,6 +822,17 @@ async function confirmPublish() {
     submit.disabled = false;
     cancel.disabled = false;
     submit.textContent = 'Commit và push';
+  }
+}
+
+async function prepareTaxonomyPublish() {
+  try {
+    const { plan } = await api('/api/taxonomy/publish/prepare', { method: 'POST', body: '{}' });
+    showPublishPlan(plan);
+  } catch (error) {
+    showToast(error.message, 'error');
+    const detail = error.details?.map((item) => item.message).filter(Boolean).join('\n');
+    if (detail) window.alert(`${error.message}\n\n${detail}`);
   }
 }
 
@@ -759,6 +947,41 @@ document.addEventListener('click', async (event) => {
   const action = event.target.closest('[data-action]')?.dataset.action;
   if (!action) return;
   if (action === 'new-article') newArticle();
+  if (action === 'new-category') openCategoryDialog();
+  if (action === 'prepare-taxonomy-publish') await prepareTaxonomyPublish();
+  if (action === 'close-category-dialog') categoryDialog.close();
+  if (action === 'close-group-dialog') groupDialog.close();
+  if (action === 'select-all-categories') selectTaxonomy();
+  if (action === 'select-category') selectTaxonomy(event.target.closest('[data-category-id]').dataset.categoryId);
+  if (action === 'select-group') selectTaxonomy(selectedCategoryId, event.target.closest('[data-group-id]').dataset.groupId);
+  if (action === 'edit-category') openCategoryDialog(selectedCategory());
+  if (action === 'new-group') openGroupDialog();
+  if (action === 'edit-group') {
+    const id = event.target.closest('[data-group-id]').dataset.groupId;
+    openGroupDialog((selectedCategory()?.groups ?? []).find((group) => group.id === id));
+  }
+  if (action === 'delete-category') {
+    const category = selectedCategory();
+    if (category && window.confirm(`Xóa chủ đề “${category.name}”? CMS sẽ chặn nếu chủ đề vẫn còn bài viết hoặc công cụ.`)) {
+      try {
+        const payload = await api('/api/categories/delete', { method: 'POST', body: JSON.stringify({ id: category.id, version: taxonomyVersion }) });
+        selectedCategoryId = '';
+        selectedGroupId = '';
+        await applyTaxonomyResponse(payload, 'Đã xóa chủ đề khỏi cấu trúc local.');
+      } catch (error) { showToast(error.message, 'error'); }
+    }
+  }
+  if (action === 'delete-group') {
+    const group = (selectedCategory()?.groups ?? []).find((item) => item.id === editingGroupId);
+    if (group && window.confirm(`Xóa nhóm “${group.title}”? CMS sẽ chặn nếu nhóm vẫn còn bài viết.`)) {
+      try {
+        const payload = await api('/api/groups/delete', { method: 'POST', body: JSON.stringify({ categoryId: selectedCategoryId, id: group.id, version: taxonomyVersion }) });
+        groupDialog.close();
+        selectedGroupId = '';
+        await applyTaxonomyResponse(payload, 'Đã xóa nhóm khỏi cấu trúc local.');
+      } catch (error) { showTaxonomyErrors(document.querySelector('#group-errors'), error); }
+    }
+  }
   if (action === 'save-draft') await saveArticle({ forceDraft: true });
   if (action === 'save-local') await saveArticle();
   if (action === 'preview') await previewArticle();
@@ -815,6 +1038,57 @@ document.addEventListener('click', async (event) => {
   if (action === 'show-list' || action === 'back-to-list') {
     if (isDirty && !window.confirm('Bạn có thay đổi chưa lưu. Vẫn quay lại danh sách?')) return;
     showView('list');
+  }
+});
+
+categoryForm.addEventListener('input', (event) => {
+  if (!editingCategoryId && event.target.name === 'name') {
+    categoryForm.elements.namedItem('id').value = slugify(event.target.value);
+  }
+});
+
+categoryForm.addEventListener('submit', async (event) => {
+  event.preventDefault();
+  const submit = categoryForm.querySelector('button[type="submit"]');
+  submit.disabled = true;
+  try {
+    const category = Object.fromEntries(new FormData(categoryForm));
+    const payload = await api('/api/categories/save', {
+      method: 'POST',
+      body: JSON.stringify({ category, originalId: editingCategoryId || null, version: taxonomyVersion }),
+    });
+    selectedCategoryId = category.id;
+    selectedGroupId = '';
+    categoryDialog.close();
+    await applyTaxonomyResponse(payload, editingCategoryId ? 'Đã cập nhật chủ đề trên local.' : 'Đã thêm chủ đề trên local.');
+  } catch (error) {
+    showTaxonomyErrors(document.querySelector('#category-errors'), error);
+  } finally {
+    submit.disabled = false;
+  }
+});
+
+groupForm.addEventListener('input', (event) => {
+  if (!editingGroupId && event.target.name === 'title') groupForm.elements.namedItem('id').value = slugify(event.target.value);
+});
+
+groupForm.addEventListener('submit', async (event) => {
+  event.preventDefault();
+  const submit = groupForm.querySelector('button[type="submit"]');
+  submit.disabled = true;
+  try {
+    const group = Object.fromEntries(new FormData(groupForm));
+    const payload = await api('/api/groups/save', {
+      method: 'POST',
+      body: JSON.stringify({ categoryId: selectedCategoryId, group, originalId: editingGroupId || null, version: taxonomyVersion }),
+    });
+    selectedGroupId = group.id;
+    groupDialog.close();
+    await applyTaxonomyResponse(payload, editingGroupId ? 'Đã cập nhật nhóm trên local.' : 'Đã thêm nhóm trên local.');
+  } catch (error) {
+    showTaxonomyErrors(document.querySelector('#group-errors'), error);
+  } finally {
+    submit.disabled = false;
   }
 });
 
@@ -875,7 +1149,8 @@ form.addEventListener('input', (event) => {
 });
 
 searchInput.addEventListener('input', renderArticles);
-categoryFilter.addEventListener('change', renderArticles);
+categoryFilter.addEventListener('change', () => selectTaxonomy(categoryFilter.value));
+groupFilter.addEventListener('change', () => selectTaxonomy(categoryFilter.value, groupFilter.value));
 categorySelect.addEventListener('change', () => populateGroups());
 window.addEventListener('resize', autosizeTitle);
 window.addEventListener('beforeunload', (event) => {
@@ -886,11 +1161,14 @@ window.addEventListener('beforeunload', (event) => {
 try {
   const [categoryPayload, articlePayload] = await Promise.all([api('/api/categories'), api('/api/articles')]);
   categories = categoryPayload.categories;
+  taxonomyVersion = categoryPayload.version;
   siteTools = categoryPayload.tools ?? [];
   articles = articlePayload.articles;
   populateCategories();
   populateGroups();
   populateTools();
+  syncGroupFilter();
+  renderTaxonomy();
   renderArticles();
 } catch (error) {
   document.querySelector('#article-count').textContent = 'Không thể đọc nội dung';

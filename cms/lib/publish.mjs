@@ -124,7 +124,7 @@ async function assertGitState(repositoryRoot, allowedPaths) {
   const allowed = new Set(allowedPaths.map(toPosix));
   const unrelated = entries.filter(({ file }) => !allowed.has(file));
   if (unrelated.length) {
-    throw new ArticleStoreError('Repository có thay đổi không thuộc bài hiện tại. CMS đã dừng để tránh commit nhầm.', 409, 'GIT_UNRELATED_CHANGES', unrelated.map(({ file }) => ({ field: 'publish', message: file })));
+    throw new ArticleStoreError('Repository có thay đổi ngoài phạm vi đang xuất bản. CMS đã dừng để tránh commit nhầm.', 409, 'GIT_UNRELATED_CHANGES', unrelated.map(({ file }) => ({ field: 'publish', message: file })));
   }
   return {
     branch: branchResult.stdout.trim(),
@@ -151,7 +151,7 @@ export function createPublisher({ repositoryRoot, store, validateCommand } = {})
       throw new ArticleStoreError('Repository đã thay đổi sau bước kiểm tra. Hãy tạo lại danh sách thao tác.', 409, 'PUBLISH_PLAN_CHANGED');
     }
     const add = await run('git', ['add', '--', ...plan.files], { cwd: root });
-    if (add.code !== 0) throw new ArticleStoreError('Không thể stage các file của bài viết.', 500, 'GIT_ADD_FAILED', [{ field: 'publish', message: add.stderr.trim() }]);
+    if (add.code !== 0) throw new ArticleStoreError('Không thể stage các file đã chọn.', 500, 'GIT_ADD_FAILED', [{ field: 'publish', message: add.stderr.trim() }]);
 
     const stagedResult = await run('git', ['diff', '--cached', '--name-only', '-z'], { cwd: root });
     const stagedFiles = stagedResult.stdout.split('\0').filter(Boolean).map(toPosix);
@@ -246,6 +246,46 @@ export function createPublisher({ repositoryRoot, store, validateCommand } = {})
         ? 'Đã chuyển bài thành Draft và push. Cloudflare sẽ gỡ route bài sau khi build xong.'
         : 'Đã commit và push. Cloudflare sẽ tự build từ GitHub.',
     };
+  }
+
+  async function prepareTaxonomy() {
+    const managedFiles = ['src/data/categories.ts'];
+    await assertGitState(root, managedFiles);
+    const validation = await run(command.executable, command.args, { cwd: root });
+    if (validation.code !== 0) {
+      throw new ArticleStoreError('Validation của project không đạt. Cấu trúc vẫn được lưu local nhưng chưa commit.', 422, 'PROJECT_VALIDATION_FAILED', [
+        { field: 'publish', message: (validation.stderr || validation.stdout).trim().slice(-1800) },
+      ]);
+    }
+    const git = await assertGitState(root, managedFiles);
+    const changedFiles = git.entries.map(({ file }) => file).filter((file) => managedFiles.includes(file));
+    if (!changedFiles.length) throw new ArticleStoreError('Cấu trúc chủ đề không có thay đổi mới để xuất bản.', 409, 'NOTHING_TO_PUBLISH');
+    const token = randomUUID();
+    plans.set(token, {
+      kind: 'taxonomy',
+      branch: git.branch,
+      files: changedFiles,
+      snapshot: git.snapshot,
+      expiresAt: Date.now() + PLAN_TTL_MS,
+    });
+    return {
+      token,
+      kind: 'taxonomy',
+      branch: git.branch,
+      remote: git.remote,
+      files: changedFiles,
+      suggestedMessage: 'feat: cập nhật cấu trúc chủ đề và nhóm',
+    };
+  }
+
+  async function confirmTaxonomy({ token, message }) {
+    const plan = plans.get(token);
+    plans.delete(token);
+    if (!plan || plan.kind !== 'taxonomy' || plan.expiresAt < Date.now()) {
+      throw new ArticleStoreError('Phiên xác nhận cấu trúc đã hết hạn. Hãy kiểm tra lại.', 409, 'PUBLISH_PLAN_EXPIRED');
+    }
+    const committed = await commitAndPush(plan, message);
+    return { ...committed, message: 'Đã commit và push cấu trúc chủ đề. Cloudflare sẽ tự build từ GitHub.' };
   }
 
   async function prepareDelete({ id, version, confirmation, deleteMedia = false } = {}) {
@@ -365,5 +405,5 @@ export function createPublisher({ repositoryRoot, store, validateCommand } = {})
     }
   }
 
-  return { prepare, confirm, prepareDelete, confirmDelete };
+  return { prepare, confirm, prepareTaxonomy, confirmTaxonomy, prepareDelete, confirmDelete };
 }

@@ -8,11 +8,13 @@ import { tools } from '../src/data/tools.ts';
 import { ArticleStoreError, createArticleStore } from './lib/articles.mjs';
 import { createMediaStore, readImageBody } from './lib/media.mjs';
 import { createPublisher } from './lib/publish.mjs';
+import { createTaxonomyStore } from './lib/taxonomy.mjs';
 
 const cmsDirectory = path.dirname(fileURLToPath(import.meta.url));
 const repositoryRoot = path.resolve(cmsDirectory, '..');
 const clientRoot = path.join(cmsDirectory, 'client');
 const articlesRoot = path.join(repositoryRoot, 'src', 'content', 'articles');
+const categoriesPath = path.join(repositoryRoot, 'src', 'data', 'categories.ts');
 const publicRoot = path.join(repositoryRoot, 'public');
 const host = '127.0.0.1';
 const port = Number(process.env.CMS_PORT || 4310);
@@ -22,6 +24,7 @@ const allowedOrigins = new Set([
   `http://localhost:${port}`,
 ]);
 const store = createArticleStore({ root: articlesRoot, categories });
+const taxonomyStore = createTaxonomyStore({ sourcePath: categoriesPath, categories, articlesRoot, tools });
 const mediaStore = createMediaStore({ publicRoot });
 const publisher = createPublisher({ repositoryRoot, store });
 
@@ -65,7 +68,31 @@ async function handleApi(request, response, url) {
     return;
   }
   if (request.method === 'GET' && url.pathname === '/api/categories') {
-    sendJson(response, 200, { categories, tools });
+    sendJson(response, 200, { ...await taxonomyStore.snapshot(), tools });
+    return;
+  }
+  if (request.method === 'POST' && url.pathname === '/api/categories/save') {
+    sendJson(response, 200, await taxonomyStore.saveCategory(await readJson(request)));
+    return;
+  }
+  if (request.method === 'POST' && url.pathname === '/api/categories/delete') {
+    sendJson(response, 200, await taxonomyStore.deleteCategory(await readJson(request)));
+    return;
+  }
+  if (request.method === 'POST' && url.pathname === '/api/groups/save') {
+    sendJson(response, 200, await taxonomyStore.saveGroup(await readJson(request)));
+    return;
+  }
+  if (request.method === 'POST' && url.pathname === '/api/groups/delete') {
+    sendJson(response, 200, await taxonomyStore.deleteGroup(await readJson(request)));
+    return;
+  }
+  if (request.method === 'POST' && url.pathname === '/api/taxonomy/publish/prepare') {
+    sendJson(response, 200, { plan: await publisher.prepareTaxonomy() });
+    return;
+  }
+  if (request.method === 'POST' && url.pathname === '/api/taxonomy/publish/confirm') {
+    sendJson(response, 200, { result: await publisher.confirmTaxonomy(await readJson(request)) });
     return;
   }
   if (request.method === 'GET' && url.pathname === '/api/articles') {

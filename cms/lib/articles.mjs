@@ -167,8 +167,6 @@ export class ArticleStoreError extends Error {
 
 export function createArticleStore({ root, categories }) {
   const articleRoot = path.resolve(root);
-  const categoryIds = new Set(categories.map((category) => category.id));
-  const categoriesById = new Map(categories.map((category) => [category.id, category]));
 
   async function list() {
     const files = await walkArticles(articleRoot);
@@ -180,6 +178,7 @@ export function createArticleStore({ root, categories }) {
         id,
         title: data.title ?? path.basename(id),
         category: data.category ?? '',
+        group: data.group ?? '',
         status: data.draft === true ? 'draft' : 'published',
         publishedDate: dateOnly(data.publishedDate),
         updatedDate: dateOnly(data.updatedDate) || fileStat.mtime.toISOString().slice(0, 10),
@@ -238,8 +237,8 @@ export function createArticleStore({ root, categories }) {
 
     if (title.length < 8) errors.push({ field: 'title', message: 'Tiêu đề cần ít nhất 8 ký tự.' });
     if (!SLUG_PATTERN.test(slug)) errors.push({ field: 'slug', message: 'Slug chỉ gồm chữ thường không dấu, số và dấu gạch ngang.' });
-    const category = categoriesById.get(metadata.category);
-    if (!categoryIds.has(metadata.category)) errors.push({ field: 'category', message: 'Hãy chọn một chủ đề hợp lệ.' });
+    const category = categories.find((item) => item.id === metadata.category);
+    if (!category) errors.push({ field: 'category', message: 'Hãy chọn một chủ đề hợp lệ.' });
     if (category) {
       const groups = Array.isArray(category.groups) ? category.groups : [];
       if (groups.length > 0 && !group) errors.push({ field: 'group', message: 'Hãy chọn một nhóm của chủ đề.' });

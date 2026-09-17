@@ -31,7 +31,7 @@ Header desktop chỉ giữ các điểm vào quan trọng nhất:
 
 `Sinh viên IT` và `Lộ trình` vẫn là các route độc lập nhưng không nằm trong header desktop. Chúng được dẫn từ nội dung liên quan và footer để điều hướng chính không cạnh tranh với định vị Cẩm nang sinh viên. `Về chúng tôi` và `Liên hệ` có mặt nhất quán trên desktop, mobile và footer.
 
-Mười chủ đề nội dung cố định:
+Website hiện có mười chủ đề nội dung khởi tạo:
 
 1. Học tập & thi cử
 2. Kỹ năng máy tính
@@ -44,7 +44,7 @@ Mười chủ đề nội dung cố định:
 9. AI cho sinh viên
 10. Công cụ & phần mềm hữu ích
 
-Nguồn dữ liệu chuẩn của chủ đề là `src/data/categories.ts`. Header mega menu, footer, trang chủ, bộ lọc, trang chủ đề, metadata và schema bài viết đều đọc từ nguồn này; không tạo danh sách chủ đề riêng trong component.
+Nguồn dữ liệu chuẩn của chủ đề là `src/data/categories.ts`. Header mega menu, footer, trang chủ, bộ lọc, trang chủ đề, metadata và schema bài viết đều đọc từ nguồn này; không tạo danh sách chủ đề riêng trong component. Số lượng chủ đề không bị hard-code: CMS local có thể thêm, sửa và xóa cấu hình trong chính nguồn này.
 
 Mỗi category có thể khai báo `groups` tùy chọn trong cùng nguồn dữ liệu. Page `/chu-de/[slug]/` dùng một render flow chung: category có group sinh navigation anchor và các section theo cấu hình; category không có group giữ danh sách bài phẳng. Article chỉ lưu `group` và `articleOrder`, còn title, mô tả và thứ tự group thuộc category config; không có component hoặc field `stage` riêng cho Học tập & thi cử.
 
@@ -131,7 +131,7 @@ Luồng dữ liệu:
 
 ```text
 CMS local
-  -> đọc taxonomy từ src/data/categories.ts
+  -> đọc/ghi taxonomy trong vùng được đánh dấu của src/data/categories.ts
   -> đọc/ghi frontmatter + Markdown trong src/content/articles/
   -> lưu ảnh bài viết trong public/media/articles/<slug>/
   -> Astro dev render route /cam-nang/<slug>/ để preview
@@ -141,7 +141,9 @@ CMS local
 
 Server CMS giới hạn request về local origin, xác thực category/slug, chặn đường dẫn thoát khỏi content root và dùng version của file để tránh ghi đè khi bài đã đổi bên ngoài CMS. Astro chỉ đưa draft vào `getStaticPaths()` trong DEV; production build vẫn loại draft.
 
-Form CMS đọc `groups` từ category config qua API local. Khi category có group, CMS hiện dropdown bắt buộc; khi không có group, control được ẩn và bài giữ danh sách phẳng. `articleOrder` là số nguyên dương tùy chọn và được round-trip qua frontmatter.
+Màn hình danh sách CMS dùng cây `Category -> Groups tùy chọn -> Articles`: chọn category hoặc group sẽ lọc bài tương ứng. Người vận hành có thể thêm/sửa/xóa category và group; ID đã tạo được khóa để tránh làm gãy URL/frontmatter. CMS chặn xóa category/group còn được bài viết tham chiếu và chặn xóa category còn được mini tool dùng.
+
+Form bài viết đọc `groups` từ category config qua API local. Khi category có group, CMS hiện dropdown bắt buộc; khi không có group, control được ẩn và bài giữ danh sách phẳng. `articleOrder` là số nguyên dương tùy chọn và được round-trip qua frontmatter.
 
 Danh sách mini tool có nguồn chuẩn tại `src/data/tools.ts`; website re-export qua `src/data/site.ts`, còn CMS server đọc trực tiếp module dữ liệu này nên client không hard-code route. Field `tool` và `sources` được round-trip qua frontmatter; server kiểm tra route nội bộ của tool và chỉ chấp nhận URL nguồn dùng `http/https`.
 
@@ -153,6 +155,6 @@ Article dùng hero ảnh toàn chiều ngang, cao khoảng nửa viewport, với
 
 Mẫu quảng cáo trong article chỉ hoạt động ở môi trường local: markup được chèn ngay lúc render, không cần client JavaScript. Bài có từ ba H2 nhận một slot trước H2 thứ ba và một slot cuối bài trước related articles; bài ngắn chỉ có slot cuối. Production build không chứa placeholder hoặc script quảng cáo. Khi có nhà cung cấp thật mới thay nội dung slot, thêm disclosure/consent cần thiết và mở cấu hình production.
 
-Publish là quy trình hai bước: bước chuẩn bị bắt buộc repository không có staged file, merge/rebase dở dang hoặc thay đổi ngoài bài hiện tại; sau validation, CMS hiển thị branch, remote và danh sách file chính xác. Chỉ khi người vận hành xác nhận, CMS mới stage danh sách đó, commit và chạy `git push origin <branch>`; không có force push.
+Publish là quy trình hai bước: bước chuẩn bị bắt buộc repository không có staged file, merge/rebase dở dang hoặc thay đổi ngoài phạm vi hiện tại; sau validation, CMS hiển thị branch, remote và danh sách file chính xác. Publish bài chỉ được stage bài/media liên quan; publish cấu trúc chỉ được stage `src/data/categories.ts`. Chỉ khi người vận hành xác nhận, CMS mới commit và chạy `git push origin <branch>`; không có force push.
 
 Gỡ bài dùng lại đúng pipeline publish nhưng lưu `draft: true`, vì vậy production mất route sau khi Cloudflare build lại trong khi file nguồn vẫn còn. Xóa bài là workflow riêng có hai lần xác nhận: người vận hành phải nhập đúng slug, CMS liệt kê file dự kiến, rồi mới chuyển file bài (và thư mục media nếu được chọn) vào `.cms-trash/`, chạy validation, stage deletion, commit và push. `.cms-trash/` bị Git ignore để giữ bản phục hồi trên máy mà không đưa bản sao lên repository.

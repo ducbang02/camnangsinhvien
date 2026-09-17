@@ -6,7 +6,8 @@ CMS Phase 2 là công cụ biên tập và xuất bản chạy trên máy ngư�
 
 CMS hỗ trợ:
 
-- danh sách, tìm kiếm và lọc bài theo 10 chủ đề;
+- cây chủ đề/nhóm để chọn phạm vi rồi tìm kiếm, lọc và quản lý bài tương ứng;
+- thêm, sửa và xóa chủ đề hoặc nhóm tùy chọn mà không cần mở file TypeScript;
 - tạo hoặc mở bài Markdown/MDX hiện có;
 - editor Tiptap Vanilla với H2/H3, bold, italic, link, bullet list, numbered list, checklist, blockquote, code block, horizontal rule và table;
 - form metadata dùng trực tiếp schema Content Collection;
@@ -47,6 +48,16 @@ Lệnh CMS tự dùng Astro server đang chạy ở cổng `4321`; nếu chưa c
 - Astro dev hiển thị draft để preview; production build vẫn loại `draft: true`.
 - Ảnh nằm tại `public/media/articles/<slug>/`, không dùng base64 trong Markdown.
 - `Lưu nháp`, `Lưu thay đổi` và `Preview` không commit hoặc push.
+
+## Quản lý chủ đề và nhóm
+
+- Nhấn `+ Chủ đề` để tạo chủ đề; chọn một chủ đề trong cột trái để sửa/xóa và quản lý các nhóm bên trong.
+- Nhóm là tùy chọn. Chủ đề không có nhóm vẫn dùng danh sách bài phẳng; chủ đề có nhóm yêu cầu bài chọn đúng một nhóm.
+- Chọn chủ đề hoặc nhóm trong cây sẽ lọc bảng bài viết. Bảng cũng hiển thị tên nhóm dưới nhãn chủ đề để dễ kiểm tra.
+- ID chủ đề/nhóm chỉ được đặt khi tạo và bị khóa khi sửa vì article, route và tool có thể đang tham chiếu ID đó.
+- Chủ đề mới mặc định dùng lại một hero image hiện có để không tạo ảnh lỗi; có thể đổi sang đường dẫn ảnh khác trong `public/media/` khi đã chuẩn bị xong.
+- CMS từ chối xóa chủ đề hoặc nhóm khi vẫn còn bài tham chiếu; category còn được tool dùng cũng không thể xóa.
+- `Lưu chủ đề`/`Lưu nhóm` chỉ ghi local vào `src/data/categories.ts`. Nút `Đưa cấu trúc lên website` chạy validation, liệt kê file rồi chỉ commit/push file taxonomy sau bước xác nhận.
 
 ## Quy trình Xuất bản
 
@@ -92,11 +103,14 @@ npm run test:cms
 npm run validate
 ```
 
-`test:cms` chỉ tạo dữ liệu trong thư mục tạm của hệ điều hành, không sửa bài thật. Test bao phủ tạo/đọc/cập nhật Markdown, table/checklist và khóa ghi khi file bị thay đổi ngoài CMS.
+`test:cms` chỉ tạo dữ liệu trong thư mục tạm của hệ điều hành, không sửa bài thật. Test bao phủ tạo/đọc/cập nhật Markdown, table/checklist, CRUD taxonomy, khóa ghi khi file bị thay đổi ngoài CMS, ràng buộc xóa và publish chọn lọc.
 
 ## Checklist thủ công
 
 - Mở danh sách và xác nhận đủ bài, đúng category/status.
+- Chọn một chủ đề rồi một nhóm trong cây, xác nhận số bài và bảng thay đổi đúng phạm vi.
+- Mở form sửa category/group, xác nhận ID bị khóa; mở form tạo group và kiểm tra thứ tự tiếp theo được đề xuất.
+- Trong repository test, thử xóa category/group còn bài để xác nhận CMS chặn; chỉ xóa cấu trúc rỗng sau khi đã xác nhận.
 - Search theo một phần tiêu đề; lọc lần lượt một category.
 - Mở bài cũ và kiểm tra metadata/nội dung được nạp đúng.
 - Mở bài có CTA/nguồn tham khảo, đổi tool, thêm/xóa/sửa nguồn rồi lưu và preview.

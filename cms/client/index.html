@@ -26,28 +26,61 @@
               <h1 id="list-title">Bài viết</h1>
               <p class="muted" id="article-count">Đang đọc repository…</p>
             </div>
-            <button class="button button-primary" type="button" data-action="new-article">+ Tạo bài mới</button>
+            <div class="page-actions">
+              <button class="button button-secondary" type="button" data-action="new-category">+ Chủ đề</button>
+              <button class="button button-primary" type="button" data-action="new-article">+ Tạo bài mới</button>
+            </div>
           </div>
 
-          <div class="filter-bar">
-            <label class="search-field">
-              <span class="sr-only">Tìm theo tiêu đề</span>
-              <svg aria-hidden="true" viewBox="0 0 24 24"><path d="m21 21-4.4-4.4m2.4-5.1a7.5 7.5 0 1 1-15 0 7.5 7.5 0 0 1 15 0Z" /></svg>
-              <input id="article-search" type="search" placeholder="Tìm theo tiêu đề…" autocomplete="off" />
-            </label>
-            <label>
-              <span class="sr-only">Lọc theo chủ đề</span>
-              <select id="category-filter"><option value="">Tất cả chủ đề</option></select>
-            </label>
-          </div>
+          <div class="content-manager">
+            <aside class="taxonomy-panel" aria-labelledby="taxonomy-title">
+              <div class="taxonomy-heading">
+                <div><p class="eyebrow">Cấu trúc</p><h2 id="taxonomy-title">Chủ đề</h2></div>
+                <button class="icon-button" type="button" data-action="new-category" aria-label="Thêm chủ đề">+</button>
+              </div>
+              <button class="taxonomy-all is-active" type="button" data-action="select-all-categories">Tất cả bài viết</button>
+              <div id="category-tree" class="category-tree"></div>
+              <div id="selected-taxonomy" class="selected-taxonomy" hidden>
+                <div class="selected-taxonomy-heading">
+                  <div><small>Đang chọn</small><strong id="selected-category-name"></strong></div>
+                  <div class="mini-actions">
+                    <button type="button" data-action="edit-category">Sửa</button>
+                    <button class="danger-link" type="button" data-action="delete-category">Xóa</button>
+                  </div>
+                </div>
+                <div class="group-heading"><strong>Nhóm bên trong</strong><button type="button" data-action="new-group">+ Thêm nhóm</button></div>
+                <div id="group-tree" class="group-tree"></div>
+                <p id="group-empty" class="taxonomy-empty">Chủ đề này chưa chia nhóm. Bài viết sẽ nằm trong danh sách phẳng.</p>
+              </div>
+              <button class="button button-publish button-full taxonomy-publish" type="button" data-action="prepare-taxonomy-publish">Đưa cấu trúc lên website</button>
+            </aside>
 
-          <div class="article-table-wrap">
-            <table class="article-table">
-              <thead><tr><th>Bài viết</th><th>Chủ đề</th><th>Trạng thái</th><th>Cập nhật</th><th><span class="sr-only">Thao tác</span></th></tr></thead>
-              <tbody id="article-list"></tbody>
-            </table>
-            <div id="empty-state" class="empty-state" hidden>
-              <span>⌕</span><h2>Không tìm thấy bài viết</h2><p>Thử đổi từ khóa hoặc bộ lọc chủ đề.</p>
+            <div class="article-manager">
+              <div class="filter-bar">
+                <label class="search-field">
+                  <span class="sr-only">Tìm theo tiêu đề</span>
+                  <svg aria-hidden="true" viewBox="0 0 24 24"><path d="m21 21-4.4-4.4m2.4-5.1a7.5 7.5 0 1 1-15 0 7.5 7.5 0 0 1 15 0Z" /></svg>
+                  <input id="article-search" type="search" placeholder="Tìm theo tiêu đề…" autocomplete="off" />
+                </label>
+                <label>
+                  <span class="sr-only">Lọc theo chủ đề</span>
+                  <select id="category-filter"><option value="">Tất cả chủ đề</option></select>
+                </label>
+                <label id="group-filter-field" hidden>
+                  <span class="sr-only">Lọc theo nhóm</span>
+                  <select id="group-filter"><option value="">Tất cả nhóm</option></select>
+                </label>
+              </div>
+
+              <div class="article-table-wrap">
+                <table class="article-table">
+                  <thead><tr><th>Bài viết</th><th>Chủ đề</th><th>Trạng thái</th><th>Cập nhật</th><th><span class="sr-only">Thao tác</span></th></tr></thead>
+                  <tbody id="article-list"></tbody>
+                </table>
+                <div id="empty-state" class="empty-state" hidden>
+                  <span>⌕</span><h2>Không tìm thấy bài viết</h2><p>Thử đổi từ khóa hoặc bộ lọc chủ đề/nhóm.</p>
+                </div>
+              </div>
             </div>
           </div>
         </section>
@@ -196,6 +229,47 @@
           <button class="button button-quiet" type="button" data-action="close-image-dialog">Hủy</button>
           <button class="button button-primary" type="submit">Tải lên và chèn</button>
         </div>
+      </form>
+    </dialog>
+
+    <dialog id="category-dialog" class="cms-dialog taxonomy-dialog" aria-labelledby="category-dialog-title">
+      <form id="category-form" method="dialog">
+        <p class="eyebrow">Cấu trúc website</p>
+        <h2 id="category-dialog-title">Thêm chủ đề</h2>
+        <div class="field-grid">
+          <label class="field"><span>Tên chủ đề</span><input name="name" required /></label>
+          <label class="field"><span>Tên ngắn</span><input name="shortName" required /></label>
+          <label class="field"><span>ID / slug</span><input name="id" placeholder="vi-du-chu-de" required /></label>
+          <label class="field"><span>Số thứ tự</span><input name="number" pattern="[0-9]{2}" placeholder="11" required /></label>
+        </div>
+        <label class="field"><span>Mô tả trang chủ đề</span><textarea name="description" rows="3" required></textarea></label>
+        <label class="field"><span>Mô tả trong menu</span><input name="menuDescription" required /></label>
+        <label class="field"><span>Thông điệp ngắn</span><input name="promise" required /></label>
+        <div class="field-grid">
+          <label class="field"><span>Màu nhấn</span><select name="accent"><option value="mint">Mint</option><option value="blue">Blue</option><option value="yellow">Yellow</option><option value="coral">Coral</option></select></label>
+          <label class="field"><span>Ảnh hero</span><input name="heroImage" placeholder="/media/category-heroes/ten-anh.webp" required /><small class="field-hint">Có thể dùng lại ảnh sẵn có rồi thay sau.</small></label>
+        </div>
+        <label class="field"><span>SEO title</span><input name="seoTitle" maxlength="70" required /></label>
+        <label class="field"><span>SEO meta description</span><textarea name="metaDescription" rows="3" maxlength="180" required></textarea></label>
+        <div id="category-errors" class="validation-summary" role="alert" hidden></div>
+        <div class="dialog-actions"><button class="button button-quiet" type="button" data-action="close-category-dialog">Hủy</button><button class="button button-primary" type="submit">Lưu chủ đề</button></div>
+      </form>
+    </dialog>
+
+    <dialog id="group-dialog" class="cms-dialog taxonomy-dialog" aria-labelledby="group-dialog-title">
+      <form id="group-form" method="dialog">
+        <p class="eyebrow">Nhóm trong chủ đề</p>
+        <h2 id="group-dialog-title">Thêm nhóm</h2>
+        <div class="field-grid">
+          <label class="field"><span>Tên nhóm</span><input name="title" required /></label>
+          <label class="field"><span>Tên ngắn</span><input name="shortTitle" /></label>
+          <label class="field"><span>ID / slug</span><input name="id" placeholder="co-ban" required /></label>
+          <label class="field"><span>Thứ tự</span><input name="order" type="number" min="1" step="1" required /></label>
+        </div>
+        <label class="field"><span>Mô tả nhóm</span><textarea name="description" rows="3" required></textarea></label>
+        <label class="field"><span>Mô tả trong thanh điều hướng</span><textarea name="navigationDescription" rows="2"></textarea></label>
+        <div id="group-errors" class="validation-summary" role="alert" hidden></div>
+        <div class="dialog-actions"><button id="delete-group-button" class="button button-danger dialog-danger" type="button" data-action="delete-group" hidden>Xóa nhóm</button><button class="button button-quiet" type="button" data-action="close-group-dialog">Hủy</button><button class="button button-primary" type="submit">Lưu nhóm</button></div>
       </form>
     </dialog>
 

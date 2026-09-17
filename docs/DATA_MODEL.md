@@ -48,6 +48,7 @@ type Category = {
   id: CategoryId;
   name: string;
   shortName: string;
+  number: string;
   heroImage: string;
   description: string;
   menuDescription: string;
@@ -72,6 +73,8 @@ type CategoryGroup = {
 `heroImage` là ảnh hero mặc định của chủ đề trong `public/media/category-heroes/`. Article ưu tiên `thumbnail` riêng; khi field này trống, article tự dùng `heroImage` của category để không bắt buộc tạo ảnh mới cho mọi bài.
 
 `groups` là tùy chọn và có số lượng bất kỳ. Trang chủ đề có `groups` sẽ tạo navigation anchor và chia bài theo `group`; trang không khai báo hoặc dùng `groups: []` tiếp tục render danh sách phẳng. Schema kiểm tra chéo để `group` của article phải thuộc đúng category. `group.order` điều khiển thứ tự group, còn `articleOrder` điều khiển thứ tự bài nên hai khái niệm không bị nhập nhằng.
+
+CMS local quản lý trực tiếp category/group trong vùng `CMS_CATEGORIES_START` đến `CMS_CATEGORIES_END`. Mỗi lần lưu dùng version của file để phát hiện ghi đè đồng thời và thay file tạm theo kiểu atomic. `Category.id` và `CategoryGroup.id` không được đổi sau khi tạo; muốn xóa phải chuyển hoặc xóa hết bài đang tham chiếu trước. `Category.number` là hai chữ số duy nhất dùng để sắp thứ tự chủ đề, còn `CategoryGroup.order` là số nguyên dương duy nhất trong từng category.
 
 ## 4. Tool
 

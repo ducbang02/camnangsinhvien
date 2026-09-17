@@ -78,6 +78,25 @@ test('dừng trước khi lưu nếu repository có thay đổi không liên qua
   );
 });
 
+test('publish taxonomy chỉ commit và push file cấu trúc chủ đề', async (t) => {
+  const { repositoryRoot, remote, publisher } = await fixture(t);
+  const taxonomyPath = path.join(repositoryRoot, 'src', 'data', 'categories.ts');
+  await mkdir(path.dirname(taxonomyPath), { recursive: true });
+  await writeFile(taxonomyPath, 'export const categories = [];\n');
+  await git(repositoryRoot, 'add', 'src/data/categories.ts');
+  await git(repositoryRoot, 'commit', '-m', 'test: thêm taxonomy ban đầu');
+  await writeFile(taxonomyPath, 'export const categories = [{ id: "hoc-tap-thi-cu" }];\n');
+
+  const plan = await publisher.prepareTaxonomy();
+  assert.equal(plan.kind, 'taxonomy');
+  assert.deepEqual(plan.files, ['src/data/categories.ts']);
+  const result = await publisher.confirmTaxonomy({ token: plan.token, message: 'feat: cập nhật cấu trúc chủ đề' });
+
+  assert.deepEqual(result.files, ['src/data/categories.ts']);
+  assert.match((await git(repositoryRoot, 'log', '-1', '--pretty=%s')).stdout, /cập nhật cấu trúc chủ đề/);
+  assert.match((await git(remote, 'show-ref', '--heads', 'main')).stdout, /refs\/heads\/main/);
+});
+
 test('gỡ bài chuyển trạng thái thành Draft rồi commit và push', async (t) => {
   const { repositoryRoot, publisher } = await fixture(t);
   const publishPlan = await publisher.prepare(articleInput());

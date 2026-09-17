@@ -27,6 +27,7 @@ function defineCategories<const T extends readonly CategoryDefinition[]>(items: 
   return items;
 }
 
+// CMS_CATEGORIES_START
 export const categories = defineCategories([
   {
     id: 'hoc-tap-thi-cu',
@@ -230,6 +231,7 @@ export const categories = defineCategories([
     ],
   },
 ]);
+// CMS_CATEGORIES_END
 
 export type CategoryId = (typeof categories)[number]['id'];
 

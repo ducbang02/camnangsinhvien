@@ -3,28 +3,67 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Icon from '../components/Icon.astro';
 ---
 
-<BaseLayout title="Về chúng tôi" description="Cách Cẩm nang sinh viên chọn chủ đề, kiểm tra nguồn, xây công cụ và giữ affiliate không làm hỏng trải nghiệm.">
-  <section class="page-hero"><div class="container"><p class="eyebrow">Về chúng tôi</p><h1>Không thêm tiếng ồn. Chỉ thêm bước làm rõ ràng.</h1><p class="lead">Cẩm nang sinh viên được xây cho những lúc bạn biết mình có vấn đề nhưng chưa biết bắt đầu từ đâu.</p></div></section>
-  <section class="section"><div class="narrow about-copy">
-    <h2>Cam kết biên tập</h2>
-    <div class="principle"><Icon name="check" size={24} /><div><h3>Viết theo việc cần làm</h3><p>Mỗi bài bắt đầu từ một pain point và kết thúc bằng bước tiếp theo, checklist hoặc công cụ phù hợp.</p></div></div>
-    <div class="principle"><Icon name="search" size={24} /><div><h3>Tách tín hiệu cộng đồng khỏi bằng chứng</h3><p>Thảo luận giúp tìm câu hỏi; quy định, công thức và khuyến nghị factual phải được đối chiếu với nguồn gốc đáng tin.</p></div></div>
-    <div class="principle"><Icon name="shield" size={24} /><div><h3>Nói rõ giới hạn</h3><p>Quy chế GPA khác nhau giữa trường; phần mềm thay đổi; AI có thể sai. Nội dung phải nói người đọc cần kiểm tra điều gì.</p></div></div>
-    <div class="principle"><Icon name="spark" size={24} /><div><h3>Công cụ tôn trọng dữ liệu</h3><p>Tool V1 chạy ngay trên trình duyệt, không yêu cầu tài khoản và không gửi dữ liệu lên máy chủ.</p></div></div>
-    <h2>Affiliate và quảng cáo</h2>
-    <p>Website có thể nhận hoa hồng từ link affiliate trong tương lai, nhưng chỉ ở nội dung có ý định mua tự nhiên. Link phải được gắn nhãn; tiêu chí chọn sản phẩm phải tồn tại trước CTA. Affiliate không làm thay đổi giá người mua và không bảo đảm sản phẩm phù hợp với mọi người.</p>
-    <p>Display Ads chưa phải ưu tiên. Khi được cân nhắc, quảng cáo không được che nội dung, chen giữa thao tác tool hoặc làm trang chậm đáng kể.</p>
-    <h2>Thông tin không thay thế tư vấn chuyên môn</h2>
-    <p>Nội dung mang tính giáo dục chung. Với quy chế học vụ, hợp đồng, tài chính, sức khỏe hoặc tình huống có hậu quả lớn, hãy kiểm tra văn bản áp dụng và hỏi đơn vị/chuyên gia có trách nhiệm.</p>
-  </div></section>
+<BaseLayout
+  title="Về chúng tôi"
+  description="Cẩm nang sinh viên chia sẻ hướng dẫn thực tế, dễ áp dụng để bạn học tốt hơn, sống chủ động hơn và chuẩn bị sớm cho tương lai."
+>
+  <section class="page-hero">
+    <div class="container">
+      <p class="eyebrow">Về Cẩm nang sinh viên</p>
+      <h1>Để những năm đại học bớt đi những lần “giá như”</h1>
+      <p class="lead">Một nơi giúp bạn tìm được thông tin cần thiết, hiểu việc mình nên làm và bắt đầu bằng một bước vừa sức.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="narrow about-copy">
+      <p class="intro">Đại học không chỉ là lên lớp, làm bài tập rồi thi qua môn. Đây còn là quãng thời gian nhiều người lần đầu tự quản lý thời gian, tiền bạc, các mối quan hệ và những lựa chọn có ảnh hưởng đến tương lai.</p>
+      <p>Cẩm nang sinh viên được tạo ra để gom những bài học hữu ích thành một nơi dễ tìm, dễ đọc và quan trọng nhất là <strong>có thể áp dụng được</strong>. Nếu kinh nghiệm của một người có thể giúp người khác tránh một lần vấp không cần thiết, kinh nghiệm đó đáng được chia sẻ.</p>
+
+      <h2>Không chỉ để “sống sót” qua đại học</h2>
+      <p>Mục tiêu của website không chỉ là giúp bạn qua môn hay lấy được tấm bằng. Mình muốn bạn biết cách học hiệu quả hơn, quản lý cuộc sống chủ động hơn, tận dụng công nghệ đúng cách và chuẩn bị cho công việc sớm hơn.</p>
+      <blockquote>Mỗi nội dung nên giúp bạn trả lời được một câu hỏi: “Đọc xong thì mình có thể làm gì tiếp theo?”</blockquote>
+
+      <h2>Cách nội dung được xây dựng</h2>
+      <div class="principles">
+        <div class="principle"><Icon name="check" size={24} /><div><h3>Bắt đầu từ vấn đề thật</h3><p>Mỗi bài viết đi từ một khó khăn sinh viên thường gặp, không chỉ dừng ở lời khuyên chung chung.</p></div></div>
+        <div class="principle"><Icon name="spark" size={24} /><div><h3>Kết thúc bằng hành động</h3><p>Ưu tiên bước tiếp theo, checklist, cách làm hoặc công cụ để bạn có thể bắt đầu ngay.</p></div></div>
+        <div class="principle"><Icon name="search" size={24} /><div><h3>Kiểm tra điều có thể kiểm chứng</h3><p>Quy định, công thức, số liệu và chính sách được đối chiếu với nguồn chính thức hoặc nguồn đáng tin cậy.</p></div></div>
+        <div class="principle"><Icon name="shield" size={24} /><div><h3>Nói rõ giới hạn</h3><p>Khi thông tin phụ thuộc vào trường học, thời điểm hoặc hoàn cảnh, bài viết sẽ chỉ ra điều bạn cần kiểm tra lại.</p></div></div>
+      </div>
+
+      <h2>Công cụ đơn giản, dữ liệu thuộc về bạn</h2>
+      <p>Các công cụ nhỏ trên website được tạo để giải quyết những việc như tính điểm, lập kế hoạch học tập hay quản lý chi tiêu. Khi có thể, chúng chạy ngay trên trình duyệt, không bắt đăng ký tài khoản và không thu thập dữ liệu không cần thiết.</p>
+
+      <h2>Không giả vờ biết tất cả</h2>
+      <p>Quy chế có thể khác giữa các trường, phần mềm có thể thay đổi và AI có thể trả lời sai. Nội dung ở đây mang tính hướng dẫn chung, không thay thế đơn vị đào tạo hoặc người có chuyên môn trong những tình huống quan trọng.</p>
+
+      <div class="closing">
+        <p>Không cần trở thành một sinh viên hoàn hảo. Chỉ mong đến lúc nhìn lại, bạn có thể thấy mình đã sống quãng thời gian ấy khá trọn vẹn.</p>
+        <p><strong>Nếu website giúp bạn tránh được một lần “giá như mình biết điều này sớm hơn”, thì Cẩm nang sinh viên đã làm được điều nó muốn làm.</strong></p>
+        <div class="closing-actions">
+          <a class="button button-primary" href="/cam-nang/">Khám phá cẩm nang <Icon name="arrow" size={18} /></a>
+          <a class="button button-ghost" href="/cong-cu/">Dùng công cụ miễn phí</a>
+        </div>
+      </div>
+    </div>
+  </section>
 </BaseLayout>
 
 <style>
   .about-copy > h2 { margin: 3rem 0 1.2rem; }
-  .about-copy > h2:first-child { margin-top: 0; }
   .about-copy > p { color: var(--ink-soft); }
+  .about-copy .intro { margin-top: 0; color: var(--ink); font-size: clamp(1.08rem, 2vw, 1.25rem); line-height: 1.75; }
+  .about-copy blockquote { margin: 2rem 0; padding: 1.35rem 1.5rem; color: var(--ink); background: var(--mint-pale); border-left: 4px solid var(--mint-dark); border-radius: 0 var(--radius) var(--radius) 0; font-size: 1.05rem; font-weight: 700; }
+  .principles { display: grid; gap: 1rem; }
   .principle { display: grid; grid-template-columns: auto 1fr; gap: 1rem; margin-bottom: 1rem; padding: 1.2rem; background: white; border: 1px solid var(--line); border-radius: var(--radius); }
   .principle > svg { color: var(--mint-dark); }
   .principle h3 { margin-bottom: .35rem; font-size: 1.05rem; }
   .principle p { margin: 0; color: var(--ink-soft); font-size: .88rem; }
+  .closing { margin-top: 3rem; padding: clamp(1.5rem, 4vw, 2.5rem); background: var(--ink); color: white; border-radius: var(--radius-lg); }
+  .closing p { color: #ced7e7; }
+  .closing p:first-child { margin-top: 0; }
+  .closing p strong { color: white; }
+  .closing-actions { display: flex; flex-wrap: wrap; gap: .75rem; margin-top: 1.5rem; }
+  .closing .button-ghost { color: white; border-color: #71819b; }
 </style>

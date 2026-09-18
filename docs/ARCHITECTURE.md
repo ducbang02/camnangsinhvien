@@ -16,7 +16,7 @@ Website là một **Student Hub tĩnh, content-first** dành cho sinh viên Vi�
 - **Markdown/MDX Content Collections**: quản lý bài viết bằng Git, kiểm tra frontmatter bằng schema.
 - **TypeScript**: dùng cho cấu hình, data và logic tool.
 - **CSS thuần**: không thêm UI framework; giảm dependency và giữ nhận diện riêng.
-- **Cloudflare Workers Static Assets**: phục vụ thư mục `dist/`, không có Worker script hoặc runtime binding.
+- **Cloudflare Worker + Static Assets**: phục vụ thư mục `dist/`, chuẩn hóa domain/header và xử lý endpoint Liên hệ qua Email Service binding.
 - **localStorage**: chỉ lưu dữ liệu cục bộ như lịch sử GPA, tùy chọn Pomodoro hoặc ngân sách. Không coi đây là dữ liệu đồng bộ.
 
 ## 3. Information Architecture
@@ -69,7 +69,8 @@ Ba landing page chính (`/`, `/cam-nang/`, `/cong-cu/`) dùng chung `HeroPicture
 | `/sinh-vien-it/` | Hub và lộ trình IT |
 | `/lo-trinh/` | Lộ trình phát triển sản phẩm/nội dung công khai |
 | `/gioi-thieu/` | Nguyên tắc biên tập, nguồn và affiliate disclosure |
-| `/lien-he/` | Góp ý nội dung, báo lỗi và hợp tác; tạm `noindex` cho tới khi có kênh liên hệ thật |
+| `/lien-he/` | Góp ý nội dung, báo lỗi và hợp tác qua form được Turnstile bảo vệ |
+| `/chinh-sach-quyen-rieng/` | Giải thích dữ liệu form liên hệ, dữ liệu tool và các dịch vụ Cloudflare liên quan |
 
 ## 5. Luồng nội dung
 
@@ -98,6 +99,8 @@ Mỗi bài có tối đa ba CTA có ích: mở tool, tải/check checklist, đ�
 - Mỗi route có `title`, `description`, canonical URL và Open Graph cơ bản.
 - Bài viết sinh JSON-LD kiểu `Article`; breadcrumb sinh `BreadcrumbList`.
 - `sitemap-index.xml` được sinh trong build; `robots.txt` cho phép crawl.
+- Domain chuẩn là `https://camnangsinhvien.site`; canonical, sitemap và `robots.txt` luôn dùng domain này.
+- Worker chuyển vĩnh viễn HTTP, `www` và hostname `workers.dev` về domain chuẩn, giữ nguyên path và query.
 - URL dùng tiếng Việt không dấu, ngắn, ổn định và có trailing slash.
 - Ngày `updatedDate` chỉ thay đổi khi nội dung được kiểm tra/cập nhật thực sự.
 
@@ -117,6 +120,7 @@ Mỗi bài có tối đa ba CTA có ích: mở tool, tải/check checklist, đ�
 - Dữ liệu tool ở `localStorage` chỉ nằm trên thiết bị; trang tool phải nói rõ điều này.
 - Link ngoài dùng thuộc tính phù hợp; affiliate được gắn nhãn `sponsored` khi có.
 - Không thêm analytics trước khi có chính sách riêng tư và lựa chọn công cụ đã được duyệt.
+- Trang `/chinh-sach-quyen-rieng/` chỉ được dẫn từ footer để không làm nặng điều hướng chính.
 
 ## 10. Ranh giới mở rộng
 
@@ -163,7 +167,15 @@ Gỡ bài dùng lại đúng pipeline publish nhưng lưu `draft: true`, vì v�
 
 ## 12. Form Liên hệ trên Cloudflare Worker
 
-Website vẫn build Astro theo chế độ static. `assets.run_worker_first` chỉ chuyển `/api/*` qua `worker/index.ts`; các route còn lại tiếp tục được phục vụ trực tiếp từ Workers Static Assets.
+Website vẫn build Astro theo chế độ static. `assets.run_worker_first` cho Worker chạy trước mọi request để chuẩn hóa hostname/protocol và gắn security/cache header; nội dung tĩnh sau đó vẫn được lấy trực tiếp từ binding Workers Static Assets.
+
+Worker áp dụng các quy tắc production sau:
+
+- redirect `308` từ `www`, HTTP và hostname `workers.dev` về `https://camnangsinhvien.site`;
+- HSTS 30 ngày cho domain HTTPS chuẩn;
+- CSP chỉ cho phép asset cùng origin, Cloudflare Turnstile và iframe YouTube Privacy-Enhanced;
+- font được browser cache một năm với `immutable`; media cache bảy ngày và stale-while-revalidate một ngày;
+- HTML giữ cơ chế revalidate mặc định để nội dung mới được cập nhật ngay sau deploy.
 
 Luồng gửi liên hệ:
 

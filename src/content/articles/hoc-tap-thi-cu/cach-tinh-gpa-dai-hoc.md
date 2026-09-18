@@ -21,9 +21,9 @@ tool: /cong-cu/tinh-gpa/
 sources:
   - label: Thông tư 08/2021/TT-BGDĐT — Quy chế đào tạo trình độ đại học
     url: 'https://vanban.chinhphu.vn/default.aspx?pageid=27160&docid=203318'
-draft: true
-thumbnail: /media/articles/cach-tinh-gpa-dai-hoc/dog.jpg
-thumbnailAlt: dog
+draft: false
+thumbnail: /media/category-heroes/hoc-tap-thi-cu.webp
+thumbnailAlt: Sinh viên học tập và ghi chú tại bàn học
 ---
 GPA không phải trung bình cộng đơn giản của tất cả môn. Môn nhiều tín chỉ ảnh hưởng mạnh hơn môn ít tín chỉ, vì vậy cách tính đúng phải dùng **trọng số tín chỉ**.
 

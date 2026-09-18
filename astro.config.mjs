@@ -3,7 +3,7 @@ import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
-  site: process.env.SITE_URL || 'https://camnangsinhvien.example',
+  site: 'https://camnangsinhvien.site',
   output: 'static',
   trailingSlash: 'always',
   integrations: [

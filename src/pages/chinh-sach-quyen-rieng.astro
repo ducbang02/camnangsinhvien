@@ -1,0 +1,94 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const title = 'Chính sách quyền riêng tư';
+const description =
+  'Thông tin về dữ liệu Cẩm nang sinh viên thu thập, mục đích sử dụng và cách người dùng có thể yêu cầu hỗ trợ.';
+---
+
+<BaseLayout title={title} description={description}>
+  <section class="privacy-hero">
+    <div class="container prose-page">
+      <p class="eyebrow">QUYỀN RIÊNG TƯ</p>
+      <h1>Chính sách quyền riêng tư</h1>
+      <p class="lead">
+        Cẩm nang sinh viên chỉ thu thập thông tin khi bạn chủ động gửi biểu mẫu liên hệ. Các công cụ học tập
+        trên website xử lý dữ liệu ngay trong trình duyệt và không gửi dữ liệu đó về máy chủ của chúng tôi.
+      </p>
+      <p class="updated">Cập nhật lần cuối: 18/09/2026</p>
+    </div>
+  </section>
+
+  <section class="privacy-content">
+    <div class="container prose-page policy-card">
+      <h2>Thông tin chúng tôi nhận được</h2>
+      <p>Khi bạn gửi biểu mẫu Liên hệ, website nhận các thông tin bạn tự cung cấp:</p>
+      <ul>
+        <li>họ và tên;</li>
+        <li>địa chỉ email;</li>
+        <li>loại yêu cầu liên hệ;</li>
+        <li>nội dung lời nhắn.</li>
+      </ul>
+
+      <h2>Thông tin được sử dụng như thế nào?</h2>
+      <p>
+        Thông tin được dùng để đọc góp ý, xử lý báo lỗi, phản hồi câu hỏi hoặc trao đổi về đề nghị hợp tác.
+        Website không bán thông tin cá nhân và không dùng biểu mẫu liên hệ để tự động gửi quảng cáo.
+      </p>
+
+      <h2>Cách biểu mẫu được vận hành</h2>
+      <p>
+        Biểu mẫu được bảo vệ bằng Cloudflare Turnstile để hạn chế spam. Sau khi được xác minh, nội dung được
+        chuyển tới email quản trị qua Cloudflare Email Service. Website hiện không lưu bản sao biểu mẫu trong
+        database.
+      </p>
+      <p>
+        Thư đã nhận có thể được giữ trong hộp thư quản trị trong thời gian cần thiết để xử lý và theo dõi yêu
+        cầu. Bạn có thể đề nghị xóa một cuộc trao đổi bằng cách liên hệ lại từ đúng địa chỉ email đã sử dụng.
+      </p>
+
+      <h2>Dữ liệu của các công cụ</h2>
+      <p>
+        Một số công cụ có thể dùng <code>localStorage</code> để ghi nhớ dữ liệu trên chính thiết bị của bạn.
+        Dữ liệu này không được đồng bộ về máy chủ và có thể được xóa bằng cách xóa dữ liệu website trong trình
+        duyệt.
+      </p>
+
+      <h2>Cookie và thống kê truy cập</h2>
+      <p>
+        Website hiện không cài hệ thống quảng cáo hành vi hoặc công cụ analytics riêng. Cloudflare có thể xử lý
+        dữ liệu kỹ thuật cần thiết để phân phối website, chống tấn công và vận hành Turnstile theo chính sách của
+        Cloudflare.
+      </p>
+
+      <h2>Liên kết bên ngoài</h2>
+      <p>
+        Bài viết có thể dẫn tới tài liệu hoặc dịch vụ của bên thứ ba. Chính sách này không kiểm soát cách các
+        website đó thu thập và xử lý dữ liệu.
+      </p>
+
+      <h2>Liên hệ về quyền riêng tư</h2>
+      <p>
+        Nếu muốn hỏi về dữ liệu đã gửi hoặc đề nghị xóa một cuộc trao đổi, hãy dùng
+        <a href="/lien-he/">trang Liên hệ</a>. Chính sách này có thể được cập nhật khi website bổ sung dịch vụ
+        mới; ngày cập nhật sẽ được ghi rõ ở đầu trang.
+      </p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .privacy-hero { padding: 5rem 0 3rem; background: var(--surface-soft); border-bottom: 1px solid var(--line); }
+  .prose-page { width: min(100% - 2rem, 800px); }
+  .privacy-hero h1 { margin: .55rem 0 1rem; font-size: clamp(2.5rem, 7vw, 4.8rem); line-height: .98; }
+  .lead { margin: 0; max-width: 680px; color: var(--ink-soft); font-size: 1.1rem; line-height: 1.75; }
+  .updated { margin: 1.3rem 0 0; color: var(--ink-soft); font-size: .88rem; }
+  .privacy-content { padding: 3rem 0 5rem; }
+  .policy-card { padding: clamp(1.5rem, 4vw, 3rem); background: white; border: 1px solid var(--line); border-radius: var(--radius); }
+  .policy-card h2 { margin: 2.4rem 0 .75rem; font-size: clamp(1.35rem, 3vw, 1.8rem); }
+  .policy-card h2:first-child { margin-top: 0; }
+  .policy-card p, .policy-card li { color: var(--ink-soft); line-height: 1.75; }
+  .policy-card ul { padding-left: 1.3rem; }
+  .policy-card a { color: var(--mint-dark); font-weight: 700; }
+  .policy-card code { padding: .12rem .35rem; background: var(--surface-soft); border-radius: .3rem; }
+</style>

@@ -1,7 +1,22 @@
 const CONTACT_PATH = '/api/contact';
+const CANONICAL_HOST = 'camnangsinhvien.site';
 const MAX_BODY_BYTES = 16_384;
 const TURNSTILE_ACTION = 'contact';
 const TURNSTILE_VERIFY_URL = 'https://challenges.cloudflare.com/turnstile/v0/siteverify';
+const CONTENT_SECURITY_POLICY = [
+  "default-src 'self'",
+  "base-uri 'self'",
+  "object-src 'none'",
+  "frame-ancestors 'none'",
+  "form-action 'self'",
+  "img-src 'self' data:",
+  "font-src 'self'",
+  "style-src 'self' 'unsafe-inline'",
+  "script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com",
+  "connect-src 'self' https://challenges.cloudflare.com",
+  "frame-src https://challenges.cloudflare.com https://www.youtube-nocookie.com",
+  'upgrade-insecure-requests',
+].join('; ');
 
 const contactTypes = {
   'gop-y-noi-dung': 'Góp ý nội dung',
@@ -34,6 +49,42 @@ function json(data: Record<string, unknown>, status = 200, headers?: HeadersInit
       'Cache-Control': 'no-store',
       ...headers,
     },
+  });
+}
+
+function canonicalRedirect(url: URL): Response | null {
+  const isProductionHost =
+    url.hostname === CANONICAL_HOST ||
+    url.hostname === `www.${CANONICAL_HOST}` ||
+    url.hostname.endsWith('.workers.dev');
+
+  if (!isProductionHost || (url.protocol === 'https:' && url.hostname === CANONICAL_HOST)) {
+    return null;
+  }
+
+  const target = new URL(`${url.pathname}${url.search}${url.hash}`, `https://${CANONICAL_HOST}`);
+  return Response.redirect(target.toString(), 308);
+}
+
+function withProductionHeaders(response: Response, url: URL): Response {
+  const headers = new Headers(response.headers);
+
+  if (url.protocol === 'https:' && url.hostname === CANONICAL_HOST) {
+    headers.set('Strict-Transport-Security', 'max-age=2592000');
+  }
+
+  headers.set('Content-Security-Policy', CONTENT_SECURITY_POLICY);
+
+  if (response.ok && url.pathname.startsWith('/fonts/')) {
+    headers.set('Cache-Control', 'public, max-age=31536000, immutable');
+  } else if (response.ok && url.pathname.startsWith('/media/')) {
+    headers.set('Cache-Control', 'public, max-age=604800, stale-while-revalidate=86400');
+  }
+
+  return new Response(response.body, {
+    status: response.status,
+    statusText: response.statusText,
+    headers,
   });
 }
 
@@ -224,10 +275,15 @@ async function handleContact(request: Request, env: Env): Promise<Response> {
 export default {
   async fetch(request, env): Promise<Response> {
     const url = new URL(request.url);
-    if (url.pathname === CONTACT_PATH) return handleContact(request, env);
-    if (url.pathname.startsWith('/api/')) {
-      return json({ ok: false, message: 'Không tìm thấy API.' }, 404);
+    const redirect = canonicalRedirect(url);
+    if (redirect) return redirect;
+
+    if (url.pathname === CONTACT_PATH) {
+      return withProductionHeaders(await handleContact(request, env), url);
     }
-    return env.ASSETS.fetch(request);
+    if (url.pathname.startsWith('/api/')) {
+      return withProductionHeaders(json({ ok: false, message: 'Không tìm thấy API.' }, 404), url);
+    }
+    return withProductionHeaders(await env.ASSETS.fetch(request), url);
   },
 } satisfies ExportedHandler<Env>;

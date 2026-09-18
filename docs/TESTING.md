@@ -154,3 +154,14 @@ CMS Phase 1 không thực hiện commit/push. Danh sách kiểm tra đầy đủ
 - Cloudflare Email Routing đã xác minh Gmail đích `sunny.contact.251010@gmail.com`; routing rule `lienhe@camnangsinhvien.site` đang `Active` và chuyển tiếp về Gmail này.
 - Production smoke test ngày 18/09/2026: rotate Turnstile secret, lưu `TURNSTILE_SECRET` đúng dạng Worker Secret và gửi form thật tại `/lien-he/` thành công. Turnstile Analytics ghi nhận 1 Siteverify request, 1 valid token và 0 invalid token; endpoint chỉ trả thông báo thành công sau khi `EMAIL.send()` hoàn tất.
 - Kiểm tra token replay riêng chưa thực hiện vì token production chỉ dùng một lần trong luồng form thật; đây không chặn chức năng gửi liên hệ.
+
+## Kiểm thử chuẩn hóa production — 18/09/2026
+
+- `npm run validate` đạt: Worker types và TypeScript đạt; `astro check` có 0 error/warning/hint; production build sinh 61 trang.
+- Build local xác nhận canonical, `robots.txt` và sitemap đều dùng `https://camnangsinhvien.site`.
+- Worker local xác nhận `www` và hostname `workers.dev` trả redirect `308`, giữ nguyên path/query và trỏ về domain chuẩn.
+- Cloudflare `Always Use HTTPS` đã bật cho toàn zone; biến build `SITE_URL` đã đổi sang `https://camnangsinhvien.site`.
+- Bài `/cam-nang/cach-tinh-gpa-dai-hoc/` trả `200`, dùng ảnh chủ đề phù hợp; bài thử `/cam-nang/test-cms123/` trả `404` sau khi xóa.
+- Trang `/chinh-sach-quyen-rieng/` có một H1, nội dung giải thích form/Turnstile/localStorage và chỉ được liên kết từ footer.
+- Media nhận browser cache bảy ngày; font nhận cache một năm với `immutable`; HTML vẫn dùng revalidation mặc định.
+- CSP cho phép cùng origin, Cloudflare Turnstile và iframe `youtube-nocookie.com`; HSTS 30 ngày chỉ được gắn cho domain HTTPS chuẩn.

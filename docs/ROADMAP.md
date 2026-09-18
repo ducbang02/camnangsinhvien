@@ -20,7 +20,7 @@
 
 **Nhóm Học đúng cách đã có bài mở đầu hoàn chỉnh.** Bài “Học đại học nên bắt đầu từ đâu?” đứng đầu group, hướng dẫn đọc đề cương, xác định mục tiêu, hiểu cách đánh giá và chọn cách học trước khi đi sâu vào Active Recall hoặc Spaced Repetition.
 
-**Điều hướng thông tin và mẫu quảng cáo đã được chuẩn bị local.** Header có thêm `Về chúng tôi` và `Liên hệ`; route Liên hệ đang dùng nội dung mẫu và `noindex` cho tới khi có email thật. Article có tối đa hai placeholder quảng cáo local để duyệt vị trí, chưa tích hợp ad network và production không render placeholder.
+**Điều hướng thông tin và mẫu quảng cáo đã được chuẩn bị.** Header có `Về chúng tôi` và `Liên hệ`; form Liên hệ production đã gửi thư thật thành công qua Cloudflare Turnstile và Email Service. Chính sách quyền riêng tư được dẫn từ footer, không thêm vào nav chính. Article có tối đa hai placeholder quảng cáo local để duyệt vị trí, chưa tích hợp ad network và production không render placeholder.
 
 **CMS Phase 2 — đã hoàn tất local, chờ duyệt giao diện.** CMS đã có upload ảnh/thumbnail vào repository, alt/caption, YouTube block và workflow validate → liệt kê đúng file → stage chọn lọc → commit → push không force. Publish được kiểm thử end-to-end bằng Git repository/remote tạm; trên repository thật chỉ smoke test nhánh cảnh báo, không tạo commit hoặc push ngoài yêu cầu. Hạng mục này tách biệt với “Phase 2 — Có traffic ban đầu” của roadmap sản phẩm.
 
@@ -30,7 +30,7 @@
 
 **Cấu trúc chủ đề và nhóm đã được quản lý trong CMS local.** Màn hình danh sách có cây chủ đề/nhóm để lọc bài; người vận hành có thể thêm, sửa và xóa category hoặc group tùy chọn trong nguồn `src/data/categories.ts`. ID được giữ ổn định, thao tác xóa bị chặn khi còn article/tool tham chiếu và publish cấu trúc chỉ stage đúng file taxonomy.
 
-Repository và local `origin` đã chuyển sang `ducbang02/camnangsinhvien`. Cloudflare Workers Builds theo dõi nhánh `main` và deploy Worker `cam-nang-sinh-vien` tại `https://cam-nang-sinh-vien.nguyenducbang-uit.workers.dev/`.
+Repository và local `origin` đã chuyển sang `ducbang02/camnangsinhvien`. Cloudflare Workers Builds theo dõi nhánh `main`; domain production chuẩn là `https://camnangsinhvien.site`. HTTP, `www` và hostname `workers.dev` được chuyển vĩnh viễn về domain chuẩn sau khi bản cấu hình production mới được deploy.
 
 ## Nguyên tắc ưu tiên
 
@@ -49,6 +49,8 @@ Mục tiêu: một hub có thể xuất bản thật, không phải landing page
 - Content schema, article layout, nguồn tham khảo, internal link, sitemap, robots và trang 404.
 - Mobile-first, keyboard-accessible và browser QA.
 - Cloudflare Workers Static Assets cùng endpoint `/api/contact`; Turnstile widget đã tạo, Gmail đích đã xác minh và routing rule `lienhe@camnangsinhvien.site` đang hoạt động. Worker secret đã được rotate, lưu đúng dạng Secret và production smoke test gửi form thật đã thành công ngày 18/09/2026.
+- Canonical/sitemap/robots dùng domain `camnangsinhvien.site`; Worker có redirect chuẩn host, HSTS, CSP và cache policy riêng cho font/media.
+- Trang Chính sách quyền riêng tư chỉ xuất hiện trong footer.
 
 Tiêu chí hoàn thành:
 

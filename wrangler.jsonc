@@ -8,12 +8,12 @@
     "directory": "./dist",
     "binding": "ASSETS",
     "not_found_handling": "404-page",
-    "run_worker_first": ["/api/*"]
+    "run_worker_first": true
   },
   "vars": {
     "CONTACT_RECIPIENT": "sunny.contact.251010@gmail.com",
     "CONTACT_SENDER": "lienhe@camnangsinhvien.site",
-    "TURNSTILE_HOSTNAMES": "localhost,127.0.0.1,camnangsinhvien.site,www.camnangsinhvien.site,cam-nang-sinh-vien.nguyenducbang-uit.workers.dev"
+    "TURNSTILE_HOSTNAMES": "localhost,127.0.0.1,camnangsinhvien.site"
   },
   "send_email": [
     {

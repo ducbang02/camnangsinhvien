@@ -152,4 +152,5 @@ CMS Phase 1 không thực hiện commit/push. Danh sách kiểm tra đầy đủ
 - Browser QA xác nhận trang Liên hệ hiển thị đủ ba nhóm nhu cầu, thông báo riêng tư, label input, Turnstile và trạng thái validation bằng `aria-live`; submit form rỗng đưa focus về trường Họ và tên và báo lỗi rõ ràng.
 - Turnstile widget production đã được tạo cho `localhost`, `127.0.0.1`, hai custom hostname và hostname `workers.dev`; token API tạm đã được thu hồi sau khi tạo widget.
 - Cloudflare Email Routing đã xác minh Gmail đích `sunny.contact.251010@gmail.com`; routing rule `lienhe@camnangsinhvien.site` đang `Active` và chuyển tiếp về Gmail này.
-- Production smoke test gửi email thật và kiểm tra token replay còn chờ Worker secret được cấu hình trên production và code mới được deploy.
+- Production smoke test ngày 18/09/2026: rotate Turnstile secret, lưu `TURNSTILE_SECRET` đúng dạng Worker Secret và gửi form thật tại `/lien-he/` thành công. Turnstile Analytics ghi nhận 1 Siteverify request, 1 valid token và 0 invalid token; endpoint chỉ trả thông báo thành công sau khi `EMAIL.send()` hoàn tất.
+- Kiểm tra token replay riêng chưa thực hiện vì token production chỉ dùng một lần trong luồng form thật; đây không chặn chức năng gửi liên hệ.

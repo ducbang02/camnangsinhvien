@@ -120,3 +120,20 @@ Không lưu giá cứng nếu không có quy trình cập nhật. Link phải c�
 ## 6. Khả năng chuyển sang database
 
 Nếu V3 chứng minh cần dữ liệu đồng bộ, giữ schema nội dung hiện tại và chỉ đưa phần user-generated state sang D1/KV. Không chuyển article vào database chỉ để có “admin”; Markdown/MDX vẫn là nguồn chuẩn cho đến khi số lượng và quy trình biên tập chứng minh CMS là cần thiết.
+
+## 7. Dữ liệu form Liên hệ
+
+Form gửi payload tạm thời tới `/api/contact`; payload không được ghi vào repository, KV, D1 hoặc database khác.
+
+```ts
+type ContactPayload = {
+  name: string;             // 2–80 ký tự
+  email: string;            // tối đa 254 ký tự
+  type: 'gop-y-noi-dung' | 'bao-loi-cap-nhat' | 'hop-tac' | 'khac';
+  message: string;          // 20–5.000 ký tự
+  website: string;          // honeypot, phải rỗng
+  turnstileToken: string;   // tối đa 2.048 ký tự, dùng một lần
+};
+```
+
+Sau khi validate và xác minh Turnstile, Worker dựng email dạng text/HTML đã escape rồi gửi tới địa chỉ quản trị cố định. `Reply-To` lấy từ `email`; nội dung form chỉ còn tồn tại trong hệ thống email của người nhận theo chính sách của nhà cung cấp email.

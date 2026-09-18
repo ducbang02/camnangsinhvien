@@ -1,0 +1,2 @@
+# Local Worker development only. Copy to .dev.vars and use the widget secret from Cloudflare.
+TURNSTILE_SECRET=replace-with-your-turnstile-secret

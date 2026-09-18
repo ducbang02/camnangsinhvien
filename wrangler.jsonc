@@ -1,10 +1,28 @@
 {
   "$schema": "./node_modules/wrangler/config-schema.json",
   "name": "cam-nang-sinh-vien",
-  "compatibility_date": "2026-09-14",
+  "main": "./worker/index.ts",
+  "compatibility_date": "2026-09-17",
   "compatibility_flags": ["nodejs_compat"],
   "assets": {
     "directory": "./dist",
-    "not_found_handling": "404-page"
+    "binding": "ASSETS",
+    "not_found_handling": "404-page",
+    "run_worker_first": ["/api/*"]
+  },
+  "vars": {
+    "CONTACT_RECIPIENT": "sunny.contact.251010@gmail.com",
+    "CONTACT_SENDER": "lienhe@camnangsinhvien.site",
+    "TURNSTILE_HOSTNAMES": "localhost,127.0.0.1,camnangsinhvien.site,www.camnangsinhvien.site,cam-nang-sinh-vien.nguyenducbang-uit.workers.dev"
+  },
+  "send_email": [
+    {
+      "name": "EMAIL",
+      "destination_address": "sunny.contact.251010@gmail.com",
+      "allowed_sender_addresses": ["lienhe@camnangsinhvien.site"]
+    }
+  ],
+  "observability": {
+    "enabled": true
   }
 }

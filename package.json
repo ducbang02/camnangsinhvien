@@ -13,7 +13,9 @@
     "build": "astro build",
     "preview": "astro preview",
     "check": "astro check",
-    "validate": "npm run check && npm run build",
+    "types:worker": "wrangler types",
+    "check:worker": "tsc --noEmit -p tsconfig.worker.json",
+    "validate": "npm run types:worker && npm run check:worker && npm run check && npm run build",
     "deploy:dry": "wrangler deploy --dry-run",
     "deploy": "npm run build && wrangler deploy"
   },

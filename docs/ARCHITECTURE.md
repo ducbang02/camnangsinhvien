@@ -111,7 +111,9 @@ Mỗi bài có tối đa ba CTA có ích: mở tool, tải/check checklist, đ�
 
 ## 9. Bảo mật và riêng tư
 
-- V1 không thu thập thông tin cá nhân, không có login, form gửi server hoặc secret.
+- V1 chỉ thu thập họ tên, email, loại liên hệ và lời nhắn khi người dùng chủ động gửi form Liên hệ; dữ liệu không được lưu vào database mà được chuyển thẳng tới email quản trị.
+- Endpoint `/api/contact` kiểm tra same-origin, content type, kích thước request, schema dữ liệu, honeypot và Turnstile trước khi gọi Email Service.
+- Turnstile secret chỉ tồn tại trong `.dev.vars` khi chạy local và Worker secret trên production; không được commit vào repository.
 - Dữ liệu tool ở `localStorage` chỉ nằm trên thiết bị; trang tool phải nói rõ điều này.
 - Link ngoài dùng thuộc tính phù hợp; affiliate được gắn nhãn `sponsored` khi có.
 - Không thêm analytics trước khi có chính sách riêng tư và lựa chọn công cụ đã được duyệt.
@@ -158,3 +160,20 @@ Mẫu quảng cáo trong article chỉ hoạt động ở môi trường local: 
 Publish là quy trình hai bước: bước chuẩn bị bắt buộc repository không có staged file, merge/rebase dở dang hoặc thay đổi ngoài phạm vi hiện tại; sau validation, CMS hiển thị branch, remote và danh sách file chính xác. Publish bài chỉ được stage bài/media liên quan; publish cấu trúc chỉ được stage `src/data/categories.ts`. Chỉ khi người vận hành xác nhận, CMS mới commit và chạy `git push origin <branch>`; không có force push.
 
 Gỡ bài dùng lại đúng pipeline publish nhưng lưu `draft: true`, vì vậy production mất route sau khi Cloudflare build lại trong khi file nguồn vẫn còn. Xóa bài là workflow riêng có hai lần xác nhận: người vận hành phải nhập đúng slug, CMS liệt kê file dự kiến, rồi mới chuyển file bài (và thư mục media nếu được chọn) vào `.cms-trash/`, chạy validation, stage deletion, commit và push. `.cms-trash/` bị Git ignore để giữ bản phục hồi trên máy mà không đưa bản sao lên repository.
+
+## 12. Form Liên hệ trên Cloudflare Worker
+
+Website vẫn build Astro theo chế độ static. `assets.run_worker_first` chỉ chuyển `/api/*` qua `worker/index.ts`; các route còn lại tiếp tục được phục vụ trực tiếp từ Workers Static Assets.
+
+Luồng gửi liên hệ:
+
+```text
+/lien-he/
+  -> POST JSON /api/contact
+  -> validate origin + giới hạn dữ liệu + honeypot
+  -> Cloudflare Turnstile Siteverify (action: contact, hostname allowlist)
+  -> Email Service binding bị khóa theo người gửi/người nhận
+  -> sunny.contact.251010@gmail.com
+```
+
+Binding `EMAIL` chỉ được gửi tới Gmail quản trị và chỉ chấp nhận người gửi `lienhe@camnangsinhvien.site`. Header `Reply-To` dùng email người gửi biểu mẫu để quản trị viên có thể trả lời trực tiếp. Worker không log nội dung, họ tên hoặc email; khi gửi lỗi chỉ log mã lỗi kỹ thuật.

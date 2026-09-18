@@ -48,7 +48,7 @@ Mục tiêu: một hub có thể xuất bản thật, không phải landing page
 - 5 mini tool: GPA, điểm cuối kỳ, Pomodoro, chia nhóm và ngân sách tháng.
 - Content schema, article layout, nguồn tham khảo, internal link, sitemap, robots và trang 404.
 - Mobile-first, keyboard-accessible và browser QA.
-- Cloudflare Workers Static Assets config; deploy sau khi người dùng có/cho phép kết nối tài khoản.
+- Cloudflare Workers Static Assets cùng endpoint `/api/contact`; Turnstile widget đã tạo, Gmail đích đã xác minh và routing rule `lienhe@camnangsinhvien.site` đang hoạt động. Production smoke test còn chờ cấu hình Worker secret và deploy code mới.
 
 Tiêu chí hoàn thành:
 

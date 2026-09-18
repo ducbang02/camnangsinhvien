@@ -8,6 +8,6 @@ export default defineConfig({
   trailingSlash: 'always',
   integrations: [
     mdx(),
-    sitemap({ filter: (page) => !page.endsWith('/lien-he/') }),
+    sitemap(),
   ],
 });

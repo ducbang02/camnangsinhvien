@@ -140,3 +140,16 @@ CMS Phase 1 không thực hiện commit/push. Danh sách kiểm tra đầy đủ
 - Browser QA tại CMS local xác nhận nút `Xuất bản lên website`, `Gỡ khỏi website (chuyển Draft)` và `Xóa bài…` hiển thị đúng với bài đã lưu; hai nút quản lý bị disable với bài mới chưa lưu.
 - Hộp xóa hiển thị đúng title/path, yêu cầu slug, mặc định không chọn xóa media; nhập slug sai giữ nguyên bài và báo lỗi rõ ràng. Không có bài thật nào bị xóa hoặc push trong browser QA.
 - Console CMS không có error hoặc warning.
+
+## Kiểm thử form Liên hệ — 17/09/2026
+
+- `npm run validate` đạt: sinh Worker types, `tsc` cho Worker, `astro check` có 0 error/warning/hint và production build đủ 60 trang.
+- `npm run deploy:dry` đọc thành công 161 static asset; Wrangler nhận đúng `EMAIL`, `ASSETS`, ba biến cấu hình public và không in Turnstile secret.
+- `npm run test:cms` đạt 17/17 test; thay đổi Worker và form không ảnh hưởng luồng CMS.
+- API local trả đúng: `GET /api/contact` 405, cross-origin 403, content type sai 415, payload sai 400, payload quá 16 KiB 413, API không tồn tại 404 và `/lien-he/` 200.
+- Payload hợp lệ nhưng token Turnstile giả bị từ chối 403 trước bước gửi email.
+- Canonical Siteverify với test key công khai trả `success: true`; test secret mô phỏng replay trả `timeout-or-duplicate`, xác nhận hai nhánh phản hồi của Cloudflare hoạt động như tài liệu.
+- Browser QA xác nhận trang Liên hệ hiển thị đủ ba nhóm nhu cầu, thông báo riêng tư, label input, Turnstile và trạng thái validation bằng `aria-live`; submit form rỗng đưa focus về trường Họ và tên và báo lỗi rõ ràng.
+- Turnstile widget production đã được tạo cho `localhost`, `127.0.0.1`, hai custom hostname và hostname `workers.dev`; token API tạm đã được thu hồi sau khi tạo widget.
+- Cloudflare Email Routing đã xác minh Gmail đích `sunny.contact.251010@gmail.com`; routing rule `lienhe@camnangsinhvien.site` đang `Active` và chuyển tiếp về Gmail này.
+- Production smoke test gửi email thật và kiểm tra token replay còn chờ Worker secret được cấu hình trên production và code mới được deploy.

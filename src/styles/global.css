@@ -212,7 +212,7 @@ h3 {
 }
 
 .desktop-nav > a,
-.mega-nav > summary {
+.mega-trigger {
   padding: 0.65rem 0.85rem;
   color: var(--ink-soft);
   border-radius: 999px;
@@ -223,28 +223,38 @@ h3 {
   text-decoration: none;
 }
 
-.mega-nav > summary::-webkit-details-marker {
-  display: none;
+.mega-nav {
+  position: relative;
 }
 
-.mega-nav > summary {
+.mega-nav::after {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  left: 0;
+  height: 1rem;
+  content: '';
+}
+
+.mega-trigger {
   display: flex;
   align-items: center;
   gap: .35rem;
 }
 
-.mega-nav > summary span {
+.mega-trigger span {
   transition: transform 160ms ease;
 }
 
-.mega-nav[open] > summary span {
+.mega-nav:hover .mega-trigger span,
+.mega-nav:focus-within .mega-trigger span {
   transform: rotate(180deg);
 }
 
 .desktop-nav > a:hover,
 .desktop-nav > a[aria-current='page'],
-.mega-nav > summary:hover,
-.mega-nav[open] > summary {
+.mega-trigger:hover,
+.mega-nav:focus-within .mega-trigger {
   color: var(--ink);
   background: var(--white);
   box-shadow: inset 0 0 0 1px var(--line);
@@ -260,6 +270,29 @@ h3 {
   border: 1px solid var(--line);
   border-radius: 24px 10px 24px 10px;
   box-shadow: 0 24px 70px rgba(16, 33, 63, .18);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-0.35rem);
+  visibility: hidden;
+  transition:
+    opacity 160ms ease,
+    transform 160ms ease,
+    visibility 160ms ease;
+}
+
+.mega-nav:hover .mega-panel,
+.mega-nav:focus-within .mega-panel {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+  visibility: visible;
+}
+
+.mega-nav[data-menu-suppressed] .mega-panel {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-0.35rem);
+  visibility: hidden;
 }
 
 .mega-heading {

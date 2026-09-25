@@ -8,7 +8,7 @@
 
 **Phase 1B — CMS local Phase 1 đã hoàn tất.** CMS Tiptap Vanilla có danh sách/search/filter, editor, metadata theo Content Collection, load/save Markdown/MDX và preview bằng layout Astro thật. CMS không có database/login, chỉ bind local và không được đưa vào production build. Xem `docs/CMS.md`.
 
-**Điều hướng chính đã được tinh gọn.** Header desktop chỉ giữ mega menu `Cẩm nang` và liên kết `Công cụ`. Hub `Sinh viên IT` và trang `Lộ trình` vẫn tồn tại nhưng được dẫn từ nội dung/footer, tránh làm loãng định vị của website.
+**Điều hướng chính đã được tinh gọn.** Header desktop chỉ giữ mega menu `Cẩm nang` và liên kết `Công cụ`. `Cẩm nang` mở mega menu khi hover/focus và dẫn về khối chủ đề trên trang chủ khi click. Hub `Sinh viên IT` và trang `Lộ trình` vẫn tồn tại nhưng được dẫn từ nội dung/footer, tránh làm loãng định vị của website.
 
 **Article hero đã chuyển sang layout ưu tiên hình ảnh.** Title và metadata nằm trên hero cao khoảng nửa viewport; mười category có ảnh mặc định tự host và article vẫn có thể ghi đè bằng thumbnail riêng từ CMS.
 

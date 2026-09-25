@@ -13,8 +13,8 @@ const isActive = (href: string) => href !== '/' && pathname.startsWith(href);
     </a>
 
     <nav class="desktop-nav" aria-label="Điều hướng chính">
-      <details class="mega-nav">
-        <summary aria-label="Mở danh sách 10 chủ đề">Cẩm nang <span aria-hidden="true">⌄</span></summary>
+      <div class="mega-nav">
+        <a class="mega-trigger" href="/#chu-de">Cẩm nang <span aria-hidden="true">⌄</span></a>
         <div class="mega-panel">
           <div class="mega-heading">
             <div><span>10 chủ đề</span><strong>Chọn đúng việc bạn đang cần giải quyết</strong></div>
@@ -29,7 +29,7 @@ const isActive = (href: string) => href !== '/' && pathname.startsWith(href);
             ))}
           </div>
         </div>
-      </details>
+      </div>
       {primaryNav.map((item) => (
         <a href={item.href} aria-current={isActive(item.href) ? 'page' : undefined}>{item.label}</a>
       ))}
@@ -55,6 +55,20 @@ const isActive = (href: string) => href !== '/' && pathname.startsWith(href);
 
 <script>
   const navigationDetails = [...document.querySelectorAll<HTMLDetailsElement>('.site-header details')];
+  const megaNav = document.querySelector<HTMLElement>('.mega-nav');
+  const megaTrigger = megaNav?.querySelector<HTMLAnchorElement>('.mega-trigger');
+
+  megaTrigger?.addEventListener('click', () => {
+    megaNav?.setAttribute('data-menu-suppressed', '');
+  });
+
+  megaNav?.addEventListener('pointerleave', () => {
+    megaNav.removeAttribute('data-menu-suppressed');
+  });
+
+  megaNav?.addEventListener('focusin', () => {
+    megaNav.removeAttribute('data-menu-suppressed');
+  });
 
   document.addEventListener('click', (event) => {
     for (const details of navigationDetails) {

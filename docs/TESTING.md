@@ -165,3 +165,10 @@ CMS Phase 1 không thực hiện commit/push. Danh sách kiểm tra đầy đủ
 - Trang `/chinh-sach-quyen-rieng/` có một H1, nội dung giải thích form/Turnstile/localStorage và chỉ được liên kết từ footer.
 - Media nhận browser cache bảy ngày; font nhận cache một năm với `immutable`; HTML vẫn dùng revalidation mặc định.
 - CSP cho phép cùng origin, Cloudflare Turnstile và iframe `youtube-nocookie.com`; HSTS 30 ngày chỉ được gắn cho domain HTTPS chuẩn.
+
+## Kiểm thử điều hướng Cẩm nang — 20/09/2026
+
+- `npm run validate` đạt: Worker types và TypeScript đạt; `astro check` có 0 error/warning/hint; production build sinh đủ 62 trang.
+- Browser QA desktop xác nhận hover và keyboard focus trên liên kết `Cẩm nang` đều mở mega menu mười chủ đề.
+- Click `Cẩm nang` từ trang con dẫn về `/#chu-de`, đóng mega menu và đặt khối “Mở đúng ngăn, giải quyết đúng việc” ngay dưới sticky header.
+- Menu mobile giữ nguyên luồng hiện tại; thay đổi chỉ áp dụng cho nav desktop đang được ẩn ở breakpoint tối đa 720px.

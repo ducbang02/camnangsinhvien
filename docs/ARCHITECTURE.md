@@ -24,7 +24,7 @@ Website là một **Student Hub tĩnh, content-first** dành cho sinh viên Vi�
 Header desktop chỉ giữ các điểm vào quan trọng nhất:
 
 1. Logo về Trang chủ
-2. Cẩm nang — mở mega menu mười chủ đề
+2. Cẩm nang — hover hoặc focus để mở mega menu mười chủ đề; click để tới khối `#chu-de` trên trang chủ
 3. Công cụ
 4. Về chúng tôi
 5. Liên hệ

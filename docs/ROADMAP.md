@@ -14,6 +14,8 @@
 
 **Landing page chính có hero image responsive.** Trang chủ, Cẩm nang và Công cụ dùng `HeroPicture.astro` với ảnh WebP desktop/mobile riêng trong `public/media/page-heroes/`; trình duyệt chọn nguồn theo viewport để giữ đúng bố cục mà không tải cả hai ảnh.
 
+**Kho ảnh biên tập đã được chuẩn hóa.** Ảnh gốc đi qua `media-inbox/`, sau đó được đổi tên theo nội dung, chuyển sang WebP và xếp vào `public/media/library/`. Kho hiện có ảnh hero, học tập, đời sống, khuôn viên, kỹ năng số, nghiên cứu, tiếng Anh và nghề nghiệp để bài mới không phải lặp một ảnh đại diện duy nhất.
+
 **Danh sách bài trong từng chủ đề đã được tinh gọn.** Mặc định bài hiển thị theo list một cột gồm title, mô tả ngắn và thời gian đọc; người đọc có thể chuyển sang lưới card ngay trên trang mà không tải lại hoặc nhân đôi nội dung.
 
 **Grouping của category đã dùng chung toàn website.** Category có thể khai báo số lượng `groups` bất kỳ trong `src/data/categories.ts`; article tham chiếu bằng `group` và sắp thứ tự bằng `articleOrder`. Trang có group sinh navigation/section tương ứng, còn trang không có group giữ nguyên danh sách phẳng. Hiện mới cấu hình ba group cho Học tập & thi cử, chưa tạo thêm bài mới.

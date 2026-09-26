@@ -172,3 +172,11 @@ CMS Phase 1 không thực hiện commit/push. Danh sách kiểm tra đầy đủ
 - Browser QA desktop xác nhận hover và keyboard focus trên liên kết `Cẩm nang` đều mở mega menu mười chủ đề.
 - Click `Cẩm nang` từ trang con dẫn về `/#chu-de`, đóng mega menu và đặt khối “Mở đúng ngăn, giải quyết đúng việc” ngay dưới sticky header.
 - Menu mobile giữ nguyên luồng hiện tại; thay đổi chỉ áp dụng cho nav desktop đang được ẩn ở breakpoint tối đa 720px.
+
+## Kiểm thử kho ảnh biên tập — 26/09/2026
+
+- `npm run validate` đạt: Worker TypeScript và Astro check không có lỗi/cảnh báo; production build sinh đủ 63 trang.
+- Duyệt trực quan 24 ảnh người dùng cung cấp và 4 ảnh tạo bổ sung bằng built-in ImageGen.
+- 28/28 ảnh đầu ra đúng định dạng WebP; bốn hero có kích thước 1536 × 864 và 24 ảnh xen bài có kích thước 1200 × 800.
+- Tổng dung lượng sau tối ưu khoảng 2,9 MB; ảnh gốc PNG khoảng 1,7–3,6 MB mỗi file không được giữ trong repository.
+- Tên file không dấu mô tả nội dung và ảnh được chia theo chủ đề trong `public/media/library/`.

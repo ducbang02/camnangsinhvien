@@ -39,6 +39,8 @@ Vòng đời bài viết không cần database: gỡ khỏi website chỉ đổi
 
 Media do CMS tải lên nằm tại `public/media/articles/<slug>/`. Markdown không chứa base64. Ảnh trong nội dung được lưu bằng block `<figure class="article-figure" data-cms-image>` gồm `img` có alt bắt buộc và `figcaption` tùy chọn. YouTube được lưu bằng block `.video-embed` chỉ chứa video ID hợp lệ và iframe `youtube-nocookie.com`; cả hai block đều được Astro render trực tiếp trong article layout.
 
+Ảnh biên tập dùng chung nằm tại `public/media/library/<nhom>/` và dùng tên file không dấu mô tả đúng nội dung. Ảnh hero chuẩn hóa ở 1536 × 864; ảnh xen bài chuẩn hóa ở 1200 × 800. Tất cả dùng WebP, không chứa base64 và chỉ được gắn vào bài sau khi có alt text phù hợp với ngữ cảnh cụ thể.
+
 ## 3. Category / chủ đề
 
 Chủ đề là dữ liệu TypeScript tĩnh trong `src/data/categories.ts`. Đây là nguồn chuẩn duy nhất cho toàn website:

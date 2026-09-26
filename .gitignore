@@ -24,3 +24,7 @@ Desktop.ini
 .dev.vars.*
 !.dev.vars.example
 .cf-turnstile-token
+
+# Raw editorial images waiting to be reviewed and optimized.
+media-inbox/*
+!media-inbox/README.md

@@ -50,6 +50,8 @@ Mỗi category có thể khai báo `groups` tùy chọn trong cùng nguồn dữ
 
 Ba landing page chính (`/`, `/cam-nang/`, `/cong-cu/`) dùng chung `HeroPicture.astro`. Mỗi trang có một ảnh WebP desktop và một ảnh WebP mobile trong `public/media/page-heroes/`; phần tử `<picture>` chỉ tải nguồn phù hợp với viewport. Ảnh category dùng cho article vẫn nằm riêng trong `public/media/category-heroes/`.
 
+Kho ảnh biên tập dùng lại cho bài tương lai nằm trong `public/media/library/`, được chia theo chủ đề và mục đích. Ảnh gốc được đưa vào `media-inbox/` để duyệt, đổi tên và tối ưu; thư mục inbox không được tham chiếu từ website và các file ảnh thô tại đây bị Git ignore.
+
 `Sinh viên IT` là một hub chuyên sâu dùng lại nội dung chung, sau đó phân nhánh theo nền tảng và hướng nghề nghiệp; không sao chép bài chỉ để thêm cụm “cho sinh viên IT”.
 
 ## 4. Route

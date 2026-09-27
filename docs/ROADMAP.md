@@ -10,6 +10,8 @@
 
 **Điều hướng chính đã được tinh gọn.** Header desktop chỉ giữ mega menu `Cẩm nang` và liên kết `Công cụ`. `Cẩm nang` mở mega menu khi hover/focus và dẫn về khối chủ đề trên trang chủ khi click. Hub `Sinh viên IT` và trang `Lộ trình` vẫn tồn tại nhưng được dẫn từ nội dung/footer, tránh làm loãng định vị của website.
 
+**Điều hướng nội bộ đã chuyển sang ClientRouter của Astro.** Chuyển giữa Công cụ, Về chúng tôi, Liên hệ và các route nội bộ không còn tải lại toàn bộ document; các script tương tác đã được đồng bộ với `astro:page-load`, Pomodoro có cleanup khi rời trang và Turnstile được render lại an toàn khi quay lại form Liên hệ.
+
 **Article hero đã chuyển sang layout ưu tiên hình ảnh.** Title và metadata nằm trên hero cao khoảng nửa viewport; mười category có ảnh mặc định tự host và article vẫn có thể ghi đè bằng thumbnail riêng từ CMS.
 
 **Landing page chính có hero image responsive.** Trang chủ, Cẩm nang và Công cụ dùng `HeroPicture.astro` với ảnh WebP desktop/mobile riêng trong `public/media/page-heroes/`; trình duyệt chọn nguồn theo viewport để giữ đúng bố cục mà không tải cả hai ảnh.

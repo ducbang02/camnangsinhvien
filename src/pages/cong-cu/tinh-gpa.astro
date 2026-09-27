@@ -45,6 +45,7 @@ import ToolLayout from '../../layouts/ToolLayout.astro';
 </ToolLayout>
 
 <script>
+  function setupGpaCalculator() {
   type Course = { name: string; credits: number; grade: number };
   type HistoryItem = { gpa: number; credits: number; date: string };
   const storageKey = 'cnsv:v1:gpa-history';
@@ -150,6 +151,9 @@ import ToolLayout from '../../layouts/ToolLayout.astro';
 
   addRow(); addRow(); addRow();
   renderHistory();
+  }
+
+  document.addEventListener('astro:page-load', setupGpaCalculator);
 </script>
 
 <style>

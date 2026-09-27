@@ -53,6 +53,7 @@ const articles = (await getCollection('articles', ({ data }) => !data.draft))
 </BaseLayout>
 
 <script>
+  function setupArticleFilters() {
   const searchInput = document.querySelector<HTMLInputElement>('#article-search');
   const buttons = [...document.querySelectorAll<HTMLButtonElement>('[data-filter]')];
   const cards = [...document.querySelectorAll<HTMLElement>('.article-card')];
@@ -96,6 +97,9 @@ const articles = (await getCollection('articles', ({ data }) => !data.draft))
     applyFilters();
     searchInput?.focus();
   });
+  }
+
+  document.addEventListener('astro:page-load', setupArticleFilters);
 </script>
 
 <style>

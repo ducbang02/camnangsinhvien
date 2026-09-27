@@ -39,6 +39,7 @@ import ToolLayout from '../../layouts/ToolLayout.astro';
 </ToolLayout>
 
 <script>
+  function setupPomodoro() {
   const settingsKey = 'cnsv:v1:pomodoro-settings';
   const dayKey = () => `cnsv:v1:pomodoro:${new Date().toISOString().slice(0, 10)}`;
   const focusInput = document.querySelector<HTMLInputElement>('#focus-minutes');
@@ -138,6 +139,12 @@ import ToolLayout from '../../layouts/ToolLayout.astro';
   remaining = readDuration();
   updateSessions();
   render();
+    document.addEventListener('astro:before-swap', () => {
+      if (interval) window.clearInterval(interval);
+    }, { once: true });
+  }
+
+  document.addEventListener('astro:page-load', setupPomodoro);
 </script>
 
 <style>

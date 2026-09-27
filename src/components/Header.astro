@@ -54,30 +54,39 @@ const isActive = (href: string) => href !== '/' && pathname.startsWith(href);
 </header>
 
 <script>
-  const navigationDetails = [...document.querySelectorAll<HTMLDetailsElement>('.site-header details')];
-  const megaNav = document.querySelector<HTMLElement>('.mega-nav');
-  const megaTrigger = megaNav?.querySelector<HTMLAnchorElement>('.mega-trigger');
+  let headerController: AbortController | undefined;
 
-  megaTrigger?.addEventListener('click', () => {
-    megaNav?.setAttribute('data-menu-suppressed', '');
-  });
+  function setupHeader() {
+    headerController?.abort();
+    headerController = new AbortController();
+    const { signal } = headerController;
+    const navigationDetails = [...document.querySelectorAll<HTMLDetailsElement>('.site-header details')];
+    const megaNav = document.querySelector<HTMLElement>('.mega-nav');
+    const megaTrigger = megaNav?.querySelector<HTMLAnchorElement>('.mega-trigger');
 
-  megaNav?.addEventListener('pointerleave', () => {
-    megaNav.removeAttribute('data-menu-suppressed');
-  });
+    megaTrigger?.addEventListener('click', () => {
+      megaNav?.setAttribute('data-menu-suppressed', '');
+    }, { signal });
 
-  megaNav?.addEventListener('focusin', () => {
-    megaNav.removeAttribute('data-menu-suppressed');
-  });
+    megaNav?.addEventListener('pointerleave', () => {
+      megaNav.removeAttribute('data-menu-suppressed');
+    }, { signal });
 
-  document.addEventListener('click', (event) => {
-    for (const details of navigationDetails) {
-      if (details.open && !details.contains(event.target as Node)) details.open = false;
-    }
-  });
+    megaNav?.addEventListener('focusin', () => {
+      megaNav.removeAttribute('data-menu-suppressed');
+    }, { signal });
 
-  document.addEventListener('keydown', (event) => {
-    if (event.key !== 'Escape') return;
-    for (const details of navigationDetails) details.open = false;
-  });
+    document.addEventListener('click', (event) => {
+      for (const details of navigationDetails) {
+        if (details.open && !details.contains(event.target as Node)) details.open = false;
+      }
+    }, { signal });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key !== 'Escape') return;
+      for (const details of navigationDetails) details.open = false;
+    }, { signal });
+  }
+
+  document.addEventListener('astro:page-load', setupHeader);
 </script>

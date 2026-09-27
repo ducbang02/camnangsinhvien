@@ -37,6 +37,7 @@ import ToolLayout from '../../layouts/ToolLayout.astro';
 </ToolLayout>
 
 <script>
+  function setupGroupSplitter() {
   const listInput = document.querySelector<HTMLTextAreaElement>('#member-list');
   const countInput = document.querySelector<HTMLInputElement>('#group-count');
   const error = document.querySelector<HTMLElement>('#group-error');
@@ -107,6 +108,9 @@ import ToolLayout from '../../layouts/ToolLayout.astro';
     try { await navigator.clipboard.writeText(text); if (copyStatus) copyStatus.textContent = 'Đã sao chép kết quả.'; }
     catch { if (copyStatus) copyStatus.textContent = 'Không thể sao chép tự động. Hãy chọn và sao chép thủ công.'; }
   });
+  }
+
+  document.addEventListener('astro:page-load', setupGroupSplitter);
 </script>
 
 <style>

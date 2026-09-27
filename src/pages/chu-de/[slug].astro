@@ -143,6 +143,7 @@ const schema = {
 </BaseLayout>
 
 <script>
+  function setupArticleViewSwitcher() {
   const articleCollection = document.querySelector<HTMLElement>('#category-articles');
   const viewButtons = [...document.querySelectorAll<HTMLButtonElement>('[data-article-view]')];
 
@@ -159,6 +160,9 @@ const schema = {
       }
     });
   }
+  }
+
+  document.addEventListener('astro:page-load', setupArticleViewSwitcher);
 </script>
 
 <style>

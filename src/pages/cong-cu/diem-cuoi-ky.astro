@@ -46,6 +46,7 @@ import ToolLayout from '../../layouts/ToolLayout.astro';
 </ToolLayout>
 
 <script>
+  function setupFinalGradeCalculator() {
   const form = document.querySelector<HTMLFormElement>('#final-grade-form');
   const currentInput = document.querySelector<HTMLInputElement>('#current-grade');
   const weightInput = document.querySelector<HTMLInputElement>('#final-weight');
@@ -89,4 +90,7 @@ import ToolLayout from '../../layouts/ToolLayout.astro';
     setTimeout(() => { if (error) error.textContent = ''; if (result) result.hidden = true; setLimits(); }, 0);
   });
   setLimits();
+  }
+
+  document.addEventListener('astro:page-load', setupFinalGradeCalculator);
 </script>

@@ -13,6 +13,7 @@ Website là một **Student Hub tĩnh, content-first** dành cho sinh viên Vi�
 ## 2. Stack đã chốt
 
 - **Astro 7**: sinh HTML tĩnh, chỉ tải JavaScript ở nơi có tương tác.
+- **Astro ClientRouter**: chuyển các route nội bộ bằng cơ chế client-side có sẵn của Astro để tránh tải lại toàn bộ document; website vẫn prerender và hoạt động theo mô hình static.
 - **Markdown/MDX Content Collections**: quản lý bài viết bằng Git, kiểm tra frontmatter bằng schema.
 - **TypeScript**: dùng cho cấu hình, data và logic tool.
 - **CSS thuần**: không thêm UI framework; giảm dependency và giữ nhận diện riêng.
@@ -94,7 +95,10 @@ Mỗi bài có tối đa ba CTA có ích: mở tool, tải/check checklist, đ�
 - Bộ lọc bài viết chạy client-side nhưng danh sách đầy đủ vẫn có trong HTML để người dùng và crawler đọc được.
 - Trang chủ đề render cùng một danh sách bài và mặc định trình bày dạng list gọn; nút `Danh sách`/`Dạng thẻ` chỉ đổi class hiển thị client-side, không nhân đôi nội dung và không lưu trạng thái.
 - Với category có group, navigation dùng link hash thật và từng section có `scroll-margin-top`; CSS `scroll-behavior` chung xử lý cuộn mượt, không cần JavaScript riêng. Category không có group không render navigation/section rỗng.
-- Không dùng SPA routing.
+- `BaseLayout.astro` đặt `ClientRouter` trong `<head>`, vì vậy link nội bộ được tải và hoán đổi trang mà không reload toàn bộ document. Nếu JavaScript không chạy, các link vẫn là URL thật và điều hướng như website tĩnh bình thường.
+- Script tương tác của Header, bộ lọc, trang chủ đề, mini tool và form Liên hệ khởi tạo theo `astro:page-load` để hoạt động cả lần vào đầu tiên lẫn khi quay lại route đã từng mở. Pomodoro dọn interval trước khi đổi trang.
+- Turnstile dùng explicit rendering sau mỗi lần vào `/lien-he/`; API chỉ được tải một lần trong phiên điều hướng và widget mới được gắn vào form hiện tại.
+- ClientRouter tôn trọng `prefers-reduced-motion` và giữ route announcement của Astro cho công nghệ hỗ trợ.
 
 ## 7. SEO và metadata
 

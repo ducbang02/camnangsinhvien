@@ -95,80 +95,151 @@ const turnstileSiteKey = '0x4AAAAAAE6GIuHV4XK2u-GP';
     </div>
   </section>
 
-  <script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 </BaseLayout>
 
 <script>
+  type TurnstileApi = {
+    render: (container: HTMLElement, options: {
+      sitekey: string;
+      action: string;
+      theme: 'light';
+      language: string;
+    }) => string;
+    reset: (widget?: string | HTMLElement) => void;
+    remove: (widget: string) => void;
+  };
+
   interface TurnstileWindow extends Window {
-    turnstile?: { reset: (widget?: string | HTMLElement) => void };
+    turnstile?: TurnstileApi;
   }
 
-  const form = document.querySelector<HTMLFormElement>('#contact-form');
-  const status = document.querySelector<HTMLElement>('#contact-status');
-  const submitButton = form?.querySelector<HTMLButtonElement>('[type="submit"]');
-  const initialButtonMarkup = submitButton?.innerHTML ?? 'Gửi liên hệ';
+  let turnstileLoader: Promise<TurnstileApi> | undefined;
 
-  function showStatus(message: string, state: 'success' | 'error'): void {
-    if (!status) return;
-    status.textContent = message;
-    status.dataset.state = state;
-  }
+  async function loadTurnstile(): Promise<TurnstileApi> {
+    const current = (window as TurnstileWindow).turnstile;
+    if (current) return current;
 
-  form?.addEventListener('submit', async (event) => {
-    event.preventDefault();
-    status?.removeAttribute('data-state');
-    if (status) status.textContent = '';
+    if (!turnstileLoader) {
+      turnstileLoader = new Promise((resolve, reject) => {
+        const existing = document.querySelector<HTMLScriptElement>('[data-turnstile-api]');
+        const script = existing ?? document.createElement('script');
 
-    if (!form.checkValidity()) {
-      form.reportValidity();
-      showStatus('Vui lòng điền đủ các trường bắt buộc.', 'error');
-      return;
-    }
+        const handleLoad = () => {
+          const api = (window as TurnstileWindow).turnstile;
+          if (api) resolve(api);
+          else reject(new Error('Turnstile chưa sẵn sàng.'));
+        };
 
-    const data = new FormData(form);
-    const turnstileToken = String(data.get('cf-turnstile-response') ?? '');
-    if (!turnstileToken) {
-      showStatus('Vui lòng hoàn tất bước xác minh trước khi gửi.', 'error');
-      return;
-    }
+        script.addEventListener('load', handleLoad, { once: true });
+        script.addEventListener('error', () => reject(new Error('Không tải được bước xác minh.')), { once: true });
 
-    if (submitButton) {
-      submitButton.disabled = true;
-      submitButton.textContent = 'Đang gửi…';
+        if (!existing) {
+          script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';
+          script.async = true;
+          script.defer = true;
+          script.dataset.turnstileApi = '';
+          document.head.append(script);
+        }
+      });
     }
 
     try {
-      const response = await fetch('/api/contact', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name: data.get('name'),
-          email: data.get('email'),
-          type: data.get('type'),
-          message: data.get('message'),
-          website: data.get('website'),
-          turnstileToken,
-        }),
-      });
-      const result = await response.json() as { ok?: boolean; message?: string };
-
-      if (!response.ok || result.ok !== true) {
-        throw new Error(result.message || 'Chưa thể gửi liên hệ lúc này.');
-      }
-
-      form.reset();
-      showStatus(result.message || 'Đã gửi liên hệ thành công.', 'success');
+      return await turnstileLoader;
     } catch (error) {
-      showStatus(error instanceof Error ? error.message : 'Chưa thể gửi liên hệ lúc này.', 'error');
-    } finally {
-      const turnstile = (window as TurnstileWindow).turnstile;
-      turnstile?.reset();
-      if (submitButton) {
-        submitButton.disabled = false;
-        submitButton.innerHTML = initialButtonMarkup;
-      }
+      turnstileLoader = undefined;
+      throw error;
     }
-  });
+  }
+
+  async function setupContactForm() {
+    const form = document.querySelector<HTMLFormElement>('#contact-form');
+    if (!form) return;
+    const status = document.querySelector<HTMLElement>('#contact-status');
+    const submitButton = form.querySelector<HTMLButtonElement>('[type="submit"]');
+    const initialButtonMarkup = submitButton?.innerHTML ?? 'Gửi liên hệ';
+    const turnstileContainer = form.querySelector<HTMLElement>('.cf-turnstile');
+    let widgetId: string | undefined;
+
+    function showStatus(message: string, state: 'success' | 'error'): void {
+      if (!status) return;
+      status.textContent = message;
+      status.dataset.state = state;
+    }
+
+    try {
+      const turnstile = await loadTurnstile();
+      if (turnstileContainer?.isConnected) {
+        widgetId = turnstile.render(turnstileContainer, {
+          sitekey: turnstileContainer.dataset.sitekey ?? '',
+          action: turnstileContainer.dataset.action ?? 'contact',
+          theme: 'light',
+          language: 'vi',
+        });
+        document.addEventListener('astro:before-swap', () => {
+          if (widgetId) turnstile.remove(widgetId);
+        }, { once: true });
+      }
+    } catch {
+      showStatus('Không tải được bước xác minh. Vui lòng tải lại trang.', 'error');
+    }
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      status?.removeAttribute('data-state');
+      if (status) status.textContent = '';
+
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        showStatus('Vui lòng điền đủ các trường bắt buộc.', 'error');
+        return;
+      }
+
+      const data = new FormData(form);
+      const turnstileToken = String(data.get('cf-turnstile-response') ?? '');
+      if (!turnstileToken) {
+        showStatus('Vui lòng hoàn tất bước xác minh trước khi gửi.', 'error');
+        return;
+      }
+
+      if (submitButton) {
+        submitButton.disabled = true;
+        submitButton.textContent = 'Đang gửi…';
+      }
+
+      try {
+        const response = await fetch('/api/contact', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            name: data.get('name'),
+            email: data.get('email'),
+            type: data.get('type'),
+            message: data.get('message'),
+            website: data.get('website'),
+            turnstileToken,
+          }),
+        });
+        const result = await response.json() as { ok?: boolean; message?: string };
+
+        if (!response.ok || result.ok !== true) {
+          throw new Error(result.message || 'Chưa thể gửi liên hệ lúc này.');
+        }
+
+        form.reset();
+        showStatus(result.message || 'Đã gửi liên hệ thành công.', 'success');
+      } catch (error) {
+        showStatus(error instanceof Error ? error.message : 'Chưa thể gửi liên hệ lúc này.', 'error');
+      } finally {
+        (window as TurnstileWindow).turnstile?.reset(widgetId);
+        if (submitButton) {
+          submitButton.disabled = false;
+          submitButton.innerHTML = initialButtonMarkup;
+        }
+      }
+    });
+  }
+
+  document.addEventListener('astro:page-load', setupContactForm);
 </script>
 
 <style>

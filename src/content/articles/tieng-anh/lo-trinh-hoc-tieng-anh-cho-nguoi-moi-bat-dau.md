@@ -230,4 +230,4 @@ Hãy đổi mục tiêu thành từng chủ đề nhỏ:
 
 Mỗi chủ đề hoàn thành giống như thêm một mảnh ghép vào khả năng sử dụng tiếng Anh của bạn. Bạn không cần học thật nhanh. Bạn cần một đường đi rõ, một việc nhỏ mỗi ngày và đủ kiên nhẫn để không dừng lại sau vài buổi đầu.
 
-Khi đã có nền cơ bản, bạn có thể đọc tiếp bài [Đọc tài liệu tiếng Anh mà không phải dịch từng từ](/cam-nang/doc-tai-lieu-tieng-anh-khong-dich-tung-tu/) để chuyển từ học câu đơn giản sang xử lý tài liệu học tập.
+Khi đã có nền cơ bản, bước tiếp theo là tập xử lý tài liệu học tập ngắn: đọc tiêu đề, đoán ý chính, chọn đoạn cần hiểu và chỉ tra những từ thật sự cản trở việc nắm nội dung.

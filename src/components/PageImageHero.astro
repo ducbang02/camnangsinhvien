@@ -1,0 +1,95 @@
+---
+interface Props {
+  eyebrow: string;
+  title: string;
+  lead: string;
+  image: string;
+  mobileImage?: string;
+  alt?: string;
+}
+
+const { eyebrow, title, lead, image, mobileImage, alt = '' } = Astro.props;
+---
+
+<section class="page-image-hero">
+  <picture>
+    {mobileImage && <source media="(max-width: 640px)" srcset={mobileImage} />}
+    <img
+      src={image}
+      alt={alt}
+      width="1536"
+      height="864"
+      loading="eager"
+      fetchpriority="high"
+      decoding="async"
+    />
+  </picture>
+  <div class="page-image-hero-shade" aria-hidden="true"></div>
+  <div class="page-image-hero-content container">
+    <p class="eyebrow">{eyebrow}</p>
+    <h1>{title}</h1>
+    <p class="lead">{lead}</p>
+  </div>
+</section>
+
+<style>
+  .page-image-hero {
+    position: relative;
+    display: grid;
+    min-height: clamp(380px, 48vh, 540px);
+    overflow: hidden;
+    color: white;
+    background: var(--ink);
+    isolation: isolate;
+    place-items: center;
+  }
+
+  .page-image-hero picture,
+  .page-image-hero img,
+  .page-image-hero-shade {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .page-image-hero picture {
+    z-index: -2;
+  }
+
+  .page-image-hero img {
+    object-fit: cover;
+  }
+
+  .page-image-hero-shade {
+    z-index: -1;
+    background: linear-gradient(180deg, rgba(7, 17, 35, 0.44), rgba(7, 17, 35, 0.76));
+  }
+
+  .page-image-hero-content {
+    min-width: 0;
+    padding-block: clamp(2.5rem, 7vw, 5rem);
+    text-align: center;
+  }
+
+  .page-image-hero .eyebrow {
+    color: var(--mint);
+  }
+
+  .page-image-hero h1 {
+    max-width: 980px;
+    margin: 0 auto 1.25rem;
+    color: white;
+    font-size: clamp(2.35rem, 6vw, 4rem);
+    line-height: 1.04;
+    text-shadow: 0 3px 24px rgba(0, 0, 0, 0.38);
+    text-wrap: balance;
+  }
+
+  .page-image-hero .lead {
+    max-width: 720px;
+    margin: 0 auto;
+    color: rgba(255, 255, 255, 0.86);
+    text-wrap: balance;
+  }
+</style>

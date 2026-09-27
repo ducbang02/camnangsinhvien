@@ -14,7 +14,7 @@
 
 **Article hero đã chuyển sang layout ưu tiên hình ảnh.** Title và metadata nằm trên hero cao khoảng nửa viewport; mười category có ảnh mặc định tự host và article vẫn có thể ghi đè bằng thumbnail riêng từ CMS.
 
-**Landing page chính có hero image responsive.** Trang chủ, Cẩm nang và Công cụ dùng `HeroPicture.astro` với ảnh WebP desktop/mobile riêng trong `public/media/page-heroes/`; trình duyệt chọn nguồn theo viewport để giữ đúng bố cục mà không tải cả hai ảnh.
+**Landing page chính có hero image responsive.** Trang chủ và Cẩm nang dùng `HeroPicture.astro` với ảnh WebP desktop/mobile riêng trong `public/media/page-heroes/`; Công cụ, Về chúng tôi và Liên hệ dùng hero ảnh nền chìm qua `PageImageHero.astro` để đồng bộ cảm giác với article hero.
 
 **Mười trang chủ đề đã có hero ảnh riêng.** `/chu-de/[slug]/` đọc trực tiếp `heroImage` từ taxonomy chung, dùng ảnh làm nền toàn chiều ngang và đặt thông tin trên lớp phủ tương phản đồng bộ với article hero; ảnh cũng được dùng cho Open Graph và tiếp tục làm fallback cho bài chưa có thumbnail.
 

@@ -1,20 +1,21 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Icon from '../components/Icon.astro';
+import PageImageHero from '../components/PageImageHero.astro';
 ---
 
 <BaseLayout
   title="Về chúng tôi"
   description="Cẩm nang sinh viên chia sẻ hướng dẫn thực tế, dễ áp dụng để bạn học tốt hơn, sống chủ động hơn và chuẩn bị sớm cho tương lai."
+  image="/media/library/heroes/hero-tu-hoc-thu-vien-nang-chieu.webp"
 >
-  <section class="page-hero">
-    <div class="container">
-      <p class="eyebrow">Về Cẩm nang sinh viên</p>
-      <h1>Để những năm đại học bớt đi những lần “giá như”</h1>
-      <p class="lead">Một nơi giúp bạn tìm được thông tin cần thiết, hiểu việc mình nên làm và bắt đầu bằng một bước vừa sức.</p>
-    </div>
-  </section>
-
+  <PageImageHero
+    eyebrow="Về Cẩm nang sinh viên"
+    title="Để những năm đại học bớt đi những lần “giá như”"
+    lead="Một nơi giúp bạn tìm được thông tin cần thiết, hiểu việc mình nên làm và bắt đầu bằng một bước vừa sức."
+    image="/media/library/heroes/hero-tu-hoc-thu-vien-nang-chieu.webp"
+    alt=""
+  />
   <section class="section">
     <div class="narrow about-copy">
       <p class="intro">Đại học không chỉ là lên lớp, làm bài tập rồi thi qua môn. Đây còn là quãng thời gian nhiều người lần đầu tự quản lý thời gian, tiền bạc, các mối quan hệ và những lựa chọn có ảnh hưởng đến tương lai.</p>

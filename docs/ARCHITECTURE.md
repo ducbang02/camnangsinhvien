@@ -32,6 +32,8 @@ Header desktop chỉ giữ các điểm vào quan trọng nhất:
 
 `Sinh viên IT` và `Lộ trình` vẫn là các route độc lập nhưng không nằm trong header desktop. Chúng được dẫn từ nội dung liên quan và footer để điều hướng chính không cạnh tranh với định vị Cẩm nang sinh viên. `Về chúng tôi` và `Liên hệ` có mặt nhất quán trên desktop, mobile và footer.
 
+Logo trong header và footer dùng trực tiếp `public/favicon.svg` để favicon và brand mark thống nhất một biểu tượng.
+
 Website hiện có mười chủ đề nội dung khởi tạo:
 
 1. Học tập & thi cử
@@ -49,7 +51,7 @@ Nguồn dữ liệu chuẩn của chủ đề là `src/data/categories.ts`. Head
 
 Mỗi category có thể khai báo `groups` tùy chọn trong cùng nguồn dữ liệu. Page `/chu-de/[slug]/` dùng một render flow chung: category có group sinh navigation anchor và các section theo cấu hình; category không có group giữ danh sách bài phẳng. Hiện chỉ `hoc-tap-thi-cu` dùng group vì số bài đủ nhiều; các chủ đề còn lại không render block bước/nhóm nội bộ cho đến khi có nhu cầu thật. Article chỉ lưu `group` và `articleOrder`, còn title, mô tả và thứ tự group thuộc category config; không có component hoặc field `stage` riêng cho Học tập & thi cử.
 
-Ba landing page chính (`/`, `/cam-nang/`, `/cong-cu/`) dùng chung `HeroPicture.astro`. Mỗi trang có một ảnh WebP desktop và một ảnh WebP mobile trong `public/media/page-heroes/`; phần tử `<picture>` chỉ tải nguồn phù hợp với viewport. Mỗi trang `/chu-de/[slug]/` render ảnh `heroImage` riêng từ taxonomy làm nền hero toàn chiều ngang, đặt thông tin trên lớp phủ tương phản như article hero; cùng ảnh trong `public/media/category-heroes/` tiếp tục làm fallback cho article chưa có thumbnail riêng.
+Trang chủ và trang Cẩm nang dùng `HeroPicture.astro` với ảnh WebP desktop/mobile riêng trong `public/media/page-heroes/`; phần tử `<picture>` chỉ tải nguồn phù hợp với viewport. Các trang tĩnh cần hero chìm như `/cong-cu/`, `/gioi-thieu/` và `/lien-he/` dùng `PageImageHero.astro`, đặt ảnh nền toàn chiều ngang với lớp phủ tương phản tương tự article hero. Mỗi trang `/chu-de/[slug]/` render ảnh `heroImage` riêng từ taxonomy làm nền hero toàn chiều ngang; cùng ảnh trong `public/media/category-heroes/` tiếp tục làm fallback cho article chưa có thumbnail riêng.
 
 Kho ảnh biên tập dùng lại cho bài tương lai nằm trong `public/media/library/`, được chia theo chủ đề và mục đích. Ảnh gốc được đưa vào `media-inbox/` để duyệt, đổi tên và tối ưu; thư mục inbox không được tham chiếu từ website và các file ảnh thô tại đây bị Git ignore.
 

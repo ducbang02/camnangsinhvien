@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Icon from '../components/Icon.astro';
+import PageImageHero from '../components/PageImageHero.astro';
 
 const turnstileSiteKey = '0x4AAAAAAE6GIuHV4XK2u-GP';
 ---
@@ -8,15 +9,15 @@ const turnstileSiteKey = '0x4AAAAAAE6GIuHV4XK2u-GP';
 <BaseLayout
   title="Liên hệ"
   description="Gửi góp ý nội dung, báo lỗi hoặc đề nghị hợp tác với Cẩm nang sinh viên."
+  image="/media/library/khuon-vien/khong-gian-thu-vien-dai-hoc.webp"
 >
-  <section class="page-hero">
-    <div class="container">
-      <p class="eyebrow">Liên hệ</p>
-      <h1>Mỗi góp ý tốt đều giúp cẩm nang hữu ích hơn.</h1>
-      <p class="lead">Bạn có thể góp ý bài viết, báo thông tin cần cập nhật hoặc trao đổi một đề nghị hợp tác phù hợp với sinh viên.</p>
-    </div>
-  </section>
-
+  <PageImageHero
+    eyebrow="Liên hệ"
+    title="Mỗi góp ý tốt đều giúp cẩm nang hữu ích hơn."
+    lead="Bạn có thể góp ý bài viết, báo thông tin cần cập nhật hoặc trao đổi một đề nghị hợp tác phù hợp với sinh viên."
+    image="/media/library/khuon-vien/khong-gian-thu-vien-dai-hoc.webp"
+    alt=""
+  />
   <section class="section">
     <div class="container contact-layout">
       <div class="contact-reasons" aria-label="Các nội dung có thể liên hệ">

@@ -22,7 +22,7 @@
 
 **Danh sách bài trong từng chủ đề đã được tinh gọn.** Mặc định bài hiển thị theo list một cột gồm title, mô tả ngắn và thời gian đọc; người đọc có thể chuyển sang lưới card ngay trên trang mà không tải lại hoặc nhân đôi nội dung.
 
-**Grouping của category đã dùng chung toàn website.** Category có thể khai báo số lượng `groups` bất kỳ trong `src/data/categories.ts`; article tham chiếu bằng `group` và sắp thứ tự bằng `articleOrder`. Trang có group sinh navigation/section tương ứng, còn trang không có group giữ nguyên danh sách phẳng. Hiện mới cấu hình ba group cho Học tập & thi cử, chưa tạo thêm bài mới.
+**Grouping của category đã dùng chung toàn website.** Category có thể khai báo số lượng `groups` bất kỳ trong `src/data/categories.ts`; article tham chiếu bằng `group` và sắp thứ tự bằng `articleOrder`. Trang có group sinh navigation/section tương ứng, còn trang không có group giữ nguyên danh sách phẳng. Hiện chỉ cấu hình ba group cho Học tập & thi cử; các chủ đề ít bài không còn render block bước/nhóm nội bộ.
 
 **Nhóm Học đúng cách đã có bài mở đầu hoàn chỉnh.** Bài “Học đại học nên bắt đầu từ đâu?” đứng đầu group, hướng dẫn đọc đề cương, xác định mục tiêu, hiểu cách đánh giá và chọn cách học trước khi đi sâu vào Active Recall hoặc Spaced Repetition.
 

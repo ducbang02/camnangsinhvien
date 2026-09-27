@@ -79,21 +79,7 @@ export const categories = defineCategories([
     "promise": "Làm chủ thiết bị thay vì chỉ dùng theo thói quen.",
     "accent": "blue",
     "seoTitle": "Kỹ năng máy tính thiết yếu cho sinh viên",
-    "metaDescription": "Hướng dẫn kỹ năng máy tính, quản lý file, bảo mật tài khoản và sử dụng thiết bị hiệu quả cho sinh viên.",
-    "steps": [
-      {
-        "label": "Sắp xếp",
-        "text": "Tổ chức file, thư mục và phiên bản để luôn tìm được tài liệu."
-      },
-      {
-        "label": "Thao tác",
-        "text": "Luyện phím tắt, gõ bàn phím và các workflow tiết kiệm thời gian."
-      },
-      {
-        "label": "Tự bảo vệ",
-        "text": "Thiết lập tài khoản an toàn và biết cách xử lý sự cố cơ bản."
-      }
-    ]
+    "metaDescription": "Hướng dẫn kỹ năng máy tính, quản lý file, bảo mật tài khoản và sử dụng thiết bị hiệu quả cho sinh viên."
   },
   {
     "id": "ky-nang-mem-giao-tiep",
@@ -106,21 +92,7 @@ export const categories = defineCategories([
     "promise": "Nói đúng việc, phối hợp đúng cách.",
     "accent": "yellow",
     "seoTitle": "Kỹ năng mềm & giao tiếp cho sinh viên",
-    "metaDescription": "Mẫu và hướng dẫn giao tiếp, viết email, thuyết trình và làm việc nhóm dành cho sinh viên.",
-    "steps": [
-      {
-        "label": "Nói rõ",
-        "text": "Trình bày đủ bối cảnh, yêu cầu và thời hạn."
-      },
-      {
-        "label": "Phối hợp",
-        "text": "Chia việc, xác nhận trách nhiệm và lưu lại tiến độ."
-      },
-      {
-        "label": "Xử lý khó",
-        "text": "Phản hồi mâu thuẫn bằng dữ kiện thay vì công kích cá nhân."
-      }
-    ]
+    "metaDescription": "Mẫu và hướng dẫn giao tiếp, viết email, thuyết trình và làm việc nhóm dành cho sinh viên."
   },
   {
     "id": "tieng-anh",
@@ -133,21 +105,7 @@ export const categories = defineCategories([
     "promise": "Học đúng ngữ cảnh bạn thực sự cần dùng.",
     "accent": "coral",
     "seoTitle": "Tiếng Anh thực dụng cho sinh viên",
-    "metaDescription": "Cẩm nang học tiếng Anh để đọc tài liệu, viết học thuật, thuyết trình và chuẩn bị đi làm cho sinh viên.",
-    "steps": [
-      {
-        "label": "Xác định đích",
-        "text": "Chọn kỹ năng theo môn học hoặc tình huống thực tế."
-      },
-      {
-        "label": "Luyện đầu vào",
-        "text": "Đọc và nghe nội dung vừa sức nhưng có tính lặp lại."
-      },
-      {
-        "label": "Tạo đầu ra",
-        "text": "Viết, nói và sửa lỗi qua từng sản phẩm nhỏ."
-      }
-    ]
+    "metaDescription": "Cẩm nang học tiếng Anh để đọc tài liệu, viết học thuật, thuyết trình và chuẩn bị đi làm cho sinh viên."
   },
   {
     "id": "quan-ly-ban-than",
@@ -160,21 +118,7 @@ export const categories = defineCategories([
     "promise": "Giữ nhịp ổn định trong một lịch học không ổn định.",
     "accent": "mint",
     "seoTitle": "Quản lý bản thân và thời gian cho sinh viên",
-    "metaDescription": "Cách quản lý thời gian, tập trung, thói quen và kế hoạch cá nhân phù hợp với đời sống sinh viên.",
-    "steps": [
-      {
-        "label": "Nhìn toàn cảnh",
-        "text": "Gom lịch học, deadline và việc cá nhân về một nơi."
-      },
-      {
-        "label": "Chọn ưu tiên",
-        "text": "Phân biệt việc quan trọng với việc chỉ đang gây ồn."
-      },
-      {
-        "label": "Giữ nhịp",
-        "text": "Thiết kế phiên tập trung và khoảng nghỉ có thể lặp lại."
-      }
-    ]
+    "metaDescription": "Cách quản lý thời gian, tập trung, thói quen và kế hoạch cá nhân phù hợp với đời sống sinh viên."
   },
   {
     "id": "cuoc-song-sinh-vien",
@@ -187,21 +131,7 @@ export const categories = defineCategories([
     "promise": "Bớt bối rối trước những việc chưa từng trải qua.",
     "accent": "yellow",
     "seoTitle": "Cẩm nang cuộc sống sinh viên",
-    "metaDescription": "Hướng dẫn thực tế về năm nhất, ở trọ, chi tiêu và chuẩn bị đời sống đại học cho sinh viên Việt Nam.",
-    "steps": [
-      {
-        "label": "Ổn định",
-        "text": "Hoàn tất giấy tờ, tài khoản, chỗ ở và lịch học."
-      },
-      {
-        "label": "Kiểm soát tiền",
-        "text": "Biết chi phí bắt buộc và số tiền thực sự có thể tiêu."
-      },
-      {
-        "label": "Sống chủ động",
-        "text": "Chuẩn bị trước các quyết định mua sắm và sinh hoạt lớn."
-      }
-    ]
+    "metaDescription": "Hướng dẫn thực tế về năm nhất, ở trọ, chi tiêu và chuẩn bị đời sống đại học cho sinh viên Việt Nam."
   },
   {
     "id": "nghien-cuu-thong-tin",
@@ -214,21 +144,7 @@ export const categories = defineCategories([
     "promise": "Đi từ câu hỏi tốt đến kết luận có căn cứ.",
     "accent": "blue",
     "seoTitle": "Nghiên cứu & xử lý thông tin cho sinh viên",
-    "metaDescription": "Hướng dẫn tìm nguồn, kiểm chứng, ghi chú và tổng hợp thông tin phục vụ học tập và nghiên cứu sinh viên.",
-    "steps": [
-      {
-        "label": "Đặt câu hỏi",
-        "text": "Thu hẹp vấn đề thành các câu hỏi có thể tìm bằng chứng."
-      },
-      {
-        "label": "Kiểm nguồn",
-        "text": "Xác định tác giả, ngữ cảnh, phương pháp và ngày cập nhật."
-      },
-      {
-        "label": "Tổng hợp",
-        "text": "Ghi lại luận điểm, bằng chứng và giới hạn của kết luận."
-      }
-    ]
+    "metaDescription": "Hướng dẫn tìm nguồn, kiểm chứng, ghi chú và tổng hợp thông tin phục vụ học tập và nghiên cứu sinh viên."
   },
   {
     "id": "nghe-nghiep",
@@ -241,21 +157,7 @@ export const categories = defineCategories([
     "promise": "Chuẩn bị năng lực trước khi cần nộp hồ sơ.",
     "accent": "coral",
     "seoTitle": "Nghề nghiệp & chuẩn bị đi làm cho sinh viên",
-    "metaDescription": "Cẩm nang định hướng nghề nghiệp, làm project, viết CV và chuẩn bị thực tập dành cho sinh viên.",
-    "steps": [
-      {
-        "label": "Khám phá",
-        "text": "Hiểu công việc qua đầu ra và kỹ năng, không chỉ qua tên chức danh."
-      },
-      {
-        "label": "Làm bằng chứng",
-        "text": "Tạo project nhỏ, hoàn chỉnh và giải thích được quyết định."
-      },
-      {
-        "label": "Ứng tuyển",
-        "text": "Chuyển trải nghiệm thành CV, portfolio và câu chuyện phỏng vấn."
-      }
-    ]
+    "metaDescription": "Cẩm nang định hướng nghề nghiệp, làm project, viết CV và chuẩn bị thực tập dành cho sinh viên."
   },
   {
     "id": "ai-cho-sinh-vien",
@@ -268,21 +170,7 @@ export const categories = defineCategories([
     "promise": "Dùng AI như trợ lý, không dùng như người làm hộ.",
     "accent": "mint",
     "seoTitle": "AI cho sinh viên: dùng hiệu quả và có trách nhiệm",
-    "metaDescription": "Hướng dẫn sinh viên dùng AI để học, nghiên cứu và làm việc hiệu quả, an toàn và có trách nhiệm.",
-    "steps": [
-      {
-        "label": "Giao việc rõ",
-        "text": "Cung cấp bối cảnh, mục tiêu và tiêu chí cho câu trả lời."
-      },
-      {
-        "label": "Giữ tư duy",
-        "text": "Tự làm bản nháp hoặc dự đoán trước khi hỏi AI."
-      },
-      {
-        "label": "Kiểm chứng",
-        "text": "Tách claim, kiểm nguồn và thử lại các ví dụ quan trọng."
-      }
-    ]
+    "metaDescription": "Hướng dẫn sinh viên dùng AI để học, nghiên cứu và làm việc hiệu quả, an toàn và có trách nhiệm."
   },
   {
     "id": "cong-cu-phan-mem",
@@ -295,21 +183,7 @@ export const categories = defineCategories([
     "promise": "Ít công cụ hơn, workflow rõ ràng hơn.",
     "accent": "blue",
     "seoTitle": "Công cụ & phần mềm hữu ích cho sinh viên",
-    "metaDescription": "Đánh giá và hướng dẫn sử dụng công cụ, ứng dụng và phần mềm hữu ích cho học tập và đời sống sinh viên.",
-    "steps": [
-      {
-        "label": "Chọn nhu cầu",
-        "text": "Bắt đầu từ việc cần làm, không bắt đầu từ danh sách ứng dụng."
-      },
-      {
-        "label": "Thiết lập gọn",
-        "text": "Chỉ giữ những tính năng phục vụ workflow chính."
-      },
-      {
-        "label": "Đánh giá lại",
-        "text": "Kiểm tra chi phí, quyền riêng tư và khả năng xuất dữ liệu."
-      }
-    ]
+    "metaDescription": "Đánh giá và hướng dẫn sử dụng công cụ, ứng dụng và phần mềm hữu ích cho học tập và đời sống sinh viên."
   }
 ]);
 // CMS_CATEGORIES_END

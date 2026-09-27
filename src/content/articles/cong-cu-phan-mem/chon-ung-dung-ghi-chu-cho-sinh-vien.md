@@ -35,6 +35,6 @@ Nếu phải dành nhiều thời gian trang trí, sửa cấu trúc hoặc tìm
 
 ## Cấu trúc tối giản nên bắt đầu
 
-Tạo một thư mục cho học kỳ, một thư mục con cho từng môn và một trang chỉ mục chứa các deadline hoặc chủ đề chính. Giữ cách đặt tên nhất quán với [quy tắc quản lý file](/cam-nang/quan-ly-file-va-dat-ten-file/).
+Tạo một thư mục cho học kỳ, một thư mục con cho từng môn và một trang chỉ mục chứa các deadline hoặc chủ đề chính. Giữ cách đặt tên file nhất quán để sau này tìm lại không phải đoán.
 
 Chỉ thêm tag hoặc liên kết khi bạn đã có nhu cầu tìm lại cụ thể. Cấu trúc đơn giản nhưng dùng đều có giá trị hơn một “second brain” không bao giờ được mở lại.

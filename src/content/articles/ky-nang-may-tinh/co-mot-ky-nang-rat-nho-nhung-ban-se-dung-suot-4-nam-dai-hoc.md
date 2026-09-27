@@ -1,12 +1,13 @@
 ---
 title: Có một kỹ năng rất nhỏ nhưng bạn sẽ dùng suốt 4 năm đại học
-description: Có một kỹ năng rất nhỏ nhưng bạn sẽ dùng suốt 4 năm đại học
-category: ky-nang-mem-giao-tiep
-topic: Phương pháp học
+description: "Vì sao sinh viên nên học gõ 10 ngón sớm, lợi ích khi làm bài và lộ trình luyện bàn phím 10-15 phút mỗi ngày."
+category: ky-nang-may-tinh
+topic: Nền tảng số
 tags:
-  - học tập
-  - kỹ năng mềm
-  - gõ phím
+  - gõ 10 ngón
+  - typing
+  - WPM
+  - bàn phím
 publishedDate: '2026-09-26'
 author: Cẩm nang sinh viên
 featured: false

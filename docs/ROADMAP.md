@@ -14,6 +14,8 @@
 
 **Landing page chính có hero image responsive.** Trang chủ, Cẩm nang và Công cụ dùng `HeroPicture.astro` với ảnh WebP desktop/mobile riêng trong `public/media/page-heroes/`; trình duyệt chọn nguồn theo viewport để giữ đúng bố cục mà không tải cả hai ảnh.
 
+**Mười trang chủ đề đã có hero ảnh riêng.** `/chu-de/[slug]/` đọc trực tiếp `heroImage` từ taxonomy chung, dùng ảnh làm nền toàn chiều ngang và đặt thông tin trên lớp phủ tương phản đồng bộ với article hero; ảnh cũng được dùng cho Open Graph và tiếp tục làm fallback cho bài chưa có thumbnail.
+
 **Kho ảnh biên tập đã được chuẩn hóa.** Ảnh gốc đi qua `media-inbox/`, sau đó được đổi tên theo nội dung, chuyển sang WebP và xếp vào `public/media/library/`. Kho hiện có ảnh hero, học tập, đời sống, khuôn viên, kỹ năng số, nghiên cứu, tiếng Anh và nghề nghiệp để bài mới không phải lặp một ảnh đại diện duy nhất.
 
 **Danh sách bài trong từng chủ đề đã được tinh gọn.** Mặc định bài hiển thị theo list một cột gồm title, mô tả ngắn và thời gian đọc; người đọc có thể chuyển sang lưới card ngay trên trang mà không tải lại hoặc nhân đôi nội dung.

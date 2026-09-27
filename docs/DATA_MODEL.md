@@ -72,7 +72,7 @@ type CategoryGroup = {
 };
 ```
 
-`heroImage` là ảnh hero mặc định của chủ đề trong `public/media/category-heroes/`. Article ưu tiên `thumbnail` riêng; khi field này trống, article tự dùng `heroImage` của category để không bắt buộc tạo ảnh mới cho mọi bài.
+`heroImage` là ảnh hero của trang chủ đề trong `public/media/category-heroes/`, đồng thời là ảnh mặc định cho article thuộc chủ đề đó. Article ưu tiên `thumbnail` riêng; khi field này trống, article tự dùng `heroImage` của category để không bắt buộc tạo ảnh mới cho mọi bài.
 
 `groups` là tùy chọn và có số lượng bất kỳ. Trang chủ đề có `groups` sẽ tạo navigation anchor và chia bài theo `group`; trang không khai báo hoặc dùng `groups: []` tiếp tục render danh sách phẳng. Schema kiểm tra chéo để `group` của article phải thuộc đúng category. `group.order` điều khiển thứ tự group, còn `articleOrder` điều khiển thứ tự bài nên hai khái niệm không bị nhập nhằng.
 

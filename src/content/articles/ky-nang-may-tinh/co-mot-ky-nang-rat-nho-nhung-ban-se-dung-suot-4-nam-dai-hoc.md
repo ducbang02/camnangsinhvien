@@ -13,8 +13,9 @@ author: Cẩm nang sinh viên
 featured: false
 draft: false
 readingMinutes: 11
+tool: https://typing.camnangsinhvien.site/
 sources: []
-updatedDate: '2026-09-26'
+updatedDate: '2026-09-29'
 ---
 Khi mới vào đại học, chúng ta thường nghĩ đến những kỹ năng như thuyết trình, làm việc nhóm, tiếng Anh hay quản lý thời gian.
 

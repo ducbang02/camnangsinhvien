@@ -451,7 +451,7 @@ async function applyTaxonomyResponse(payload, message) {
 
 function populateTools() {
   for (const tool of siteTools) {
-    toolSelect.add(new Option(tool.name, `/cong-cu/${tool.slug}/`));
+    toolSelect.add(new Option(tool.name, tool.href ?? `/cong-cu/${tool.slug}/`));
   }
 }
 

@@ -23,7 +23,7 @@ const allowedOrigins = new Set([
   `http://${host}:${port}`,
   `http://localhost:${port}`,
 ]);
-const store = createArticleStore({ root: articlesRoot, categories });
+const store = createArticleStore({ root: articlesRoot, categories, tools });
 const taxonomyStore = createTaxonomyStore({ sourcePath: categoriesPath, categories, articlesRoot, tools });
 const mediaStore = createMediaStore({ publicRoot });
 const publisher = createPublisher({ repositoryRoot, store });

@@ -90,8 +90,11 @@ type Tool = {
   status: 'ready' | 'planned';
   category: CategoryId;
   icon: string;
+  href?: string;
 };
 ```
+
+`href` chỉ cần khai báo khi tool nằm ngoài route `/cong-cu/<slug>/`, ví dụ Typing Speed VN trên subdomain riêng. Khi bỏ trống, website và CMS tự dùng route nội bộ từ `slug`. CMS chỉ chấp nhận URL ngoài đã có trong nguồn tool chung, không cho bài viết lưu một URL công cụ tùy ý.
 
 Khóa localStorage có namespace `cnsv:v1:*` để tránh xung đột và cho phép migration sau này:
 

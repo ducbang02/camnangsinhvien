@@ -135,7 +135,10 @@ const schema = {
       <div class="container">
         <div class="section-heading"><div><p class="eyebrow">Thực hành ngay</p><h2>Công cụ cho chủ đề này</h2></div></div>
         <div class="tool-buttons">
-          {categoryTools.map((tool) => <a class="button button-dark" href={`/cong-cu/${tool.slug}/`}>{tool.name} <Icon name="arrow" size={18} /></a>)}
+          {categoryTools.map((tool) => {
+            const href = 'href' in tool ? tool.href : `/cong-cu/${tool.slug}/`;
+            return <a class="button button-dark" href={href}>{tool.name} <Icon name={href.startsWith('http') ? 'external' : 'arrow'} size={18} /></a>;
+          })}
         </div>
       </div>
     </section>

@@ -7,17 +7,20 @@ interface Props {
     name: string;
     description: string;
     icon: string;
+    href?: string;
   };
 }
 
 const { tool } = Astro.props;
+const href = tool.href ?? `/cong-cu/${tool.slug}/`;
+const isExternal = href.startsWith('http');
 ---
 
-<a class="tool-card" href={`/cong-cu/${tool.slug}/`}>
+<a class="tool-card" href={href}>
   <span class="tool-icon"><Icon name={tool.icon} size={25} /></span>
   <span class="tool-copy">
     <strong>{tool.name}</strong>
     <span>{tool.description}</span>
   </span>
-  <span class="tool-arrow"><Icon name="arrow" size={20} /></span>
+  <span class="tool-arrow"><Icon name={isExternal ? 'external' : 'arrow'} size={20} /></span>
 </a>

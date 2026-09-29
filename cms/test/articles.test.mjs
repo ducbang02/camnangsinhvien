@@ -16,6 +16,10 @@ const categories = [
   },
   { id: 'ky-nang-may-tinh', name: 'Kỹ năng máy tính' },
 ];
+const tools = [
+  { slug: 'tinh-gpa', name: 'Tính GPA' },
+  { slug: 'luyen-go-10-ngon', name: 'Luyện gõ 10 ngón', href: 'https://typing.camnangsinhvien.site/' },
+];
 
 function input(overrides = {}) {
   return {
@@ -112,6 +116,18 @@ test('từ chối route công cụ và nguồn tham khảo không hợp lệ', a
     ],
   }));
   assert.deepEqual(errors.map((error) => error.field), ['tool', 'sources', 'sources']);
+});
+
+test('chấp nhận URL ngoài khi công cụ đã được cấu hình', async (t) => {
+  const root = await mkdtemp(path.join(tmpdir(), 'cnsv-cms-'));
+  t.after(() => rm(root, { recursive: true, force: true }));
+  const store = createArticleStore({ root, categories, tools });
+  const errors = store.validate(input({
+    category: 'ky-nang-may-tinh',
+    group: '',
+    tool: 'https://typing.camnangsinhvien.site/',
+  }));
+  assert.deepEqual(errors, []);
 });
 
 test('kiểm tra group theo cấu hình category và thứ tự bài', async (t) => {

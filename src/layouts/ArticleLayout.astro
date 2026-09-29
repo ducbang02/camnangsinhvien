@@ -19,6 +19,7 @@ const url = new URL(`/cam-nang/${articleSlug(article.id)}/`, Astro.site ?? Astro
 const metaTitle = data.seoTitle || data.title;
 const metaDescription = data.seoDescription || data.description;
 const showAdPreview = import.meta.env.DEV;
+const toolIsExternal = data.tool?.startsWith('http') ?? false;
 const schema = [
   {
     '@context': 'https://schema.org',
@@ -96,8 +97,8 @@ const schema = [
         {data.tool && (
           <div class="article-tool-cta">
             <span class="tool-icon"><Icon name="spark" size={24} /></span>
-            <div><strong>Đừng chỉ đọc — thử với số liệu của bạn</strong><p>Công cụ chạy ngay trên trình duyệt, không cần tài khoản.</p></div>
-            <a class="button button-primary" href={data.tool}>Mở công cụ <Icon name="arrow" size={18} /></a>
+            <div><strong>Đừng chỉ đọc — thử ngay trên công cụ</strong><p>Công cụ miễn phí, không cần tài khoản.</p></div>
+            <a class="button button-primary" href={data.tool}>Mở công cụ <Icon name={toolIsExternal ? 'external' : 'arrow'} size={18} /></a>
           </div>
         )}
         {data.sources.length > 0 && (

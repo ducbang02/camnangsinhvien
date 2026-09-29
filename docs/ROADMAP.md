@@ -12,6 +12,8 @@
 
 **Điều hướng nội bộ đã chuyển sang ClientRouter của Astro.** Chuyển giữa Công cụ, Về chúng tôi, Liên hệ và các route nội bộ không còn tải lại toàn bộ document; các script tương tác đã được đồng bộ với `astro:page-load`, Pomodoro có cleanup khi rời trang và Turnstile được render lại an toàn khi quay lại form Liên hệ.
 
+**Typing Speed VN đã được nối vào hệ sinh thái.** Ứng dụng riêng tại `typing.camnangsinhvien.site` xuất hiện trong danh mục Công cụ, trang chủ đề Kỹ năng máy tính và CTA cuối bài gõ 10 ngón. CMS đọc URL này từ nguồn tool chung và chỉ cho chọn URL ngoài đã được cấu hình.
+
 **Article hero đã chuyển sang layout ưu tiên hình ảnh.** Title và metadata nằm trên hero cao khoảng nửa viewport; mười category có ảnh mặc định tự host và article vẫn có thể ghi đè bằng thumbnail riêng từ CMS.
 
 **Landing page chính có hero image responsive.** Trang chủ và Cẩm nang dùng `HeroPicture.astro` với ảnh WebP desktop/mobile riêng trong `public/media/page-heroes/`; Công cụ, Về chúng tôi và Liên hệ dùng hero ảnh nền chìm qua `PageImageHero.astro` để đồng bộ cảm giác với article hero.
@@ -51,7 +53,7 @@ Mục tiêu: một hub có thể xuất bản thật, không phải landing page
 
 - Mười trang chủ đề, mega menu, hub Sinh viên IT và danh mục bài viết.
 - 20 bài mở đầu và 7 bài mẫu bổ sung tạo thành các đường đi hoàn chỉnh, ưu tiên GPA, phương pháp học, kỹ năng số/AI, năm nhất/chi tiêu và nền tảng IT.
-- 5 mini tool: GPA, điểm cuối kỳ, Pomodoro, chia nhóm và ngân sách tháng.
+- 5 mini tool nội bộ: GPA, điểm cuối kỳ, Pomodoro, chia nhóm và ngân sách tháng; cùng ứng dụng Typing Speed VN trên subdomain riêng.
 - Content schema, article layout, nguồn tham khảo, internal link, sitemap, robots và trang 404.
 - Mobile-first, keyboard-accessible và browser QA.
 - Cloudflare Workers Static Assets cùng endpoint `/api/contact`; Turnstile widget đã tạo, Gmail đích đã xác minh và routing rule `lienhe@camnangsinhvien.site` đang hoạt động. Worker secret đã được rotate, lưu đúng dạng Secret và production smoke test gửi form thật đã thành công ngày 18/09/2026.
@@ -71,7 +73,7 @@ Tiêu chí hoàn thành:
 Điều kiện vào phase: website đã index, có ít nhất 8–12 tuần dữ liệu Search Console.
 
 - Mở rộng 5 cluster dựa trên impression/query thật, không dựa vào số lượng bài.
-- Thêm Typing Test/Trainer nếu cụm gõ 10 ngón có impression.
+- Theo dõi lượt dùng Typing Speed VN và mở rộng bài luyện khi dữ liệu cho thấy nhu cầu.
 - Tạo template tải về nhẹ: semester planner, checklist năm nhất, bảng chi tiêu.
 - Thêm analytics tôn trọng riêng tư sau khi có privacy policy và consent phù hợp.
 - Thử 3–5 affiliate card ở bài có purchase intent cao; đo outbound click và phản hồi.

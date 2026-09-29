@@ -20,6 +20,8 @@ Website là một **Student Hub tĩnh, content-first** dành cho sinh viên Vi�
 - **Cloudflare Worker + Static Assets**: phục vụ thư mục `dist/`, chuẩn hóa domain/header và xử lý endpoint Liên hệ qua Email Service binding.
 - **localStorage**: chỉ lưu dữ liệu cục bộ như lịch sử GPA, tùy chọn Pomodoro hoặc ngân sách. Không coi đây là dữ liệu đồng bộ.
 
+Typing Speed VN là ứng dụng tĩnh riêng tại `https://typing.camnangsinhvien.site/`. Website chính chỉ giữ metadata và liên kết tới ứng dụng từ danh mục Công cụ, chủ đề Kỹ năng máy tính và bài viết liên quan; không sao chép source hoặc tạo route proxy trong project này.
+
 ## 3. Information Architecture
 
 Header desktop chỉ giữ các điểm vào quan trọng nhất:
@@ -71,6 +73,7 @@ Kho ảnh biên tập dùng lại cho bài tương lai nằm trong `public/media
 | `/cong-cu/pomodoro/` | Pomodoro học tập |
 | `/cong-cu/chia-nhom/` | Chia nhóm ngẫu nhiên |
 | `/cong-cu/ngan-sach-sinh-vien/` | Lập ngân sách tháng |
+| `https://typing.camnangsinhvien.site/` | Ứng dụng riêng để học, luyện hằng ngày và kiểm tra tốc độ gõ 10 ngón |
 | `/sinh-vien-it/` | Hub và lộ trình IT |
 | `/lo-trinh/` | Lộ trình phát triển sản phẩm/nội dung công khai |
 | `/gioi-thieu/` | Nguyên tắc biên tập, nguồn và affiliate disclosure |
@@ -94,6 +97,7 @@ Mỗi bài có tối đa ba CTA có ích: mở tool, tải/check checklist, đ�
 - Tất cả nội dung và route được prerender thành HTML.
 - Header, card, breadcrumb và article layout không cần hydration.
 - Mini tool dùng script nhỏ, cô lập theo từng trang.
+- Tool có `href` ngoài domain vẫn dùng link HTML thông thường và điều hướng cùng tab; ClientRouter chỉ tiếp quản route cùng origin.
 - Bộ lọc bài viết chạy client-side nhưng danh sách đầy đủ vẫn có trong HTML để người dùng và crawler đọc được.
 - Trang chủ đề render cùng một danh sách bài và mặc định trình bày dạng list gọn; nút `Danh sách`/`Dạng thẻ` chỉ đổi class hiển thị client-side, không nhân đôi nội dung và không lưu trạng thái.
 - Với category có group, navigation dùng link hash thật và từng section có `scroll-margin-top`; CSS `scroll-behavior` chung xử lý cuộn mượt, không cần JavaScript riêng. Category không có group không render navigation/section rỗng.

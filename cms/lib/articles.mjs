@@ -165,8 +165,9 @@ export class ArticleStoreError extends Error {
   }
 }
 
-export function createArticleStore({ root, categories }) {
+export function createArticleStore({ root, categories, tools = [] }) {
   const articleRoot = path.resolve(root);
+  const configuredToolUrls = new Set(tools.map((tool) => tool.href ?? `/cong-cu/${tool.slug}/`));
 
   async function list() {
     const files = await walkArticles(articleRoot);
@@ -254,7 +255,13 @@ export function createArticleStore({ root, categories }) {
     if (String(metadata.seoDescription ?? '').trim().length > 180) errors.push({ field: 'seoDescription', message: 'SEO description tối đa 180 ký tự.' });
     if (metadata.thumbnail && (!/^\/[A-Za-z0-9._/-]+$/.test(String(metadata.thumbnail)) || String(metadata.thumbnail).includes('..'))) errors.push({ field: 'thumbnail', message: 'Thumbnail cần là đường dẫn public an toàn bắt đầu bằng /.' });
     if (metadata.thumbnail && !String(metadata.thumbnailAlt ?? '').trim()) errors.push({ field: 'thumbnailAlt', message: 'Ảnh thumbnail cần alt text.' });
-    if (metadata.tool && !/^\/cong-cu\/[a-z0-9]+(?:-[a-z0-9]+)*\/$/.test(String(metadata.tool))) errors.push({ field: 'tool', message: 'Công cụ liên quan cần là một route /cong-cu/.../ hợp lệ.' });
+    if (metadata.tool) {
+      const toolUrl = String(metadata.tool);
+      const isInternalTool = /^\/cong-cu\/[a-z0-9]+(?:-[a-z0-9]+)*\/$/.test(toolUrl);
+      if (!isInternalTool && !configuredToolUrls.has(toolUrl)) {
+        errors.push({ field: 'tool', message: 'Công cụ liên quan cần thuộc danh sách công cụ đã cấu hình.' });
+      }
+    }
     if (metadata.sources !== undefined && !Array.isArray(metadata.sources)) errors.push({ field: 'sources', message: 'Danh sách nguồn tham khảo không hợp lệ.' });
     if (sources.length > 20) errors.push({ field: 'sources', message: 'Mỗi bài có tối đa 20 nguồn tham khảo.' });
     for (const source of sources) {

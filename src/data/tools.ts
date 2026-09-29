@@ -39,4 +39,13 @@ export const tools = [
     category: 'cuoc-song-sinh-vien',
     status: 'ready',
   },
+  {
+    slug: 'luyen-go-10-ngon',
+    name: 'Luyện gõ 10 ngón',
+    description: 'Học theo từng bài, luyện tập mỗi ngày và kiểm tra tốc độ gõ trong 1 phút.',
+    icon: 'keyboard',
+    category: 'ky-nang-may-tinh',
+    status: 'ready',
+    href: 'https://typing.camnangsinhvien.site/',
+  },
 ] as const;

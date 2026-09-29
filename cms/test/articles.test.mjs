@@ -39,6 +39,8 @@ function input(overrides = {}) {
       sources: [{ label: 'Nguồn kiểm tra', url: 'https://example.com/tai-lieu' }],
       status: 'draft',
       publishedDate: '2026-09-14',
+      reviewer: '',
+      reviewedDate: '',
       tags: ['cms', 'kiểm thử'],
       ...overrides,
     },
@@ -128,6 +130,20 @@ test('chấp nhận URL ngoài khi công cụ đã được cấu hình', async 
     tool: 'https://typing.camnangsinhvien.site/',
   }));
   assert.deepEqual(errors, []);
+});
+
+test('giữ metadata rà soát và yêu cầu nhập đủ cặp reviewer/ngày', async (t) => {
+  const root = await mkdtemp(path.join(tmpdir(), 'cnsv-cms-'));
+  t.after(() => rm(root, { recursive: true, force: true }));
+  const store = createArticleStore({ root, categories, tools });
+
+  const incompleteErrors = store.validate(input({ reviewer: 'Ban biên tập', reviewedDate: '' }));
+  assert.equal(incompleteErrors.some((error) => error.field === 'reviewer'), true);
+
+  const created = await store.save(input({ reviewer: 'Ban biên tập', reviewedDate: '2026-09-20' }));
+  const loaded = await store.get(created.id);
+  assert.equal(loaded.metadata.reviewer, 'Ban biên tập');
+  assert.equal(loaded.metadata.reviewedDate, '2026-09-20');
 });
 
 test('kiểm tra group theo cấu hình category và thứ tự bài', async (t) => {

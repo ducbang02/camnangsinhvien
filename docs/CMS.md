@@ -87,7 +87,8 @@ Các trường `title`, `description`, `category`, `topic`, `tags`, `publishedDa
 Các trường tùy chọn khác có backward compatibility:
 
 - `thumbnail` và `thumbnailAlt`;
-- `seoTitle` và `seoDescription`.
+- `seoTitle` và `seoDescription`;
+- `reviewer` và `reviewedDate`: chỉ nhập khi nội dung đã thực sự được rà soát; hai field phải có cùng nhau.
 
 CMS cũng đọc/ghi trực tiếp hai field có sẵn của article:
 
@@ -96,6 +97,15 @@ CMS cũng đọc/ghi trực tiếp hai field có sẵn của article:
 
 Nếu SEO title/description trống, trang bài viết tiếp tục dùng title/description chính. CMS Phase 2 đã hỗ trợ tải thumbnail và ảnh nội dung vào `public/media/articles/<slug>/`.
 
+### Checklist trước khi ghi nhận đã rà soát
+
+- Đọc lại toàn bộ bài và kiểm tra tiêu đề, mô tả, heading, chính tả cùng các bước hướng dẫn.
+- Mở thử các link, nguồn tham khảo và CTA công cụ; bỏ hoặc thay nguồn đã hỏng/lỗi thời.
+- Kiểm tra những thông tin có thể thay đổi theo thời gian như quy chế, học phí, phiên bản phần mềm và chính sách dịch vụ.
+- Preview trên giao diện website thật, kiểm tra ảnh/alt, bảng, danh sách, mobile và các bài liên quan.
+- Chỉ điền `reviewer` và `reviewedDate` sau khi hoàn tất các bước trên. Việc CMS tự cập nhật `updatedDate` khi lưu không đồng nghĩa bài đã được rà soát.
+- Không dùng tên người hoặc đơn vị chưa trực tiếp kiểm tra bài. Nếu chưa có người rà soát thật, để trống cả hai field.
+
 ## Kiểm tra tự động
 
 ```bash
@@ -103,7 +113,7 @@ npm run test:cms
 npm run validate
 ```
 
-`test:cms` chỉ tạo dữ liệu trong thư mục tạm của hệ điều hành, không sửa bài thật. Test bao phủ tạo/đọc/cập nhật Markdown, table/checklist, CRUD taxonomy, khóa ghi khi file bị thay đổi ngoài CMS, ràng buộc xóa và publish chọn lọc.
+`test:cms` chỉ tạo dữ liệu trong thư mục tạm của hệ điều hành, không sửa bài thật. Test bao phủ tạo/đọc/cập nhật Markdown, metadata rà soát, table/checklist, CRUD taxonomy, khóa ghi khi file bị thay đổi ngoài CMS, ràng buộc xóa và publish chọn lọc.
 
 ## Checklist thủ công
 
@@ -113,6 +123,7 @@ npm run validate
 - Trong repository test, thử xóa category/group còn bài để xác nhận CMS chặn; chỉ xóa cấu trúc rỗng sau khi đã xác nhận.
 - Search theo một phần tiêu đề; lọc lần lượt một category.
 - Mở bài cũ và kiểm tra metadata/nội dung được nạp đúng.
+- Thử chỉ nhập một trong hai field người/ngày rà soát và xác nhận CMS chặn; nhập đủ cặp rồi preview badge dưới mô tả bài.
 - Mở bài có CTA/nguồn tham khảo, đổi tool, thêm/xóa/sửa nguồn rồi lưu và preview.
 - Tạo bài mới, kiểm tra slug tự sinh và có thể sửa tay.
 - Chọn category có group và xác nhận dropdown group xuất hiện; đổi sang category không có group và xác nhận dropdown biến mất.

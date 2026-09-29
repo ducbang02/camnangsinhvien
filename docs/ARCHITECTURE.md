@@ -92,6 +92,8 @@ Search intent / pain point
 
 Mỗi bài có tối đa ba CTA có ích: mở tool, tải/check checklist, đọc bước kế tiếp. Affiliate chỉ xuất hiện khi có purchase intent tự nhiên và phải có nhãn minh bạch.
 
+Thông tin tin cậy tách rõ lần chỉnh sửa và lần rà soát: `updatedDate` phản ánh lần CMS lưu bài cũ, còn badge “Đã được rà soát” chỉ render khi frontmatter có đủ `reviewer` và `reviewedDate`. CMS không tự điền hai giá trị này và schema chặn ngày rà soát trước ngày đăng hoặc ở tương lai.
+
 ## 6. Rendering và JavaScript
 
 - Tất cả nội dung và route được prerender thành HTML.

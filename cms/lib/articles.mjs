@@ -131,6 +131,8 @@ function publicMetadata(data) {
     seoTitle: data.seoTitle ?? '',
     seoDescription: data.seoDescription ?? '',
     tool: data.tool ?? '',
+    reviewer: data.reviewer ?? '',
+    reviewedDate: dateOnly(data.reviewedDate),
     sources: Array.isArray(data.sources)
       ? data.sources.map((source) => ({ label: source?.label ?? '', url: source?.url ?? '' }))
       : [],
@@ -250,6 +252,18 @@ export function createArticleStore({ root, categories, tools = [] }) {
     if (description.length < 40 || description.length > 180) errors.push({ field: 'description', message: 'Mô tả cần từ 40 đến 180 ký tự.' });
     if (!tags.length) errors.push({ field: 'tags', message: 'Cần ít nhất một tag.' });
     if (!DATE_PATTERN.test(String(metadata.publishedDate ?? ''))) errors.push({ field: 'publishedDate', message: 'Ngày đăng không hợp lệ.' });
+    const reviewer = String(metadata.reviewer ?? '').trim();
+    const reviewedDate = String(metadata.reviewedDate ?? '').trim();
+    if (Boolean(reviewer) !== Boolean(reviewedDate)) errors.push({ field: 'reviewer', message: 'Người rà soát và ngày rà soát phải được nhập cùng nhau.' });
+    if (reviewer && reviewer.length < 2) errors.push({ field: 'reviewer', message: 'Người rà soát cần ít nhất 2 ký tự.' });
+    if (reviewer.length > 80) errors.push({ field: 'reviewer', message: 'Người rà soát tối đa 80 ký tự.' });
+    if (reviewedDate && !DATE_PATTERN.test(reviewedDate)) errors.push({ field: 'reviewedDate', message: 'Ngày rà soát không hợp lệ.' });
+    if (DATE_PATTERN.test(reviewedDate) && DATE_PATTERN.test(String(metadata.publishedDate ?? '')) && reviewedDate < metadata.publishedDate) {
+      errors.push({ field: 'reviewedDate', message: 'Ngày rà soát không được trước ngày đăng.' });
+    }
+    if (DATE_PATTERN.test(reviewedDate) && reviewedDate > new Date().toISOString().slice(0, 10)) {
+      errors.push({ field: 'reviewedDate', message: 'Ngày rà soát không được ở tương lai.' });
+    }
     if (!['draft', 'published'].includes(metadata.status)) errors.push({ field: 'status', message: 'Trạng thái không hợp lệ.' });
     if (String(metadata.seoTitle ?? '').trim().length > 70) errors.push({ field: 'seoTitle', message: 'SEO title tối đa 70 ký tự.' });
     if (String(metadata.seoDescription ?? '').trim().length > 180) errors.push({ field: 'seoDescription', message: 'SEO description tối đa 180 ký tự.' });
@@ -350,6 +364,8 @@ export function createArticleStore({ root, categories, tools = [] }) {
       publishedDate: metadata.publishedDate,
       updatedDate: original ? today : undefined,
       author: previousData.author ?? 'Cẩm nang sinh viên',
+      reviewer: optionalText(metadata.reviewer),
+      reviewedDate: optionalText(metadata.reviewedDate),
       featured: previousData.featured ?? false,
       draft: metadata.status === 'draft',
       readingMinutes: estimateReadingMinutes(markdown),

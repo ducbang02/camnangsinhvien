@@ -20,6 +20,9 @@ const metaTitle = data.seoTitle || data.title;
 const metaDescription = data.seoDescription || data.description;
 const showAdPreview = import.meta.env.DEV;
 const toolIsExternal = data.tool?.startsWith('http') ?? false;
+const modifiedDate = [data.publishedDate, data.updatedDate, data.reviewedDate]
+  .filter((date): date is Date => Boolean(date))
+  .sort((a, b) => b.valueOf() - a.valueOf())[0];
 const schema = [
   {
     '@context': 'https://schema.org',
@@ -27,7 +30,7 @@ const schema = [
     headline: data.title,
     description: metaDescription,
     datePublished: data.publishedDate.toISOString(),
-    dateModified: (data.updatedDate ?? data.publishedDate).toISOString(),
+    dateModified: modifiedDate.toISOString(),
     author: { '@type': 'Organization', name: data.author },
     publisher: { '@type': 'Organization', name: 'Cẩm nang sinh viên' },
     mainEntityOfPage: url.href,
@@ -81,6 +84,15 @@ const schema = [
 
     <div class="article-intro">
       <p class="article-dek narrow">{data.description}</p>
+      {data.reviewer && data.reviewedDate && (
+        <aside class="article-review" aria-label="Thông tin rà soát nội dung">
+          <Icon name="shield" size={22} />
+          <div>
+            <strong>Đã được rà soát bởi {data.reviewer}</strong>
+            <span>Rà soát ngày <time datetime={data.reviewedDate.toISOString()}>{formatDate(data.reviewedDate)}</time></span>
+          </div>
+        </aside>
+      )}
     </div>
 
     <div class="container article-shell">

@@ -18,8 +18,10 @@ Collection: `articles`, định dạng `.md` hoặc `.mdx`.
 | `articleOrder` | integer dương | Không | Thứ tự bài trong group hoặc trong danh sách phẳng; bài không khai báo được xếp sau các bài có thứ tự |
 | `tags` | string[] | Có | Từ khóa điều hướng, không dùng để nhồi SEO |
 | `publishedDate` | date | Có | Ngày xuất bản |
-| `updatedDate` | date | Không | Ngày kiểm tra nội dung gần nhất |
+| `updatedDate` | date | Không | Ngày nội dung được chỉnh sửa gần nhất; CMS tự cập nhật khi lưu bài cũ |
 | `author` | string | Có | Tác giả/chủ thể chịu trách nhiệm |
+| `reviewer` | string | Không | Người hoặc đơn vị đã thực sự rà soát nội dung; phải đi cùng `reviewedDate` |
+| `reviewedDate` | date | Không | Ngày rà soát, không trước ngày đăng và không ở tương lai |
 | `featured` | boolean | Không | Ưu tiên ở trang tổng hợp |
 | `draft` | boolean | Không | Không build ra route công khai khi `true` |
 | `readingMinutes` | number | Không | Thời gian đọc ước tính biên tập |
@@ -33,7 +35,7 @@ Collection: `articles`, định dạng `.md` hoặc `.mdx`.
 
 ID/slug được lấy từ đường dẫn file, ví dụ `hoc-tap-thi-cu/cach-tinh-gpa.md` thành `hoc-tap-thi-cu/cach-tinh-gpa` ở collection; route công khai sử dụng phần tên file để giữ URL ngắn.
 
-CMS dùng slug làm tên file và kiểm tra slug duy nhất trên toàn collection vì route công khai không chứa category. Trạng thái form `Draft`/`Published` được lưu thành `draft: true`/`draft: false`. CMS cho phép chỉnh `tool` bằng danh sách công cụ chung và chỉnh `sources` bằng các cặp tên nguồn/URL. Các field chưa xuất hiện trên form như `author`, `featured` và `video` vẫn được giữ nguyên khi sửa bài.
+CMS dùng slug làm tên file và kiểm tra slug duy nhất trên toàn collection vì route công khai không chứa category. Trạng thái form `Draft`/`Published` được lưu thành `draft: true`/`draft: false`. CMS cho phép chỉnh `tool`, `sources` và cặp metadata rà soát `reviewer`/`reviewedDate`. Không được nhập một trường rà soát mà bỏ trống trường còn lại. Các field chưa xuất hiện trên form như `author`, `featured` và `video` vẫn được giữ nguyên khi sửa bài.
 
 Vòng đời bài viết không cần database: gỡ khỏi website chỉ đổi `draft: true`; xóa sẽ di chuyển file nguồn vào `.cms-trash/<timestamp>/src/content/articles/...` trên máy local. Nếu chọn xóa media, thư mục `public/media/articles/<slug>/` cũng được chuyển vào cùng bản thùng rác. Thùng rác không thuộc Git và có thể phục hồi thủ công bằng cách chép file về đường dẫn cũ.
 

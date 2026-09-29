@@ -18,6 +18,8 @@ const articles = defineCollection({
     publishedDate: z.coerce.date(),
     updatedDate: z.coerce.date().optional(),
     author: z.string().default('Cẩm nang sinh viên'),
+    reviewer: z.string().trim().min(2).max(80).optional(),
+    reviewedDate: z.coerce.date().optional(),
     featured: z.boolean().default(false),
     draft: z.boolean().default(false),
     readingMinutes: z.number().int().positive().optional(),
@@ -38,6 +40,18 @@ const articles = defineCollection({
 
     if (data.group && !groups.some((group) => group.id === data.group)) {
       context.addIssue({ code: 'custom', path: ['group'], message: 'Group không tồn tại trong cấu hình của chủ đề.' });
+    }
+
+    if (Boolean(data.reviewer) !== Boolean(data.reviewedDate)) {
+      context.addIssue({ code: 'custom', path: ['reviewer'], message: 'Người rà soát và ngày rà soát phải được khai báo cùng nhau.' });
+    }
+
+    if (data.reviewedDate && data.reviewedDate < data.publishedDate) {
+      context.addIssue({ code: 'custom', path: ['reviewedDate'], message: 'Ngày rà soát không được trước ngày đăng.' });
+    }
+
+    if (data.reviewedDate && data.reviewedDate > new Date()) {
+      context.addIssue({ code: 'custom', path: ['reviewedDate'], message: 'Ngày rà soát không được ở tương lai.' });
     }
   }),
 });

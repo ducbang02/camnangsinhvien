@@ -11,6 +11,13 @@
 - Không có console error trên các route kiểm tra.
 - Chưa có trace Lighthouse/Core Web Vitals vì môi trường chưa cấu hình Chrome DevTools MCP; không suy luận điểm hiệu năng từ browser QA.
 
+## Metadata rà soát nội dung — 29/09/2026
+
+- Content schema hỗ trợ `reviewer` và `reviewedDate` tùy chọn, nhưng yêu cầu có đủ cặp; ngày rà soát không được trước ngày đăng hoặc ở tương lai.
+- CMS đọc, ghi và xóa được hai field; form giải thích rõ chỉ điền khi đã rà soát thực tế.
+- `npm run test:cms`: 19/19 test đạt, bao gồm round-trip metadata rà soát và trường hợp chỉ nhập reviewer.
+- Article layout chỉ hiển thị badge khi có đủ dữ liệu; bài cũ không có khoảng trống hoặc UI thừa.
+
 Ngày kiểm thử: 14/09/2026.
 
 ## Production smoke test — 14/09/2026

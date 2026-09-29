@@ -634,6 +634,8 @@ function metadataFromForm() {
     seoDescription: seoDescriptionInput.value.trim(),
     tool: toolSelect.value,
     sources: sourcesFromForm(),
+    reviewer: document.querySelector('#reviewer').value.trim(),
+    reviewedDate: document.querySelector('#reviewedDate').value,
     status: statusInput.value,
     publishedDate: document.querySelector('#publishedDate').value,
     tags: document.querySelector('#tags').value.split(',').map((tag) => tag.trim()).filter(Boolean),
@@ -678,7 +680,7 @@ function newArticle() {
     version: null,
     metadata: {
       title: '', slug: '', category: '', topic: '', group: '', articleOrder: '', description: '', thumbnail: '', thumbnailAlt: '',
-      seoTitle: '', seoDescription: '', tool: '', sources: [], status: 'draft', publishedDate: today(), tags: [],
+      seoTitle: '', seoDescription: '', tool: '', sources: [], reviewer: '', reviewedDate: '', status: 'draft', publishedDate: today(), tags: [],
     },
     html: '<p></p>',
   });

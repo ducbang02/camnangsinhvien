@@ -189,6 +189,13 @@
                 </details>
 
                 <details>
+                  <summary>Rà soát nội dung</summary>
+                  <p class="field-hint">Chỉ nhập khi bài đã được một người hoặc đơn vị thực sự kiểm tra. Để trống cả hai trường nếu chưa rà soát.</p>
+                  <label class="field"><span>Người / đơn vị rà soát</span><input id="reviewer" name="reviewer" type="text" maxlength="80" placeholder="Ví dụ: Ban biên tập Cẩm nang sinh viên" /></label>
+                  <label class="field"><span>Ngày rà soát</span><input id="reviewedDate" name="reviewedDate" type="date" /></label>
+                </details>
+
+                <details>
                   <summary>Thumbnail</summary>
                   <p class="field-hint">Để trống để dùng ảnh mặc định của chủ đề. Ảnh riêng được lưu tại <code>public/media/articles/&lt;slug&gt;/</code>, không nhúng base64.</p>
                   <label class="field"><span>Chọn ảnh thumbnail</span><input id="thumbnail-file" type="file" accept="image/jpeg,image/png,image/gif,image/webp,image/avif" /></label>

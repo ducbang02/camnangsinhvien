@@ -16,6 +16,8 @@
 
 **Trang chủ và validation SEO đã được đồng bộ sau audit ngày 29/09/2026.** Số công cụ trên trang chủ/Lộ trình lấy trực tiếp từ nguồn tool chung; H1 và metadata mô tả rõ Cẩm nang sinh viên Việt Nam; mọi trang có `Organization` JSON-LD. Build sẽ dừng nếu HTML thiếu title/H1/canonical, canonical sai domain, sitemap chứa route không tồn tại hoặc có link nội bộ gãy.
 
+**Metadata rà soát nội dung đã tách khỏi ngày cập nhật.** CMS có hai field tùy chọn `reviewer` và `reviewedDate`, bắt buộc đi cùng nhau và không tự sinh. Bài có đủ metadata hiển thị badge rà soát dưới phần mô tả; bài cũ giữ nguyên giao diện, không bị gắn thông tin tin cậy giả.
+
 **Article hero đã chuyển sang layout ưu tiên hình ảnh.** Title và metadata nằm trên hero cao khoảng nửa viewport; mười category có ảnh mặc định tự host và article vẫn có thể ghi đè bằng thumbnail riêng từ CMS.
 
 **Landing page chính có hero image responsive.** Trang chủ và Cẩm nang dùng `HeroPicture.astro` với ảnh WebP desktop/mobile riêng trong `public/media/page-heroes/`; Công cụ, Về chúng tôi và Liên hệ dùng hero ảnh nền chìm qua `PageImageHero.astro` để đồng bộ cảm giác với article hero.

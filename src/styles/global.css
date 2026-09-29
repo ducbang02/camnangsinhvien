@@ -1170,6 +1170,25 @@ h3 {
   text-wrap: balance;
 }
 
+.article-review {
+  display: flex;
+  width: min(100%, 760px);
+  align-items: flex-start;
+  gap: .75rem;
+  margin: 1.25rem auto 0;
+  padding: .9rem 1rem;
+  color: var(--ink);
+  background: var(--mint-soft);
+  border: 1px solid rgba(8, 117, 101, .3);
+  border-radius: 12px;
+}
+
+.article-review > svg { flex: 0 0 auto; color: var(--mint-dark); }
+.article-review strong,
+.article-review span { display: block; }
+.article-review strong { font-size: .86rem; }
+.article-review span { margin-top: .15rem; color: var(--ink-soft); font-size: .78rem; }
+
 .byline {
   display: flex;
   flex-wrap: wrap;

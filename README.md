@@ -6,14 +6,14 @@ Student Hub tĩnh dành cho sinh viên Việt Nam: bài hướng dẫn → check
 
 MVP gồm:
 
-- ba trụ cột: Học tập & phát triển bản thân, Kỹ năng số & công cụ, Cuộc sống sinh viên;
+- 10 chủ đề dùng chung một nguồn taxonomy;
 - hub chuyên sâu Sinh viên IT;
-- 20 bài mở đầu bằng Markdown;
-- 5 mini tool client-side: GPA, điểm cuối kỳ, Pomodoro, chia nhóm và ngân sách;
-- lọc/tìm bài phía client, sitemap, robots, canonical, Article/Breadcrumb structured data;
+- bài viết Markdown/MDX và CMS local để biên tập, preview, xuất bản;
+- 5 mini tool nội bộ cùng ứng dụng Typing Speed VN trên subdomain riêng;
+- lọc/tìm bài phía client, sitemap, robots, canonical và structured data;
 - cấu hình Cloudflare Workers Static Assets.
 
-Không có backend, database, login, analytics hoặc affiliate link ở V1.
+Không có database, login, analytics hoặc affiliate link ở V1. Backend production chỉ gồm endpoint Liên hệ nhỏ trong Cloudflare Worker.
 
 ## Chạy local
 
@@ -33,15 +33,16 @@ npm run validate
 npm run deploy:dry
 ```
 
-`validate` chạy type/content check và production build. `deploy:dry` xác minh gói Static Assets mà không deploy.
+`validate` chạy Worker typecheck, Astro check, production build và kiểm tra title/H1/canonical/sitemap/link nội bộ. `deploy:dry` xác minh gói Static Assets mà không deploy.
 
 ## Thêm bài viết
 
-1. Tạo file `.md` hoặc `.mdx` trong `src/content/articles/<nhom>/`.
-2. Dùng frontmatter theo `src/content.config.ts`.
-3. Chỉ dùng một trong ba `pillar`: `hoc-tap`, `ky-nang-so`, `cuoc-song`.
-4. Đặt `draft: true` khi chưa muốn xuất bản.
-5. Chạy `npm run validate` trước khi đưa lên repository.
+1. Ưu tiên chạy `npm run cms` và mở `http://127.0.0.1:4310`.
+2. Nếu tạo thủ công, đặt file `.md` hoặc `.mdx` trong `src/content/articles/<category>/`.
+3. Dùng frontmatter theo `src/content.config.ts`.
+4. Chọn một `category` từ `src/data/categories.ts`; `group` chỉ dùng khi category đó có cấu hình nhóm.
+5. Đặt `draft: true` khi chưa muốn xuất bản.
+6. Chạy `npm run validate` trước khi đưa lên repository.
 
 Ví dụ tối thiểu:
 
@@ -49,8 +50,8 @@ Ví dụ tối thiểu:
 ---
 title: "Tiêu đề bài viết đủ rõ"
 description: "Mô tả khoảng 40–180 ký tự, nói đúng vấn đề và kết quả người đọc nhận được."
-pillar: hoc-tap
-topic: Phương pháp học
+category: hoc-tap-thi-cu
+group: hoc-dung-cach
 tags: [học tập]
 publishedDate: 2026-09-14
 author: Cẩm nang sinh viên
@@ -60,11 +61,10 @@ readingMinutes: 6
 
 ## Thiết lập URL production
 
-Canonical, sitemap và `robots.txt` dùng biến `SITE_URL`. Trước build production, đặt URL thật, không giữ domain `.example`:
+Canonical, sitemap và `robots.txt` dùng domain `site` trong `astro.config.mjs`. Giá trị production hiện tại là `https://camnangsinhvien.site`:
 
 ```powershell
-$env:SITE_URL='https://ten-mien-cua-ban.vn'
-npm.cmd run build
+npm.cmd run validate
 ```
 
 Xem đầy đủ tại `docs/DEPLOYMENT.md`.

@@ -1,20 +1,20 @@
 # Deploy lên Cloudflare Workers Static Assets
 
-Ngày rà soát tài liệu: 14/09/2026.
+Ngày rà soát tài liệu: 29/09/2026.
 
-Cloudflare khuyến nghị Workers Static Assets cho dự án tĩnh mới. Dự án này không có Worker script, binding, database hoặc secret runtime.
+Website dùng Cloudflare Worker để phục vụ Static Assets, chuẩn hóa hostname/header và xử lý `/api/contact` qua Turnstile cùng Email Service. Không có database hoặc login production.
 
 Các URL chủ đề cũ được chuyển hướng `301` bằng `public/_redirects`; file này được Astro chép vào `dist/` và Cloudflare Workers Static Assets xử lý khi deploy.
 
 ## Production hiện tại
 
 - Worker: `cam-nang-sinh-vien`
-- URL: `https://cam-nang-sinh-vien.nguyenducbang-uit.workers.dev/`
+- URL chuẩn: `https://camnangsinhvien.site/`
 - Repository: `ducbang02/camnangsinhvien`
 - Production branch: `main`
 - Build command: `npm run build`
 - Deploy command: `npx wrangler deploy`
-- Build variable: `SITE_URL=https://cam-nang-sinh-vien.nguyenducbang-uit.workers.dev`
+- Canonical build URL: `https://camnangsinhvien.site` trong `astro.config.mjs`
 - Cloudflare Access: tắt; website công khai.
 - Non-production branch builds: bật.
 
@@ -44,7 +44,7 @@ git remote set-url origin https://github.com/ducbang02/camnangsinhvien.git
 4. Worker name phải khớp `name` trong `wrangler.jsonc`: `cam-nang-sinh-vien`.
 5. Build command: `npm run build`.
 6. Deploy command: `npx wrangler deploy`.
-7. Thêm build variable `SITE_URL` bằng URL production đầy đủ, ví dụ `https://camnangsinhvien.vn`.
+7. Xác nhận `site` trong `astro.config.mjs` vẫn là domain production chuẩn trước khi deploy.
 8. Save and Deploy, chờ trạng thái thành công.
 
 Workers Builds dùng phiên bản Wrangler đã khóa trong `package.json`.
@@ -55,7 +55,6 @@ Chỉ dùng khi muốn deploy từ máy local:
 
 ```powershell
 npx.cmd wrangler login
-$env:SITE_URL='https://ten-mien-cua-ban.vn'
 npm.cmd run deploy
 ```
 
@@ -67,7 +66,7 @@ Sau khi Worker chạy ổn ở `workers.dev`:
 
 1. Mở Worker → **Settings → Domains & Routes**.
 2. Thêm custom domain đang quản lý trong Cloudflare.
-3. Đặt `SITE_URL` thành custom domain và deploy lại để canonical/sitemap/robots đúng.
+3. Đặt `site` trong `astro.config.mjs` thành custom domain và deploy lại để canonical/sitemap/robots đúng.
 
 Không đưa domain `camnangsinhvien.example` lên production; đây chỉ là placeholder để local build có canonical hợp lệ.
 

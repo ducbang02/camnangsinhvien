@@ -13,9 +13,10 @@
     "build": "astro build",
     "preview": "astro preview",
     "check": "astro check",
+    "validate:site": "node scripts/validate-site.mjs",
     "types:worker": "wrangler types",
     "check:worker": "tsc --noEmit -p tsconfig.worker.json",
-    "validate": "npm run types:worker && npm run check:worker && npm run check && npm run build",
+    "validate": "npm run types:worker && npm run check:worker && npm run check && npm run build && npm run validate:site",
     "deploy:dry": "wrangler deploy --dry-run",
     "deploy": "npm run build && wrangler deploy"
   },

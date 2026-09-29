@@ -88,7 +88,7 @@ Thang điểm 1–5; độ khó càng cao càng tốn công.
 | 3 | Pomodoro | 4 | 3 | 2 | 2 | Không | V1 |
 | 4 | Ngân sách sinh viên | 5 | 4 | 3 | 3 | Không | V1 |
 | 5 | Chia nhóm ngẫu nhiên | 4 | 3 | 5 | 2 | Không | V1 |
-| 6 | Typing Test | 5 | 5 | 5 | 4 | Không | V2 |
+| 6 | Typing Speed VN | 5 | 5 | 5 | 4 | Không | V1 — ứng dụng riêng |
 | 7 | Study Planner | 5 | 4 | 3 | 4 | Không ở bản đơn giản | V2 |
 | 8 | Grade Converter | 3 | 4 | 2 | 2 | Không | V2 |
 | 9 | Internship Readiness | 4 | 3 | 4 | 4 | Không | V2 |
@@ -136,3 +136,20 @@ Các tín hiệu được dùng để **xếp ưu tiên**, không coi lượt t�
 - Nội dung sẽ chỉ biến thành hướng dẫn sau khi công thức/quy trình được đối chiếu nguồn chính thức; đặc biệt quy chế GPA phải luôn nhắc người dùng kiểm tra trường của mình.
 
 Nguồn khởi đầu được lưu trong `docs/RESEARCH_SOURCES.md`; mỗi bài còn có danh sách nguồn riêng khi phù hợp.
+
+## 11. Checklist biên tập trước khi xuất bản
+
+Không ép mọi bài theo một dàn ý cứng, nhưng người biên tập phải kiểm tra:
+
+- title nói rõ vấn đề hoặc kết quả người đọc nhận được;
+- phần mở đầu xác nhận đúng tình huống, không kéo dài để nhồi từ khóa;
+- hướng dẫn có bước làm, ví dụ hoặc checklist đủ cụ thể;
+- tuyên bố về quy định, số liệu, nghiên cứu hoặc phần mềm có nguồn phù hợp;
+- ngày cập nhật chỉ đổi khi nội dung thực sự được rà soát;
+- có 2–4 liên kết nội bộ hữu ích theo ngữ cảnh, không chèn chỉ để đủ số lượng;
+- nối sang tool khi tool giúp hoàn thành việc đang đọc;
+- không bịa người rà soát, kinh nghiệm cá nhân hoặc kết quả thử nghiệm;
+- ảnh có alt mô tả khi mang thông tin; ảnh trang trí dùng alt rỗng;
+- kiểm tra preview desktop/mobile trước khi xuất bản.
+
+Trong giai đoạn hiện tại, ưu tiên đào sâu GPA/thi cử, phương pháp học, kỹ năng số–AI và năm nhất–chi tiêu. Mười chủ đề vẫn được giữ làm taxonomy, không phải quota buộc phải sản xuất đều.

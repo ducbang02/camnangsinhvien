@@ -109,9 +109,11 @@ Mỗi bài có tối đa ba CTA có ích: mở tool, tải/check checklist, đ�
 ## 7. SEO và metadata
 
 - Mỗi route có `title`, `description`, canonical URL và Open Graph cơ bản.
+- `BaseLayout.astro` luôn sinh `Organization` JSON-LD; trang chủ bổ sung `WebSite`, còn bài viết bổ sung `Article` và `BreadcrumbList`.
 - Bài viết sinh JSON-LD kiểu `Article`; breadcrumb sinh `BreadcrumbList`.
 - `sitemap-index.xml` được sinh trong build; `robots.txt` cho phép crawl.
 - Domain chuẩn là `https://camnangsinhvien.site`; canonical, sitemap và `robots.txt` luôn dùng domain này.
+- Sau production build, `scripts/validate-site.mjs` kiểm tra mỗi HTML có đúng một H1, có title/canonical đúng domain, không có link nội bộ gãy và sitemap chỉ chứa route tồn tại. Script này là bước bắt buộc của `npm run validate`.
 - Worker chuyển vĩnh viễn HTTP, `www` và hostname `workers.dev` về domain chuẩn, giữ nguyên path và query.
 - URL dùng tiếng Việt không dấu, ngắn, ổn định và có trailing slash.
 - Ngày `updatedDate` chỉ thay đổi khi nội dung được kiểm tra/cập nhật thực sự.

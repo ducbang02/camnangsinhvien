@@ -1,5 +1,16 @@
 # Báo cáo kiểm thử MVP
 
+## Audit consistency, SEO và responsive — 29/09/2026
+
+- `npm run validate` đạt: Worker TypeScript, Astro check 0 lỗi/cảnh báo, build 58 trang và `validate:site` đạt cho toàn bộ 58 HTML.
+- Validation mới kiểm tra title, đúng một H1, canonical production, link nội bộ, sitemap index/sitemap con và route trong sitemap.
+- Trang chủ lấy số công cụ từ `tools.length`; browser QA hiển thị nhất quán “6 công cụ miễn phí” và “Xem đủ 6 công cụ”.
+- Trang chủ có title mô tả học tập/kỹ năng/công cụ, H1 chứa “Cẩm nang sinh viên Việt Nam”, ảnh Open Graph và `Organization` JSON-LD.
+- Browser QA ở 360×800 và 412×915 cho trang chủ, Cẩm nang, chủ đề Học tập, bài GPA, Công cụ và Liên hệ: đúng một H1, body 16px và không có horizontal overflow.
+- Keyboard focus từ logo sang `Cẩm nang` mở mega menu; form Liên hệ có label cho mọi trường và vùng phản hồi `aria-live="polite"`.
+- Không có console error trên các route kiểm tra.
+- Chưa có trace Lighthouse/Core Web Vitals vì môi trường chưa cấu hình Chrome DevTools MCP; không suy luận điểm hiệu năng từ browser QA.
+
 Ngày kiểm thử: 14/09/2026.
 
 ## Production smoke test — 14/09/2026

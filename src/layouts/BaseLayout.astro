@@ -27,6 +27,18 @@ const {
 const pageTitle = title ? `${title} | ${site.name}` : `${site.name} — Học tốt hơn, sống chủ động hơn`;
 const canonicalUrl = new URL(canonical, Astro.site ?? Astro.url.origin);
 const imageUrl = image ? new URL(image, Astro.site ?? Astro.url.origin) : undefined;
+const baseUrl = Astro.site ?? Astro.url.origin;
+const organizationSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: site.name,
+  url: new URL('/', baseUrl).href,
+  logo: new URL('/favicon.svg', baseUrl).href,
+  description: site.description,
+};
+const structuredData = schema
+  ? [organizationSchema, ...(Array.isArray(schema) ? schema : [schema])]
+  : organizationSchema;
 ---
 
 <!doctype html>
@@ -53,7 +65,7 @@ const imageUrl = image ? new URL(image, Astro.site ?? Astro.url.origin) : undefi
     <meta name="twitter:description" content={description} />
     {imageUrl && <meta name="twitter:image" content={imageUrl} />}
     <title>{pageTitle}</title>
-    {schema && <script is:inline type="application/ld+json" set:html={JSON.stringify(schema)} />}
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(structuredData)} />
     <ClientRouter />
   </head>
   <body>

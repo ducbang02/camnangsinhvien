@@ -10,6 +10,7 @@ import { categories, tools } from '../data/site';
 const articles = (await getCollection('articles', ({ data }) => !data.draft))
   .sort((a, b) => Number(b.data.featured) - Number(a.data.featured) || b.data.publishedDate.valueOf() - a.data.publishedDate.valueOf());
 const featured = articles.slice(0, 6);
+const toolCount = tools.length;
 
 const schema = {
   '@context': 'https://schema.org',
@@ -21,19 +22,24 @@ const schema = {
 };
 ---
 
-<BaseLayout schema={schema}>
+<BaseLayout
+  title="Hướng dẫn học tập, kỹ năng và công cụ cho sinh viên"
+  description="Cẩm nang sinh viên Việt Nam với hướng dẫn thực hành về học tập, kỹ năng, đời sống và các công cụ miễn phí."
+  image="/media/page-heroes/home-desktop.webp"
+  schema={schema}
+>
   <section class="home-hero">
     <div class="container hero-grid">
       <div class="hero-copy">
-        <p class="eyebrow">Student hub dành cho sinh viên Việt Nam</p>
-        <h1>Đại học có nhiều việc khó. Mình giải quyết <span>từng việc một.</span></h1>
-        <p class="lead">Không chỉ đọc mẹo. Chọn đúng vấn đề, làm theo hướng dẫn và dùng công cụ ngay trên cùng một nơi.</p>
+        <p class="eyebrow">Học tốt hơn · sống chủ động hơn</p>
+        <h1>Cẩm nang sinh viên Việt Nam. Giải quyết <span>từng việc một.</span></h1>
+        <p class="lead">Đại học có nhiều việc khó. Chọn đúng vấn đề, làm theo hướng dẫn và dùng công cụ ngay trên cùng một nơi.</p>
         <div class="hero-actions">
           <a class="button button-primary" href="/cong-cu/tinh-gpa/">Tính GPA ngay <Icon name="arrow" size={19} /></a>
           <a class="button button-ghost" href="/cam-nang/">Xem tất cả cẩm nang</a>
         </div>
         <div class="hero-proof" aria-label="Điểm nổi bật">
-          <span><Icon name="check" size={17} /> 5 công cụ miễn phí</span>
+          <span><Icon name="check" size={17} /> {toolCount} công cụ miễn phí</span>
           <span><Icon name="shield" size={17} /> Dữ liệu nằm trên thiết bị</span>
         </div>
       </div>
@@ -95,7 +101,7 @@ const schema = {
           <p class="eyebrow">Làm ngay</p>
           <h2>Công cụ nhỏ cho việc đang cần giải quyết</h2>
         </div>
-        <a class="arrow-link" href="/cong-cu/">Xem đủ 5 công cụ <Icon name="arrow" size={18} /></a>
+        <a class="arrow-link" href="/cong-cu/">Xem đủ {toolCount} công cụ <Icon name="arrow" size={18} /></a>
       </div>
       <div class="tools-grid">
         {tools.slice(0, 4).map((tool) => <ToolCard tool={tool} />)}

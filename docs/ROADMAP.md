@@ -14,6 +14,8 @@
 
 **Typing Speed VN đã được nối vào hệ sinh thái.** Ứng dụng riêng tại `typing.camnangsinhvien.site` xuất hiện trong danh mục Công cụ, trang chủ đề Kỹ năng máy tính và CTA cuối bài gõ 10 ngón. CMS đọc URL này từ nguồn tool chung và chỉ cho chọn URL ngoài đã được cấu hình.
 
+**Trang chủ và validation SEO đã được đồng bộ sau audit ngày 29/09/2026.** Số công cụ trên trang chủ/Lộ trình lấy trực tiếp từ nguồn tool chung; H1 và metadata mô tả rõ Cẩm nang sinh viên Việt Nam; mọi trang có `Organization` JSON-LD. Build sẽ dừng nếu HTML thiếu title/H1/canonical, canonical sai domain, sitemap chứa route không tồn tại hoặc có link nội bộ gãy.
+
 **Article hero đã chuyển sang layout ưu tiên hình ảnh.** Title và metadata nằm trên hero cao khoảng nửa viewport; mười category có ảnh mặc định tự host và article vẫn có thể ghi đè bằng thumbnail riêng từ CMS.
 
 **Landing page chính có hero image responsive.** Trang chủ và Cẩm nang dùng `HeroPicture.astro` với ảnh WebP desktop/mobile riêng trong `public/media/page-heroes/`; Công cụ, Về chúng tôi và Liên hệ dùng hero ảnh nền chìm qua `PageImageHero.astro` để đồng bộ cảm giác với article hero.

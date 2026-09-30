@@ -10,6 +10,7 @@ CMS hỗ trợ:
 - thêm, sửa và xóa chủ đề hoặc nhóm tùy chọn mà không cần mở file TypeScript;
 - tạo hoặc mở bài Markdown/MDX hiện có;
 - editor Tiptap Vanilla với H2/H3, bold, italic, link, bullet list, numbered list, checklist, blockquote, code block, horizontal rule và table;
+- quy tắc soạn Markdown ngắn gọn nằm tại `docs/article-style.md`; CMS nhận cả nội dung đã định dạng lẫn raw Markdown dán từ ChatGPT, không cần thêm class trình bày thủ công;
 - form metadata dùng trực tiếp schema Content Collection;
 - chọn CTA `Mở công cụ` từ danh sách tool chung và thêm/xóa/sửa nguồn tham khảo;
 - làm sạch style/font thừa khi dán từ Word hoặc Google Docs;
@@ -129,6 +130,7 @@ npm run validate
 - Chọn category có group và xác nhận dropdown group xuất hiện; đổi sang category không có group và xác nhận dropdown biến mất.
 - Thử đủ nút toolbar, đặc biệt checklist và table.
 - Dán một đoạn từ Word/Google Docs có heading, bold, list, table và link.
+- Dán một bài Markdown từ ChatGPT, đối chiếu heading/list/table/code/checklist trong editor và mở Preview để xác nhận giao diện production.
 - Bỏ trống từng trường bắt buộc để xem thông báo validation.
 - Lưu nháp, kiểm tra file có `draft: true` và không có Git commit mới.
 - Sửa file cùng lúc ngoài CMS rồi lưu để xác nhận cảnh báo version conflict.

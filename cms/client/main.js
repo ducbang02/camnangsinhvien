@@ -2,6 +2,7 @@ import { Editor, Node } from '@tiptap/core';
 import StarterKit from '@tiptap/starter-kit';
 import { TableKit } from '@tiptap/extension-table';
 import { TaskItem, TaskList } from '@tiptap/extension-list';
+import { marked } from 'marked';
 import './styles.css';
 
 const ASTRO_URL = 'http://127.0.0.1:4321';
@@ -138,8 +139,45 @@ function cleanPastedHtml(html) {
         || attribute.name.startsWith('on')) node.removeAttribute(attribute.name);
     }
   });
+  documentFragment.querySelectorAll('a[href]').forEach((node) => {
+    const href = node.getAttribute('href')?.trim() ?? '';
+    if (!/^(?:https?:\/\/|\/|#|mailto:)/i.test(href)) node.removeAttribute('href');
+  });
+  documentFragment.querySelectorAll('img[src]').forEach((node) => {
+    const src = node.getAttribute('src')?.trim() ?? '';
+    if (!/^(?:https?:\/\/|\/)/i.test(src)) node.remove();
+  });
   documentFragment.querySelectorAll('font, span').forEach((node) => node.replaceWith(...node.childNodes));
   return documentFragment.body.innerHTML;
+}
+
+function looksLikeMarkdown(text) {
+  return /^(?:#{2,3}\s+|>\s+|[-*+]\s+(?:\[[ xX]\]\s+)?|\d+[.)]\s+|```|~~~|\|.+\|\s*$)/m.test(text);
+}
+
+function markdownToPastedHtml(markdown) {
+  const documentFragment = new DOMParser().parseFromString(marked.parse(markdown, { gfm: true, breaks: false }), 'text/html');
+
+  documentFragment.querySelectorAll('li').forEach((item) => {
+    const checkbox = item.querySelector(':scope > input[type="checkbox"]');
+    if (!checkbox) return;
+    item.setAttribute('data-type', 'taskItem');
+    item.setAttribute('data-checked', checkbox.checked ? 'true' : 'false');
+    checkbox.remove();
+    item.parentElement?.setAttribute('data-type', 'taskList');
+  });
+
+  documentFragment.querySelectorAll('img').forEach((image) => {
+    if (image.closest('figure')) return;
+    const figure = documentFragment.createElement('figure');
+    figure.className = 'article-figure';
+    figure.setAttribute('data-cms-image', '');
+    image.replaceWith(figure);
+    figure.append(image);
+    figure.append(documentFragment.createElement('figcaption'));
+  });
+
+  return cleanPastedHtml(documentFragment.body.innerHTML);
 }
 
 const editor = new Editor({
@@ -156,6 +194,15 @@ const editor = new Editor({
   editorProps: {
     attributes: { 'aria-label': 'Nội dung bài viết', spellcheck: 'true' },
     transformPastedHTML: cleanPastedHtml,
+    handlePaste: (_view, event) => {
+      const text = event.clipboardData?.getData('text/plain') ?? '';
+      const html = event.clipboardData?.getData('text/html') ?? '';
+      const hasStructuredHtml = /<(?:h[2-3]|ul|ol|blockquote|table|pre|strong|em|a)\b/i.test(html);
+      if (!text || hasStructuredHtml || !looksLikeMarkdown(text)) return false;
+      event.preventDefault();
+      editor.commands.insertContent(markdownToPastedHtml(text));
+      return true;
+    },
   },
   onUpdate: () => markDirty(),
   onSelectionUpdate: updateToolbar,

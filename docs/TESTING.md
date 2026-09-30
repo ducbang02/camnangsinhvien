@@ -198,3 +198,14 @@ CMS Phase 1 không thực hiện commit/push. Danh sách kiểm tra đầy đủ
 - 28/28 ảnh đầu ra đúng định dạng WebP; bốn hero có kích thước 1536 × 864 và 24 ảnh xen bài có kích thước 1200 × 800.
 - Tổng dung lượng sau tối ưu khoảng 2,9 MB; ảnh gốc PNG khoảng 1,7–3,6 MB mỗi file không được giữ trong repository.
 - Tên file không dấu mô tả nội dung và ảnh được chia theo chủ đề trong `public/media/library/`.
+
+## Kiểm thử Article Design System — 30/09/2026
+
+- Tạo một bài Draft tạm có đủ H2/H3, bold, italic, link dài, bullet list lồng, numbered list, blockquote, table, inline code, code block, ảnh Markdown, horizontal rule và checklist; xóa fixture sau khi hoàn tất kiểm thử.
+- Desktop 1440px: chiều rộng nội dung đọc giữ ở 760px, mục lục và nội dung tách rõ, typography và khoảng cách section ổn định.
+- Tablet 968px: article hero, mục lục và cột nội dung không tạo horizontal overflow; console không có error/warning.
+- Mobile 390px: document không tràn ngang; bảng có vùng cuộn riêng (`319px / 544px`) và code block có vùng cuộn riêng (`319px / 912px`).
+- Preview Astro render đúng class checklist và Shiki code; browser console không có error/warning.
+- CMS local tải bài mẫu vào Tiptap với typography tương ứng; tiêu đề, heading, link, list, table, code và checklist hiển thị rõ trong editor.
+- Paste raw Markdown vào CMS chuyển đúng H2/H3, bold, list, blockquote, table, inline/code block, link và checklist thành block Tiptap thay vì giữ dấu Markdown dạng text.
+- `npm run test:cms` đạt 19/19; `npm run validate` đạt, `astro check` có 0 error/warning/hint và production build sinh 57 trang hợp lệ.

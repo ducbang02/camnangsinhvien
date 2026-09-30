@@ -41,7 +41,10 @@ function createTurndownService() {
     },
   });
   service.addRule('taskItem', {
-    filter: (node) => node.nodeName === 'LI' && node.getAttribute('data-type') === 'taskItem',
+    filter: (node) => node.nodeName === 'LI' && (
+      node.getAttribute('data-type') === 'taskItem'
+      || (node.hasAttribute('data-checked') && node.parentElement?.getAttribute('data-type') === 'taskList')
+    ),
     replacement(content, node) {
       const checked = node.getAttribute('data-checked') === 'true' ? 'x' : ' ';
       return `\n- [${checked}] ${content.trim()}\n`;

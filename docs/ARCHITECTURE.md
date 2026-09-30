@@ -96,6 +96,9 @@ Thông tin tin cậy tách rõ lần chỉnh sửa và lần rà soát: `updated
 ## 6. Rendering và JavaScript
 
 - Tất cả nội dung và route được prerender thành HTML.
+- `ArticleLayout.astro` là layout duy nhất của bài viết; toàn bộ body Markdown/MDX được render trong wrapper `.article-body.prose`. Article Design System nằm trong `src/styles/global.css`, tự định dạng heading, paragraph, list lồng, blockquote, table, checklist, link, ảnh, code và đường phân cách mà người viết không cần thêm class thủ công.
+- Article body rộng tối đa 760px. Table và code block tự cuộn ngang trong chính vùng của chúng trên màn hình nhỏ; văn bản, URL và từ dài được ngắt an toàn nên không tạo horizontal overflow cho toàn trang.
+- CMS editor dùng cùng ngôn ngữ typography cơ bản để nội dung lúc biên tập gần với preview, nhưng Astro preview vẫn là nguồn xác nhận giao diện production. Quy tắc viết ngắn gọn nằm tại `docs/article-style.md`.
 - Header, card, breadcrumb và article layout không cần hydration.
 - Mini tool dùng script nhỏ, cô lập theo từng trang.
 - Tool có `href` ngoài domain vẫn dùng link HTML thông thường và điều hướng cùng tab; ClientRouter chỉ tiếp quản route cùng origin.

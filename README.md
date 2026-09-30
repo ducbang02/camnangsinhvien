@@ -75,5 +75,6 @@ Xem đầy đủ tại `docs/DEPLOYMENT.md`.
 - `docs/DATA_MODEL.md`: schema content/tool và localStorage.
 - `docs/ROADMAP.md`: phase, P0/P1/P2 và thứ tự nội dung.
 - `docs/CONTENT_STRATEGY.md`: định vị, pillar, IT, SEO, tool và monetization.
+- `docs/article-style.md`: quy chuẩn Markdown và trình bày dùng chung cho mọi bài viết.
 - `docs/RESEARCH_SOURCES.md`: nguồn nghiên cứu ban đầu.
 - `docs/TESTING.md`: phạm vi và kết quả kiểm thử MVP.

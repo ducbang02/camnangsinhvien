@@ -1289,7 +1289,15 @@ h3 {
 
 .prose {
   min-width: 0;
-  font-size: 1.04rem;
+  max-width: 100%;
+  color: var(--ink-soft);
+  font-size: clamp(1rem, 0.97rem + 0.16vw, 1.06rem);
+  line-height: 1.82;
+  overflow-wrap: break-word;
+}
+
+.prose > * {
+  max-width: 100%;
 }
 
 .prose > :first-child {
@@ -1297,74 +1305,142 @@ h3 {
 }
 
 .prose h2 {
-  margin: 3.2rem 0 1rem;
-  font-size: clamp(1.6rem, 3vw, 2.15rem);
+  margin: clamp(2.8rem, 7vw, 4rem) 0 1rem;
+  color: var(--ink);
+  font-size: clamp(1.55rem, 2.7vw, 2rem);
+  line-height: 1.22;
   scroll-margin-top: 100px;
+  text-wrap: balance;
 }
 
 .prose h3 {
-  margin: 2.2rem 0 0.8rem;
-  font-size: 1.25rem;
+  margin: 2.35rem 0 0.75rem;
+  color: var(--ink);
+  font-size: clamp(1.18rem, 2vw, 1.35rem);
+  line-height: 1.3;
   scroll-margin-top: 100px;
+  text-wrap: balance;
 }
 
 .prose p,
 .prose li {
-  color: #2c3c58;
+  color: var(--ink-soft);
 }
 
 .prose p {
-  margin-bottom: 1.25rem;
+  margin-bottom: 1.35em;
 }
 
 .prose li + li {
-  margin-top: 0.55rem;
+  margin-top: 0.5rem;
 }
 
 .prose ul,
 .prose ol {
-  padding-left: 1.4rem;
+  margin: 1.25rem 0 1.55rem;
+  padding-left: 1.5rem;
+}
+
+.prose li > ul,
+.prose li > ol {
+  margin: 0.65rem 0 0.25rem;
+}
+
+.prose li::marker {
+  color: var(--mint-dark);
+  font-weight: 750;
 }
 
 .prose strong {
   color: var(--ink);
+  font-weight: 750;
+}
+
+.prose em {
+  color: #31415e;
 }
 
 .prose blockquote {
-  margin: 2rem 0;
-  padding: 1.2rem 1.4rem;
-  background: #e8f8f3;
+  margin: 2.25rem 0;
+  padding: 1.2rem 1.35rem 1.2rem 1.5rem;
+  background: var(--white);
+  border: 1px solid var(--line);
   border-left: 5px solid var(--mint-dark);
-  border-radius: 0 var(--radius) var(--radius) 0;
-  font-family: var(--font-display);
-  font-size: 1.1rem;
-  font-weight: 700;
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  box-shadow: 0 10px 26px rgba(16, 33, 63, 0.05);
+  font-size: 1.03rem;
+  font-weight: 650;
+  line-height: 1.7;
 }
 
-.prose blockquote p {
-  margin: 0;
+.prose blockquote p,
+.prose blockquote li {
   color: var(--ink);
+}
+
+.prose blockquote > :last-child {
+  margin-bottom: 0;
 }
 
 .prose table {
   display: block;
   width: 100%;
-  margin: 1.5rem 0;
-  overflow-x: auto;
-  border-collapse: collapse;
-}
-
-.prose .article-figure {
+  max-width: 100%;
   margin: 2rem 0;
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+  -webkit-overflow-scrolling: touch;
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  border-collapse: collapse;
+  font-size: 0.92rem;
+  line-height: 1.55;
+  scrollbar-color: var(--line-strong) transparent;
+  scrollbar-width: thin;
 }
 
+.prose table::-webkit-scrollbar,
+.prose pre::-webkit-scrollbar {
+  height: 9px;
+}
+
+.prose table::-webkit-scrollbar-thumb,
+.prose pre::-webkit-scrollbar-thumb {
+  background: var(--line-strong);
+  border: 2px solid transparent;
+  border-radius: 999px;
+  background-clip: padding-box;
+}
+
+.prose caption {
+  padding: 0 0 0.7rem;
+  color: var(--ink-soft);
+  font-size: 0.82rem;
+  text-align: left;
+}
+
+.prose figure,
+.prose .article-figure {
+  margin: 2.25rem 0;
+}
+
+.prose img,
 .prose .article-figure img {
   display: block;
   width: 100%;
   height: auto;
+  margin-inline: auto;
+  object-fit: contain;
   border-radius: 16px;
 }
 
+.prose figure img,
+.prose .article-figure img {
+  margin: 0;
+}
+
+.prose figcaption,
 .prose .article-figure figcaption {
   margin-top: .65rem;
   color: var(--ink-soft);
@@ -1392,29 +1468,132 @@ h3 {
 
 .prose th,
 .prose td {
-  min-width: 130px;
-  padding: 0.75rem;
-  border: 1px solid var(--line);
+  min-width: 9rem;
+  padding: 0.8rem 0.9rem;
+  border-right: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
   text-align: left;
   vertical-align: top;
+}
+
+.prose tr > :last-child {
+  border-right: 0;
+}
+
+.prose tbody tr:last-child td {
+  border-bottom: 0;
 }
 
 .prose th {
   color: var(--ink);
   background: #edf2f8;
-  font-size: 0.82rem;
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.025em;
 }
 
-.prose code {
+.prose tbody tr:nth-child(even) td {
+  background: #fafbfd;
+}
+
+.prose a:not(.button) {
+  color: var(--blue-dark);
+  font-weight: 650;
+  text-decoration-line: underline;
+  text-decoration-thickness: 0.08em;
+  text-decoration-color: rgba(39, 93, 194, 0.45);
+  text-underline-offset: 0.2em;
+  overflow-wrap: anywhere;
+}
+
+.prose a:not(.button):hover {
+  color: var(--mint-dark);
+  text-decoration-color: currentColor;
+}
+
+.prose a:not(.button):focus-visible {
+  border-radius: 3px;
+}
+
+.prose :not(pre) > code {
   padding: 0.12em 0.35em;
   background: #e8edf5;
+  border: 1px solid #d8e0eb;
   border-radius: 5px;
   font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
   font-size: 0.9em;
+  overflow-wrap: anywhere;
+}
+
+.prose pre {
+  width: 100%;
+  max-width: 100%;
+  margin: 2rem 0;
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+  padding: 1.15rem 1.25rem;
+  color: #eef4ff !important;
+  background: #17243b !important;
+  border: 1px solid #2d3d59;
+  border-radius: var(--radius-sm);
+  font: 0.88rem/1.65 ui-monospace, SFMono-Regular, Consolas, monospace;
+  tab-size: 2;
+  white-space: pre;
+  scrollbar-color: #536581 transparent;
+  scrollbar-width: thin;
+}
+
+.prose pre code {
+  display: block;
+  min-width: max-content;
+  padding: 0;
+  color: inherit;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  font: inherit;
+  overflow-wrap: normal;
+}
+
+.prose ul.contains-task-list,
+.prose ul[data-type='taskList'] {
+  display: grid;
+  gap: 0.65rem;
+  margin: 1.5rem 0 2rem;
+  padding: 0;
+  list-style: none;
+}
+
+.prose .task-list-item,
+.prose li[data-type='taskItem'] {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.7rem;
+  margin: 0;
+  padding: 0.75rem 0.9rem;
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+}
+
+.prose .task-list-item input,
+.prose li[data-type='taskItem'] input {
+  width: 1.05rem;
+  height: 1.05rem;
+  flex: 0 0 auto;
+  margin: 0.28rem 0 0;
+  accent-color: var(--mint-dark);
+}
+
+.prose li[data-type='taskItem'] > div,
+.prose li[data-type='taskItem'] > p {
+  min-width: 0;
+  margin: 0;
 }
 
 .prose hr {
-  margin-block: 2.5rem;
+  width: min(100%, 16rem);
+  margin: 3rem auto;
   border: 0;
   border-top: 1px solid var(--line);
 }
@@ -1495,6 +1674,23 @@ h3 {
   .inline-cta .button { width: 100%; }
   .article-tool-cta { grid-template-columns: auto 1fr; }
   .article-tool-cta .button { grid-column: 1 / -1; width: 100%; }
+  .article-shell { padding-block: 2.75rem 4rem; }
+  .prose { font-size: 1rem; line-height: 1.78; }
+  .prose h2 { margin-top: 2.8rem; font-size: clamp(1.45rem, 7vw, 1.75rem); }
+  .prose h3 { margin-top: 2rem; font-size: 1.18rem; }
+  .prose ul,
+  .prose ol { padding-left: 1.25rem; }
+  .prose li > ul,
+  .prose li > ol { padding-left: 1.1rem; }
+  .prose blockquote { margin-block: 1.8rem; padding: 1rem 1rem 1rem 1.15rem; font-size: 1rem; }
+  .prose table { margin-block: 1.6rem; font-size: 0.88rem; }
+  .prose th,
+  .prose td { min-width: 8.5rem; padding: 0.7rem 0.75rem; }
+  .prose pre { margin-block: 1.6rem; padding: 1rem; font-size: 0.82rem; }
+  .prose figure,
+  .prose .article-figure { margin-block: 1.8rem; }
+  .prose .task-list-item,
+  .prose li[data-type='taskItem'] { padding: 0.7rem 0.75rem; }
 }
 
 @media (max-width: 620px) {

@@ -51,7 +51,7 @@ function input(overrides = {}) {
       tags: ['cms', 'kiểm thử'],
       ...overrides,
     },
-    html: '<h2>Danh sách cần làm</h2><ul data-type="taskList"><li data-type="taskItem" data-checked="true"><p>Kiểm tra nội dung</p></li></ul><table style="min-width: 75px;"><colgroup><col style="min-width: 25px;"><col style="min-width: 25px;"></colgroup><tbody><tr><th colspan="1" rowspan="1"><p>A</p></th><th colspan="1" rowspan="1"><p>B</p></th></tr><tr><td colspan="1" rowspan="1"><p>1</p></td><td colspan="1" rowspan="1"><p>2</p></td></tr></tbody></table>',
+    html: '<h2>Danh sách cần làm</h2><ul data-type="taskList"><li data-checked="true"><p>Kiểm tra nội dung</p></li><li data-checked="false"><p>Hoàn tất preview</p></li></ul><table style="min-width: 75px;"><colgroup><col style="min-width: 25px;"><col style="min-width: 25px;"></colgroup><tbody><tr><th colspan="1" rowspan="1"><p>A</p></th><th colspan="1" rowspan="1"><p>B</p></th></tr><tr><td colspan="1" rowspan="1"><p>1</p></td><td colspan="1" rowspan="1"><p>2</p></td></tr></tbody></table>',
   };
 }
 
@@ -67,6 +67,7 @@ test('tạo, đọc và cập nhật một bài Markdown trong thư mục tạm'
   const markdown = await readFile(markdownPath, 'utf8');
   assert.match(markdown, /draft: true/);
   assert.match(markdown, /- \[x\] Kiểm tra nội dung/);
+  assert.match(markdown, /- \[ \] Hoàn tất preview/);
   assert.match(markdown, /\| A \| B \|/);
   assert.match(markdown, /tool: \/cong-cu\/tinh-gpa\//);
   assert.match(markdown, /group: hoc-dung-cach/);

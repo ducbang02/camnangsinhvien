@@ -18,6 +18,8 @@
 
 **Metadata rà soát nội dung đã tách khỏi ngày cập nhật.** CMS có hai field tùy chọn `reviewer` và `reviewedDate`, bắt buộc đi cùng nhau và không tự sinh. Bài có đủ metadata hiển thị badge rà soát dưới phần mô tả; bài cũ giữ nguyên giao diện, không bị gắn thông tin tin cậy giả.
 
+**Article Design System đã được chuẩn hóa.** Mọi body Markdown/MDX đi qua `ArticleLayout.astro` và `.prose`, tự định dạng typography, list lồng, blockquote, table responsive, checklist, link, ảnh và code mà không yêu cầu class riêng trong từng bài. Quy tắc biên tập tối thiểu được lưu tại `docs/article-style.md`.
+
 **Article hero đã chuyển sang layout ưu tiên hình ảnh.** Title và metadata nằm trên hero cao khoảng nửa viewport; chín category có ảnh mặc định tự host và article vẫn có thể ghi đè bằng thumbnail riêng từ CMS.
 
 **Landing page chính có hero image responsive.** Trang chủ và Cẩm nang dùng `HeroPicture.astro` với ảnh WebP desktop/mobile riêng trong `public/media/page-heroes/`; Công cụ, Về chúng tôi và Liên hệ dùng hero ảnh nền chìm qua `PageImageHero.astro` để đồng bộ cảm giác với article hero.

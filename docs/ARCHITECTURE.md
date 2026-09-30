@@ -20,14 +20,14 @@ Website là một **Student Hub tĩnh, content-first** dành cho sinh viên Vi�
 - **Cloudflare Worker + Static Assets**: phục vụ thư mục `dist/`, chuẩn hóa domain/header và xử lý endpoint Liên hệ qua Email Service binding.
 - **localStorage**: chỉ lưu dữ liệu cục bộ như lịch sử GPA, tùy chọn Pomodoro hoặc ngân sách. Không coi đây là dữ liệu đồng bộ.
 
-Typing Speed VN là ứng dụng tĩnh riêng tại `https://typing.camnangsinhvien.site/`. Website chính chỉ giữ metadata và liên kết tới ứng dụng từ danh mục Công cụ, chủ đề Kỹ năng máy tính và bài viết liên quan; không sao chép source hoặc tạo route proxy trong project này.
+Typing Speed VN là ứng dụng tĩnh riêng tại `https://typing.camnangsinhvien.site/`. Website chính chỉ giữ metadata và liên kết tới ứng dụng từ danh mục Công cụ, nhóm Kỹ năng máy tính trong chủ đề Kỹ năng và bài viết liên quan; không sao chép source hoặc tạo route proxy trong project này.
 
 ## 3. Information Architecture
 
 Header desktop chỉ giữ các điểm vào quan trọng nhất:
 
 1. Logo về Trang chủ
-2. Cẩm nang — hover hoặc focus để mở mega menu mười chủ đề; click để tới khối `#chu-de` trên trang chủ
+2. Cẩm nang — hover hoặc focus để mở mega menu chín chủ đề; click để tới khối `#chu-de` trên trang chủ
 3. Công cụ
 4. Về chúng tôi
 5. Liên hệ
@@ -36,22 +36,21 @@ Header desktop chỉ giữ các điểm vào quan trọng nhất:
 
 Logo trong header và footer dùng trực tiếp `public/favicon.svg` để favicon và brand mark thống nhất một biểu tượng.
 
-Website hiện có mười chủ đề nội dung khởi tạo:
+Website hiện có chín chủ đề nội dung khởi tạo:
 
 1. Học tập & thi cử
-2. Kỹ năng máy tính
-3. Kỹ năng mềm & giao tiếp
-4. Tiếng Anh
-5. Quản lý bản thân
-6. Cuộc sống sinh viên
-7. Nghiên cứu & xử lý thông tin
-8. Nghề nghiệp & chuẩn bị đi làm
-9. AI cho sinh viên
-10. Công cụ & phần mềm hữu ích
+2. Kỹ năng (gồm Kỹ năng máy tính và Kỹ năng mềm)
+3. Ngoại ngữ
+4. Quản lý bản thân
+5. Cuộc sống sinh viên
+6. Nghiên cứu & xử lý thông tin
+7. Nghề nghiệp & chuẩn bị đi làm
+8. AI cho sinh viên
+9. Công cụ & phần mềm hữu ích
 
 Nguồn dữ liệu chuẩn của chủ đề là `src/data/categories.ts`. Header mega menu, footer, trang chủ, bộ lọc, trang chủ đề, metadata và schema bài viết đều đọc từ nguồn này; không tạo danh sách chủ đề riêng trong component. Số lượng chủ đề không bị hard-code: CMS local có thể thêm, sửa và xóa cấu hình trong chính nguồn này.
 
-Mỗi category có thể khai báo `groups` tùy chọn trong cùng nguồn dữ liệu. Page `/chu-de/[slug]/` dùng một render flow chung: category có group sinh navigation anchor và các section theo cấu hình; category không có group giữ danh sách bài phẳng. Hiện chỉ `hoc-tap-thi-cu` dùng group vì số bài đủ nhiều; các chủ đề còn lại không render block bước/nhóm nội bộ cho đến khi có nhu cầu thật. Article chỉ lưu `group` và `articleOrder`, còn title, mô tả và thứ tự group thuộc category config; không có component hoặc field `stage` riêng cho Học tập & thi cử.
+Mỗi category có thể khai báo `groups` tùy chọn trong cùng nguồn dữ liệu. Page `/chu-de/[slug]/` dùng một render flow chung: category có group sinh navigation anchor và các section theo cấu hình; category không có group giữ danh sách bài phẳng. Hiện `hoc-tap-thi-cu` và `ky-nang` dùng group; các chủ đề còn lại không render block nhóm nội bộ cho đến khi có nhu cầu thật. Article chỉ lưu `group` và `articleOrder`, còn title, mô tả và thứ tự group thuộc category config; không có component hoặc field `stage` riêng cho một chủ đề cụ thể.
 
 Trang chủ và trang Cẩm nang dùng `HeroPicture.astro` với ảnh WebP desktop/mobile riêng trong `public/media/page-heroes/`; phần tử `<picture>` chỉ tải nguồn phù hợp với viewport. Các trang tĩnh cần hero chìm như `/cong-cu/`, `/gioi-thieu/` và `/lien-he/` dùng `PageImageHero.astro`, đặt ảnh nền toàn chiều ngang với lớp phủ tương phản tương tự article hero. Mỗi trang `/chu-de/[slug]/` render ảnh `heroImage` riêng từ taxonomy làm nền hero toàn chiều ngang; cùng ảnh trong `public/media/category-heroes/` tiếp tục làm fallback cho article chưa có thumbnail riêng.
 
@@ -63,7 +62,7 @@ Kho ảnh biên tập dùng lại cho bài tương lai nằm trong `public/media
 
 | Route | Vai trò |
 | --- | --- |
-| `/` | Điểm vào theo nhu cầu và mười chủ đề |
+| `/` | Điểm vào theo nhu cầu và chín chủ đề |
 | `/cam-nang/` | Danh mục toàn bộ bài viết, có lọc client-side |
 | `/cam-nang/[slug]/` | Trang bài viết chuẩn hóa |
 | `/chu-de/[slug]/` | Trang chủ đề và cụm nội dung |

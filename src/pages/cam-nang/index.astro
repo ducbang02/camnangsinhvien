@@ -16,7 +16,7 @@ const articles = (await getCollection('articles', ({ data }) => !data.draft))
       <div class="page-hero-copy">
         <p class="eyebrow">{articles.length} hướng dẫn thực hành</p>
         <h1>Tìm đúng việc bạn cần giải quyết</h1>
-        <p class="lead">Lọc theo 10 chủ đề hoặc gõ vấn đề đang gặp. Danh sách đầy đủ luôn có sẵn, không cần đăng nhập.</p>
+        <p class="lead">Lọc theo {categories.length} chủ đề hoặc gõ vấn đề đang gặp. Danh sách đầy đủ luôn có sẵn, không cần đăng nhập.</p>
       </div>
       <HeroPicture
         class="page-hero-picture"

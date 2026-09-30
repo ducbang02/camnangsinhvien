@@ -4,7 +4,7 @@
 
 **Phase 1 — MVP đã deploy production.** Kiến trúc đã chốt ngày 14/09/2026: Astro + Markdown/MDX + Cloudflare Workers Static Assets, không backend/database/login. Validation, route scan, internal-link scan, browser QA local và production smoke test đã đạt; xem `docs/TESTING.md`.
 
-**Phase 1A — kiến trúc 10 chủ đề đã được duyệt local.** Mô hình ba nhóm nội dung ban đầu đã được thay bằng mười chủ đề dùng chung một nguồn `src/data/categories.ts`. Đã bổ sung 7 bài mẫu ngắn để mọi chủ đề có ít nhất 2 bài; website hiện có 27 bài. Chưa push hoặc deploy thay đổi này lên production.
+**Phase 1A — kiến trúc 9 chủ đề đã được duyệt local.** Mô hình ba nhóm nội dung ban đầu đã được thay bằng chín chủ đề dùng chung một nguồn `src/data/categories.ts`; chủ đề Kỹ năng gom hai nhóm Kỹ năng máy tính và Kỹ năng mềm, còn Tiếng Anh được đổi tên thành Ngoại ngữ. Chưa push hoặc deploy thay đổi này lên production.
 
 **Phase 1B — CMS local Phase 1 đã hoàn tất.** CMS Tiptap Vanilla có danh sách/search/filter, editor, metadata theo Content Collection, load/save Markdown/MDX và preview bằng layout Astro thật. CMS không có database/login, chỉ bind local và không được đưa vào production build. Xem `docs/CMS.md`.
 
@@ -12,23 +12,23 @@
 
 **Điều hướng nội bộ đã chuyển sang ClientRouter của Astro.** Chuyển giữa Công cụ, Về chúng tôi, Liên hệ và các route nội bộ không còn tải lại toàn bộ document; các script tương tác đã được đồng bộ với `astro:page-load`, Pomodoro có cleanup khi rời trang và Turnstile được render lại an toàn khi quay lại form Liên hệ.
 
-**Typing Speed VN đã được nối vào hệ sinh thái.** Ứng dụng riêng tại `typing.camnangsinhvien.site` xuất hiện trong danh mục Công cụ, trang chủ đề Kỹ năng máy tính và CTA cuối bài gõ 10 ngón. CMS đọc URL này từ nguồn tool chung và chỉ cho chọn URL ngoài đã được cấu hình.
+**Typing Speed VN đã được nối vào hệ sinh thái.** Ứng dụng riêng tại `typing.camnangsinhvien.site` xuất hiện trong danh mục Công cụ, nhóm Kỹ năng máy tính và CTA cuối bài gõ 10 ngón. CMS đọc URL này từ nguồn tool chung và chỉ cho chọn URL ngoài đã được cấu hình.
 
 **Trang chủ và validation SEO đã được đồng bộ sau audit ngày 29/09/2026.** Số công cụ trên trang chủ/Lộ trình lấy trực tiếp từ nguồn tool chung; H1 và metadata mô tả rõ Cẩm nang sinh viên Việt Nam; mọi trang có `Organization` JSON-LD. Build sẽ dừng nếu HTML thiếu title/H1/canonical, canonical sai domain, sitemap chứa route không tồn tại hoặc có link nội bộ gãy.
 
 **Metadata rà soát nội dung đã tách khỏi ngày cập nhật.** CMS có hai field tùy chọn `reviewer` và `reviewedDate`, bắt buộc đi cùng nhau và không tự sinh. Bài có đủ metadata hiển thị badge rà soát dưới phần mô tả; bài cũ giữ nguyên giao diện, không bị gắn thông tin tin cậy giả.
 
-**Article hero đã chuyển sang layout ưu tiên hình ảnh.** Title và metadata nằm trên hero cao khoảng nửa viewport; mười category có ảnh mặc định tự host và article vẫn có thể ghi đè bằng thumbnail riêng từ CMS.
+**Article hero đã chuyển sang layout ưu tiên hình ảnh.** Title và metadata nằm trên hero cao khoảng nửa viewport; chín category có ảnh mặc định tự host và article vẫn có thể ghi đè bằng thumbnail riêng từ CMS.
 
 **Landing page chính có hero image responsive.** Trang chủ và Cẩm nang dùng `HeroPicture.astro` với ảnh WebP desktop/mobile riêng trong `public/media/page-heroes/`; Công cụ, Về chúng tôi và Liên hệ dùng hero ảnh nền chìm qua `PageImageHero.astro` để đồng bộ cảm giác với article hero.
 
-**Mười trang chủ đề đã có hero ảnh riêng.** `/chu-de/[slug]/` đọc trực tiếp `heroImage` từ taxonomy chung, dùng ảnh làm nền toàn chiều ngang và đặt thông tin trên lớp phủ tương phản đồng bộ với article hero; ảnh cũng được dùng cho Open Graph và tiếp tục làm fallback cho bài chưa có thumbnail.
+**Chín trang chủ đề đã có hero ảnh riêng.** `/chu-de/[slug]/` đọc trực tiếp `heroImage` từ taxonomy chung, dùng ảnh làm nền toàn chiều ngang và đặt thông tin trên lớp phủ tương phản đồng bộ với article hero; ảnh cũng được dùng cho Open Graph và tiếp tục làm fallback cho bài chưa có thumbnail.
 
 **Kho ảnh biên tập đã được chuẩn hóa.** Ảnh gốc đi qua `media-inbox/`, sau đó được đổi tên theo nội dung, chuyển sang WebP và xếp vào `public/media/library/`. Kho hiện có ảnh hero, học tập, đời sống, khuôn viên, kỹ năng số, nghiên cứu, tiếng Anh và nghề nghiệp để bài mới không phải lặp một ảnh đại diện duy nhất.
 
 **Danh sách bài trong từng chủ đề đã được tinh gọn.** Mặc định bài hiển thị theo list một cột gồm title, mô tả ngắn và thời gian đọc; người đọc có thể chuyển sang lưới card ngay trên trang mà không tải lại hoặc nhân đôi nội dung.
 
-**Grouping của category đã dùng chung toàn website.** Category có thể khai báo số lượng `groups` bất kỳ trong `src/data/categories.ts`; article tham chiếu bằng `group` và sắp thứ tự bằng `articleOrder`. Trang có group sinh navigation/section tương ứng, còn trang không có group giữ nguyên danh sách phẳng. Hiện chỉ cấu hình ba group cho Học tập & thi cử; các chủ đề ít bài không còn render block bước/nhóm nội bộ.
+**Grouping của category đã dùng chung toàn website.** Category có thể khai báo số lượng `groups` bất kỳ trong `src/data/categories.ts`; article tham chiếu bằng `group` và sắp thứ tự bằng `articleOrder`. Trang có group sinh navigation/section tương ứng, còn trang không có group giữ nguyên danh sách phẳng. Hiện Học tập & thi cử có ba group và Kỹ năng có hai group; các chủ đề còn lại không render block nhóm nội bộ.
 
 **Nhóm Học đúng cách đã có bài mở đầu hoàn chỉnh.** Bài “Học đại học nên bắt đầu từ đâu?” đứng đầu group, hướng dẫn đọc đề cương, xác định mục tiêu, hiểu cách đánh giá và chọn cách học trước khi đi sâu vào Active Recall hoặc Spaced Repetition.
 
@@ -55,7 +55,7 @@ Repository và local `origin` đã chuyển sang `ducbang02/camnangsinhvien`. Cl
 
 Mục tiêu: một hub có thể xuất bản thật, không phải landing page minh họa.
 
-- Mười trang chủ đề, mega menu, hub Sinh viên IT và danh mục bài viết.
+- Chín trang chủ đề, mega menu, hub Sinh viên IT và danh mục bài viết.
 - 20 bài mở đầu và 7 bài mẫu bổ sung tạo thành các đường đi hoàn chỉnh, ưu tiên GPA, phương pháp học, kỹ năng số/AI, năm nhất/chi tiêu và nền tảng IT.
 - 5 mini tool nội bộ: GPA, điểm cuối kỳ, Pomodoro, chia nhóm và ngân sách tháng; cùng ứng dụng Typing Speed VN trên subdomain riêng.
 - Content schema, article layout, nguồn tham khảo, internal link, sitemap, robots và trang 404.
@@ -85,7 +85,7 @@ Tiêu chí hoàn thành:
 
 ## Phase 3 — Scale content (P1/P2)
 
-- Mở rộng cluster thắng trong mười chủ đề đã chốt thay vì tạo thêm chủ đề tùy ý.
+- Mở rộng cluster thắng trong chín chủ đề đã chốt thay vì tạo thêm chủ đề tùy ý.
 - Bổ sung roadmap tương tác cho Sinh viên IT và kỹ năng số.
 - Xây kho tài nguyên có tiêu chí chọn, ngày kiểm tra và nguồn rõ ràng.
 - Content QA: độ chính xác, trùng intent, orphan page, liên kết gãy, nội dung lỗi thời.

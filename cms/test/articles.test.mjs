@@ -14,7 +14,14 @@ const categories = [
       { id: 'vao-ky-thi', title: 'Vào kỳ thi', order: 2 },
     ],
   },
-  { id: 'ky-nang-may-tinh', name: 'Kỹ năng máy tính' },
+  {
+    id: 'ky-nang',
+    name: 'Kỹ năng',
+    groups: [
+      { id: 'ky-nang-may-tinh', title: 'Kỹ năng máy tính', order: 1 },
+      { id: 'ky-nang-mem', title: 'Kỹ năng mềm', order: 2 },
+    ],
+  },
 ];
 const tools = [
   { slug: 'tinh-gpa', name: 'Tính GPA' },
@@ -125,8 +132,8 @@ test('chấp nhận URL ngoài khi công cụ đã được cấu hình', async 
   t.after(() => rm(root, { recursive: true, force: true }));
   const store = createArticleStore({ root, categories, tools });
   const errors = store.validate(input({
-    category: 'ky-nang-may-tinh',
-    group: '',
+    category: 'ky-nang',
+    group: 'ky-nang-may-tinh',
     tool: 'https://typing.camnangsinhvien.site/',
   }));
   assert.deepEqual(errors, []);
@@ -156,11 +163,11 @@ test('kiểm tra group theo cấu hình category và thứ tự bài', async (t)
     ['group', 'articleOrder'],
   );
   assert.deepEqual(
-    store.validate(input({ category: 'ky-nang-may-tinh', group: 'hoc-dung-cach', articleOrder: '' })).map((error) => error.field),
+    store.validate(input({ category: 'ky-nang', group: 'hoc-dung-cach', articleOrder: '' })).map((error) => error.field),
     ['group'],
   );
   assert.deepEqual(
-    store.validate(input({ category: 'ky-nang-may-tinh', group: '', articleOrder: '4' })).map((error) => error.field),
+    store.validate(input({ category: 'ky-nang', group: 'ky-nang-may-tinh', articleOrder: '4' })).map((error) => error.field),
     [],
   );
 });
@@ -171,7 +178,7 @@ test('từ chối slug trùng ở category khác vì route chỉ dùng tên file
   const store = createArticleStore({ root, categories });
   await store.save(input());
   await assert.rejects(
-    () => store.save(input({ category: 'ky-nang-may-tinh', group: '' })),
+    () => store.save(input({ category: 'ky-nang', group: 'ky-nang-may-tinh' })),
     (error) => error instanceof ArticleStoreError && error.code === 'SLUG_EXISTS',
   );
 });

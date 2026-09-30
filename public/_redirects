@@ -1,7 +1,13 @@
-# Giữ liên kết cũ sau khi chuyển từ 3 pillar sang 10 trụ cột.
+# Giữ liên kết cũ sau khi chuyển taxonomy sang 9 chủ đề và nhóm Kỹ năng.
 /chu-de/hoc-tap /chu-de/hoc-tap-thi-cu/ 301
 /chu-de/hoc-tap/ /chu-de/hoc-tap-thi-cu/ 301
-/chu-de/ky-nang-so /chu-de/ky-nang-may-tinh/ 301
-/chu-de/ky-nang-so/ /chu-de/ky-nang-may-tinh/ 301
+/chu-de/ky-nang-so /chu-de/ky-nang/ 301
+/chu-de/ky-nang-so/ /chu-de/ky-nang/ 301
+/chu-de/ky-nang-may-tinh /chu-de/ky-nang/ 301
+/chu-de/ky-nang-may-tinh/ /chu-de/ky-nang/ 301
+/chu-de/ky-nang-mem-giao-tiep /chu-de/ky-nang/ 301
+/chu-de/ky-nang-mem-giao-tiep/ /chu-de/ky-nang/ 301
+/chu-de/tieng-anh /chu-de/ngoai-ngu/ 301
+/chu-de/tieng-anh/ /chu-de/ngoai-ngu/ 301
 /chu-de/cuoc-song /chu-de/cuoc-song-sinh-vien/ 301
 /chu-de/cuoc-song/ /chu-de/cuoc-song-sinh-vien/ 301

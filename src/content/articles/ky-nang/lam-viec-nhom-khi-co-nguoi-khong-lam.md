@@ -1,7 +1,8 @@
 ---
 title: "Làm việc nhóm khi có thành viên không làm: xử lý theo từng bước"
 description: "Quy trình xác nhận vấn đề, chia lại đầu việc, lưu bằng chứng và báo giảng viên đúng lúc thay vì im lặng hoặc công kích."
-category: ky-nang-mem-giao-tiep
+category: ky-nang
+group: ky-nang-mem
 topic: Làm việc nhóm
 tags: [làm việc nhóm, chia việc, conflict, thuyết trình]
 publishedDate: 2026-08-28

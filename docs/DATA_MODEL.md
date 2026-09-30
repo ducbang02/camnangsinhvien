@@ -12,7 +12,7 @@ Collection: `articles`, định dạng `.md` hoặc `.mdx`.
 | --- | --- | --- | --- |
 | `title` | string | Có | Tiêu đề hiển thị và SEO |
 | `description` | string | Có | Mô tả ngắn, dùng trong card/meta |
-| `category` | enum | Có | Một trong mười ID khai báo tại `src/data/categories.ts` |
+| `category` | enum | Có | Một trong chín ID khai báo tại `src/data/categories.ts` |
 | `topic` | string | Có | Nhóm nhỏ để gom cluster |
 | `group` | string | Tùy category | ID group khai báo trong chính category; bắt buộc khi category có `groups`, không dùng khi category không chia group |
 | `articleOrder` | integer dương | Không | Thứ tự bài trong group hoặc trong danh sách phẳng; bài không khai báo được xếp sau các bài có thứ tự |

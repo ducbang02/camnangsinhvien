@@ -1,7 +1,8 @@
 ---
 title: Có một kỹ năng rất nhỏ nhưng bạn sẽ dùng suốt 4 năm đại học
 description: "Vì sao sinh viên nên học gõ 10 ngón sớm, lợi ích khi làm bài và lộ trình luyện bàn phím 10-15 phút mỗi ngày."
-category: ky-nang-may-tinh
+category: ky-nang
+group: ky-nang-may-tinh
 topic: Nền tảng số
 tags:
   - gõ 10 ngón

@@ -11,7 +11,7 @@
 
 ### Điểm yếu
 
-- Mười chủ đề cần được phát triển theo cluster có ưu tiên; không chia đều số bài chỉ để lấp danh mục.
+- Chín chủ đề cần được phát triển theo cluster có ưu tiên; không chia đều số bài chỉ để lấp danh mục.
 - Một người khó duy trì bài hướng dẫn phần mềm nếu không có lịch rà soát.
 - Nội dung học tập/self-help dễ chung chung nếu thiếu tình huống, mẫu và bằng chứng.
 
@@ -32,14 +32,13 @@
 
 **Cẩm nang sinh viên là nơi biến một vấn đề ở đại học thành bước làm cụ thể: hiểu đúng, dùng công cụ, hoàn thành việc và biết nên học gì tiếp theo.** Website ưu tiên sinh viên Việt Nam nói chung, với một nhánh sâu cho sinh viên IT.
 
-## 3. Mười chủ đề
+## 3. Chín chủ đề
 
 | Chủ đề | Phạm vi chính | Cụm ưu tiên ban đầu |
 | --- | --- | --- |
 | Học tập & thi cử | Điểm số và phương pháp học | GPA, điểm cuối kỳ, Active Recall, ôn thi |
-| Kỹ năng máy tính | Năng lực sử dụng thiết bị | File/folder, bàn phím, bảo mật, xử lý lỗi |
-| Kỹ năng mềm & giao tiếp | Giao tiếp trong môi trường đại học | Email, teamwork, thuyết trình, xử lý mâu thuẫn |
-| Tiếng Anh | Tiếng Anh phục vụ học và việc | Đọc tài liệu, viết, thuyết trình, phỏng vấn |
+| Kỹ năng | Năng lực công nghệ và phối hợp | Kỹ năng máy tính, email, teamwork, thuyết trình, xử lý lỗi |
+| Ngoại ngữ | Ngoại ngữ phục vụ học và việc | Đọc tài liệu, viết, thuyết trình, phỏng vấn |
 | Quản lý bản thân | Thời gian, năng lượng và thói quen | Semester planning, tập trung, trì hoãn |
 | Cuộc sống sinh viên | Quyết định đời sống và tài chính | Năm nhất, ở trọ, ngân sách, đồ dùng |
 | Nghiên cứu & xử lý thông tin | Tìm và tổng hợp bằng chứng | Tìm nguồn, fact-check, ghi chú, Zotero |
@@ -47,7 +46,7 @@
 | AI cho sinh viên | AI-assisted learning có trách nhiệm | Prompt, kiểm chứng, academic integrity |
 | Công cụ & phần mềm hữu ích | Chọn và thiết lập workflow | Office, PDF, cloud, note-taking, phần mềm miễn phí |
 
-Mười chủ đề là khung điều hướng cố định, không phải quota bài viết. Nội dung vẫn được ưu tiên theo search intent, nhu cầu thật và khả năng tạo cluster có chiều sâu.
+Chín chủ đề là khung điều hướng cố định, không phải quota bài viết. Chủ đề Kỹ năng có hai nhóm con để giữ bài máy tính và kỹ năng mềm trong cùng một điểm vào. Nội dung vẫn được ưu tiên theo search intent, nhu cầu thật và khả năng tạo cluster có chiều sâu.
 
 ## 4. Sinh viên IT
 
@@ -152,4 +151,4 @@ Không ép mọi bài theo một dàn ý cứng, nhưng người biên tập ph�
 - ảnh có alt mô tả khi mang thông tin; ảnh trang trí dùng alt rỗng;
 - kiểm tra preview desktop/mobile trước khi xuất bản.
 
-Trong giai đoạn hiện tại, ưu tiên đào sâu GPA/thi cử, phương pháp học, kỹ năng số–AI và năm nhất–chi tiêu. Mười chủ đề vẫn được giữ làm taxonomy, không phải quota buộc phải sản xuất đều.
+Trong giai đoạn hiện tại, ưu tiên đào sâu GPA/thi cử, phương pháp học, kỹ năng số–AI và năm nhất–chi tiêu. Chín chủ đề vẫn được giữ làm taxonomy, trong đó Kỹ năng có hai nhóm con, không phải quota buộc phải sản xuất đều.

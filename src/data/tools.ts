@@ -28,7 +28,7 @@ export const tools = [
     name: 'Chia nhóm ngẫu nhiên',
     description: 'Dán danh sách thành viên và chia nhóm cân bằng trong vài giây.',
     icon: 'group',
-    category: 'ky-nang-mem-giao-tiep',
+    category: 'ky-nang',
     status: 'ready',
   },
   {
@@ -44,7 +44,7 @@ export const tools = [
     name: 'Luyện gõ 10 ngón',
     description: 'Học theo từng bài, luyện tập mỗi ngày và kiểm tra tốc độ gõ trong 1 phút.',
     icon: 'keyboard',
-    category: 'ky-nang-may-tinh',
+    category: 'ky-nang',
     status: 'ready',
     href: 'https://typing.camnangsinhvien.site/',
   },

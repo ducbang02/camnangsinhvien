@@ -6,7 +6,7 @@ Student Hub tĩnh dành cho sinh viên Việt Nam: bài hướng dẫn → check
 
 MVP gồm:
 
-- 10 chủ đề dùng chung một nguồn taxonomy;
+- 9 chủ đề dùng chung một nguồn taxonomy; chủ đề Kỹ năng gom các nhóm Kỹ năng máy tính và Kỹ năng mềm;
 - hub chuyên sâu Sinh viên IT;
 - bài viết Markdown/MDX và CMS local để biên tập, preview, xuất bản;
 - 5 mini tool nội bộ cùng ứng dụng Typing Speed VN trên subdomain riêng;

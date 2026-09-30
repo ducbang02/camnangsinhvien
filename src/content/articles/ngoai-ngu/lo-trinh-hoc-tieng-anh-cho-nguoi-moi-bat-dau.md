@@ -1,7 +1,7 @@
 ---
 title: "Lộ trình học tiếng Anh cho người mới bắt đầu"
 description: "Lộ trình học lại tiếng Anh từ đầu cho người mất gốc: bắt đầu từ phát âm, từ vựng theo câu, ngữ pháp đủ dùng, nghe ngắn và nói mỗi ngày."
-category: tieng-anh
+category: ngoai-ngu
 topic: Phương pháp học
 tags:
   - học tập

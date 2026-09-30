@@ -30,7 +30,7 @@ Không phải câu hỏi nào cũng có sẵn một đáp án đúng cho tất c
 
 Tư duy phản biện không có nghĩa là lúc nào cũng phản đối người khác. Nó là khả năng dừng lại, nhìn vấn đề rõ hơn, kiểm tra điều mình đang tin và chọn cách xử lý có căn cứ.
 
-## I. Đừng tìm giải pháp trước khi hiểu vấn đề
+## Đừng tìm giải pháp trước khi hiểu vấn đề
 
 Một lỗi thường gặp là thấy kết quả không tốt rồi nhảy ngay đến giải pháp.
 
@@ -51,11 +51,11 @@ Trước khi hỏi “Mình phải làm gì?”, hãy hỏi: **“Vấn đề th
 
 Nếu nguyên nhân là thiếu nền tảng, tăng số giờ học theo cách cũ có thể chỉ làm bạn mệt hơn. Xác định đúng vấn đề giúp bạn chọn một giải pháp nhỏ nhưng trúng hơn.
 
-## II. Một quy trình 5 bước để tự xử lý vấn đề
+## Một quy trình 5 bước để tự xử lý vấn đề
 
 Bạn không cần nhớ nhiều mô hình phức tạp. Khi chưa biết phải làm gì, hãy đi qua năm bước sau.
 
-### 1. Nói rõ vấn đề
+### Nói rõ vấn đề
 
 Tránh những câu quá rộng như “Mình học dở” hoặc “Mình không có thời gian”. Hãy biến chúng thành một vấn đề có thể quan sát được.
 
@@ -67,7 +67,7 @@ Ví dụ:
 
 Vấn đề càng cụ thể, bước tiếp theo càng dễ xác định.
 
-### 2. Tìm nguyên nhân thay vì chỉ nhìn triệu chứng
+### Tìm nguyên nhân thay vì chỉ nhìn triệu chứng
 
 Hãy hỏi “Vì sao?” thêm vài lần, nhưng đừng biến nó thành một cuộc điều tra vô tận.
 
@@ -79,7 +79,7 @@ Lúc này, giải pháp không nhất thiết là “cố chăm chỉ hơn”. B
 
 Đây là khác biệt giữa lời hứa mơ hồ và một thay đổi có thể thực hiện.
 
-### 3. Kiểm tra thông tin mình đang dựa vào
+### Kiểm tra thông tin mình đang dựa vào
 
 Không phải điều gì nghe hợp lý cũng là sự thật. Khi đọc một lời khuyên, xem video hoặc hỏi AI, hãy tách ba thứ:
 
@@ -97,7 +97,7 @@ Bạn có thể hỏi:
 
 Tư duy phản biện không yêu cầu bạn nghi ngờ mọi thứ. Nó chỉ giúp bạn không vội biến một ý kiến thành sự thật.
 
-### 4. So sánh lựa chọn và đặt ưu tiên
+### So sánh lựa chọn và đặt ưu tiên
 
 Nhiều quyết định ở đại học không phải chọn giữa đúng và sai, mà là chọn việc phù hợp hơn ở thời điểm hiện tại.
 
@@ -110,7 +110,7 @@ Bạn có thể tự hỏi:
 
 Ví dụ, cả tiếng Anh, Python và làm portfolio đều có ích. Nhưng nếu học kỳ này bạn đang mất gốc một môn bắt buộc, ưu tiên xử lý môn đó trước có thể hợp lý hơn. Không phải vì các kỹ năng kia không quan trọng, mà vì **thứ tự** cũng là một phần của quyết định.
 
-### 5. Hành động, quan sát và điều chỉnh
+### Hành động, quan sát và điều chỉnh
 
 Đừng chờ đến khi có đầy đủ thông tin mới bắt đầu. Với nhiều việc, bạn có thể thử ở quy mô nhỏ rồi xem kết quả.
 
@@ -126,7 +126,7 @@ Quy trình thực tế là:
 
 Một quyết định có thể thay đổi khi bạn có thêm trải nghiệm. Đổi hướng sau khi biết thêm thông tin không có nghĩa là quyết định ban đầu “ngu ngốc”. Đó là cách bạn cập nhật kế hoạch.
 
-## III. Đặt câu hỏi tốt và bắt đầu hành động
+## Đặt câu hỏi tốt và bắt đầu hành động
 
 Khi gặp vấn đề, hãy thử đổi cách hỏi.
 

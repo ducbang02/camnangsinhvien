@@ -34,7 +34,7 @@ Vấn đề là nhiều bạn dừng ở đó. Bạn làm các thao tác tạo c
 
 Bài này không khuyên bạn bỏ hết thói quen cũ. Mục tiêu là biết khi nào chúng đang hỗ trợ việc học, và khi nào chúng chỉ đang làm bạn bận.
 
-## 1. Đọc đi đọc lại tài liệu
+## Đọc đi đọc lại tài liệu
 
 Đọc lại là cách rất dễ bắt đầu. Bạn chỉ cần mở slide, kéo từ đầu đến cuối, gặp chỗ quen thì thấy yên tâm hơn. Trước kỳ thi, đọc lại còn tạo cảm giác “mình đã phủ hết chương”.
 
@@ -61,7 +61,7 @@ Bạn có thể nhận ra khái niệm khi nhìn thấy, nhưng vẫn không t�
 
 Nếu bí, mở lại tài liệu, sửa phần thiếu, rồi thử trả lời lại. Đọc lại lúc này vẫn có ích, nhưng nó là bước phản hồi sau khi bạn đã tự thử.
 
-## 2. Highlight quá nhiều
+## Highlight quá nhiều
 
 Highlight giúp mắt bạn quay lại chỗ quan trọng nhanh hơn. Một vài dòng được đánh dấu tốt có thể tiết kiệm thời gian khi ôn.
 
@@ -88,7 +88,7 @@ Sau khi highlight, hãy viết một câu hỏi bên cạnh. Ví dụ:
 
 Lần ôn sau, nhìn câu hỏi trước. Chỉ xem dòng highlight sau khi đã tự trả lời.
 
-## 3. Chép lại gần như toàn bộ slide
+## Chép lại gần như toàn bộ slide
 
 Ghi chép có thể rất hữu ích. Nó giúp bạn tập trung hơn trên lớp, lưu lại ví dụ của giảng viên và gom những điểm slide chưa nói rõ.
 
@@ -119,7 +119,7 @@ Thử đổi ghi chép thành ba loại nội dung:
 
 Nếu slide đã có sẵn định nghĩa, bạn không cần chép lại nguyên văn. Hãy ghi phần giảng viên giải thích thêm, ví dụ thực tế, lỗi hay gặp, hoặc câu hỏi bạn chưa trả lời được.
 
-## 4. Tóm tắt khi chưa kiểm tra mình hiểu chưa
+## Tóm tắt khi chưa kiểm tra mình hiểu chưa
 
 Tóm tắt nghe có vẻ là cách học tốt, và đúng là nó có thể tốt. Vấn đề là nhiều bản tóm tắt được viết khi tài liệu vẫn mở ngay trước mặt.
 
@@ -147,7 +147,7 @@ Thử quy trình ngắn hơn:
 
 Nếu không viết được gì khi đóng tài liệu, đó không phải thất bại. Đó là tín hiệu rằng bạn cần học lại phần đó trước khi tóm tắt.
 
-## 5. Xem lời giải rồi nghĩ “mình hiểu rồi”
+## Xem lời giải rồi nghĩ “mình hiểu rồi”
 
 Đây là lỗi rất phổ biến ở môn Toán, Xác suất, Cơ sở dữ liệu, lập trình và các môn có bài tập.
 
@@ -176,7 +176,7 @@ Nếu không làm lại được, bạn chưa thật sự nắm bài. Hãy ghi r
 
 Phần kẹt đó mới là thứ cần học tiếp.
 
-## 6. Chăm chút hệ thống nhiều hơn học
+## Chăm chút hệ thống nhiều hơn học
 
 Một cuốn vở đẹp, một workspace Notion gọn, màu highlight thống nhất, template flashcard xịn: tất cả đều có thể tạo động lực. Không có gì sai khi bạn thích góc học tập hoặc hệ thống ghi chú đẹp.
 

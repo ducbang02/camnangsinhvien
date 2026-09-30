@@ -209,3 +209,12 @@ CMS Phase 1 không thực hiện commit/push. Danh sách kiểm tra đầy đủ
 - CMS local tải bài mẫu vào Tiptap với typography tương ứng; tiêu đề, heading, link, list, table, code và checklist hiển thị rõ trong editor.
 - Paste raw Markdown vào CMS chuyển đúng H2/H3, bold, list, blockquote, table, inline/code block, link và checklist thành block Tiptap thay vì giữ dấu Markdown dạng text.
 - `npm run test:cms` đạt 19/19; `npm run validate` đạt, `astro check` có 0 error/warning/hint và production build sinh 57 trang hợp lệ.
+
+## Kiểm thử đánh số heading bài viết — 01/10/2026
+
+- Bài Active Recall xác nhận H2 hiển thị số La Mã liên tục `I–X`; mục lục dùng cùng thứ tự.
+- H3 dùng số thường và reset về `1` sau mỗi H2 mới; section VII hiển thị lại `1, 2, 3…` thay vì tiếp tục số từ section trước.
+- Số H2/H3 dùng `font-size: 1em`, bằng đúng cỡ chữ của heading tương ứng trên website và trong CMS.
+- CMS editor hiển thị cùng cách đánh số với preview nhưng HTML/Markdown, anchor và heading text gốc không bị chèn số.
+- Mobile không có horizontal overflow (`clientWidth = scrollWidth`); desktop và CMS không có console error/warning.
+- `npm run test:cms` đạt 19/19; `npm run validate` đạt, `astro check` có 0 error/warning/hint và production build sinh 59 trang hợp lệ.

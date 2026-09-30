@@ -18,7 +18,7 @@ draft: false
 readingMinutes: 6
 sources: []
 ---
-## I. Tự học là gì?
+## Tự học là gì?
 
 Tự học không đơn giản là học một mình hay không cần giáo viên.
 
@@ -30,7 +30,7 @@ Khi biết tự học, bạn có thể chủ động bổ sung những gì mình
 
 > Giá trị lớn nhất của tự học không phải là biết thật nhiều, mà là biết cách học một thứ mình chưa từng biết.
 
-## II. Những phương pháp giúp tự học hiệu quả hơn
+## Những phương pháp giúp tự học hiệu quả hơn
 
 ### 1\. Xác định rõ mục tiêu trước khi bắt đầu
 
@@ -120,7 +120,7 @@ Một nguyên tắc đơn giản là:
 
 Đây là vòng lặp quan trọng của quá trình tự học.
 
-## III. Những điều cần lưu ý khi tự học
+## Những điều cần lưu ý khi tự học
 
 ### 1\. Sẵn sàng thay đổi phương pháp học
 

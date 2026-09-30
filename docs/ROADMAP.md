@@ -20,6 +20,8 @@
 
 **Article Design System đã được chuẩn hóa.** Mọi body Markdown/MDX đi qua `ArticleLayout.astro` và `.prose`, tự định dạng typography, list lồng, blockquote, table responsive, checklist, link, ảnh và code mà không yêu cầu class riêng trong từng bài. Quy tắc biên tập tối thiểu được lưu tại `docs/article-style.md`.
 
+**Heading bài viết được đánh số tự động.** H2 hiển thị số La Mã, H3 dùng số thường và reset theo từng H2; CMS preview và website dùng cùng quy tắc mà không làm thay đổi Markdown, anchor hoặc SEO heading text.
+
 **Article hero đã chuyển sang layout ưu tiên hình ảnh.** Title và metadata nằm trên hero cao khoảng nửa viewport; chín category có ảnh mặc định tự host và article vẫn có thể ghi đè bằng thumbnail riêng từ CMS.
 
 **Landing page chính có hero image responsive.** Trang chủ và Cẩm nang dùng `HeroPicture.astro` với ảnh WebP desktop/mobile riêng trong `public/media/page-heroes/`; Công cụ, Về chúng tôi và Liên hệ dùng hero ảnh nền chìm qua `PageImageHero.astro` để đồng bộ cảm giác với article hero.

@@ -36,7 +36,7 @@ Vì vậy, trước khi hỏi **“Mình nên học bao nhiêu tiếng?”**, h�
 
 Đó mới là điểm bắt đầu.
 
-## 1. Đừng lao vào học ngay — hãy nhìn bản đồ của môn học
+## Đừng lao vào học ngay — hãy nhìn bản đồ của môn học
 
 Hãy tưởng tượng bạn chuẩn bị đi đến một nơi chưa từng tới. Việc đầu tiên hợp lý không phải là chạy thật nhanh, mà là mở bản đồ.
 
@@ -68,7 +68,7 @@ Sau khi xem đề cương, bạn thấy môn học được đánh giá như sau
 
 Thông tin đó hữu ích hơn nhiều so với việc mở chương 1 và đọc từ đầu đến cuối mà chưa biết mình cần tạo ra năng lực gì.
 
-## 2. Xác định mục tiêu cho từng môn
+## Xác định mục tiêu cho từng môn
 
 Không phải môn nào bạn cũng cần đạt cùng một mức điểm. Đây là điều nhiều sinh viên hơi ngại thừa nhận, nhưng lại rất thực tế.
 
@@ -93,7 +93,7 @@ Với mỗi môn, hãy trả lời ba câu:
 
 Câu thứ ba đặc biệt hữu ích khi nhiều deadline bắt đầu xuất hiện cùng lúc.
 
-## 3. Hiểu “luật chơi” của môn học
+## Hiểu “luật chơi” của môn học
 
 Đừng chỉ hỏi “Môn này học gì?”. Hãy hỏi thêm: **“Môn này đánh giá mình như thế nào?”**
 
@@ -111,7 +111,7 @@ Một số câu hỏi nên được làm rõ càng sớm càng tốt:
 
 Đây không phải là “học tủ”. Mục đích là luyện đúng kỹ năng mà môn học yêu cầu. Quy định chung chỉ tạo khung; cách đánh giá cụ thể vẫn cần được kiểm tra trong đề cương và quy định đào tạo của trường bạn.
 
-## 4. Đừng coi mọi phần kiến thức quan trọng như nhau
+## Đừng coi mọi phần kiến thức quan trọng như nhau
 
 Một chương giáo trình dài 60 trang không có nghĩa là cả 60 trang đều cần lượng thời gian giống nhau.
 
@@ -128,7 +128,7 @@ Hãy chú ý các dấu hiệu:
 
 Ví dụ ở một môn lập trình, nếu vòng lặp, hàm, mảng và lập trình hướng đối tượng liên tục xuất hiện trong bài tập, project và đề thi thì đó gần như chắc chắn là kiến thức lõi. Đừng dành ba giờ trang trí ghi chú cho một phần nhỏ nhưng chỉ dành 20 phút luyện code.
 
-## 5. Chọn cách học theo loại môn, không theo xu hướng
+## Chọn cách học theo loại môn, không theo xu hướng
 
 Không có một phương pháp duy nhất phù hợp với mọi môn. Câu hỏi tốt không phải “Phương pháp học tốt nhất là gì?”, mà là **“Mình cần ghi nhớ, giải bài, thực hành hay tạo ra sản phẩm?”**
 
@@ -150,7 +150,7 @@ Bạn phải tự viết code, gặp lỗi, debug và hoàn thành các chương
 
 Các nghiên cứu tổng quan về kỹ thuật học cũng cho thấy hiệu quả phụ thuộc vào loại nhiệm vụ và cách áp dụng. Vì vậy, hãy chọn phương pháp theo đầu ra cần đạt thay vì theo độ nổi tiếng của một ứng dụng hoặc video.
 
-## 6. Tạo một hệ thống học tối thiểu cho mỗi tuần
+## Tạo một hệ thống học tối thiểu cho mỗi tuần
 
 Bạn chưa cần một Notion template với 20 database hay một thời khóa biểu hoàn hảo từng phút. Hãy bắt đầu với hệ thống đủ đơn giản để duy trì.
 
@@ -181,7 +181,7 @@ Dành một khoảng ngắn để kiểm tra:
 
 Bạn không cần quản lý hoàn hảo. Điều quan trọng là phát hiện vấn đề sớm, trước khi nó tích tụ trong tám tuần và chỉ lộ ra sát kỳ thi.
 
-## 7. Coi cách học như một thử nghiệm
+## Coi cách học như một thử nghiệm
 
 Có người hiểu bài tốt hơn khi đọc trước. Có người cần nghe giảng rồi mới đọc. Có người tập trung tốt trong 25 phút, người khác lại phù hợp với phiên học dài hơn.
 
@@ -198,7 +198,7 @@ Sau đó tự hỏi:
 
 Giữ thứ hiệu quả, bỏ thứ không hiệu quả. Đừng tiếp tục một phương pháp chỉ vì một người có GPA cao nói rằng nó tốt.
 
-## 8. Ví dụ hoàn chỉnh: bắt đầu môn Lập trình Web
+## Ví dụ hoàn chỉnh: bắt đầu môn Lập trình Web
 
 Giả sử thứ Hai bạn bắt đầu môn Lập trình Web.
 
@@ -227,7 +227,7 @@ Môn thiên về thực hành. Nếu chỉ xem slide thì khó đủ. Sau mỗi 
 
 Đó đã là một kế hoạch học. Bạn chưa cần timetable bảy màu hay mười ứng dụng productivity.
 
-## 9. Checklist 15 phút khi bắt đầu một môn
+## Checklist 15 phút khi bắt đầu một môn
 
 - [ ] Mình đã đọc đề cương môn học.
 - [ ] Mình biết các thành phần điểm và trọng số.
@@ -239,7 +239,7 @@ Môn thiên về thực hành. Nếu chỉ xem slide thì khó đủ. Sau mỗi 
 
 Nếu trả lời được bảy câu trên, bạn đã có một khởi đầu tốt hơn nhiều so với việc mở giáo trình và học một cách vô định.
 
-## 10. Những lỗi thường gặp khi mới bắt đầu
+## Những lỗi thường gặp khi mới bắt đầu
 
 ### Học tất cả mọi thứ với mức độ như nhau
 

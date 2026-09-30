@@ -30,7 +30,7 @@ Không phải câu hỏi nào cũng có sẵn một đáp án đúng cho tất c
 
 Tư duy phản biện không có nghĩa là lúc nào cũng phản đối người khác. Nó là khả năng dừng lại, nhìn vấn đề rõ hơn, kiểm tra điều mình đang tin và chọn cách xử lý có căn cứ.
 
-## Đừng tìm giải pháp trước khi hiểu vấn đề
+## I. Đừng tìm giải pháp trước khi hiểu vấn đề
 
 Một lỗi thường gặp là thấy kết quả không tốt rồi nhảy ngay đến giải pháp.
 
@@ -51,7 +51,7 @@ Trước khi hỏi “Mình phải làm gì?”, hãy hỏi: **“Vấn đề th
 
 Nếu nguyên nhân là thiếu nền tảng, tăng số giờ học theo cách cũ có thể chỉ làm bạn mệt hơn. Xác định đúng vấn đề giúp bạn chọn một giải pháp nhỏ nhưng trúng hơn.
 
-## Một quy trình 5 bước để tự xử lý vấn đề
+## II. Một quy trình 5 bước để tự xử lý vấn đề
 
 Bạn không cần nhớ nhiều mô hình phức tạp. Khi chưa biết phải làm gì, hãy đi qua năm bước sau.
 
@@ -126,7 +126,7 @@ Quy trình thực tế là:
 
 Một quyết định có thể thay đổi khi bạn có thêm trải nghiệm. Đổi hướng sau khi biết thêm thông tin không có nghĩa là quyết định ban đầu “ngu ngốc”. Đó là cách bạn cập nhật kế hoạch.
 
-## Một câu hỏi tốt thường hữu ích hơn thêm một lời khuyên
+## III. Đặt câu hỏi tốt và bắt đầu hành động
 
 Khi gặp vấn đề, hãy thử đổi cách hỏi.
 
@@ -156,7 +156,7 @@ Hãy hỏi:
 
 Câu hỏi cụ thể thường kéo theo một hành động cụ thể hơn.
 
-## Checklist 5 phút khi chưa biết phải làm gì
+### Checklist 5 phút khi chưa biết phải làm gì
 
 Bạn có thể ghi nhanh các câu sau ra giấy:
 

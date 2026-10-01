@@ -9,9 +9,10 @@ interface Props {
   article: CollectionEntry<'articles'>;
   headings: { depth: number; slug: string; text: string }[];
   related: CollectionEntry<'articles'>[];
+  unnumberedHeadingSlugs?: string[];
 }
 
-const { article, headings, related } = Astro.props;
+const { article, headings, related, unnumberedHeadingSlugs = [] } = Astro.props;
 const { data } = article;
 const category = getCategory(data.category);
 const heroImage = data.thumbnail || category?.heroImage;
@@ -100,7 +101,11 @@ const schema = [
         <aside class="toc" aria-labelledby="toc-title">
           <p id="toc-title">Trong bài này</p>
           <ol>
-            {headings.filter((heading) => heading.depth === 2).map((heading) => <li><a href={`#${heading.slug}`}>{heading.text}</a></li>)}
+            {headings.filter((heading) => heading.depth === 2).map((heading) => (
+              <li data-heading-numbered={unnumberedHeadingSlugs.includes(heading.slug) ? 'false' : undefined}>
+                <a href={`#${heading.slug}`}>{heading.text}</a>
+              </li>
+            ))}
           </ol>
         </aside>
       )}

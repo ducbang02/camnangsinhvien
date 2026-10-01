@@ -60,7 +60,7 @@ README trả lời:
 
 Một nhà tuyển dụng dễ đánh giá project có README trung thực hơn repository 30 folder không có hướng dẫn.
 
-## Checklist trước khi đưa vào portfolio
+## Checklist trước khi đưa vào portfolio {no-number}
 
 - Clone vào thư mục mới và chạy theo README.
 - Không có API key, password hoặc dữ liệu cá nhân trong lịch sử Git.

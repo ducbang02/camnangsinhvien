@@ -15,7 +15,7 @@
 
 - Content schema hỗ trợ `reviewer` và `reviewedDate` tùy chọn, nhưng yêu cầu có đủ cặp; ngày rà soát không được trước ngày đăng hoặc ở tương lai.
 - CMS đọc, ghi và xóa được hai field; form giải thích rõ chỉ điền khi đã rà soát thực tế.
-- `npm run test:cms`: 19/19 test đạt, bao gồm round-trip metadata rà soát và trường hợp chỉ nhập reviewer.
+- `npm run test:cms`: 20/20 test đạt, bao gồm round-trip metadata rà soát, trường hợp chỉ nhập reviewer và heading không đánh số.
 - Article layout chỉ hiển thị badge khi có đủ dữ liệu; bài cũ không có khoảng trống hoặc UI thừa.
 
 Ngày kiểm thử: 14/09/2026.
@@ -216,5 +216,6 @@ CMS Phase 1 không thực hiện commit/push. Danh sách kiểm tra đầy đủ
 - H3 dùng số thường và reset về `1` sau mỗi H2 mới; section VII hiển thị lại `1, 2, 3…` thay vì tiếp tục số từ section trước.
 - Số H2/H3 dùng `font-size: 1em`, bằng đúng cỡ chữ của heading tương ứng trên website và trong CMS.
 - CMS editor hiển thị cùng cách đánh số với preview nhưng HTML/Markdown, anchor và heading text gốc không bị chèn số.
+- Heading bật `✓ Không số` round-trip qua marker `{no-number}`, render dấu ✓ trong nội dung/mục lục, giữ anchor sạch và không làm tăng counter của heading sau.
 - Mobile không có horizontal overflow (`clientWidth = scrollWidth`); desktop và CMS không có console error/warning.
-- `npm run test:cms` đạt 19/19; `npm run validate` đạt, `astro check` có 0 error/warning/hint và production build sinh 59 trang hợp lệ.
+- `npm run test:cms` đạt 20/20; `npm run validate` đạt, `astro check` có 0 error/warning/hint và production build sinh 59 trang hợp lệ.

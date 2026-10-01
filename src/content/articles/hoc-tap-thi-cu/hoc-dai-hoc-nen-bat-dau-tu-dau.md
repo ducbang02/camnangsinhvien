@@ -227,7 +227,7 @@ Môn thiên về thực hành. Nếu chỉ xem slide thì khó đủ. Sau mỗi 
 
 Đó đã là một kế hoạch học. Bạn chưa cần timetable bảy màu hay mười ứng dụng productivity.
 
-## Checklist 15 phút khi bắt đầu một môn
+## Checklist 15 phút khi bắt đầu một môn {no-number}
 
 - [ ] Mình đã đọc đề cương môn học.
 - [ ] Mình biết các thành phần điểm và trọng số.

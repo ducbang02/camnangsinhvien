@@ -224,7 +224,7 @@ Một bộ flashcard đẹp không đảm bảo bạn học tốt hơn. Nếu m�
 
 Bắt đầu bằng giấy trắng, một file ghi chú đơn giản hoặc ngay mép vở. Khi nhu cầu rõ hơn, hãy nâng cấp công cụ sau.
 
-## Checklist sau một buổi học
+## Checklist sau một buổi học {no-number}
 
 Bạn có thể dùng checklist này ngay sau buổi học hoặc tối cùng ngày:
 

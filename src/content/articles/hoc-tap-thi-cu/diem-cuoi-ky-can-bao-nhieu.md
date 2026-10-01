@@ -55,7 +55,7 @@ Công cụ V1 dùng một giá trị “điểm hiện tại” đã gộp. Nế
 - **Điểm cần vượt thang tối đa:** kiểm tra bonus, điều kiện thi lại/học cải thiện và điều chỉnh mục tiêu thực tế.
 - **Môn có điểm liệt cuối kỳ:** dù tổng điểm đủ, bạn vẫn có thể không đạt nếu bài thi dưới ngưỡng. Kiểm tra đề cương môn học.
 
-## Checklist dữ liệu cần kiểm tra
+## Checklist dữ liệu cần kiểm tra {no-number}
 
 1. Trọng số có cộng đủ 100% không?
 2. Điểm quá trình đã chốt hay còn bài chưa chấm?

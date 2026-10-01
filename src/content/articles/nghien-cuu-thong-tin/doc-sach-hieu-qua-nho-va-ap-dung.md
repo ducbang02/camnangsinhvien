@@ -251,7 +251,7 @@ Nếu bạn không muốn nhớ quá nhiều phương pháp, hãy thử quy trì
 
 Toàn bộ quá trình không khiến việc đọc phức tạp hơn quá nhiều. Nhưng nó biến bạn từ người chỉ tiếp nhận chữ thành người thực sự xử lý thông tin.
 
-## Checklist đọc sách hiệu quả
+## Checklist đọc sách hiệu quả {no-number}
 
 Lần tới khi mở một cuốn sách, bạn có thể kiểm tra nhanh:
 

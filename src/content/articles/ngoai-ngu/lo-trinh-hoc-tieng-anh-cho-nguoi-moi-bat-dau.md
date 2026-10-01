@@ -203,7 +203,7 @@ Hiểu đơn giản, sau giai đoạn này bạn nên làm được vài việc 
 
 Đây không phải đích cuối. Nó chỉ là cái nền để bạn đi tiếp lên A2, B1 và những mục tiêu lớn hơn.
 
-## Checklist bắt đầu hôm nay
+## Checklist bắt đầu hôm nay {no-number}
 
 Nếu muốn bắt đầu ngay, đừng mở 10 tab tài liệu. Hãy làm một vòng nhỏ trong 30 phút:
 

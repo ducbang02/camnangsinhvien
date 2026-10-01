@@ -1277,7 +1277,7 @@ h3 {
   list-style: none;
 }
 
-.toc li {
+.toc li:not([data-heading-numbered='false']) {
   counter-increment: article-toc;
 }
 
@@ -1288,10 +1288,17 @@ h3 {
   text-decoration: none;
 }
 
-.toc a::before {
+.toc li:not([data-heading-numbered='false']) a::before {
   margin-right: 0.35rem;
   color: var(--mint-dark);
   content: counter(article-toc, upper-roman) ".";
+  font-weight: 800;
+}
+
+.toc li[data-heading-numbered='false'] a::before {
+  margin-right: 0.35rem;
+  color: var(--mint-dark);
+  content: "✓";
   font-weight: 800;
 }
 
@@ -1335,13 +1342,17 @@ h3 {
   text-wrap: balance;
 }
 
-.prose > h2 {
+.prose > h2:not([data-heading-numbered='false']) {
   counter-increment: article-h2;
   counter-set: article-h3 0;
 }
 
-.prose > h3 {
+.prose > h3:not([data-heading-numbered='false']) {
   counter-increment: article-h3;
+}
+
+.prose > h2[data-heading-numbered='false'] {
+  counter-set: article-h3 0;
 }
 
 .prose > h2::before,
@@ -1362,6 +1373,11 @@ h3 {
   margin-right: 0.38em;
   content: counter(article-h3) ".";
   font-size: 1em;
+}
+
+.prose > h2[data-heading-numbered='false']::before,
+.prose > h3[data-heading-numbered='false']::before {
+  content: "✓";
 }
 
 .prose p,

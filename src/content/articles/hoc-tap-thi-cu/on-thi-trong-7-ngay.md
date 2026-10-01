@@ -145,7 +145,7 @@ Nếu chưa biết mình cần bao nhiêu điểm, có thể dùng [công cụ t
 
 Tối thiểu hóa rủi ro không có nghĩa là học tủ hay gian lận. Nó nghĩa là đảm bảo phần có thể lấy điểm trước, không tiêu hết thời gian cho câu quá khó trong khi câu cơ bản còn bỏ trống.
 
-## Checklist nếu kỳ thi là ngày mai
+## Checklist nếu kỳ thi là ngày mai {no-number}
 
 - [ ] Mình biết hình thức thi và thời lượng chưa?
 - [ ] Mình đã rà phần trọng số cao chưa?

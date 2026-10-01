@@ -339,7 +339,7 @@ Không cần mua khóa học. Không cần luyện vài tiếng mỗi ngày.
 
 Chỉ cần duy trì đều đặn.
 
-### Checklist 30 ngày
+### Checklist 30 ngày {no-number}
 
 -   Học vị trí hàng phím cơ sở `ASDF JKL;`.
     

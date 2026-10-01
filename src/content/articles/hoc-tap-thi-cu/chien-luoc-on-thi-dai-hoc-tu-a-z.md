@@ -172,7 +172,7 @@ Sát ngày thi, đừng cố nhồi toàn bộ giáo trình trong một đêm.
 
 Nếu phải cắt, hãy cắt phần phạm vi thấp trước khi cắt giấc ngủ. Một đêm trắng có thể làm bạn đọc thêm vài trang nhưng trả giá bằng khả năng tập trung trong phòng thi.
 
-## Checklist trước mỗi phiên ôn
+## Checklist trước mỗi phiên ôn {no-number}
 
 - [ ] Mình đang ôn cho dạng thi nào?
 - [ ] Phiên này thuộc nhóm A, B hay C?

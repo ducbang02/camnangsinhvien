@@ -1,4 +1,4 @@
-import { Editor, Node } from '@tiptap/core';
+import { Editor, Extension, Node } from '@tiptap/core';
 import StarterKit from '@tiptap/starter-kit';
 import { TableKit } from '@tiptap/extension-table';
 import { TaskItem, TaskList } from '@tiptap/extension-list';
@@ -56,6 +56,24 @@ let selectedCategoryId = '';
 let selectedGroupId = '';
 let editingCategoryId = '';
 let editingGroupId = '';
+
+const HeadingNumbering = Extension.create({
+  name: 'headingNumbering',
+  addGlobalAttributes() {
+    return [{
+      types: ['heading'],
+      attributes: {
+        numbered: {
+          default: true,
+          parseHTML: (element) => element.getAttribute('data-heading-numbered') !== 'false',
+          renderHTML: (attributes) => attributes.numbered === false
+            ? { 'data-heading-numbered': 'false' }
+            : {},
+        },
+      },
+    }];
+  },
+});
 
 const ImageFigure = Node.create({
   name: 'imageFigure',
@@ -158,6 +176,13 @@ function looksLikeMarkdown(text) {
 function markdownToPastedHtml(markdown) {
   const documentFragment = new DOMParser().parseFromString(marked.parse(markdown, { gfm: true, breaks: false }), 'text/html');
 
+  documentFragment.querySelectorAll('h2, h3').forEach((heading) => {
+    const textNode = [...heading.childNodes].reverse().find((node) => node.nodeType === 3);
+    if (!textNode || !/\s*\{no-number\}\s*$/.test(textNode.textContent ?? '')) return;
+    textNode.textContent = textNode.textContent.replace(/\s*\{no-number\}\s*$/, '');
+    heading.setAttribute('data-heading-numbered', 'false');
+  });
+
   documentFragment.querySelectorAll('li').forEach((item) => {
     const checkbox = item.querySelector(':scope > input[type="checkbox"]');
     if (!checkbox) return;
@@ -184,6 +209,7 @@ const editor = new Editor({
   element: document.querySelector('#content-editor'),
   extensions: [
     StarterKit.configure({ heading: { levels: [2, 3] } }),
+    HeadingNumbering,
     TableKit.configure({ table: { resizable: true } }),
     TaskList,
     TaskItem.configure({ nested: true }),
@@ -941,6 +967,7 @@ async function previewArticle() {
 }
 
 function updateToolbar() {
+  const isHeading = editor.isActive('heading');
   const activeMap = {
     heading2: editor.isActive('heading', { level: 2 }),
     heading3: editor.isActive('heading', { level: 3 }),
@@ -953,14 +980,23 @@ function updateToolbar() {
     taskList: editor.isActive('taskList'),
     blockquote: editor.isActive('blockquote'),
     codeBlock: editor.isActive('codeBlock'),
+    unnumberedHeading: isHeading && editor.getAttributes('heading').numbered === false,
   };
-  document.querySelectorAll('[data-command]').forEach((button) => button.classList.toggle('is-active', Boolean(activeMap[button.dataset.command])));
+  document.querySelectorAll('[data-command]').forEach((button) => {
+    button.classList.toggle('is-active', Boolean(activeMap[button.dataset.command]));
+    if (button.dataset.command === 'unnumberedHeading') button.disabled = !isHeading;
+  });
   document.querySelector('.table-tools').hidden = !editor.isActive('table');
 }
 
 const commands = {
   heading2: () => editor.chain().focus().toggleHeading({ level: 2 }).run(),
   heading3: () => editor.chain().focus().toggleHeading({ level: 3 }).run(),
+  unnumberedHeading: () => {
+    if (!editor.isActive('heading')) return;
+    const numbered = editor.getAttributes('heading').numbered !== false;
+    editor.chain().focus().updateAttributes('heading', { numbered: !numbered }).run();
+  },
   paragraph: () => editor.chain().focus().setParagraph().run(),
   bold: () => editor.chain().focus().toggleBold().run(),
   italic: () => editor.chain().focus().toggleItalic().run(),

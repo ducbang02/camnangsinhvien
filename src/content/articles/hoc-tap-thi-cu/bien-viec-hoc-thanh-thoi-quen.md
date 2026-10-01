@@ -166,7 +166,7 @@ Lịch này nhỏ, nhưng có khả năng sống sót cao hơn một kế hoạc
 
 Khi đã giữ được 2-3 tuần, bạn có thể tăng dần: thêm một phiên, kéo dài phiên, hoặc chia theo môn. Đừng bắt đầu bằng phiên bản quá hoành tráng.
 
-## Checklist thiết kế thói quen học
+## Checklist thiết kế thói quen học {no-number}
 
 Trả lời 5 câu này:
 

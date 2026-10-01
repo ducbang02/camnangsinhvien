@@ -242,7 +242,7 @@ Hoặc:
 
 Nói thẳng không có nghĩa là nói nặng. Bạn vẫn có thể lịch sự và cứng rắn cùng lúc.
 
-## Checklist thỏa thuận phòng ở chung
+## Checklist thỏa thuận phòng ở chung {no-number}
 
 Nếu phòng bạn sắp ngồi lại, có thể dùng checklist này:
 

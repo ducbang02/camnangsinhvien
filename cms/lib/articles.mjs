@@ -21,6 +21,13 @@ function createTurndownService() {
     strongDelimiter: '**',
   });
   service.use(gfm);
+  service.addRule('unnumberedHeading', {
+    filter: (node) => /^H[23]$/.test(node.nodeName) && node.getAttribute('data-heading-numbered') === 'false',
+    replacement(content, node) {
+      const level = Number(node.nodeName.slice(1));
+      return `\n\n${'#'.repeat(level)} ${content.trim()} {no-number}\n\n`;
+    },
+  });
   service.addRule('articleImage', {
     filter: (node) => node.nodeName === 'FIGURE' && node.hasAttribute('data-cms-image'),
     replacement(_content, node) {
@@ -73,7 +80,12 @@ function normalizeEditorHtml(html) {
 
 async function markdownToEditorHtml(markdown) {
   const html = await marked.parse(markdown);
-  const withCmsBlocks = html
+  const withHeadingOptions = html.replace(/<(h[23])([^>]*)>([\s\S]*?)<\/\1>/gi, (heading, tag, attributes, content) => {
+    if (!/\s*\{no-number\}\s*$/.test(content)) return heading;
+    const cleanContent = content.replace(/\s*\{no-number\}\s*$/, '');
+    return `<${tag}${attributes} data-heading-numbered="false">${cleanContent}</${tag}>`;
+  });
+  const withCmsBlocks = withHeadingOptions
     .replace(/<figure class="article-figure"(?![^>]*data-cms-image)/gi, '<figure class="article-figure" data-cms-image')
     .replace(/<div class="video-embed" data-youtube-id="([A-Za-z0-9_-]{11})">/gi, '<div class="video-embed" data-youtube-id="$1">');
   const withTaskItems = withCmsBlocks.replace(

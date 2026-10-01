@@ -60,7 +60,7 @@ Phân loại phần đã kiểm tra:
 
 Chỉ dùng claim “đã xác nhận” cho phần factual quan trọng. Nói rõ giới hạn thay vì lấp bằng một câu chắc chắn giả.
 
-## Checklist trước khi nộp bài
+## Checklist trước khi nộp bài {no-number}
 
 - Mọi trích dẫn đều mở được và nói đúng điều mình gán cho nó.
 - Không dùng AI làm tác giả giả hoặc nguồn giả.

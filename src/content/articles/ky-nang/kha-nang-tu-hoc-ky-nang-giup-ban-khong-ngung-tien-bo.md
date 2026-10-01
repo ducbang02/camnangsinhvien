@@ -200,7 +200,7 @@ Khi có khả năng đó, việc chưa biết một thứ gì đó không còn q
 
 Bạn chỉ đơn giản là **chưa học nó mà thôi**.
 
-## Checklist tự học
+## Checklist tự học {no-number}
 
 -   Tôi đã xác định rõ mình muốn đạt được điều gì.
     

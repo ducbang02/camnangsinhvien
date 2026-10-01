@@ -22,6 +22,11 @@ const inlineAdPreview = `
   </aside>
 `;
 const articleHtml = article.rendered?.html;
+const unnumberedHeadingSlugs = articleHtml
+  ? [...articleHtml.matchAll(/<h2\b[^>]*>/g)]
+      .map(([tag]) => tag.includes('data-heading-numbered="false"') ? tag.match(/\bid="([^"]+)"/)?.[1] : undefined)
+      .filter((slug): slug is string => Boolean(slug))
+  : [];
 const h2Matches = articleHtml ? [...articleHtml.matchAll(/<h2(?:\s|>)/g)] : [];
 const previewHtml = import.meta.env.DEV && articleHtml && h2Matches.length >= 3
   ? `${articleHtml.slice(0, h2Matches[2].index)}${inlineAdPreview}${articleHtml.slice(h2Matches[2].index)}`
@@ -41,6 +46,6 @@ const related = articles
   .slice(0, 3);
 ---
 
-<ArticleLayout {article} {headings} {related}>
+<ArticleLayout {article} {headings} {related} {unnumberedHeadingSlugs}>
   {previewHtml ? <Fragment set:html={previewHtml} /> : <Content />}
 </ArticleLayout>

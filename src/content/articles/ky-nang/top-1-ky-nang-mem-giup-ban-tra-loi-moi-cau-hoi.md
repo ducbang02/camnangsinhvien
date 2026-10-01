@@ -156,7 +156,7 @@ Hãy hỏi:
 
 Câu hỏi cụ thể thường kéo theo một hành động cụ thể hơn.
 
-### Checklist 5 phút khi chưa biết phải làm gì
+### Checklist 5 phút khi chưa biết phải làm gì {no-number}
 
 Bạn có thể ghi nhanh các câu sau ra giấy:
 

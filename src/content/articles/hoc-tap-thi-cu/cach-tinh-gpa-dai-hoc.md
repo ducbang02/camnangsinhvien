@@ -70,7 +70,7 @@ Giáo dục thể chất, giáo dục quốc phòng, môn đạt/không đạt h
 
 Có trường dùng điểm lần gần nhất, có nơi quy định chi tiết hơn về học cải thiện hoặc điểm F. Đừng tự xóa một lần học khỏi phép tính nếu bảng điểm chính thức vẫn tính nó.
 
-## Checklist trước khi bấm tính
+## Checklist trước khi bấm tính {no-number}
 
 -   Lấy điểm hệ 4 từ bảng điểm hoặc bảng quy đổi chính thức của trường.
     

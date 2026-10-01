@@ -141,7 +141,7 @@ Nhưng một bạn khác học môn lý thuyết buổi tối lại thấy 45 ph
 
 Không có con số thắng tuyệt đối. Chỉ có con số hợp với bạn, môn học và thời điểm hiện tại.
 
-## Checklist thử trong 3 ngày
+## Checklist thử trong 3 ngày {no-number}
 
 Trong 3 ngày tới, chọn một môn và thử ghi ngắn sau mỗi phiên:
 

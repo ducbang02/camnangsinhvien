@@ -200,3 +200,18 @@ test('giữ block ảnh có alt/caption và YouTube khi lưu rồi mở lại', 
   assert.match(loaded.html, /data-cms-image/);
   assert.match(loaded.html, /data-youtube-id="dQw4w9WgXcQ"/);
 });
+
+test('giữ lựa chọn không đánh số của heading qua vòng lưu và mở lại', async (t) => {
+  const root = await mkdtemp(path.join(tmpdir(), 'cnsv-cms-'));
+  t.after(() => rm(root, { recursive: true, force: true }));
+  const store = createArticleStore({ root, categories });
+  const html = '<h2>Phần chính</h2><p>Nội dung.</p><h2 data-heading-numbered="false">Checklist cuối bài</h2><ul data-type="taskList"><li data-checked="false"><p>Kiểm tra bài</p></li></ul>';
+
+  const created = await store.save({ ...input(), html });
+  const markdownPath = path.join(root, 'hoc-tap-thi-cu', 'bai-kiem-tra-cms-local.md');
+  const markdown = await readFile(markdownPath, 'utf8');
+  assert.match(markdown, /## Checklist cuối bài \{no-number\}/);
+
+  const loaded = await store.get(created.id);
+  assert.match(loaded.html, /<h2 data-heading-numbered="false">Checklist cuối bài<\/h2>/);
+});

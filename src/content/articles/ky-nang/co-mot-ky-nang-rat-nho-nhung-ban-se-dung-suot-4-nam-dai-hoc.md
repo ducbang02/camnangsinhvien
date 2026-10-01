@@ -50,7 +50,7 @@ Mục tiêu thực tế hơn là tạo được phản xạ để **không còn 
 
 ## Vì sao sinh viên nên học gõ 10 ngón?
 
-### 1\. Làm bài tập và báo cáo nhanh hơn
+### Làm bài tập và báo cáo nhanh hơn
 
 Một bài báo cáo vài nghìn từ có thể khiến bạn phải gõ bàn phím hàng giờ.
 
@@ -89,7 +89,7 @@ Giả sử bạn cần gõ khoảng 500 từ cho một phần báo cáo, ghi ch�
 
 Đó mới chỉ là phần thời gian gõ. Lợi ích lớn hơn là bạn ít bị ngắt mạch suy nghĩ hơn khi đang viết.
 
-### 2\. Ghi chép nhanh hơn khi học
+### Ghi chép nhanh hơn khi học
 
 Có những lúc giảng viên nói khá nhanh và bạn chỉ có vài giây để ghi lại một ý quan trọng.
 
@@ -108,7 +108,7 @@ Khi tay đã quen vị trí các phím, bạn có thể dành nhiều sự tập
 
 Không phải vì con số WPM đẹp hơn, mà vì bàn phím dần trở thành một công cụ tự nhiên.
 
-### 3\. Làm PowerPoint, Excel và tìm tài liệu cũng nhanh hơn
+### Làm PowerPoint, Excel và tìm tài liệu cũng nhanh hơn
 
 Typing không chỉ hữu ích khi viết Word.
 
@@ -137,7 +137,7 @@ Một thao tác tiết kiệm 1–2 giây có vẻ chẳng đáng kể.
 
 Nhưng khi thao tác đó được lặp lại hàng trăm lần mỗi ngày, sự khác biệt bắt đầu trở nên rõ ràng.
 
-### 4\. Nếu học IT hoặc lập trình, kỹ năng này càng đáng học
+### Nếu học IT hoặc lập trình, kỹ năng này càng đáng học
 
 Sinh viên lập trình dành rất nhiều thời gian bên bàn phím.
 

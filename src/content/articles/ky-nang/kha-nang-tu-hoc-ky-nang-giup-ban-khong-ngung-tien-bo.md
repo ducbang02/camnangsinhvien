@@ -33,7 +33,7 @@ Khi biết tự học, bạn có thể chủ động bổ sung những gì mình
 
 ## Những phương pháp giúp tự học hiệu quả hơn
 
-### 1\. Xác định rõ mục tiêu trước khi bắt đầu
+### Xác định rõ mục tiêu trước khi bắt đầu
 
 Đừng bắt đầu bằng một mục tiêu quá chung chung như:
 
@@ -57,7 +57,7 @@ Ví dụ:
 
 Khi biết rõ đích đến, bạn sẽ dễ xác định mình cần học những gì hơn.
 
-### 2\. Chia mục tiêu lớn thành những mục tiêu nhỏ
+### Chia mục tiêu lớn thành những mục tiêu nhỏ
 
 Một mục tiêu quá lớn rất dễ khiến bạn cảm thấy không biết phải bắt đầu từ đâu.
 
@@ -71,7 +71,7 @@ Bạn có thể chia thành:
 
 Mỗi khi hoàn thành một phần nhỏ, bạn vừa nhìn thấy tiến bộ vừa biết bước tiếp theo mình cần làm gì.
 
-### 3\. Học từ nhiều nguồn khác nhau
+### Học từ nhiều nguồn khác nhau
 
 Không có một nguồn tài liệu nào phù hợp với tất cả mọi người.
 
@@ -96,7 +96,7 @@ Nếu một nguồn giải thích quá khó, hãy thử tìm một cách giải 
 
 Quan trọng là **hiểu được vấn đề**, không phải ép mình phải học bằng đúng một phương pháp.
 
-### 4\. Học phải đi đôi với thực hành
+### Học phải đi đôi với thực hành
 
 Chỉ xem video hoặc đọc sách rất dễ tạo cảm giác rằng mình đã hiểu.
 
@@ -123,7 +123,7 @@ Một nguyên tắc đơn giản là:
 
 ## Những điều cần lưu ý khi tự học
 
-### 1\. Sẵn sàng thay đổi phương pháp học
+### Sẵn sàng thay đổi phương pháp học
 
 Nếu học mãi nhưng không tiến bộ, đừng chỉ cố gắng học nhiều hơn.
 
@@ -133,7 +133,7 @@ Có thể tài liệu quá khó, cách học không phù hợp hoặc bạn đan
 
 Tự học tốt cũng đồng nghĩa với việc **biết điều chỉnh phương pháp khi cần thiết**.
 
-### 2\. Duy trì đều đặn quan trọng hơn học theo cảm hứng
+### Duy trì đều đặn quan trọng hơn học theo cảm hứng
 
 Học 6 tiếng trong một ngày rồi nghỉ cả tuần thường không hiệu quả bằng việc duy trì một khoảng thời gian hợp lý mỗi ngày.
 
@@ -149,7 +149,7 @@ Không cần lúc nào cũng học thật nhiều.
 
 Quan trọng là đừng để quá trình học liên tục bị ngắt quãng.
 
-### 3\. Dùng AI như một trợ lý, không phải người học thay bạn
+### Dùng AI như một trợ lý, không phải người học thay bạn
 
 AI có thể giúp việc tự học nhanh hơn rất nhiều.
 
@@ -178,7 +178,7 @@ Thay vì:
 
 `Có bài → gửi AI → copy kết quả`.
 
-### 4\. Mục tiêu cuối cùng là có khả năng tự học một thứ mới
+### Mục tiêu cuối cùng là có khả năng tự học một thứ mới
 
 Đây mới là kết quả quan trọng nhất.
 
@@ -201,7 +201,7 @@ Khi có khả năng đó, việc chưa biết một thứ gì đó không còn q
 
 Bạn chỉ đơn giản là **chưa học nó mà thôi**.
 
-## Checklist tự học
+## Checklist tự học {no-number}
 
 -   Tôi đã xác định rõ mình muốn đạt được điều gì.
     

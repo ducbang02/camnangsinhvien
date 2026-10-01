@@ -6,7 +6,7 @@
 
 - Không viết H1 trong body; tiêu đề bài lấy từ frontmatter/CMS.
 - Dùng H2 (`##`) cho section chính. Dùng H3 (`###`) khi H2 thật sự cần chia nhỏ.
-- Không tự gõ số vào heading. Website tự hiển thị H2 bằng số La Mã (`I, II, III…`) và reset H3 về số thường (`1, 2, 3…`) trong từng H2.
+- Không tự gõ `I.`, `II.`, `1.`, `2.` vào đầu heading. Website tự hiển thị H2 bằng số La Mã (`I, II, III…`) và reset H3 về số thường (`1, 2, 3…`) trong từng H2; CMS cũng tự loại các prefix này khi dán nội dung mới.
 - Với checklist/tóm tắt không thuộc chuỗi section, đặt con trỏ trong H2/H3 rồi bật `✓ Không số` trên CMS. Source dùng marker `{no-number}`; không tự gõ marker khi đang biên tập bằng CMS.
 - Mở đầu bằng đoạn ngắn đi thẳng vào vấn đề; mỗi đoạn thường 2–4 câu.
 - Một bài nên đi theo mạch: vấn đề → cách làm/ví dụ → checklist hoặc bước tiếp theo.

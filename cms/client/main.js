@@ -128,6 +128,12 @@ function cleanPastedHtml(html) {
   const documentFragment = new DOMParser().parseFromString(html, 'text/html');
   documentFragment.querySelectorAll('script, style, meta, link, object, embed, iframe').forEach((node) => node.remove());
 
+  documentFragment.querySelectorAll('h2, h3').forEach((heading) => {
+    const firstTextNode = [...heading.childNodes].find((node) => node.nodeType === 3 && node.textContent?.trim());
+    if (!firstTextNode) return;
+    firstTextNode.textContent = firstTextNode.textContent.replace(/^\s*(?:[IVXLCDM]+|\d+)[.)]\s+/i, '');
+  });
+
   const wordParagraphs = [...documentFragment.body.children].filter((node) =>
     node.tagName === 'P' && /mso-list/i.test(node.getAttribute('style') || ''),
   );

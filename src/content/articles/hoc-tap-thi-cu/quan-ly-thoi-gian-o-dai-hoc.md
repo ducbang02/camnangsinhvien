@@ -59,7 +59,7 @@ Trước khi xếp lịch, hãy xếp ưu tiên theo bốn câu hỏi:
 
 Một bài tập nhỏ hạn ngày mai có thể cần đứng trước một project lớn hạn tháng sau. Nhưng nếu project đó cần phỏng vấn, thu thập dữ liệu hoặc code nhiều phần, bạn vẫn phải mở nó sớm. Ưu tiên không chỉ là nhìn hạn nộp. Nó là nhìn cả hậu quả, độ khó và thời gian cần để hoàn thành.
 
-Nếu bạn đang có nhiều deadline dồn cùng lúc, có thể đọc thêm bài [Quá nhiều deadline: chọn việc quan trọng trong 15 phút](/cam-nang/chon-viec-quan-trong-khi-qua-nhieu-deadline/) để xử lý tình huống khẩn cấp. Còn bài này tập trung vào nhịp học đều hơn trong tuần.
+Nếu bạn đang có nhiều deadline dồn cùng lúc, hãy quay lại quy trình ưu tiên ở phần trên và xử lý từng việc theo bước kế tiếp. Còn bài này tập trung vào việc giữ nhịp học đều hơn trong tuần.
 
 ## Đừng chia thời gian bằng nhau cho tất cả môn
 

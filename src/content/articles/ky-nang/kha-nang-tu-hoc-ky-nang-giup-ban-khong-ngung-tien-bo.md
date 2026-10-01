@@ -16,9 +16,16 @@ author: Cẩm nang sinh viên
 featured: false
 draft: false
 readingMinutes: 6
-sources: []
+sources:
+  - label: 'Ảnh minh họa: Pexels — Yan Krukau'
+    url: 'https://www.pexels.com/photo/student-using-laptop-in-library-8199257/'
 updatedDate: '2026-10-01'
 ---
+<figure class="article-figure">
+  <img src="/media/articles/kha-nang-tu-hoc-ky-nang-giup-ban-khong-ngung-tien-bo/hoc-tap-thu-vien.webp" alt="Sinh viên tập trung học với laptop trong thư viện" loading="lazy" decoding="async" />
+  <figcaption>Ảnh minh họa: Pexels / Yan Krukau.</figcaption>
+</figure>
+
 ## Tự học là gì?
 
 Tự học không đơn giản là học một mình hay không cần giáo viên.

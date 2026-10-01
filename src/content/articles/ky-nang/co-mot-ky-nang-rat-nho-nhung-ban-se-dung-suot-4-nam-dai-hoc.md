@@ -15,8 +15,10 @@ featured: false
 draft: false
 readingMinutes: 11
 tool: https://typing.camnangsinhvien.site/
-sources: []
-updatedDate: '2026-09-29'
+sources:
+  - label: 'Ảnh minh họa: Pexels — Pavel Danilyuk'
+    url: 'https://www.pexels.com/photo/hands-typing-on-a-laptop-6405641/'
+updatedDate: '2026-10-01'
 ---
 Khi mới vào đại học, chúng ta thường nghĩ đến những kỹ năng như thuyết trình, làm việc nhóm, tiếng Anh hay quản lý thời gian.
 
@@ -27,6 +29,11 @@ Từ làm bài tập, viết báo cáo, tìm tài liệu, nhắn tin nhóm, làm
 > **Gõ 10 ngón không giúp bạn học giỏi ngay lập tức, nhưng nó giúp gần như mọi công việc trên máy tính trở nên nhanh và nhẹ hơn.**
 
 Và đây là lý do mình nghĩ sinh viên nên học kỹ năng này càng sớm càng tốt.
+
+<figure class="article-figure">
+  <img src="/media/articles/co-mot-ky-nang-rat-nho-nhung-ban-se-dung-suot-4-nam-dai-hoc/ban-phim-va-ban-lam-viec.webp" alt="Hai bàn tay đang gõ trên laptop tại bàn làm việc" loading="lazy" decoding="async" />
+  <figcaption>Ảnh minh họa: Pexels / Pavel Danilyuk.</figcaption>
+</figure>
 
 ## Bạn có thể đang gõ phím rất nhiều nhưng vẫn chưa thực sự biết gõ
 

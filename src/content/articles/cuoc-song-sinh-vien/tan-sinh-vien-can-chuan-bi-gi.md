@@ -40,7 +40,7 @@ Với mỗi môn, ghi:
 - deadline đã biết;
 - cách liên hệ giảng viên/trợ giảng.
 
-Đây là lúc tạo [kế hoạch học kỳ](/cam-nang/lap-ke-hoach-hoc-ky-30-phut/), không đợi đến tuần thi.
+Đây là lúc tạo [kế hoạch học tập theo tuần](/cam-nang/quan-ly-thoi-gian-o-dai-hoc/), không đợi đến tuần thi.
 
 ## Tuần 3: xây mạng hỗ trợ nhỏ
 

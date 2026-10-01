@@ -14,7 +14,9 @@ author: Cẩm nang sinh viên
 featured: false
 draft: false
 readingMinutes: 8
-sources: []
+sources:
+  - label: 'Ảnh minh họa: Pexels — Andy Barbour'
+    url: 'https://www.pexels.com/photo/students-having-conversation-inside-the-classroom-6683485/'
 ---
 
 Bạn có thể sẽ gặp những câu hỏi như:
@@ -29,6 +31,11 @@ Không phải câu hỏi nào cũng có sẵn một đáp án đúng cho tất c
 Đó là vai trò của **tư duy phản biện và giải quyết vấn đề**.
 
 Tư duy phản biện không có nghĩa là lúc nào cũng phản đối người khác. Nó là khả năng dừng lại, nhìn vấn đề rõ hơn, kiểm tra điều mình đang tin và chọn cách xử lý có căn cứ.
+
+<figure class="article-figure">
+  <img src="/media/articles/top-1-ky-nang-mem-giup-ban-tra-loi-moi-cau-hoi/thao-luan-trong-lop.webp" alt="Nhóm sinh viên đang thảo luận trong lớp học" loading="lazy" decoding="async" />
+  <figcaption>Ảnh minh họa: Pexels / Andy Barbour.</figcaption>
+</figure>
 
 ## Đừng tìm giải pháp trước khi hiểu vấn đề
 

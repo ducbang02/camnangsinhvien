@@ -124,7 +124,7 @@ Chỉ bắt đầu khi có returning users và nhu cầu đồng bộ được c
 
 1. Cách tính GPA đại học — intent rõ, nối trực tiếp GPA Calculator.
 2. Điểm cuối kỳ cần bao nhiêu — pain point sát kỳ thi, nối Final Grade Calculator.
-3. Lập kế hoạch học kỳ trong 30 phút — hub cho deadline và Pomodoro.
+3. Quản lý thời gian ở đại học — hub cho deadline và Pomodoro.
 4. Active Recall: học bằng cách tự nhớ — phương pháp nền tảng, dễ thực hành.
 5. Spaced Repetition cho sinh viên — cặp cluster với Active Recall.
 6. Ôn thi trong 7 ngày — intent cấp bách, dùng lại planner.

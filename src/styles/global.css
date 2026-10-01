@@ -1514,6 +1514,11 @@ h3 {
   text-align: center;
 }
 
+.prose figcaption:empty,
+.prose .article-figure figcaption:empty {
+  display: none;
+}
+
 .prose .video-embed {
   position: relative;
   aspect-ratio: 16 / 9;

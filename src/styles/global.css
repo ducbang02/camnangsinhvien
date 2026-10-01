@@ -1480,7 +1480,13 @@ h3 {
 
 .prose figure,
 .prose .article-figure {
-  margin: 2.25rem 0;
+  width: fit-content;
+  max-width: 100%;
+  margin: 2.25rem auto;
+  padding: .75rem;
+  border: 1px solid #d8e8e2;
+  border-radius: 20px;
+  background: #eef5f2;
 }
 
 .prose img,

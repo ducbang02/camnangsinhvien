@@ -120,7 +120,7 @@ Chỉ bắt đầu khi có returning users và nhu cầu đồng bộ được c
 - Tạo đủ 20 tool trước khi tool hiện tại có usage.
 - Nhét affiliate vào bài không có purchase intent.
 
-## Thứ tự 20 bài đầu
+## Thứ tự 18 bài đầu
 
 1. Cách tính GPA đại học — intent rõ, nối trực tiếp GPA Calculator.
 2. Điểm cuối kỳ cần bao nhiêu — pain point sát kỳ thi, nối Final Grade Calculator.
@@ -138,7 +138,5 @@ Chỉ bắt đầu khi có returning users và nhu cầu đồng bộ được c
 14. Lập ngân sách tháng cho sinh viên — nối Budget Planner.
 15. Ở trọ lần đầu cần chuẩn bị gì — purchase intent tự nhiên.
 16. Laptop cho sinh viên: chọn theo nhu cầu — commercial investigation có tiêu chí.
-17. Viết email cho giảng viên — tình huống lặp lại và shareable.
-18. Làm việc nhóm khi có người không làm — pain point thực tế, nối tool chia nhóm.
-19. Sinh viên IT nên học gì trước — gateway cho hub IT.
-20. Project đầu tiên cho sinh viên IT — đáp ứng khoảng trống giữa môn học và thực tế.
+17. Sinh viên IT nên học gì trước — gateway cho hub IT.
+18. Project đầu tiên cho sinh viên IT — đáp ứng khoảng trống giữa môn học và thực tế.

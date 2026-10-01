@@ -17,6 +17,7 @@ featured: false
 draft: false
 readingMinutes: 6
 sources: []
+updatedDate: '2026-10-01'
 ---
 ## Tự học là gì?
 
@@ -200,7 +201,7 @@ Khi có khả năng đó, việc chưa biết một thứ gì đó không còn q
 
 Bạn chỉ đơn giản là **chưa học nó mà thôi**.
 
-## Checklist tự học {no-number}
+## Checklist tự học
 
 -   Tôi đã xác định rõ mình muốn đạt được điều gì.
     
